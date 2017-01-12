@@ -17,7 +17,7 @@ from utils import ADDON_ICON, notify, string, sizeof, get_icon_path, get_enabled
 provider_names = []
 provider_results = []
 available_providers = 0
-request_time = time.clock()
+request_time = time.time()
 timeout = get_setting("timeout", int)
 
 
@@ -32,7 +32,7 @@ def search(payload, method="general"):
     provider_names = []
     provider_results = []
     available_providers = 0
-    request_time = time.clock()
+    request_time = time.time()
 
     providers = get_enabled_providers()
 
@@ -84,19 +84,27 @@ def search(payload, method="general"):
 
     log.debug("all filtered_results: %s" % repr(filtered_results))
 
-    log.info("Providers returned %d results in %s seconds" % (len(filtered_results), round(time.clock() - request_time, 2)))
+    log.info("Providers returned %d results in %s seconds" % (len(filtered_results), round(time.time() - request_time, 2)))
 
     return filtered_results
 
 
-def got_results(provider, data):
+def got_results(provider, results):
     global provider_names
     global provider_results
     global available_providers
     definition = definitions[provider]
 
-    log.info(">> %s provider returned %d results in %.1f seconds" % (definition['name'], len(data), round(time.clock() - request_time, 2)))
-    provider_results.extend(data)
+    max_results = get_setting('max_results', int)
+    sorted_results = sorted(results, key=lambda r: (r['seeds']), reverse=True)
+    if len(sorted_results) > max_results:
+        sorted_results = sorted_results[:max_results]
+
+    log.info(">> %s provider returned %d results in %.1f seconds%s" % (
+            definition['name'], len(results), round(time.time() - request_time, 2),
+            (", sending %d best ones" % max_results) if len(results) > max_results else ""))
+
+    provider_results.extend(sorted_results)
     available_providers -= 1
     if definition['name'] in provider_names:
         provider_names.remove(definition['name'])

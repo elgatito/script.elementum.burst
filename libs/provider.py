@@ -13,7 +13,6 @@ from utils import ADDON_PATH, get_int, clean_size, normalize_string
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
     filtering.information(provider)
     results = []
-    counter = 0
 
     definition = definitions[provider]
 
@@ -25,7 +24,6 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
         log.debug("name: %s \n info_hash: %s\n magnet: %s\n size: %s\n seeds: %s\n peers: %s" % (
                   name, info_hash, uri, size, seeds, peers))
         if filtering.verify(provider, v_name, v_size):
-            counter += 1
             results.append({"name": name,
                             "uri": uri,
                             "info_hash": info_hash,
@@ -36,13 +34,10 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
                             "provider": '[COLOR %s]%s[/COLOR]' % (definition['color'], definition['name']),
                             "icon": os.path.join(ADDON_PATH, 'libs', 'providers', 'icons', '%s.png' % provider),
                             })  # return the torrent
-            if counter >= get_setting('max_results'):  # limit magnets
-                break
-
         else:
             log.debug(filtering.reason.encode('ascii', 'ignore'))
 
-    log.debug('>>>>>> %s sending %d torrents to Quasar <<<<<<<' % (provider, counter))
+    log.debug('>>>>>> %s would send %d torrents to Quasar <<<<<<<' % (provider, len(results)))
 
     return results
 
