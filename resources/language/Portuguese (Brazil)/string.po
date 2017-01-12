@@ -1,0 +1,76 @@
+# Kodi Media Center language file
+# Add-on Name: Quasar Burst
+# Add-on id: script.quasar.burst
+# Add-on provider: scakemyer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Quasar Burst\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-05 05:53-0400\n"
+"PO-Revision-Date: 2016-12-26 10:34-0500\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.11\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Geral"
+
+msgctxt "#32015"
+msgid "Username"
+msgstr "Usuário"
+
+msgctxt "#32016"
+msgid "Password"
+msgstr "Senha"
+
+msgctxt "#32033"
+msgid "Minimum size"
+msgstr "Tamanho mínimo"
+
+msgctxt "#32034"
+msgid "Maximum size"
+msgstr "Tamanho máximo"
+
+msgctxt "#32040"
+msgid "Maximum torrents"
+msgstr "Número Máximo torrents"
+
+msgctxt "#32041"
+msgid "Use CloudHole"
+msgstr "Usar CloudHole"
+
+msgctxt "#32060"
+msgid "No providers enabled"
+msgstr "Nenhum provedor instalado"
+
+msgctxt "#32061"
+msgid "Starting..."
+msgstr "Iniciando..."
+
+msgctxt "#32062"
+msgid "%s providers left"
+msgstr "%s Provedores Restantes"
+
+msgctxt "#32063"
+msgid "1 provider left"
+msgstr "1 Provedor Restante"
+
+msgctxt "#32064"
+msgid " timed out"
+msgstr " Provedor Lento"
+
+msgctxt "#32070"
+msgid "Search timeout (seconds)"
+msgstr "Tempo Limite da Pesquisa"
+
+msgctxt "#32075"
+msgid "No torrents found"
+msgstr "Não encontrou torrent"

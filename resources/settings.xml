@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+  <category label="32000">
+    <setting label="32033" id="min_size" type="slider" option="float" range="0,0.25,10" default="0" />
+    <setting label="32034" id="max_size" type="slider" option="float" range="10,0.25,200" default="100" />
+    <setting label="32040" id="max_results" type="slider" default="20" option="int" range="1,1,100" />
+    <setting label="32070" id="timeout" type="slider" default="20" option="int" range="5,5,50" />
+    <setting label="32041" id="use_cloudhole" type="bool" default="false" />
+  </category>
+  <category label="32001">
+    <setting label="32012" type="lsep" />
+    <setting label="YTS" id="use_yts" type="bool" default="true" />
+    <setting label="RARBG" id="use_rarbg" type="bool" default="true" />
+    <setting label="1337x" id="use_1337x" type="bool" default="true" />
+    <setting label="TorLock" id="use_torlock" type="bool" default="true" />
+    <setting label="MagnetDL" id="use_magnetdl" type="bool" default="true" />
+    <setting label="The Pirate Bay" id="use_thepiratebay" type="bool" default="true" />
+
+    <setting label="Ruhunt" id="use_ruhunt" type="bool" default="false" />
+    <setting label="Rutor" id="use_rutor" type="bool" default="false" />
+    <setting label="Nextorrent" id="use_nextorrent" type="bool" default="false" />
+    <setting label="Torrent9" id="use_torrent9" type="bool" default="false" />
+    <setting label="Cpasbien" id="use_cpasbien" type="bool" default="false" />
+    <setting label="Nyaa" id="use_nyaa" type="bool" default="false" />
+    <setting label="BTjunkie" id="use_btjunkie" type="bool" default="false" />
+    <setting label="Divxatope" id="use_divxatope" type="bool" default="false" />
+    <setting label="TorrentFunk" id="use_torrentfunk" type="bool" default="false" />
+    <setting label="idope" id="use_idope" type="bool" default="false" />
+    <setting label="EZTV" id="use_eztv" type="bool" default="false" />
+    <setting label="KickAss" id="use_kickass" type="bool" default="false" />
+    <setting label="TorrentZ" id="use_torrentz" type="bool" default="false" />
+    <setting label="EliteTorrent" id="use_elitetorrent" type="bool" default="false" />
+    <setting label="Bitsnoop" id="use_bitsnoop" type="bool" default="false" />
+    <setting label="YourBitTorrent" id="use_yourbittorrent" type="bool" default="false" />
+    <setting label="Ilcorsaronero" id="use_ilcorsaronero" type="bool" default="false" />
+    <setting label="Monova" id="use_monova" type="bool" default="false" />
+    <setting label="Btstorrent" id="use_btstorrent" type="bool" default="false" />
+    <setting label="GloTorrents" id="use_glotorrents" type="bool" default="false" />
+    <setting label="ExtraTorrent" id="use_extratorrent" type="bool" default="false" />
+    <setting label="TorrentDownloads" id="use_torrentdownloads" type="bool" default="false" />
+    <setting label="Zoogle" id="use_zoogle" type="bool" default="false" />
+    <setting label="Zooqle" id="use_zooqle" type="bool" default="false" />
+
+    <setting label="32014" type="lsep" />
+    <setting label="TorrentLeech" id="use_torrentleech" type="bool" default="false" />
+    <setting label="FileList" id="use_filelist" type="bool" default="false" />
+    <setting label="T411" id="use_t411" type="bool" default="false" />
+    <setting label="UhdBits" id="use_uhdbits" type="bool" default="false" />
+    <setting label="AlphaReign" id="use_alphareign" type="bool" default="false" />
+    <setting label="FinBytes" id="use_finbytes" type="bool" default="false" />
+    <setting label="GimmePeers" id="use_gimmepeers" type="bool" default="false" />
+    <setting label="Tv Torrents.ro" id="use_freshon.tv" type="bool" default="false" />
+    <setting label="Zone" id="use_myxzorg" type="bool" default="false" />
+  </category>
+  <category label="32002">
+    <setting label="480p" id="filter_480p" type="bool" default="true" />
+    <setting label="720p" id="filter_720p" type="bool" default="true" />
+    <setting label="1080p" id="filter_1080p" type="bool" default="true" />
+    <setting label="2K" id="filter_2k" type="bool" default="true" />
+    <setting label="4K" id="filter_4k" type="bool" default="true" />
+  </category>
+  <category label="32003">
+    <setting label="BRRip" id="filter_brrip" type="bool" default="true" />
+    <setting label="WebDL" id="filter_webdl" type="bool" default="true" />
+    <setting label="HDRip" id="filter_hdrip" type="bool" default="true" />
+    <setting label="HDTV" id="filter_hdtv" type="bool" default="true" />
+    <setting label="DVDRip" id="filter_dvd" type="bool" default="true" />
+    <setting label="DVDScr" id="filter_dvdscr" type="bool" default="true" />
+    <setting label="Screener" id="filter_screener" type="bool" default="true" />
+    <setting label="TeleSync" id="filter_ts" type="bool" default="false" />
+    <setting label="Cam" id="filter_cam" type="bool" default="false" />
+    <setting label="3D" id="filter_3d" type="bool" default="false" />
+    <setting label="Trailer" id="filter_trailer" type="bool" default="false" />
+    <setting label="Workprint" id="filter_workprint" type="bool" default="false" />
+  </category>
+</settings>
