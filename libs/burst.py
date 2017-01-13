@@ -175,7 +175,7 @@ def extract_torrents(provider, browser):
                 if definition['private']:
                     log.debug("[%s] Cookies: %s" % (provider, repr(browser.cookies())))
                     parsed_url = urlparse(definition['root_url'])
-                    cookie_domain = '{uri.netloc}'.format(uri=parsed_url).replace('www', '')
+                    cookie_domain = '{uri.netloc}'.format(uri=parsed_url).replace('www.', '')
                     cookies = []
                     log.debug("[%s] cookie_domain: %s" % (provider, cookie_domain))
                     for cookie in browser._cookies:

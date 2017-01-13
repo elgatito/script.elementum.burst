@@ -132,10 +132,10 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
 
     # start the process
     for query, extra in zip(filtering.queries, filtering.extras):
-        log.debug("[%s] - query: %s - extra: %s" % (provider, query, extra))
+        log.debug("[%s] before keywords - query: %s - extra: %s" % (provider, query, extra))
         query = process_keywords(provider, query, filtering)
         extra = process_keywords(provider, extra, filtering)
-        log.debug("[%s] - query: %s - extra: %s" % (provider, query, extra))
+        log.debug("[%s] after keywords  - query: %s - extra: %s" % (provider, query, extra))
         if query:
             url_search = filtering.url.replace('QUERY', query.replace(' ', definition['separator']))
             url_search = normalize_string(url_search)
@@ -167,10 +167,10 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                     else:
                         data[key] = filtering.get_data[key]
 
-            log.debug(">>  %s query: %s" % (provider, query))
-            log.debug(">>> %s url_search before token: %s" % (provider, url_search))
-            log.debug("%s filtering with post_data: %s" % (provider, repr(filtering.post_data)))
-            log.debug("%s using payload: %s" % (provider, repr(payload)))
+            log.debug("-   %s query: %s" % (provider, query))
+            log.debug("--  %s url_search before token: %s" % (provider, url_search))
+            log.debug("--- %s using POST payload: %s" % (provider, repr(payload)))
+            log.debug("----%s filtering with post_data: %s" % (provider, repr(filtering.post_data)))
 
             # to do filtering by name.. TODO what?
             filtering.title = query
@@ -189,7 +189,6 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                     log.warning('%s: Unable to get token for %s' % (provider, url_search))
 
             if 'private' in definition and definition['private']:
-                # TODO All the conditional private provider settings for user/pass...
                 username = get_setting('%s_username' % provider)
                 password = get_setting('%s_password' % provider)
                 try:
