@@ -63,6 +63,12 @@ definitions['torrentleech']['subpage'] = False
 # AlphaReign
 definitions['alphareign']['login_object'] = "{'username': USERNAME, 'password': PASSWORD, 'csrf_name': CSRF_NAME, 'csrf_value': CSRF_VALUE}"
 
+# T411
+definitions['t411']['parser']['torrent'] = definitions['t411']['parser']['torrent'] + '.replace("//www.t411.li", "")'
+
+# FileList
+definitions['filelist']['parser']['torrent'] = "'/%s' % " + definitions['filelist']['parser']['torrent']
+
 # YTS
 definitions['yts']['is_api'] = True
 definitions['yts']['separator'] = '%20'

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.quasar.burst" name="Quasar [COLOR FFFF6B00]Burst[/COLOR]" version="0.1.1" provider-name="scakemyer">
+<addon id="script.quasar.burst" name="Quasar [COLOR FFFF6B00]Burst[/COLOR]" version="0.1.2" provider-name="scakemyer">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="plugin.video.quasar" optional="false"/>
@@ -15,7 +15,7 @@
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <website>https://www.tvaddons.ag/</website>
         <forum>TODO</forum>
-        <source>https://gitlab.com/scakemyer/script.module.burst</source>
+        <source>https://gitlab.com/scakemyer/script.quasar.burst</source>
         <assets>
             <icon>icon.png</icon>
             <fanart>fanart.jpg</fanart>
