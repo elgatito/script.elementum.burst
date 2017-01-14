@@ -122,20 +122,18 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
 
     browser = Browser()
 
-    # get the cloudhole key
     if get_setting("use_cloudhole", bool):
         browser.clearance = xbmcaddon.Addon('script.quasar.burst').getSetting('clearance')
         browser.user_agent = xbmcaddon.Addon('script.quasar.burst').getSetting('user_agent')
 
-    log.debug("%s queries: %s" % (provider, filtering.queries))
-    log.debug("%s extra: %s" % (provider, filtering.extras))
+    log.debug("[%s] Queries: %s" % (provider, filtering.queries))
+    log.debug("[%s] Extras:  %s" % (provider, filtering.extras))
 
-    # start the process
     for query, extra in zip(filtering.queries, filtering.extras):
-        log.debug("[%s] before keywords - query: %s - extra: %s" % (provider, query, extra))
+        log.debug("[%s] Before keywords - Query: %s - Extra: %s" % (provider, query, extra))
         query = process_keywords(provider, query, filtering)
         extra = process_keywords(provider, extra, filtering)
-        log.debug("[%s] after keywords  - query: %s - extra: %s" % (provider, query, extra))
+        log.debug("[%s] After keywords  - Query: %s - Extra: %s" % (provider, query, extra))
         if query:
             url_search = filtering.url.replace('QUERY', query.replace(' ', definition['separator']))
             url_search = normalize_string(url_search)
@@ -220,10 +218,10 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                     login_object = definition['login_object'].replace('USERNAME', '"%s"' % username).replace('PASSWORD', '"%s"' % password)
 
                     if provider == 'alphareign':  # TODO generic flags in definitions?
-                        browser.open(definition['root_url'])
+                        browser.open(definition['root_url'] + definition['login_path'])
                         if browser.content:
-                            csrf_name = re.search('name="csrf_name" value="(.*?)"', browser.content)
-                            csrf_value = re.search('name="csrf_value" value="(.*?)"', browser.content)
+                            csrf_name = re.search(r'name="csrf_name" value="(.*?)"', browser.content)
+                            csrf_value = re.search(r'name="csrf_value" value="(.*?)"', browser.content)
                             login_object.replace("CSRF_NAME", '"%s"' % csrf_name)
                             login_object.replace("CSRF_VALUE", '"%s"' % csrf_value)
 

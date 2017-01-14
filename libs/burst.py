@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 import json
 import time
 import xbmcgui
@@ -11,7 +12,7 @@ from parser.ehp import Html
 from provider import process
 from providers.definitions import definitions
 from filtering import apply_filters, Filtering
-from browser import get_cloudhole_key, get_cloudhole_clearance
+from browser import Browser, get_cloudhole_key, get_cloudhole_clearance
 from utils import ADDON_ICON, notify, string, sizeof, get_icon_path, get_enabled_providers
 
 provider_names = []
@@ -118,9 +119,10 @@ def extract_torrents(provider, browser):
     log.debug("Extracting torrents from %s using definitions: %s" % (provider, repr(definition)))
 
     if browser.content is None:
-        return
+        raise StopIteration
 
     dom = Html().feed(browser.content)
+
     row_search = "dom." + definition['parser']['row']
     name_search = definition['parser']['name']
     torrent_search = definition['parser']['torrent']
@@ -147,68 +149,85 @@ def extract_torrents(provider, browser):
                 log.error("[%s] Subpage logging failed with: %s" % (provider, repr(e)))
                 map(log.debug, traceback.format_exc().split("\n"))
 
-            browser.open(torrent)
-            magnet = None
-            try:
-                magnet = next(extract_magnets(browser.content))  # TODO not just magnets...
-            except:
-                pass
-            if magnet:
-                log.debug(u"[%s] Magnet from %s: %s" % (provider, torrent, magnet['uri']))
-                torrent = magnet['uri']
+            # New browser instance, otherwise it's race conditions all over the place
+            subbrowser = Browser()
+
+            uri = torrent.split('|')  # Split cookies for private trackers
+            subbrowser.open(uri[0])
+
+            if 'bittorrent' in subbrowser.headers.get('content-type', ''):
+                log.debug('[%s] bittorrent content-type for %s' % (provider, torrent))
+                if len(uri) > 1:  # Stick back cookies if needed
+                    torrent = '%s|%s' % (torrent, uri[1])
             else:
-                torrent = None
+                try:
+                    magnet = next(extract_magnets(subbrowser.content))
+                    log.debug(u"[%s] Magnet from %s: %s" % (provider, uri[0], magnet['uri']))
+                    torrent = magnet['uri']
+                except:
+                    try:
+                        torrent = extract_from_page(provider, subbrowser.content)
+                        if torrent and len(uri) > 1:  # Stick back cookies if needed
+                            torrent = '%s|%s' % (torrent, uri[1])
+                    except Exception as e:
+                        import traceback
+                        log.error("[%s] Subpage extraction for %s failed with: %s" % (provider, uri[0], repr(e)))
+                        map(log.debug, traceback.format_exc().split("\n"))
+
             ret = (name, info_hash, torrent, size, seeds, peers)
             q.put_nowait(ret)
 
-    if dom is not None:
-        for item in eval(row_search):
-            if item is not None:
-                name = eval(name_search)
-                torrent = eval(torrent_search) if torrent_search else ""
-                size = eval(size_search) if size_search else ""
-                seeds = eval(seeds_search) if seeds_search else ""
-                peers = eval(peers_search) if peers_search else ""
-                info_hash = eval(info_hash_search) if info_hash_search else ""
+    if dom is None:
+        raise StopIteration
 
-                # Pass browser cookies with torrent if private
-                if definition['private']:
-                    log.debug("[%s] Cookies: %s" % (provider, repr(browser.cookies())))
-                    parsed_url = urlparse(definition['root_url'])
-                    cookie_domain = '{uri.netloc}'.format(uri=parsed_url).replace('www.', '')
-                    cookies = []
-                    log.debug("[%s] cookie_domain: %s" % (provider, cookie_domain))
-                    for cookie in browser._cookies:
-                        log.debug("[%s] cookie for domain: %s (%s=%s)" % (provider, cookie.domain, cookie.name, cookie.value))
-                        if cookie_domain in cookie.domain:
-                            cookies.append(cookie)
-                    if cookies:
-                        headers = {'Cookie': ";".join(["%s=%s" % (c.name, c.value) for c in cookies])}
-                        log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
-                        torrent = append_headers(torrent, headers)
-                        log.debug("[%s] Torrent with headers: %s" % (provider, torrent))
+    for item in eval(row_search):
+        if item is None:
+            continue
+        name = eval(name_search)
+        torrent = eval(torrent_search) if torrent_search else ""
+        size = eval(size_search) if size_search else ""
+        seeds = eval(seeds_search) if seeds_search else ""
+        peers = eval(peers_search) if peers_search else ""
+        info_hash = eval(info_hash_search) if info_hash_search else ""
 
-                if name and torrent and needs_subpage:
-                    if not torrent.startswith('http'):
-                        torrent = definition['root_url'] + torrent.decode('ascii', 'ignore')
-                    t = Thread(target=extract_subpage, args=(q, name, torrent, size, seeds, peers, info_hash))
-                    threads.append(t)
-                else:
-                    yield (name, info_hash, torrent, size, seeds, peers)
+        # Pass browser cookies with torrent if private
+        if definition['private']:
+            log.debug("[%s] Cookies: %s" % (provider, repr(browser.cookies())))
+            parsed_url = urlparse(definition['root_url'])
+            cookie_domain = '{uri.netloc}'.format(uri=parsed_url).replace('www.', '')
+            cookies = []
+            log.debug("[%s] cookie_domain: %s" % (provider, cookie_domain))
+            for cookie in browser._cookies:
+                log.debug("[%s] cookie for domain: %s (%s=%s)" % (provider, cookie.domain, cookie.name, cookie.value))
+                if cookie_domain in cookie.domain:
+                    cookies.append(cookie)
+            if cookies:
+                headers = {'Cookie': ";".join(["%s=%s" % (c.name, c.value) for c in cookies])}
+                log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
+                torrent = append_headers(torrent, headers)
+                log.debug("[%s] Torrent with headers: %s" % (provider, torrent))
 
-        if needs_subpage:
-            log.debug("[%s] Starting subpage threads..." % provider)
-            for x in threads:
-                x.start()
-            for x in threads:
-                x.join()
+        if name and torrent and needs_subpage:
+            if not torrent.startswith('http'):
+                torrent = definition['root_url'] + torrent.decode('ascii', 'ignore')  # FIXME ignoring ascii chars will 404...
+            t = Thread(target=extract_subpage, args=(q, name, torrent, size, seeds, peers, info_hash))
+            threads.append(t)
+        else:
+            yield (name, info_hash, torrent, size, seeds, peers)
 
-            log.debug("[%s] Threads returned: %s" % (provider, repr(threads)))
+    if needs_subpage:
+        log.debug("[%s] Starting subpage threads..." % provider)
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
 
-            for i in range(q.qsize()):
-                ret = q.get_nowait()
-                log.debug("[%s] Queue %d got: %s" % (provider, i, repr(ret)))
-                yield ret
+        log.debug("[%s] Threads returned: %s" % (provider, repr(threads)))
+
+        for i in range(q.qsize()):
+            ret = q.get_nowait()
+            log.debug("[%s] Queue %d got: %s" % (provider, i, repr(ret)))
+            yield ret
 
 
 def extract_from_api(provider, browser):
@@ -216,7 +235,7 @@ def extract_from_api(provider, browser):
      An almost clever API parser, mostly just for YTS and RARBG
     """
     data = json.loads(browser.content)
-    # log.info("%s json: %s" % (provider, repr(data)))
+    log.debug("[%s] JSON response from API: %s" % (provider, repr(data)))
 
     api_format = definitions[provider]['api_format']
 
@@ -228,7 +247,7 @@ def extract_from_api(provider, browser):
             data = data[key]
         else:
             data = []
-        # log.info("%s nested results: %s" % (provider, repr(data)))
+        # log.debug("%s nested results: %s" % (provider, repr(data)))
     results = data
     log.debug("%s results: %s" % (provider, repr(results)))
 
@@ -270,6 +289,37 @@ def extract_from_api(provider, browser):
         if 'peers' in api_format:
             peers = result[api_format['peers']]
         yield (name, info_hash, torrent, size, seeds, peers)
+
+
+def extract_from_page(provider, content):
+    definition = definitions[provider]
+
+    matches = re.findall('http(.*?).torrent["\']', content)
+    if matches:
+        result = 'http' + matches[0] + '.torrent'
+        result = result.replace('torcache.net', 'itorrents.org')
+        log.info('[%s] Matched torrent link: %s' % (provider, result))
+        return result
+
+    matches = re.findall('/download\?token=[A-Za-z0-9%]+', content)
+    if matches:
+        result = definition['root_url'] + matches[0]
+        log.info('[%s] Matched download link with token: %s' % (provider, result))
+        return result
+
+    matches = re.findall('/telechargement/[a-z0-9-_.]+', content)  # cpasbien
+    if matches:
+        result = definition['root_url'] + matches[0]
+        log.info('[%s] Matched some french link: %s' % (provider, result))
+        return result
+
+    matches = re.findall('/torrents/download/\?id=[a-z0-9-_.]+', content)  # t411
+    if matches:
+        result = definition['root_url'] + matches[0]
+        log.info('[%s] Matched download link with an ID: %s' % (provider, result))
+        return result
+
+    return None
 
 
 def run_provider(provider, payload, method):

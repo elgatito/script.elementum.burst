@@ -6,6 +6,7 @@ from os import path
 from time import sleep
 from storage import Storage
 from urlparse import urlparse
+from contextlib import closing
 from quasar.provider import log
 from cookielib import Cookie, LWPCookieJar
 from urllib import quote_plus, urlencode
@@ -72,18 +73,11 @@ class Browser:
             log.debug("Saving cookies error: %s" % repr(e))
 
     def _good_spider(self):
-        """
-        Delay of 0.5 seconds to prevent too many requests per second.
-        """
         self._counter += 1
         if self._counter > 1:
-            sleep(0.5)
+            sleep(0.25)
 
     def cookies(self):
-        """
-        Cookies
-        :return: LWPCookieJar format.
-        """
         return self._cookies
 
     def open(self, url='', language='en', post_data=None, get_data=None, use_cache=False):
@@ -92,7 +86,7 @@ class Browser:
             cache = Storage.open(cache_file, ttl=15)
             if 'uri' in cache:
                 self.status = 200
-                self.content = cache['uri']
+                self.content = cache['content']
                 self.headers = cache['headers']
                 log.info('Using cache for %s' % url)
                 cache.close()
@@ -104,57 +98,57 @@ class Browser:
         if get_data is not None:
             url += '?' + urlencode(get_data)
 
-        log.debug("DerhbarhgginDarFahckin URL: %s" % url)
-        result = True
+        log.debug("Opening URL: %s" % url)
+        result = False
+
         data = urlencode(post_data) if len(post_data) > 0 else None
         req = urllib2.Request(url, data)
+
         self._read_cookies(url)
         log.debug("Cookies for %s: %s" % (url, repr(self._cookies)))
+
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self._cookies))
         req.add_header('User-Agent', self.user_agent)
         req.add_header('Content-Language', language)
         req.add_header("Accept-Encoding", "gzip")
+
         try:
             self._good_spider()
-            response = opener.open(req)
-            self.headers = response.headers
-            self._save_cookies()
-            if response.headers.get("Content-Encoding", "") == "gzip":
-                import zlib
-                self.content = zlib.decompressobj(16 + zlib.MAX_WBITS).decompress(response.read())
-            else:
-                self.content = response.read()
+            with closing(opener.open(req)) as response:
+                self.headers = response.headers
+                self._save_cookies()
+                if response.headers.get("Content-Encoding", "") == "gzip":
+                    import zlib
+                    self.content = zlib.decompressobj(16 + zlib.MAX_WBITS).decompress(response.read())
+                else:
+                    self.content = response.read()
 
-            response.close()
-            self.status = 200
-            # Save in the cache
-            if use_cache:
-                cache = Storage.open(cache_file, ttl=15)
-                cache['uri'] = self.content
-                cache['headers'] = self.headers
-                cache.close()
-
-            # status
-            log.debug("Status for %s : %s" % (url, str(self.status)))
-            # log.debug("Content: %s" % repr(self.content))
+                self.status = response.getcode()
+            result = True
 
         except urllib2.HTTPError as e:
             self.status = e.code
             log.warning("Status for %s : %s" % (url, str(self.status)))
-            result = False
             if e.code == 403 or e.code == 503:
                 log.warning("CloudFlared at %s, try enabling CloudHole" % url)
 
         except urllib2.URLError as e:
             self.status = e.reason
             log.warning("Status for %s : %s" % (url, str(self.status)))
-            result = False
 
         except Exception as e:
             import traceback
             log.error("%s failed with %s:" % (url, repr(e)))
             map(log.debug, traceback.format_exc().split("\n"))
-            result = False
+
+        if result:
+            if use_cache:
+                cache = Storage.open(cache_file, ttl=15)
+                cache['content'] = self.content
+                cache['headers'] = self.headers
+                cache.sync()
+
+        log.debug("Status for %s : %s" % (url, str(self.status)))
 
         return result
 
@@ -188,8 +182,8 @@ def get_cloudhole_key():
     try:
         r = urllib2.Request("https://cloudhole.herokuapp.com/key")
         r.add_header('Content-type', 'application/json')
-        res = urllib2.urlopen(r)
-        content = res.read()
+        with closing(urllib2.urlopen(r)) as response:
+            content = response.read()
         log.info("CloudHole key: %s" % content)
         data = json.loads(content)
         cloudhole_key = data['key']
@@ -215,8 +209,8 @@ def get_cloudhole_clearance(cloudhole_key=None):
             r = urllib2.Request("https://cloudhole.herokuapp.com/clearances")
             r.add_header('Content-type', 'application/json')
             r.add_header('Authorization', cloudhole_key)
-            res = urllib2.urlopen(r)
-            content = res.read()
+            with closing(urllib2.urlopen(r)) as response:
+                content = response.read()
             log.debug("CloudHole returned: %s" % content)
             data = json.loads(content)
             user_agent = data[0]['userAgent']

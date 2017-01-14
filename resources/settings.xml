@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
   <category label="32000">
+    <setting label="32041" id="use_cloudhole" type="bool" default="false" />
     <setting label="32033" id="min_size" type="slider" option="float" range="0,0.25,10" default="0" />
     <setting label="32034" id="max_size" type="slider" option="float" range="10,1,200" default="100" />
     <setting label="32040" id="max_results" type="slider" default="25" option="int" range="1,5,100" />
     <setting label="32070" id="timeout" type="slider" default="20" option="int" range="5,5,50" />
-    <setting label="32041" id="use_cloudhole" type="bool" default="false" />
   </category>
   <category label="32001">
     <setting label="32012" type="lsep" />
@@ -14,8 +14,8 @@
     <setting label="1337x" id="use_1337x" type="bool" default="true" />
     <setting label="TorLock" id="use_torlock" type="bool" default="true" />
     <setting label="MagnetDL" id="use_magnetdl" type="bool" default="true" />
-    <setting label="The Pirate Bay" id="use_thepiratebay" type="bool" default="true" />
 
+    <setting label="The Pirate Bay" id="use_thepiratebay" type="bool" default="false" />
     <setting label="Ruhunt" id="use_ruhunt" type="bool" default="false" />
     <setting label="Rutor" id="use_rutor" type="bool" default="false" />
     <setting label="Nextorrent" id="use_nextorrent" type="bool" default="false" />
