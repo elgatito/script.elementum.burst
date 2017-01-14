@@ -65,7 +65,25 @@ definitions['alphareign']['login_object'] = "{'username': USERNAME, 'password': 
 
 # T411
 definitions['t411']['parser']['torrent'] = definitions['t411']['parser']['torrent'] + '.replace("//www.t411.li", "")'
+definitions['t411']['is_api'] = True
+definitions['t411']['base_url'] = 'https://api.t411.li'
+definitions['t411']['root_url'] = definitions['t411']['base_url']
 definitions['t411']['token_auth'] = '/auth'
+definitions['t411']['login_object'] = "{'username': USERNAME, 'password': PASSWORD}"
+definitions['t411']['download_path'] = '/torrents/download/'
+definitions['t411']['general_query'] = '/torrents/search/QUERY?limit=100&cid=0'
+definitions['t411']['movie_query'] = definitions['t411']['general_query']
+definitions['t411']['show_query'] = '/torrents/search/QUERY?limit=100&cid=433'
+definitions['t411']['season_query'] = '/torrents/search/QUERY?limit=100&cid=433'
+definitions['t411']['anime_query'] = '/torrents/search/QUERY?limit=100&cid=637'
+definitions['t411']['api_format'] = {
+    'results': 'torrents',
+    'name': 'name',
+    'torrent': 'id',
+    'size': 'size',
+    'seeds': 'seeders',
+    'peers': 'leechers',
+}
 
 # FileList
 definitions['filelist']['parser']['torrent'] = "'/%s' % " + definitions['filelist']['parser']['torrent']

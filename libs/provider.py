@@ -226,23 +226,26 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                             login_object.replace("CSRF_VALUE", '"%s"' % csrf_value)
 
                     if 'token_auth' in definition:
-                        if browser.login(definition['root_url'] + definition['token_auth'], eval(login_object)):
+                        # log.debug("[%s] logging in with: %s" % (provider, login_object))
+                        if browser.open(definition['root_url'] + definition['token_auth'], post_data=eval(login_object)):
                             token_data = json.loads(browser.content)
                             log.debug("Token response for %s: %s" % (provider, repr(token_data)))
                             if 'token' in token_data:
                                 browser.token = token_data['token']
-                                log.debug("Auth token for %s: %s" % (provider, token))
+                                log.debug("Auth token for %s: %s" % (provider, browser.token))
                             else:
                                 log.warning('%s: Unable to get auth token for %s' % (provider, url_search))
+                            log.info('[%s] login successful' % provider)
+                        else:
+                            log.error("[%s] login failed for token authorization: %s" % (provider, repr(browser.content)))
 
-                    # log.debug("Logging in with %s" % login_object)
+                    # log.debug("[%s] logging in with %s" % (provider, login_object))
                     elif browser.login(definition['root_url'] + definition['login_path'],
                                        eval(login_object), definition['login_failed']):
                         log.info('[%s] login successful' % provider)
 
             log.info("> %s search URL: %s" % (provider, url_search))
 
-            # requesting the QUERY and adding info
             browser.open(url_search, post_data=payload, get_data=data, use_cache=False)
             filtering.results.extend(
                 generate_payload(provider,

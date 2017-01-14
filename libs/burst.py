@@ -12,7 +12,7 @@ from parser.ehp import Html
 from provider import process
 from providers.definitions import definitions
 from filtering import apply_filters, Filtering
-from browser import Browser, get_cloudhole_key, get_cloudhole_clearance
+from browser import USER_AGENT, Browser, get_cloudhole_key, get_cloudhole_clearance
 from utils import ADDON_ICON, notify, string, sizeof, get_icon_path, get_enabled_providers
 
 provider_names = []
@@ -238,12 +238,13 @@ def extract_torrents(provider, browser):
 
 def extract_from_api(provider, browser):
     """
-     An almost clever API parser, mostly just for YTS and RARBG
+     An almost clever API parser, mostly just for YTS, RARBG and T411
     """
     data = json.loads(browser.content)
     log.debug("[%s] JSON response from API: %s" % (provider, repr(data)))
 
-    api_format = definitions[provider]['api_format']
+    definition = definitions[provider]
+    api_format = definition['api_format']
 
     results = []
     result_keys = api_format['results'].split('.')
@@ -282,6 +283,16 @@ def extract_from_api(provider, browser):
             name = result[api_format['name']]
         if 'torrent' in api_format:
             torrent = result[api_format['torrent']]
+            if 'download_path' in definition:
+                torrent = definition['base_url'] + definition['download_path'] + torrent
+            if browser.token:
+                user_agent = USER_AGENT
+                if get_setting("use_cloudhole", bool):
+                    user_agent = get_setting("user_agent")
+                headers = {'Authorization': browser.token, 'User-Agent': user_agent}
+                log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
+                torrent = append_headers(torrent, headers)
+                log.debug("[%s] Torrent with headers: %s" % (provider, torrent))
         if 'info_hash' in api_format:
             info_hash = result[api_format['info_hash']]
         if 'quality' in api_format:
@@ -290,10 +301,16 @@ def extract_from_api(provider, browser):
             size = result[api_format['size']]
             if type(size) in (long, int):
                 size = sizeof(size)
+            elif type(size) in (str, unicode) and size.isdigit():
+                size = sizeof(int(size))
         if 'seeds' in api_format:
             seeds = result[api_format['seeds']]
+            if type(seeds) in (str, unicode) and seeds.isdigit():
+                seeds = int(seeds)
         if 'peers' in api_format:
             peers = result[api_format['peers']]
+            if type(peers) in (str, unicode) and peers.isdigit():
+                peers = int(peers)
         yield (name, info_hash, torrent, size, seeds, peers)
 
 
