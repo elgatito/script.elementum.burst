@@ -192,20 +192,26 @@ def extract_torrents(provider, browser):
 
         # Pass browser cookies with torrent if private
         if definition['private']:
-            log.debug("[%s] Cookies: %s" % (provider, repr(browser.cookies())))
-            parsed_url = urlparse(definition['root_url'])
-            cookie_domain = '{uri.netloc}'.format(uri=parsed_url).replace('www.', '')
-            cookies = []
-            log.debug("[%s] cookie_domain: %s" % (provider, cookie_domain))
-            for cookie in browser._cookies:
-                log.debug("[%s] cookie for domain: %s (%s=%s)" % (provider, cookie.domain, cookie.name, cookie.value))
-                if cookie_domain in cookie.domain:
-                    cookies.append(cookie)
-            if cookies:
-                headers = {'Cookie': ";".join(["%s=%s" % (c.name, c.value) for c in cookies])}
+            if browser.token:
+                headers = {'Authorization': browser.token}
                 log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                 torrent = append_headers(torrent, headers)
                 log.debug("[%s] Torrent with headers: %s" % (provider, torrent))
+            else:
+                log.debug("[%s] Cookies: %s" % (provider, repr(browser.cookies())))
+                parsed_url = urlparse(definition['root_url'])
+                cookie_domain = '{uri.netloc}'.format(uri=parsed_url).replace('www.', '')
+                cookies = []
+                log.debug("[%s] cookie_domain: %s" % (provider, cookie_domain))
+                for cookie in browser._cookies:
+                    log.debug("[%s] cookie for domain: %s (%s=%s)" % (provider, cookie.domain, cookie.name, cookie.value))
+                    if cookie_domain in cookie.domain:
+                        cookies.append(cookie)
+                if cookies:
+                    headers = {'Cookie': ";".join(["%s=%s" % (c.name, c.value) for c in cookies])}
+                    log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
+                    torrent = append_headers(torrent, headers)
+                    log.debug("[%s] Torrent with headers: %s" % (provider, torrent))
 
         if name and torrent and needs_subpage:
             if not torrent.startswith('http'):

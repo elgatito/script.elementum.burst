@@ -31,6 +31,7 @@ class Browser:
         self.clearance = None
         self.content = None
         self.status = None
+        self.token = None
         self.headers = dict()
 
     def _create_cookies(self, payload):
@@ -111,6 +112,8 @@ class Browser:
         req.add_header('User-Agent', self.user_agent)
         req.add_header('Content-Language', language)
         req.add_header("Accept-Encoding", "gzip")
+        if self.token:
+            req.add_header("Authorization", self.token)
 
         try:
             self._good_spider()
@@ -152,7 +155,7 @@ class Browser:
 
         return result
 
-    def login(self, url='', payload=None, word=''):
+    def login(self, url='', data=None, fails_with=''):
         """
         Login to web site
         :param url:  url address from web site
@@ -164,12 +167,11 @@ class Browser:
         :return: True if the login was successful. False, otherwise.
         """
         result = False
-        if self.open(url, post_data=payload):
+        if self.open(url, post_data=data):
             result = True
-            if word in self.content.decode('utf-8'):
+            if fails_with in self.content.decode('utf-8'):
                 self.status = 'Wrong username or password'
                 result = False
-
         return result
 
 

@@ -65,9 +65,11 @@ definitions['alphareign']['login_object'] = "{'username': USERNAME, 'password': 
 
 # T411
 definitions['t411']['parser']['torrent'] = definitions['t411']['parser']['torrent'] + '.replace("//www.t411.li", "")'
+definitions['t411']['token_auth'] = '/auth'
 
 # FileList
 definitions['filelist']['parser']['torrent'] = "'/%s' % " + definitions['filelist']['parser']['torrent']
+definitions['filelist']['movie_query'] = '19&searchin=0&sort=0'
 
 # YTS
 definitions['yts']['is_api'] = True
