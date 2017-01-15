@@ -25,6 +25,11 @@ timeout = get_setting("timeout", int)
 def search(payload, method="general"):
     log.debug("Searching with payload (%s): %s" % (method, repr(payload)))
 
+    if method == 'general':
+        payload = {
+            'title': payload
+        }
+
     global request_time
     global provider_names
     global provider_results
