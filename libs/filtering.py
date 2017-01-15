@@ -5,8 +5,9 @@ import hashlib
 from urllib import unquote
 from quasar.provider import log, get_setting
 from parser.HTMLParser import HTMLParser
+from parser.ehp import normalize_string
 from providers.definitions import definitions
-from utils import Magnet, get_int, get_float, normalize_string
+from utils import Magnet, get_int, get_float
 
 
 class Filtering:

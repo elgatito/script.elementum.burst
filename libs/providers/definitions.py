@@ -35,9 +35,15 @@ definitions['magnetdl']['separator'] = '-'
 # Cpasbien
 definitions['cpasbien']['language'] = 'fr'
 
+# Nextorrent
+definitions['nextorrent']['general_keywords'] = '{title:fr}'
+definitions['nextorrent']['movie_keywords'] = '{title:fr} {year}'
+
 # Torrent9
 definitions['torrent9']['subpage'] = False
 definitions['torrent9']['parser']['torrent'] = "'" + definitions['torrent9']['root_url'] + "%s' % (" + definitions['torrent9']['parser']['torrent'] + ")"
+definitions['torrent9']['general_keywords'] = '{title:fr}'
+definitions['torrent9']['movie_keywords'] = '{title:fr} {year}'
 
 # YourBitTorrent
 definitions['yourbittorrent']['parser']['torrent'] = "'" + definitions['yourbittorrent']['root_url'] + definitions['yourbittorrent']['parser']['torrent'][1:]
@@ -47,6 +53,7 @@ definitions['torrentfunk']['parser']['torrent'] = "'" + definitions['torrentfunk
 
 # idope
 definitions['idope']['parser']['torrent'] = "'magnet:?xt=%s' % " + definitions['idope']['parser']['infohash']
+definitions['idope']['tv_keywords2'] = "{title} S{season:2}"
 
 # Monova
 definitions['monova']['parser']['torrent'] = definitions['monova']['parser']['torrent'] + '.replace("//monova.org", "")'
@@ -57,37 +64,8 @@ definitions['torrentz']['parser']['torrent'] = "'magnet:?xt=%s' % " + definition
 # Ilcorsaronero
 definitions['ilcorsaronero']['parser']['torrent'] = "'magnet:?xt=%s' % " + definitions['ilcorsaronero']['parser']['infohash']
 
-# TorrentLeech
-definitions['torrentleech']['subpage'] = False
-
-# AlphaReign
-definitions['alphareign']['login_object'] = "{'username': USERNAME, 'password': PASSWORD, 'csrf_name': CSRF_NAME, 'csrf_value': CSRF_VALUE}"
-
-# T411
-definitions['t411']['parser']['torrent'] = definitions['t411']['parser']['torrent'] + '.replace("//www.t411.li", "")'
-definitions['t411']['is_api'] = True
-definitions['t411']['base_url'] = 'https://api.t411.li'
-definitions['t411']['root_url'] = definitions['t411']['base_url']
-definitions['t411']['token_auth'] = '/auth'
-definitions['t411']['login_object'] = "{'username': USERNAME, 'password': PASSWORD}"
-definitions['t411']['download_path'] = '/torrents/download/'
-definitions['t411']['general_query'] = '/torrents/search/QUERY?limit=100&cid=0'
-definitions['t411']['movie_query'] = definitions['t411']['general_query']
-definitions['t411']['show_query'] = '/torrents/search/QUERY?limit=100&cid=433'
-definitions['t411']['season_query'] = '/torrents/search/QUERY?limit=100&cid=433'
-definitions['t411']['anime_query'] = '/torrents/search/QUERY?limit=100&cid=637'
-definitions['t411']['api_format'] = {
-    'results': 'torrents',
-    'name': 'name',
-    'torrent': 'id',
-    'size': 'size',
-    'seeds': 'seeders',
-    'peers': 'leechers',
-}
-
-# FileList
-definitions['filelist']['parser']['torrent'] = "'/%s' % " + definitions['filelist']['parser']['torrent']
-definitions['filelist']['movie_query'] = '19&searchin=0&sort=0'
+# Ruhunt
+definitions['ruhunt']['base_url'] = "http://ruhunt.org/search?q=QUERYEXTRA&i=s"
 
 # YTS
 definitions['yts']['is_api'] = True
@@ -126,4 +104,45 @@ definitions['rarbg']['api_format'] = {
     'seeds': 'seeders',
     'peers': 'leechers',
     'size': 'size',
+}
+
+#
+# Private trackers
+#
+
+# TorrentLeech
+definitions['torrentleech']['subpage'] = False
+
+# AlphaReign
+definitions['alphareign']['login_object'] = "{'username': USERNAME, 'password': PASSWORD, 'csrf_name': CSRF_NAME, 'csrf_value': CSRF_VALUE}"
+
+# freshon.tv
+definitions['freshon.tv']['subpage'] = False
+definitions['freshon.tv']['tv_keywords2'] = "{title} S{season:2}"
+definitions['freshon.tv']['parser']['torrent'] = "'" + definitions['freshon.tv']['root_url'] + "%s' % " + definitions['freshon.tv']['parser']['torrent']
+
+# FileList
+definitions['filelist']['parser']['torrent'] = "'/%s' % " + definitions['filelist']['parser']['torrent']
+definitions['filelist']['movie_query'] = '19&searchin=0&sort=0'
+
+# T411
+definitions['t411']['parser']['torrent'] = definitions['t411']['parser']['torrent'] + '.replace("//www.t411.li", "")'
+definitions['t411']['is_api'] = True
+definitions['t411']['base_url'] = 'https://api.t411.li'
+definitions['t411']['root_url'] = definitions['t411']['base_url']
+definitions['t411']['token_auth'] = '/auth'
+definitions['t411']['login_object'] = "{'username': USERNAME, 'password': PASSWORD}"
+definitions['t411']['download_path'] = '/torrents/download/'
+definitions['t411']['general_query'] = '/torrents/search/QUERY?limit=100&cid=0'
+definitions['t411']['movie_query'] = definitions['t411']['general_query']
+definitions['t411']['show_query'] = '/torrents/search/QUERY?limit=100&cid=433'
+definitions['t411']['season_query'] = '/torrents/search/QUERY?limit=100&cid=433'
+definitions['t411']['anime_query'] = '/torrents/search/QUERY?limit=100&cid=637'
+definitions['t411']['api_format'] = {
+    'results': 'torrents',
+    'name': 'name',
+    'torrent': 'id',
+    'size': 'size',
+    'seeds': 'seeders',
+    'peers': 'leechers',
 }

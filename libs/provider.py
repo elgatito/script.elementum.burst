@@ -4,10 +4,11 @@ import os
 import re
 import json
 import xbmcaddon
+from urllib import quote
 from browser import Browser
 from quasar.provider import log, get_setting, set_setting
 from providers.definitions import definitions
-from utils import ADDON_PATH, get_int, clean_size, normalize_string
+from utils import ADDON_PATH, get_int, clean_size
 
 
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
@@ -21,8 +22,6 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
         # uri, info_hash = clean_magnet(uri, info_hash)
         v_name = name if verify_name else filtering.title
         v_size = size if verify_size else None
-        log.debug("name: %s \n info_hash: %s\n magnet: %s\n size: %s\n seeds: %s\n peers: %s" % (
-                  name, info_hash, uri, size, seeds, peers))
         if filtering.verify(provider, v_name, v_size):
             results.append({"name": name,
                             "uri": uri,
@@ -33,7 +32,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
                             "language": definition["language"] if 'language' in definition else 'en',
                             "provider": '[COLOR %s]%s[/COLOR]' % (definition['color'], definition['name']),
                             "icon": os.path.join(ADDON_PATH, 'libs', 'providers', 'icons', '%s.png' % provider),
-                            })  # return the torrent
+                            })
         else:
             log.debug(filtering.reason.encode('ascii', 'ignore'))
 
@@ -70,12 +69,20 @@ def process_keywords(provider, text, filtering):
         if 'title' in keyword:
             title = filtering.info["title"]
             language = definitions[provider]['language']
-            if language and filtering.info['titles']:
+            use_language = None
+            if ':' in keyword:
+                use_language = keyword.split(':')[1]
+            if use_language and filtering.info['titles']:
                 try:
-                    if language in filtering.info['titles']:
-                        title = filtering.safe_name(filtering.info['titles'][language])
-                        log.info("[%s] Using translated title '%s'" % (provider, title))
-                        log.debug("[%s] Translated titles from Quasar: %s" % (provider, repr(filtering.info['titles'])))
+                    if use_language not in filtering.info['titles']:
+                        use_language = language
+                    if use_language in filtering.info['titles'] and filtering.info['titles'][use_language]:
+                        title = filtering.info['titles'][use_language]
+                        title = title.replace('.', '')  # FIXME shouldn't be here...
+                        log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
+                                                                          repr(title)))
+                        log.debug("[%s] Translated titles from Quasar: %s" % (provider,
+                                                                              repr(filtering.info['titles'])))
                 except Exception as e:
                     import traceback
                     log.error("%s failed with: %s" % (provider, repr(e)))
@@ -123,8 +130,8 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
     browser = Browser()
 
     if get_setting("use_cloudhole", bool):
-        browser.clearance = xbmcaddon.Addon('script.quasar.burst').getSetting('clearance')
-        browser.user_agent = xbmcaddon.Addon('script.quasar.burst').getSetting('user_agent')
+        browser.clearance = get_setting('clearance')
+        browser.user_agent = get_setting('user_agent')
 
     log.debug("[%s] Queries: %s" % (provider, filtering.queries))
     log.debug("[%s] Extras:  %s" % (provider, filtering.extras))
@@ -133,124 +140,114 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
         log.debug("[%s] Before keywords - Query: %s - Extra: %s" % (provider, query, extra))
         query = process_keywords(provider, query, filtering)
         extra = process_keywords(provider, extra, filtering)
-        log.debug("[%s] After keywords  - Query: %s - Extra: %s" % (provider, query, extra))
-        if query:
-            url_search = filtering.url.replace('QUERY', query.replace(' ', definition['separator']))
-            url_search = normalize_string(url_search)
-            if extra:
-                url_search = url_search.replace('EXTRA', extra.replace(' ', definition['separator']))
+        log.debug("[%s] After keywords  - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
+        if not query:
+            return filtering.results
+
+        separated_query = query.replace(' ', definition['separator']) if definition['separator'] != '%20' else query
+        separated_extra = query.replace(' ', definition['separator']) if definition['separator'] != '%20' else extra
+
+        url_search = filtering.url.replace('QUERY', quote(separated_query).encode('utf-8'))
+        if extra:
+            url_search = url_search.replace('EXTRA', quote(separated_extra).encode('utf-8'))
+        else:
+            url_search = url_search.replace('EXTRA', '')
+
+        # MagnetDL fix...
+        url_search = url_search.replace('FIRSTLETTER', query[:1])
+
+        # Creating the payload for POST method
+        payload = dict()
+        for key, value in filtering.post_data.iteritems():
+            if 'QUERY' in value:
+                payload[key] = filtering.post_data[key].replace('QUERY', query)
             else:
-                url_search = url_search.replace('EXTRA', '')
+                payload[key] = filtering.post_data[key]
 
-            # MagnetDL fix...
-            url_search = url_search.replace('FIRSTLETTER', query[:1])
-
-            # Creating the payload for POST method
-            payload = dict()
-            for key, value in filtering.post_data.iteritems():
+        # Creating the payload for GET method
+        data = None
+        if filtering.get_data is not None:
+            data = dict()
+            for key, value in filtering.get_data.iteritems():
                 if 'QUERY' in value:
-                    payload[key] = filtering.post_data[key].replace('QUERY', query)
-
+                    data[key] = filtering.get_data[key].replace('QUERY', query.encode('utf-8'))
                 else:
-                    payload[key] = filtering.post_data[key]
+                    data[key] = filtering.get_data[key]
 
-            # Creating the payload for GET method
-            data = None
-            if filtering.get_data is not None:
-                data = dict()
-                for key, value in filtering.get_data.iteritems():
-                    if 'QUERY' in value:
-                        data[key] = filtering.get_data[key].replace('QUERY', query)
+        log.debug("-   %s query: %s" % (provider, repr(query)))
+        log.debug("--  %s url_search before token: %s" % (provider, url_search))
+        log.debug("--- %s using POST payload: %s" % (provider, repr(payload)))
+        log.debug("----%s filtering with post_data: %s" % (provider, repr(filtering.post_data)))
 
-                    else:
-                        data[key] = filtering.get_data[key]
+        # to do filtering by name.. TODO what?
+        filtering.title = query
 
-            log.debug("-   %s query: %s" % (provider, query))
-            log.debug("--  %s url_search before token: %s" % (provider, url_search))
-            log.debug("--- %s using POST payload: %s" % (provider, repr(payload)))
-            log.debug("----%s filtering with post_data: %s" % (provider, repr(filtering.post_data)))
+        if 'token' in definition:
+            token_url = definition['base_url'] + definition['token']
+            log.debug("Getting token for %s at %s" % (provider, token_url))
+            browser.open(token_url)
+            token_data = json.loads(browser.content)
+            log.debug("Token response for %s: %s" % (provider, repr(token_data)))
+            if 'token' in token_data:
+                token = token_data['token']
+                log.debug("Got token for %s: %s" % (provider, token))
+                url_search = url_search.replace('TOKEN', token)
+            else:
+                log.warning('%s: Unable to get token for %s' % (provider, url_search))
 
-            # to do filtering by name.. TODO what?
-            filtering.title = query
+        if 'private' in definition and definition['private']:
+            username = get_setting('%s_username' % provider)
+            password = get_setting('%s_password' % provider)
+            if not username and not password:
+                for addon_name in ('script.magnetic.%s' % provider, 'script.magnetic.%s-mc' % provider):
+                    for setting in ('username', 'password'):
+                        try:
+                            value = xbmcaddon.Addon(addon_name).getSetting(setting)
+                            set_setting('%s_%s' % (provider, setting), value)
+                            if setting == 'username':
+                                username = value
+                            if setting == 'password':
+                                password = value
+                        except:
+                            pass
 
-            if 'token' in definition:
-                token_url = definition['base_url'] + definition['token']
-                log.debug("Getting token for %s at %s" % (provider, token_url))
-                browser.open(token_url)
-                token_data = json.loads(browser.content)
-                log.debug("Token response for %s: %s" % (provider, repr(token_data)))
-                if 'token' in token_data:
-                    token = token_data['token']
-                    log.debug("Got token for %s: %s" % (provider, token))
-                    url_search = url_search.replace('TOKEN', token)
-                else:
-                    log.warning('%s: Unable to get token for %s' % (provider, url_search))
+            if username and password:
+                login_object = definition['login_object'].replace('USERNAME', '"%s"' % username).replace('PASSWORD', '"%s"' % password)
 
-            if 'private' in definition and definition['private']:
-                username = get_setting('%s_username' % provider)
-                password = get_setting('%s_password' % provider)
-                try:
-                    if not username:
-                        username = xbmcaddon.Addon('script.magnetic.%s' % provider).getSetting('username')
-                        set_setting('%s_username' % provider, username)
-                except:
-                    pass
-                try:
-                    if not username:
-                        username = xbmcaddon.Addon('script.magnetic.%s-mc' % provider).getSetting('username')
-                        set_setting('%s_username' % provider, username)
-                except:
-                    pass
-                try:
-                    if not password:
-                        password = xbmcaddon.Addon('script.magnetic.%s' % provider).getSetting('password')
-                        set_setting('%s_password' % provider, password)
-                except:
-                    pass
-                try:
-                    if not password:
-                        password = xbmcaddon.Addon('script.magnetic.%s-mc' % provider).getSetting('password')
-                        set_setting('%s_password' % provider, password)
-                except:
-                    pass
+                if provider == 'alphareign':  # TODO generic flags in definitions?
+                    browser.open(definition['root_url'] + definition['login_path'])
+                    if browser.content:
+                        csrf_name = re.search(r'name="csrf_name" value="(.*?)"', browser.content)
+                        csrf_value = re.search(r'name="csrf_value" value="(.*?)"', browser.content)
+                        login_object.replace("CSRF_NAME", '"%s"' % csrf_name)
+                        login_object.replace("CSRF_VALUE", '"%s"' % csrf_value)
 
-                if username and password:
-                    login_object = definition['login_object'].replace('USERNAME', '"%s"' % username).replace('PASSWORD', '"%s"' % password)
-
-                    if provider == 'alphareign':  # TODO generic flags in definitions?
-                        browser.open(definition['root_url'] + definition['login_path'])
-                        if browser.content:
-                            csrf_name = re.search(r'name="csrf_name" value="(.*?)"', browser.content)
-                            csrf_value = re.search(r'name="csrf_value" value="(.*?)"', browser.content)
-                            login_object.replace("CSRF_NAME", '"%s"' % csrf_name)
-                            login_object.replace("CSRF_VALUE", '"%s"' % csrf_value)
-
-                    if 'token_auth' in definition:
-                        # log.debug("[%s] logging in with: %s" % (provider, login_object))
-                        if browser.open(definition['root_url'] + definition['token_auth'], post_data=eval(login_object)):
-                            token_data = json.loads(browser.content)
-                            log.debug("Token response for %s: %s" % (provider, repr(token_data)))
-                            if 'token' in token_data:
-                                browser.token = token_data['token']
-                                log.debug("Auth token for %s: %s" % (provider, browser.token))
-                            else:
-                                log.warning('%s: Unable to get auth token for %s' % (provider, url_search))
-                            log.info('[%s] login successful' % provider)
+                if 'token_auth' in definition:
+                    # log.debug("[%s] logging in with: %s" % (provider, login_object))
+                    if browser.open(definition['root_url'] + definition['token_auth'], post_data=eval(login_object)):
+                        token_data = json.loads(browser.content)
+                        log.debug("Token response for %s: %s" % (provider, repr(token_data)))
+                        if 'token' in token_data:
+                            browser.token = token_data['token']
+                            log.debug("Auth token for %s: %s" % (provider, browser.token))
                         else:
-                            log.error("[%s] login failed for token authorization: %s" % (provider, repr(browser.content)))
-
-                    # log.debug("[%s] logging in with %s" % (provider, login_object))
-                    elif browser.login(definition['root_url'] + definition['login_path'],
-                                       eval(login_object), definition['login_failed']):
+                            log.warning('%s: Unable to get auth token for %s' % (provider, url_search))
                         log.info('[%s] login successful' % provider)
+                    else:
+                        log.error("[%s] login failed for token authorization: %s" % (provider, repr(browser.content)))
 
-            log.info("> %s search URL: %s" % (provider, url_search))
+                # log.debug("[%s] logging in with %s" % (provider, login_object))
+                elif browser.login(definition['root_url'] + definition['login_path'],
+                                   eval(login_object), definition['login_failed']):
+                    log.info('[%s] login successful' % provider)
 
-            browser.open(url_search, post_data=payload, get_data=data, use_cache=False)
-            filtering.results.extend(
-                generate_payload(provider,
-                                 generator(provider, browser),
-                                 filtering,
-                                 verify_name,
-                                 verify_size))
+        log.info("> %s search URL: %s" % (provider, url_search))
+
+        browser.open(url_search, post_data=payload, get_data=data, use_cache=False)
+        filtering.results.extend(
+            generate_payload(provider,
+                             generator(provider, browser),
+                             filtering,
+                             verify_name,
+                             verify_size))
     return filtering.results

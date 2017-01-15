@@ -175,24 +175,6 @@ def sizeof(num, suffix='B'):
     return "%.1f %s%s" % (num, 'Y', suffix)
 
 
-def normalize_string(name):
-    from unicodedata import normalize
-    import types
-    try:
-        normalize_name = name.decode('unicode-escape').encode('latin-1')
-
-    except:
-        if types.StringType == type(name):
-            unicode_name = unicode(name, 'utf-8', 'ignore')
-
-        else:
-            unicode_name = name
-
-        normalize_name = normalize('NFKD', unicode_name).encode('ascii', 'ignore')
-
-    return normalize_name
-
-
 def notify(message, image=None):
     """
     Create notification dialog
