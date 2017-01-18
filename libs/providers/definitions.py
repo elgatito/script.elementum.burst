@@ -53,7 +53,8 @@ definitions['torrentfunk']['parser']['torrent'] = "'" + definitions['torrentfunk
 
 # idope
 definitions['idope']['parser']['torrent'] = "'magnet:?xt=%s' % " + definitions['idope']['parser']['infohash']
-definitions['idope']['tv_keywords2'] = '{title} S{season:2}'
+definitions['idope']['tv_keywords'] = '{title} S{season:2}'
+definitions['idope']['tv_keywords2'] = '{title} s{season:2}e{episode:2}'
 
 # Monova
 definitions['monova']['parser']['torrent'] = definitions['monova']['parser']['torrent'] + '.replace("//monova.org", "")'
@@ -68,7 +69,8 @@ definitions['ilcorsaronero']['parser']['torrent'] = "'magnet:?xt=%s' % " + defin
 definitions['ruhunt']['base_url'] = "http://ruhunt.org/search?q=QUERYEXTRA&i=s"
 
 # Rutor
-definitions['rutor']['tv_keywords2'] = '{title} S{season:2}'
+definitions['rutor']['tv_keywords'] = '{title} S{season:2}'
+definitions['rutor']['tv_keywords2'] = '{title} s{season:2}e{episode:2}'
 
 # YTS
 definitions['yts']['is_api'] = True
