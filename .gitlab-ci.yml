@@ -31,12 +31,16 @@ release:
     - apk add git make lftp zip
   script:
     - make
+    - ./scripts/changelog.sh > changelog.txt
   after_script:
     - |
         lftp -c "open 'ftp://$FTP_USER:$FTP_PASS@$FTP_HOST'; \
         cd script.quasar.burst; \
-        mirror --reverse --verbose --exclude '.*' --exclude '.*/' --include-glob addon.xml; \
-        mirror --reverse --verbose --exclude '.*' --exclude '.*/' --include-glob *.zip; \
+        mirror --reverse --verbose --exclude '.*' --exclude '.*/' --include-glob addon.xml \
+                                                                  --include-glob icon.png \
+                                                                  --include-glob fanart.jpg \
+                                                                  --include-glob changelog.txt \
+                                                                  --include-glob *.zip; \
         exit;"
   artifacts:
     paths:
