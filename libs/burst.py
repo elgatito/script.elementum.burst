@@ -302,7 +302,7 @@ def extract_from_api(provider, browser):
                 log.debug("[%s] Torrent with headers: %s" % (provider, torrent))
         if 'info_hash' in api_format:
             info_hash = result[api_format['info_hash']]
-        if 'quality' in api_format:
+        if 'quality' in api_format:  # Again quite specific to YTS...
             name = "%s (%s)" % (name, result[api_format['quality']])
         if 'size' in api_format:
             size = result[api_format['size']]

@@ -53,7 +53,7 @@ definitions['torrentfunk']['parser']['torrent'] = "'" + definitions['torrentfunk
 
 # idope
 definitions['idope']['parser']['torrent'] = "'magnet:?xt=%s' % " + definitions['idope']['parser']['infohash']
-definitions['idope']['tv_keywords2'] = "{title} S{season:2}"
+definitions['idope']['tv_keywords2'] = '{title} S{season:2}'
 
 # Monova
 definitions['monova']['parser']['torrent'] = definitions['monova']['parser']['torrent'] + '.replace("//monova.org", "")'
@@ -66,6 +66,9 @@ definitions['ilcorsaronero']['parser']['torrent'] = "'magnet:?xt=%s' % " + defin
 
 # Ruhunt
 definitions['ruhunt']['base_url'] = "http://ruhunt.org/search?q=QUERYEXTRA&i=s"
+
+# Rutor
+definitions['rutor']['tv_keywords2'] = '{title} S{season:2}'
 
 # YTS
 definitions['yts']['is_api'] = True
@@ -106,6 +109,7 @@ definitions['rarbg']['api_format'] = {
     'size': 'size',
 }
 
+
 #
 # Private trackers
 #
@@ -118,7 +122,8 @@ definitions['alphareign']['login_object'] = "{'username': USERNAME, 'password': 
 
 # freshon.tv
 definitions['freshon.tv']['subpage'] = False
-definitions['freshon.tv']['tv_keywords2'] = "{title} S{season:2}"
+definitions['freshon.tv']['tv_keywords'] = '{title} S{season:2}'
+definitions['freshon.tv']['tv_keywords2'] = '{title} s{season:2}e{episode:2}'
 definitions['freshon.tv']['parser']['torrent'] = "'" + definitions['freshon.tv']['root_url'] + "%s' % " + definitions['freshon.tv']['parser']['torrent']
 
 # FileList
@@ -138,6 +143,10 @@ definitions['t411']['movie_query'] = definitions['t411']['general_query']
 definitions['t411']['show_query'] = '/torrents/search/QUERY?limit=100&cid=433'
 definitions['t411']['season_query'] = '/torrents/search/QUERY?limit=100&cid=433'
 definitions['t411']['anime_query'] = '/torrents/search/QUERY?limit=100&cid=637'
+definitions['t411']['tv_keywords'] = '{title} S{season:2}'
+definitions['t411']['season_keywords1'] = '{title} S{season:2}'
+definitions['t411']['season_keywords2'] = '{title} Season{season}'
+definitions['t411']['season_keywords3'] = '{title} Season_{season}'
 definitions['t411']['api_format'] = {
     'results': 'torrents',
     'name': 'name',
