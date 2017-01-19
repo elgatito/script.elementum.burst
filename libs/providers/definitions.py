@@ -13,6 +13,10 @@ for provider in definitions:
     parsed_url = urlparse(definitions[provider]['base_url'])
     root_url = '%s://%s' % (parsed_url.scheme, parsed_url.netloc)
     definitions[provider]['root_url'] = root_url
+    if definitions[provider]['season_keywords']:
+        definitions[provider]['season_keywords'] = definitions[provider]['season_keywords'].replace('Season_{season}', 'season {season:2}')
+    if definitions[provider]['season_keywords2']:
+        definitions[provider]['season_keywords2'] = definitions[provider]['season_keywords2'].replace('Season{season}', 's{season:2}')
 
 
 #############
@@ -21,16 +25,22 @@ for provider in definitions:
 
 # TorLock
 definitions['torlock']['parser']['torrent'] = "'" + definitions['torlock']['root_url'] + definitions['torlock']['parser']['torrent'][1:]
+definitions['torlock']['season_keywords'] = '{title} s{season:2}'
+definitions['torlock']['season_keywords2'] = None
 
 # 1337x
 definitions['1337x']['root_url'] = definitions['1337x']['root_url'].replace('http://', 'https://')
 definitions['1337x']['base_url'] = definitions['1337x']['base_url'].replace('http://', 'https://')
 definitions['1337x']['parser']['torrent'] = "'" + definitions['1337x']['root_url'] + "%s' % " + definitions['1337x']['parser']['torrent']
+definitions['1337x']['season_keywords'] = '{title} s{season:2}'
+definitions['1337x']['season_keywords2'] = None
 
 # MagnetDL
 definitions['magnetdl']['name'] = 'MagnetDL'
 definitions['magnetdl']['base_url'] = 'http://www.magnetdl.com/FIRSTLETTER/QUERYEXTRA/'
 definitions['magnetdl']['separator'] = '-'
+definitions['magnetdl']['season_keywords'] = '{title} s{season:2}'
+definitions['magnetdl']['season_keywords2'] = None
 
 # Cpasbien
 definitions['cpasbien']['language'] = 'fr'
@@ -53,7 +63,7 @@ definitions['torrentfunk']['parser']['torrent'] = "'" + definitions['torrentfunk
 
 # idope
 definitions['idope']['parser']['torrent'] = "'magnet:?xt=%s' % " + definitions['idope']['parser']['infohash']
-definitions['idope']['tv_keywords'] = '{title} S{season:2}'
+definitions['idope']['tv_keywords'] = '{title} s{season:2}'
 definitions['idope']['tv_keywords2'] = '{title} s{season:2}e{episode:2}'
 
 # Monova
@@ -69,7 +79,7 @@ definitions['ilcorsaronero']['parser']['torrent'] = "'magnet:?xt=%s' % " + defin
 definitions['ruhunt']['base_url'] = "http://ruhunt.org/search?q=QUERYEXTRA&i=s"
 
 # Rutor
-definitions['rutor']['tv_keywords'] = '{title} S{season:2}'
+definitions['rutor']['tv_keywords'] = '{title} s{season:2}'
 definitions['rutor']['tv_keywords2'] = '{title} s{season:2}e{episode:2}'
 
 # YTS
@@ -102,6 +112,7 @@ definitions['rarbg']['movie_query'] = definitions['rarbg']['general_query']
 definitions['rarbg']['show_query'] = definitions['rarbg']['general_query']
 definitions['rarbg']['season_query'] = definitions['rarbg']['general_query']
 definitions['rarbg']['anime_query'] = definitions['rarbg']['general_query']
+definitions['rarbg']['season_keywords'] = '{title} s{season:2}'
 definitions['rarbg']['api_format'] = {
     'results': 'torrent_results',
     'torrent': 'download',
@@ -125,15 +136,37 @@ definitions['alphareign']['login_object'] = "{'username': USERNAME, 'password': 
 # freshon.tv
 definitions['freshon.tv']['subpage'] = False
 definitions['freshon.tv']['tv_keywords'] = '{title} S{season:2}'
-definitions['freshon.tv']['tv_keywords2'] = '{title} s{season:2}e{episode:2}'
+definitions['freshon.tv']['tv_keywords2'] = None
+definitions['freshon.tv']['season_keywords'] = '{title} S{season:2}'
+definitions['freshon.tv']['season_keywords2'] = None
 definitions['freshon.tv']['parser']['torrent'] = "'" + definitions['freshon.tv']['root_url'] + "%s' % " + definitions['freshon.tv']['parser']['torrent']
 
 # FileList
 definitions['filelist']['parser']['torrent'] = "'/%s' % " + definitions['filelist']['parser']['torrent']
 definitions['filelist']['movie_query'] = '19&searchin=0&sort=0'
 
+
 # T411
-definitions['t411']['parser']['torrent'] = definitions['t411']['parser']['torrent'] + '.replace("//www.t411.li", "")'
+def t411season(season):
+    if season < 25 or 27 < season < 31:
+        real_s = season + 967
+    if season == 25:
+        real_s = 994
+    if 25 < season < 28:
+        real_s = season + 966
+    return real_s
+
+
+def t411episode(episode):
+    if episode < 9:
+        real_ep = episode + 936
+    if 8 < episode < 31:
+        real_ep = episode + 937
+    if 30 < episode < 61:
+        real_ep = episode + 1057
+    return real_ep
+
+
 definitions['t411']['is_api'] = True
 definitions['t411']['base_url'] = 'https://api.t411.li'
 definitions['t411']['root_url'] = definitions['t411']['base_url']
@@ -141,14 +174,12 @@ definitions['t411']['token_auth'] = '/auth'
 definitions['t411']['login_object'] = "{'username': USERNAME, 'password': PASSWORD}"
 definitions['t411']['download_path'] = '/torrents/download/'
 definitions['t411']['general_query'] = '/torrents/search/QUERY?limit=100&cid=0'
-definitions['t411']['movie_query'] = definitions['t411']['general_query']
-definitions['t411']['show_query'] = '/torrents/search/QUERY?limit=100&cid=433'
-definitions['t411']['season_query'] = '/torrents/search/QUERY?limit=100&cid=433'
-definitions['t411']['anime_query'] = '/torrents/search/QUERY?limit=100&cid=637'
-definitions['t411']['tv_keywords'] = '{title} S{season:2}'
-definitions['t411']['season_keywords1'] = '{title} S{season:2}'
-definitions['t411']['season_keywords2'] = '{title} Season{season}'
-definitions['t411']['season_keywords3'] = '{title} Season_{season}'
+definitions['t411']['movie_query'] = '/torrents/search/QUERY?limit=100&cid=0'
+definitions['t411']['show_query'] = '/torrents/search/QUERY?limit=100&cid=433&EXTRA'
+definitions['t411']['season_query'] = '/torrents/search/QUERY?limit=100&cid=433&EXTRA'
+definitions['t411']['anime_query'] = '/torrents/search/QUERY?limit=100&cid=637&EXTRA'
+definitions['t411']['tv_extra'] = "term[45][]={season+t411season}&term[46][]={episode+t411episode}"
+definitions['t411']['season_extra'] = "term[45][]={season+t411season}&term[46][]=936"
 definitions['t411']['api_format'] = {
     'results': 'torrents',
     'name': 'name',

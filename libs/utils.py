@@ -19,10 +19,6 @@ PATH_TEMP = xbmc.translatePath("special://temp")
 
 
 class Magnet:
-    """
-    Create Magnet object with its properties
-    """
-
     def __init__(self, magnet):
         self.magnet = magnet + '&'
         # hash
@@ -59,97 +55,71 @@ def get_enabled_providers():
 
 
 def get_icon_path():
-    """
-    Get the path from add-on's icon
-    :return: icon's path
-    """
     return os.path.join(ADDON_PATH, 'icon.png')
 
 
 def string(id_value):
-    """
-    Internationalisation string
-    :param id_value: id value from string.po file
-    :type id_value: int
-    :return: the translated string
-    """
     return xbmcaddon.Addon().getLocalizedString(id_value)
 
 
-def get_int(text):
-    """
-    Convert string to integer number
-    :param text: string to convert
-    :type text: str
-    :return: converted string in integer
-    """
-    return int(get_float(text))
+def get_int(string):
+    try:
+        return int(string)
+    except:
+        try:
+            return int(get_float(string))
+        except:
+            pass
+    return int(filter(type(string).isdigit, string))
 
 
 def get_float(string):
-    """
-    Convert string to float number
-    :param text: string to convert
-    :type text: str
-    :return: converted string in float
-    """
-    value = 0
-    if isinstance(string, (float, long, int)):
-        value = float(string)
-
-    elif isinstance(string, str):
+    try:
+        return float(string)
+    except:
         try:
-            string = clean_number(string)
-            value = float(string)
-
+            cleaned = clean_number(string)
+            floated = re.findall(r'[\d.]+', cleaned)[0]
+            return float(floated)
         except:
-            value = 0
-
-    return value
+            pass
+    try:
+        string = string[:clean_number(string).find('.')]
+        return float(filter(type(string).isdigit, string))
+    except:
+        pass
+    return float(filter(type(string).isdigit, string))
 
 
 def size_int(size_txt):
-    """
-    Convert string with size format to integer
-    :param size_txt: string to be converted
-    :type size_txt: str
-    :return: converted string in integer
-    """
     try:
         return int(size_txt)
-
     except:
         size_txt = size_txt.upper()
-        size = get_float(size_txt.replace('B', '').replace('I', '').replace('K', '').replace('M', '').replace('G', ''))
+        size = get_float(size_txt)
         if 'K' in size_txt:
-            size *= 1000
-
+            size *= 1e3
         if 'M' in size_txt:
-            size *= 1000000
-
+            size *= 1e6
         if 'G' in size_txt:
             size *= 1e9
+        if 'T' in size_txt:
+            size *= 1e12
 
         return size
 
 
 def clean_number(text):
-    """
-    Convert string with a number to USA decimal format
-    :param text: string with the number
-    :type text: str
-    :return: converted number in string
-    """
     comma = text.find(',')
     point = text.find('.')
     if comma > 0 and point > 0:
         if comma < point:
             text = text.replace(',', '')
-
         else:
             text = text.replace('.', '')
             text = text.replace(',', '.')
-
+    elif comma > 0:
+        text = text.replace(',', '.')
     return text
 
 

@@ -7,7 +7,7 @@ from quasar.provider import log, get_setting
 from parser.HTMLParser import HTMLParser
 from parser.ehp import normalize_string
 from providers.definitions import definitions
-from utils import Magnet, get_int, get_float
+from utils import Magnet, get_int, get_float, clean_number, size_int
 
 
 class Filtering:
@@ -44,8 +44,8 @@ class Filtering:
         self.max_size = get_float(get_setting('max_size'))
         self.filter_title = False  # TODO ???
 
-        self.queries = ['{title}']
-        self.extras = ['']
+        self.queries = []
+        self.extras = []
 
         self.info = dict(title="", titles=[])
         self.get_data = None
@@ -74,9 +74,6 @@ class Filtering:
         if definition['movie_keywords']:
             self.queries = ["%s" % definition['movie_keywords']]
             self.extras = ["%s" % definition['movie_extra']]
-        else:
-            self.queries = ['{title} {year}', '{title}']
-            self.extras = ['', '']
 
     def use_episode(self, provider, payload):
         definition = definitions[provider]
@@ -90,10 +87,7 @@ class Filtering:
             # TODO this sucks, tv_keywords should be a list from the start..
             if definition['tv_keywords2']:
                 self.queries.append(definition['tv_keywords2'])
-                self.queries.append(definition['tv_extra2'] if definition['tv_extra2'] else '')
-        else:
-            self.queries = ['{title} s{season:2}e{episode:2}']
-            self.extras = ['']
+                self.extras.append(definition['tv_extra2'] if definition['tv_extra2'] else '')
 
     def use_season(self, provider, info):
         definition = definitions[provider]
@@ -101,19 +95,12 @@ class Filtering:
         log.debug("Season URL: %s%s" % (definition['base_url'], season_query))
         self.info = info
         self.url = "%s%s" % (definition['base_url'], season_query)
-        if definition['season_keywords1']:
-            self.queries = ["%s" % definition['season_keywords1']]
-            self.extras = ['']
+        if definition['season_keywords']:
+            self.queries = ["%s" % definition['season_keywords']]
+            self.extras = ["%s" % definition['season_extra'] if definition['season_extra'] else '']
             if definition['season_keywords2']:
                 self.queries.append("%s" % definition['season_keywords2'])
-                self.queries.append('')
-            if definition['season_keywords3']:
-                self.queries.append("%s" % definition['season_keywords3'])
-                self.queries.append('')
-        # TODO See, told you it sucked
-        else:
-            self.queries = ['{title} Season_{season}', '{title} Season{season}', '{title} S{season:2}']
-            self.extras = ['', '', '']
+                self.extras.append("%s" % definition['season_extra2'] if definition['season_extra2'] else '')
 
     def use_anime(self, provider, info):
         definition = definitions[provider]
@@ -121,12 +108,11 @@ class Filtering:
         log.debug("Anime URL: %s%s" % (definition['base_url'], anime_query))
         self.info = info
         self.url = "%s%s" % (definition['base_url'], anime_query)
+        if self.info['absolute_number']:
+            self.info['episode'] = self.info['absolute_number']
         if definition['anime_keywords']:
             self.queries = ["%s" % definition['anime_keywords']]
             self.extras = ["%s" % definition['anime_extra'] if definition['anime_extra'] else '']
-        else:
-            self.queries = ['{title} {episode}']
-            self.extras = ['']
 
     def information(self, provider):
         log.debug('[%s] Accepted keywords: %s' % (provider, self.quality_allow))
@@ -166,7 +152,7 @@ class Filtering:
                     result = False
 
             if size is not None and size is not '':
-                if not self.size_clearance(size):
+                if not self.in_size_range(size):
                     result = False
                     self.reason += " Size out of range"
 
@@ -176,20 +162,13 @@ class Filtering:
 
         return result
 
-    def size_clearance(self, size):
-        """
-        Convert string with size format to number ex: 1kb = 1000
-        :param size: string with the size format
-        :type size: str
-        :return: converter value in integer
-        """
-        max_size1 = 100 if self.max_size == 10 else self.max_size
+    def in_size_range(self, size):
         res = False
-        value = get_float(size)
-        value *= 0.001 if 'M' in size else 1
-        if self.min_size <= value <= max_size1:
+        value = size_int(clean_number(size))
+        min_size = self.min_size * 1e9
+        max_size = self.max_size * 1e9
+        if min_size <= value <= max_size:
             res = True
-
         return res
 
     def safe_name(self, value):
@@ -313,7 +292,7 @@ def cleanup_results(results_list):
         if not result['uri']:
             if not result['name']:
                 continue
-            log.warning('[%s] No URI for %s' % (result['provider'][16:-8], result['name'].decode('ascii', 'ignore')))
+            log.warning('[%s] No URI for %s' % (result['provider'][16:-8], result['name'].encode('ascii', 'ignore')))
             continue
 
         hash_ = result['info_hash'].upper()
@@ -325,7 +304,7 @@ def cleanup_results(results_list):
                 hash_ = hashlib.md5(result['uri']).hexdigest()
 
         try:
-            log.debug("[%s] Hash for %s: %s" % (result['provider'][16:-8], result['name'].decode('ascii', 'ignore'), hash_))
+            log.debug("[%s] Hash for %s: %s" % (result['provider'][16:-8], result['name'].encode('ascii', 'ignore'), hash_))
         except Exception as e:
             import traceback
             log.error("%s failed with: %s" % (result['provider'], repr(e)))

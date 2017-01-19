@@ -7,7 +7,7 @@ import xbmcaddon
 from urllib import quote
 from browser import Browser
 from quasar.provider import log, get_setting, set_setting
-from providers.definitions import definitions
+from providers.definitions import definitions, t411season, t411episode
 from utils import ADDON_PATH, get_int, clean_size
 
 
@@ -87,7 +87,6 @@ def process_keywords(provider, text, filtering):
                     import traceback
                     log.error("%s failed with: %s" % (provider, repr(e)))
                     map(log.debug, traceback.format_exc().split("\n"))
-
             text = text.replace('{%s}' % keyword, title)
 
         if 'year' in keyword:
@@ -96,26 +95,27 @@ def process_keywords(provider, text, filtering):
         if 'season' in keyword:
             if '+' in keyword:
                 keys = keyword.split('+')
-                season = '%d%s' % (filtering.info["season"], keys[1])
-
+                if keys[1] == "t411season":
+                    season = str(t411season(filtering.info['season']))
+                else:
+                    season = str(filtering.info["season"] + get_int(keys[1]))
             elif ':' in keyword:
                 keys = keyword.split(':')
                 season = ('%%.%sd' % keys[1]) % filtering.info["season"]
-
             else:
                 season = '%s' % filtering.info["season"]
-
             text = text.replace('{%s}' % keyword, season)
 
         if 'episode' in keyword:
             if '+' in keyword:
                 keys = keyword.split('+')
-                episode = '%d%s' % (filtering.info["episode"], keys[1])
-
+                if keys[1] == "t411episode":
+                    episode = str(t411episode(filtering.info['episode']))
+                else:
+                    episode = str(filtering.info["episode"] + get_int(keys[1]))
             elif ':' in keyword:
                 keys = keyword.split(':')
                 episode = ('%%.%sd' % keys[1]) % filtering.info["episode"]
-
             else:
                 episode = '%s' % filtering.info["episode"]
             text = text.replace('{%s}' % keyword, episode)
@@ -145,11 +145,11 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
             return filtering.results
 
         separated_query = query.replace(' ', definition['separator']) if definition['separator'] != '%20' else query
-        separated_extra = query.replace(' ', definition['separator']) if definition['separator'] != '%20' else extra
+        separated_extra = extra.replace(' ', definition['separator']) if definition['separator'] != '%20' else extra
 
         url_search = filtering.url.replace('QUERY', quote(separated_query).encode('utf-8'))
         if extra:
-            url_search = url_search.replace('EXTRA', quote(separated_extra).encode('utf-8'))
+            url_search = url_search.replace('EXTRA', separated_extra.encode('utf-8'))
         else:
             url_search = url_search.replace('EXTRA', '')
 

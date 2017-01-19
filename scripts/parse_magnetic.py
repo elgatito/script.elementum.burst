@@ -46,11 +46,12 @@ def parse(main=None, addon=None, settings=None, provider=None, path=None, from_c
     tv_keywords2 = re.findall(r".*id=\"tv_query2\"[\r\n]?\s+default=\"(.*)\"", settings)
     tv_extra = re.findall(r".*id=\"tv_extra1\"[\r\n]?\s+default=\"(.*)\"", settings)
     tv_extra2 = re.findall(r".*id=\"tv_extra2\"[\r\n]?\s+default=\"(.*)\"", settings)
+    season_keywords = re.findall(r".*id=\"season_query1\"[\r\n]?\s+default=\"(.*)\"", settings)
+    season_keywords2 = re.findall(r".*id=\"season_query2\"[\r\n]?\s+default=\"(.*)\"", settings)
+    season_extra = re.findall(r".*id=\"season_extra1\"[\r\n]?\s+default=\"(.*)\"", settings)
+    season_extra2 = re.findall(r".*id=\"season_extra2\"[\r\n]?\s+default=\"(.*)\"", settings)
     anime_keywords = re.findall(r".*id=\"anime_query1\"[\r\n]?\s+default=\"(.*)\"", settings)
     anime_extra = re.findall(r".*id=\"anime_extra1\"[\r\n]?\s+default=\"(.*)\"", settings)
-    season_keywords1 = re.findall(r".*id=\"season_query1\"[\r\n]?\s+default=\"(.*)\"", settings)
-    season_keywords2 = re.findall(r".*id=\"season_query2\"[\r\n]?\s+default=\"(.*)\"", settings)
-    season_keywords3 = re.findall(r".*id=\"season_query3\"[\r\n]?\s+default=\"(.*)\"", settings)
 
     subpage = re.findall(r".*id=\"read_magnet_link\"[\r\n]?\s+default=\"(.*)\"", settings)
     row = re.findall(r".*id=\"row_search\"[\r\n]?\s+default=\"(.*)\"", settings)
@@ -115,9 +116,10 @@ def parse(main=None, addon=None, settings=None, provider=None, path=None, from_c
         'tv_extra2': tv_extra2[0] if tv_extra2 else None,
         'anime_keywords': anime_keywords[0] if anime_keywords else None,
         'anime_extra': anime_extra[0] if anime_extra else None,
-        'season_keywords1': season_keywords1[0] if season_keywords1 else None,
+        'season_keywords': season_keywords[0] if season_keywords else None,
         'season_keywords2': season_keywords2[0] if season_keywords2 else None,
-        'season_keywords3': season_keywords3[0] if season_keywords3 else None,
+        'season_extra': season_extra[0] if season_extra else None,
+        'season_extra2': season_extra2[0] if season_extra2 else None,
         'subpage': subpage[0] == 'true' if subpage else None,
         'parser': {
             'row': row[0] if row else None,

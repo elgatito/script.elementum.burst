@@ -247,7 +247,10 @@ def extract_from_api(provider, browser):
     """
      An almost clever API parser, mostly just for YTS, RARBG and T411
     """
-    data = json.loads(browser.content)
+    try:
+        data = json.loads(browser.content)
+    except:
+        data = []
     log.debug("[%s] JSON response from API: %s" % (provider, repr(data)))
 
     definition = definitions[provider]

@@ -83,7 +83,6 @@ def extract_magnetic(provider):
                                                   provider=new_provider)[new_provider]
     else:
         r.raise_for_status()
-    print
 
 
 for provider in providers:

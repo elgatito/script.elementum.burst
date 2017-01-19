@@ -59,9 +59,10 @@ This is the format of a provider's definitions:
             "torrent": "item(tag='a', attribute='href', order=2)"
         },
         "private": false,
-        "season_keywords1": "{title} Season_{season}",
+        "season_extra": "",
+        "season_extra2": "",
+        "season_keywords": "{title} Season {season:2}",
         "season_keywords2": "{title} Season{season}",
-        "season_keywords3": "{title} S{season:2}",
         "season_query": "EXTRA",
         "separator": "+",
         "show_query": "",
