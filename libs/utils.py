@@ -63,6 +63,8 @@ def string(id_value):
 
 
 def get_int(string):
+    if not string:
+        return 0
     try:
         return int(string)
     except:

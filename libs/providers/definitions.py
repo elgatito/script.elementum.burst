@@ -62,7 +62,7 @@ definitions['yourbittorrent']['parser']['torrent'] = "'" + definitions['yourbitt
 definitions['torrentfunk']['parser']['torrent'] = "'" + definitions['torrentfunk']['root_url'] + definitions['torrentfunk']['parser']['torrent'][1:]
 
 # idope
-definitions['idope']['parser']['torrent'] = "'magnet:?xt=%s' % " + definitions['idope']['parser']['infohash']
+definitions['idope']['parser']['torrent'] = "'magnet:?xt=urn:btih:%s' % " + definitions['idope']['parser']['infohash']
 definitions['idope']['tv_keywords'] = '{title} s{season:2}'
 definitions['idope']['tv_keywords2'] = '{title} s{season:2}e{episode:2}'
 
@@ -70,10 +70,10 @@ definitions['idope']['tv_keywords2'] = '{title} s{season:2}e{episode:2}'
 definitions['monova']['parser']['torrent'] = definitions['monova']['parser']['torrent'] + '.replace("//monova.org", "")'
 
 # TorrentZ
-definitions['torrentz']['parser']['torrent'] = "'magnet:?xt=%s' % " + definitions['torrentz']['parser']['infohash']
+definitions['torrentz']['parser']['torrent'] = "'magnet:?xt=urn:btih:%s' % " + definitions['torrentz']['parser']['infohash']
 
 # Ilcorsaronero
-definitions['ilcorsaronero']['parser']['torrent'] = "'magnet:?xt=%s' % " + definitions['ilcorsaronero']['parser']['infohash']
+definitions['ilcorsaronero']['parser']['torrent'] = "'magnet:?xt=urn:btih:%s' % " + definitions['ilcorsaronero']['parser']['infohash']
 
 # Ruhunt
 definitions['ruhunt']['base_url'] = "http://ruhunt.org/search?q=QUERYEXTRA&i=s"
