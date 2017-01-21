@@ -19,6 +19,8 @@ A burst of providers.
 
 **IMPORTANT: Disable the Magnetic Quasar Connector before anything else.**
 
+Get the latest release from https://burst.surge.sh
+
 Install the add-on and enjoy.
 
 
