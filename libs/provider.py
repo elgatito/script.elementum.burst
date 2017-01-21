@@ -137,7 +137,7 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
     log.debug("[%s] Extras:  %s" % (provider, filtering.extras))
 
     for query, extra in zip(filtering.queries, filtering.extras):
-        log.debug("[%s] Before keywords - Query: %s - Extra: %s" % (provider, query, extra))
+        log.debug("[%s] Before keywords - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
         query = process_keywords(provider, query, filtering)
         extra = process_keywords(provider, extra, filtering)
         log.debug("[%s] After keywords  - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
