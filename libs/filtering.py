@@ -292,7 +292,13 @@ def cleanup_results(results_list):
         if not result['uri']:
             if not result['name']:
                 continue
-            log.warning('[%s] No URI for %s' % (result['provider'][16:-8], result['name'].encode('ascii', 'ignore')))
+            try:
+                log.warning('[%s] No URI for %s' % (result['provider'][16:-8], result['name'].decode('ascii', 'ignore')))
+            except Exception as e:
+                import traceback
+                log.warning("%s logging failed with: %s" % (result['provider'], repr(e)))
+                map(log.debug, traceback.format_exc().split("\n"))
+
             continue
 
         hash_ = result['info_hash'].upper()
@@ -304,10 +310,10 @@ def cleanup_results(results_list):
                 hash_ = hashlib.md5(result['uri']).hexdigest()
 
         try:
-            log.debug("[%s] Hash for %s: %s" % (result['provider'][16:-8], result['name'].encode('ascii', 'ignore'), hash_))
+            log.debug("[%s] Hash for %s: %s" % (result['provider'][16:-8], result['name'].decode('ascii', 'ignore'), hash_))
         except Exception as e:
             import traceback
-            log.error("%s failed with: %s" % (result['provider'], repr(e)))
+            log.warning("%s logging failed with: %s" % (result['provider'], repr(e)))
             map(log.debug, traceback.format_exc().split("\n"))
 
         if not any(existing == hash_ for existing in hashes):

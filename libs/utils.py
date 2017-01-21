@@ -72,10 +72,15 @@ def get_int(string):
             return int(get_float(string))
         except:
             pass
-    return int(filter(type(string).isdigit, string))
+    try:
+        return int(filter(type(string).isdigit, string))
+    except:
+        return 0
 
 
 def get_float(string):
+    if not string:
+        return float(0)
     try:
         return float(string)
     except:
@@ -90,7 +95,10 @@ def get_float(string):
         return float(filter(type(string).isdigit, string))
     except:
         pass
-    return float(filter(type(string).isdigit, string))
+    try:
+        return float(filter(type(string).isdigit, string))
+    except:
+        return float(0)
 
 
 def size_int(size_txt):
