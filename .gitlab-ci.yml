@@ -17,21 +17,19 @@ test:
 build:
   stage: build
   before_script:
-    - apk update
-    - apk add git make zip
+    - apk --no-cache add git make zip
   script:
     - make
-  only:
-    - master
+  except:
+    - tags
 
 release:
+  image: quasarhq/burst-website:latest
   stage: release
-  before_script:
-    - apk update
-    - apk add git make lftp zip
   script:
     - make
     - ./scripts/changelog.sh > changelog.txt
+    - make surge
   after_script:
     - |
         lftp -c "open 'ftp://$FTP_USER:$FTP_PASS@$FTP_HOST'; \
