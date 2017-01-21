@@ -74,19 +74,19 @@
     <setting label="480p" id="filter_480p" type="bool" default="true" />
     <setting label="720p" id="filter_720p" type="bool" default="true" />
     <setting label="1080p" id="filter_1080p" type="bool" default="true" />
-    <setting label="2K" id="filter_2k" type="bool" default="true" />
-    <setting label="4K" id="filter_4k" type="bool" default="true" />
+    <setting label="2K/1440p" id="filter_2k" type="bool" default="true" />
+    <setting label="4K/2160p" id="filter_4k" type="bool" default="true" />
   </category>
   <category label="32003">
-    <setting label="BRRip" id="filter_brrip" type="bool" default="true" />
-    <setting label="WebDL" id="filter_webdl" type="bool" default="true" />
+    <setting label="BRRip/BDRip/Bluray" id="filter_brrip" type="bool" default="true" />
+    <setting label="WebDL/WebRip" id="filter_webdl" type="bool" default="true" />
     <setting label="HDRip" id="filter_hdrip" type="bool" default="true" />
     <setting label="HDTV" id="filter_hdtv" type="bool" default="true" />
     <setting label="DVDRip" id="filter_dvd" type="bool" default="true" />
     <setting label="DVDScr" id="filter_dvdscr" type="bool" default="true" />
-    <setting label="Screener" id="filter_screener" type="bool" default="true" />
-    <setting label="TeleSync" id="filter_ts" type="bool" default="false" />
-    <setting label="Cam" id="filter_cam" type="bool" default="false" />
+    <setting label="Screener/SCR" id="filter_screener" type="bool" default="true" />
+    <setting label="TeleSync/TS/TC" id="filter_ts" type="bool" default="false" />
+    <setting label="Cam/HDCam" id="filter_cam" type="bool" default="false" />
     <setting label="3D" id="filter_3d" type="bool" default="false" />
     <setting label="Trailer" id="filter_trailer" type="bool" default="false" />
     <setting label="Workprint" id="filter_workprint" type="bool" default="false" />
