@@ -24,14 +24,31 @@ Install the add-on and enjoy.
 
 ### Adding / editing providers
 
-**Do NOT add definitions to the `definitions.json` file**, it is generated automatically by the Magnetic extraction script.
+**Do NOT add definitions to the `definitions.json` file**, it is generated
+automatically by the Magnetic extraction script.
 
-A mechanism to easily add extra definitions will soon be implemented. Until then,
-add your definitions in `libs/providers/definitions.py`. This is also where overrides
-and fixes are added.
-
-This is the format of a provider's definitions:
+Default fixes and overrides are located in `libs/providers/definitions.py`, and
+although you can edit that file directly, keep in mind that you will lose your
+changes on the next update. You can override existing definitions by adding
+another file named `overrides.py` in your profile folder, ie. in
+`~/.kodi/userdata/addon_data/script.quasar.burst/overrides.py`. Put all your
+overrides in the `overrides` variable within that file, as such:
 ```
+overrides = {
+    'torlock': {
+        'name': 'MyTorLock'
+    }
+}
+```
+
+Adding a custom provider is similar, although you'll be using a JSON file, per
+provider or with all your custom providers, unless you add them all in your
+custom `overrides.py`, which also works. Simply create a file with the `.json`
+extension under the `providers` folder in your profile, ie. in
+`~/.kodi/userdata/addon_data/script.quasar.burst/providers/nice_provider.json`
+and make sure it follows the format below (hopefully with `"subpage": false`):
+```
+{
     "1337x": {
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
@@ -72,4 +89,5 @@ This is the format of a provider's definitions:
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": ""
     }
+}
 ```

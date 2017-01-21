@@ -2,11 +2,15 @@
 
 import os
 import json
+import xbmc
 import xbmcaddon
+from glob import glob
 from urlparse import urlparse
+from quasar.provider import log
+ADDON = xbmcaddon.Addon()
 
 definitions = {}
-with open(os.path.join(xbmcaddon.Addon().getAddonInfo("path"), 'libs', 'providers', 'definitions.json')) as defs:
+with open(os.path.join(ADDON.getAddonInfo("path"), 'libs', 'providers', 'definitions.json')) as defs:
     definitions = json.load(defs)
 
 for provider in definitions:
@@ -17,6 +21,44 @@ for provider in definitions:
         definitions[provider]['season_keywords'] = definitions[provider]['season_keywords'].replace('Season_{season}', 'season {season:2}')
     if definitions[provider]['season_keywords2']:
         definitions[provider]['season_keywords2'] = definitions[provider]['season_keywords2'].replace('Season{season}', 's{season:2}')
+
+# Load custom providers
+custom_providers = os.path.join(xbmc.translatePath(ADDON.getAddonInfo("profile")), "providers")
+if not os.path.exists(custom_providers):
+    try:
+        os.makedirs(custom_providers)
+    except Exception as e:
+        log.error("Unable to create custom providers folder: %s", repr(e))
+        pass
+for provider_file in glob(os.path.join(custom_providers, "*.json")):
+    log.info("Importing and enabling %s" % provider_file)
+    try:
+        with open(os.path.join(custom_providers, provider_file)) as provider_def:
+            custom_definitions = json.load(provider_def)
+            for provider in custom_definitions:
+                custom_definitions[provider]['custom'] = True
+                parsed_url = urlparse(custom_definitions[provider]['base_url'])
+                root_url = '%s://%s' % (parsed_url.scheme, parsed_url.netloc)
+                custom_definitions[provider]['root_url'] = root_url
+            definitions.update(custom_definitions)
+    except Exception as e:
+        import traceback
+        log.error("Failed importing custom provider from %s: %s", provider_def, repr(e))
+        map(log.error, traceback.format_exc().split("\n"))
+
+# Load custom overrides
+overrides = os.path.join(xbmc.translatePath(ADDON.getAddonInfo("profile")), "overrides.py")
+if os.path.exists(overrides):
+    try:
+        import sys
+        sys.path.append(os.path.dirname(overrides))
+        from overrides import overrides
+        for provider_overrides in overrides:
+            definitions[provider_overrides].update(overrides[provider_overrides])
+    except Exception as e:
+        import traceback
+        log.error("Failed importing custom overrides: %s", repr(e))
+        map(log.error, traceback.format_exc().split("\n"))
 
 
 #############

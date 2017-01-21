@@ -51,6 +51,8 @@ def get_enabled_providers():
     for provider in definitions:
         if get_setting('use_%s' % provider, bool):
             results.append(provider)
+        if 'custom' in definitions[provider] and definitions[provider]['custom']:
+            results.append(provider)
     return results
 
 
