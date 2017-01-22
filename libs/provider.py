@@ -4,7 +4,6 @@ import os
 import re
 import json
 import xbmcaddon
-from urllib import quote
 from browser import Browser
 from quasar.provider import log, get_setting, set_setting
 from providers.definitions import definitions, t411season, t411episode
@@ -144,14 +143,12 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
         if not query:
             return filtering.results
 
-        separated_query = query.replace(' ', definition['separator']) if definition['separator'] != '%20' else query
-        separated_extra = extra.replace(' ', definition['separator']) if definition['separator'] != '%20' else extra
-
-        url_search = filtering.url.replace('QUERY', quote(separated_query).encode('utf-8'))
+        url_search = filtering.url.replace('QUERY', query.encode('utf-8'))
         if extra:
-            url_search = url_search.replace('EXTRA', separated_extra.encode('utf-8'))
+            url_search = url_search.replace('EXTRA', extra.encode('utf-8'))
         else:
             url_search = url_search.replace('EXTRA', '')
+        url_search = url_search.replace(' ', definition['separator'])
 
         # MagnetDL fix...
         url_search = url_search.replace('FIRSTLETTER', query[:1])
@@ -212,15 +209,28 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                             pass
 
             if username and password:
+                logged_in = False
                 login_object = definition['login_object'].replace('USERNAME', '"%s"' % username).replace('PASSWORD', '"%s"' % password)
 
-                if provider == 'alphareign':  # TODO generic flags in definitions?
+                # TODO generic flags in definitions for those...
+                if provider == 'alphareign':
                     browser.open(definition['root_url'] + definition['login_path'])
                     if browser.content:
                         csrf_name = re.search(r'name="csrf_name" value="(.*?)"', browser.content)
                         csrf_value = re.search(r'name="csrf_value" value="(.*?)"', browser.content)
-                        login_object.replace("CSRF_NAME", '"%s"' % csrf_name)
-                        login_object.replace("CSRF_VALUE", '"%s"' % csrf_value)
+                        if csrf_name and csrf_value:
+                            login_object = login_object.replace("CSRF_NAME", '"%s"' % csrf_name.group(1))
+                            login_object = login_object.replace("CSRF_VALUE", '"%s"' % csrf_value.group(1))
+                        else:
+                            logged_in = True
+                if provider == 'hd-torrents':
+                    browser.open(definition['root_url'] + definition['login_path'])
+                    if browser.content:
+                        csrf_token = re.search(r'name="csrfToken" value="(.*?)"', browser.content)
+                        if csrf_token:
+                            login_object = login_object.replace('CSRF_TOKEN', '"%s"' % csrf_token.group(1))
+                        else:
+                            logged_in = True
 
                 if 'token_auth' in definition:
                     # log.debug("[%s] logging in with: %s" % (provider, login_object))
@@ -232,14 +242,23 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                             log.debug("Auth token for %s: %s" % (provider, browser.token))
                         else:
                             log.warning('%s: Unable to get auth token for %s' % (provider, url_search))
-                        log.info('[%s] login successful' % provider)
+                        log.info('[%s] Login successful' % provider)
                     else:
-                        log.error("[%s] login failed for token authorization: %s" % (provider, repr(browser.content)))
+                        log.error("[%s] Login failed for token authorization: %s" % (provider, repr(browser.content)))
+                        return filtering.results
+                elif not logged_in and browser.login(definition['root_url'] + definition['login_path'],
+                                                     eval(login_object), definition['login_failed']):
+                    log.info('[%s] Login successful' % provider)
+                elif not logged_in:
+                    log.error("[%s] Login failed: %s", provider, browser.status)
+                    log.debug("[%s] Failed login content: %s" % repr(browser.content))
+                    return filtering.results
 
-                # log.debug("[%s] logging in with %s" % (provider, login_object))
-                elif browser.login(definition['root_url'] + definition['login_path'],
-                                   eval(login_object), definition['login_failed']):
-                    log.info('[%s] login successful' % provider)
+                if logged_in:
+                    if provider == 'hd-torrents':
+                        browser.open(definition['root_url'] + '/torrents.php')
+                        csrf_token = re.search(r'name="csrfToken" value="(.*?)"', browser.content)
+                        url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
 
         log.info("> %s search URL: %s" % (provider, url_search))
 

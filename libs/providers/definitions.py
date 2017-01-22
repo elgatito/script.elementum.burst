@@ -176,6 +176,7 @@ definitions['torrentleech']['subpage'] = False
 definitions['alphareign']['login_object'] = "{'username': USERNAME, 'password': PASSWORD, 'csrf_name': CSRF_NAME, 'csrf_value': CSRF_VALUE}"
 
 # freshon.tv
+definitions['freshon.tv']['spoof'] = 'Deluge 1.3.12.0'
 definitions['freshon.tv']['subpage'] = False
 definitions['freshon.tv']['tv_keywords'] = '{title} S{season:2}'
 definitions['freshon.tv']['tv_keywords2'] = None
@@ -229,4 +230,47 @@ definitions['t411']['api_format'] = {
     'size': 'size',
     'seeds': 'seeders',
     'peers': 'leechers',
+}
+
+# HD Torrents
+definitions['hd-torrents'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "EXTRA",
+    "base_url": "https://hd-torrents.org/torrents.php?csrfToken=CSRF_TOKEN&search=QUERYEXTRA&active=1&order=seeds&by=DESC",
+    "color": "FFCFCFCF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": "Recover",
+    "login_object": "{'uid': USERNAME, 'pwd': PASSWORD, 'csrfToken': CSRF_TOKEN}",
+    "login_path": "/login.php",
+    "movie_extra": "",
+    "movie_keywords": "{title} {year}",
+    "movie_query": "",
+    "name": "HD Torrents",
+    "parser": {
+        "infohash": "",
+        "name": "item(tag='a', order=2)",
+        "peers": "item(tag='td', order=11)",
+        "row": "find_once('table', ('class', 'mainblockcontenttt')).find_all('tr', start=3)",
+        "seeds": "item(tag='td', order=10)",
+        "size": "item(tag='td', order=8)",
+        "torrent": "'https://hd-torrents.org/%s' % item(tag='a', attribute='href', order=5)"
+    },
+    "private": True,
+    "root_url": "https://hd-torrents.org",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "{title} Season {season:2}",
+    "season_keywords2": "{title} S{season:2}",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": False,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "{title} s{season:2}e{episode:2}",
+    "tv_keywords2": ""
 }

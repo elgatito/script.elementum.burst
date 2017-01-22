@@ -66,6 +66,9 @@
     <setting label="Tv Torrents.ro" id="use_freshon.tv" type="bool" default="false" />
       <setting id="freshon.tv_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="freshon.tv_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+    <setting label="HD Torrents" id="use_hd-torrents" type="bool" default="false" />
+      <setting id="hd-torrents_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="hd-torrents_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
     <setting label="Zone" id="use_myxzorg" type="bool" default="false" />
       <setting id="myxzorg_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="myxzorg_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
