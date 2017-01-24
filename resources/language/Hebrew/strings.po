@@ -71,8 +71,8 @@ msgid "Starting..."
 msgstr "מתחיל..."
 
 msgctxt "#32062"
-msgid "%s providers left"
-msgstr "%s ספקים נותרו"
+msgid "%d providers left"
+msgstr "%d ספקים נותרו"
 
 msgctxt "#32063"
 msgid "1 provider left"

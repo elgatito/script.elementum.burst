@@ -76,7 +76,7 @@ msgid "Starting..."
 msgstr ""
 
 msgctxt "#32062"
-msgid "%s providers left"
+msgid "%d providers left"
 msgstr ""
 
 msgctxt "#32063"
