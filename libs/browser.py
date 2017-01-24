@@ -4,25 +4,21 @@ import json
 import urllib2
 from os import path
 from time import sleep
-from storage import Storage
 from urlparse import urlparse
 from contextlib import closing
 from quasar.provider import log
 from cookielib import Cookie, LWPCookieJar
-from urllib import quote_plus, urlencode
+from urllib import urlencode
 
 from xbmc import translatePath
 
 
-USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36" \
-             " (KHTML, like Gecko) Chrome/30.0.1599.66 Safari/537.36"
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 " \
+             "(KHTML, like Gecko) Chrome/53.0.2785.21 Safari/537.36"
 PATH_TEMP = translatePath("special://temp")
 
 
 class Browser:
-    """
-    Browser with cookie handling
-    """
     def __init__(self):
         self._counter = 0
         self._cookies_filename = ''
@@ -81,19 +77,7 @@ class Browser:
     def cookies(self):
         return self._cookies
 
-    def open(self, url='', language='en', post_data=None, get_data=None, use_cache=False):
-        cache_file = quote_plus(url) + '.cache'
-        if use_cache:
-            cache = Storage.open(cache_file, ttl=15)
-            if 'uri' in cache:
-                self.status = 200
-                self.content = cache['content']
-                self.headers = cache['headers']
-                log.info('Using cache for %s' % url)
-                cache.close()
-                return True
-
-        # Creating request
+    def open(self, url='', language='en', post_data=None, get_data=None):
         if post_data is None:
             post_data = {}
         if get_data is not None:
@@ -144,28 +128,11 @@ class Browser:
             log.error("%s failed with %s:" % (url, repr(e)))
             map(log.debug, traceback.format_exc().split("\n"))
 
-        if result:
-            if use_cache:
-                cache = Storage.open(cache_file, ttl=15)
-                cache['content'] = self.content
-                cache['headers'] = self.headers
-                cache.sync()
-
         log.debug("Status for %s : %s" % (url, str(self.status)))
 
         return result
 
     def login(self, url='', data=None, fails_with=''):
-        """
-        Login to web site
-        :param url:  url address from web site
-        :type url: str
-        :param payload: parameters for the login request
-        :type payload: dict
-        :param word:  message from the web site when the login fails
-        :type word: str
-        :return: True if the login was successful. False, otherwise.
-        """
         result = False
         if self.open(url, post_data=data):
             result = True
@@ -176,10 +143,6 @@ class Browser:
 
 
 def get_cloudhole_key():
-    """
-    Get CloudHole API key
-    https://github.com/scakemyer/cloudhole-api
-    """
     cloudhole_key = None
     try:
         r = urllib2.Request("https://cloudhole.herokuapp.com/key")
@@ -197,13 +160,6 @@ def get_cloudhole_key():
 
 
 def get_cloudhole_clearance(cloudhole_key=None):
-    """
-    Define the clearance value and USER AGENT
-    https://github.com/scakemyer/cloudhole-api
-    :param cloudhole_key: key from cloudhole
-    :type  cloudhole_key: str
-    :return clearance, USER AGENT
-    """
     user_agent = USER_AGENT
     clearance = None
     if cloudhole_key:

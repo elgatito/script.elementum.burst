@@ -262,7 +262,7 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
 
         log.info("> %s search URL: %s" % (provider, url_search))
 
-        browser.open(url_search, post_data=payload, get_data=data, use_cache=False)
+        browser.open(url_search, post_data=payload, get_data=data)
         filtering.results.extend(
             generate_payload(provider,
                              generator(provider, browser),

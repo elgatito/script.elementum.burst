@@ -188,13 +188,7 @@ def display_message_cache():
 
 
 def clear_cache():
-    storage_path = os.path.join(xbmc.translatePath("special://temp"), "burst")
-    if os.path.isdir(storage_path):
-        for f in os.listdir(storage_path):
-            if re.search('.cache', f):
-                os.remove(os.path.join(storage_path, f))
-
-    cookies_path = xbmc.translatePath("special://temp")
+    cookies_path = os.path.join(xbmc.translatePath("special://temp"), "burst")
     if os.path.isdir(cookies_path):
         for f in os.listdir(cookies_path):
             if re.search('.jar', f):

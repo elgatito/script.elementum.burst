@@ -93,3 +93,8 @@ and make sure it follows the format below (hopefully with `"subpage": false`):
     }
 }
 ```
+
+### Credits
+- @mancuniancol for all his work on Magnetic, this add-on wouldn't have been
+  possible without him.
+- All the alpha and beta testers that led to the first stable release.
