@@ -188,6 +188,12 @@ definitions['freshon.tv']['parser']['torrent'] = "'" + definitions['freshon.tv']
 definitions['filelist']['parser']['torrent'] = "'/%s' % " + definitions['filelist']['parser']['torrent']
 definitions['filelist']['movie_query'] = '19&searchin=0&sort=0'
 
+# XtremeZone
+definitions['myxzorg']['parser']['torrent'] = "'/%s' % " + definitions['myxzorg']['parser']['torrent']
+definitions['myxzorg']['parser']['peers'] = "item(tag='td', order=9)"
+definitions['myxzorg']['parser']['seeds'] = "item(tag='td', order=7)"
+definitions['myxzorg']['parser']['torrent'] = "item(tag='a', attribute='href', order=5)"
+
 
 # T411
 def t411season(season):
