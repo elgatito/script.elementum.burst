@@ -105,5 +105,9 @@
     <setting label="32009" type="lsep" subsetting="true" visible="eq(-7,true)" />
     <setting label="32033" id="min_size_episodes" type="slider" option="float" range="0,0.25,100" default="0" subsetting="true" visible="eq(-8,true)" />
     <setting label="32034" id="max_size_episodes" type="slider" option="float" range="1,1,200" default="100" subsetting="true" visible="eq(-9,true)" />
+    <setting label="32036" id="additional_filters" type="bool" default="false" />
+    <setting label="32037" id="filtering_help" type="text" enable="false" subsetting="true" visible="eq(-1,true)" />
+    <setting label="32038" id="accept" type="text" default="" subsetting="true" visible="eq(-2,true)" />
+    <setting label="32039" id="block" type="text" default="" subsetting="true" visible="eq(-3,true)" />
   </category>
 </settings>

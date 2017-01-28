@@ -83,6 +83,22 @@ msgctxt "#32035"
 msgid "Use separate size range for movies, seasons and episodes"
 msgstr ""
 
+msgctxt "#32036"
+msgid "Additional keyword filters (comma separated)"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Use underscores around keywords to require a space/dot, ie. _HEVC_"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Accept"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Block"
+msgstr ""
+
 msgctxt "#32040"
 msgid "Maximum results per provider"
 msgstr ""

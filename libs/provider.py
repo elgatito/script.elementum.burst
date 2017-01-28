@@ -6,7 +6,7 @@ import json
 import xbmcaddon
 from browser import Browser
 from quasar.provider import log, get_setting, set_setting
-from providers.definitions import definitions, t411season, t411episode
+from providers.definitions import definitions
 from utils import ADDON_PATH, get_int, clean_size
 
 
@@ -40,88 +40,6 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
     return results
 
 
-def read_keywords(keywords):
-    """
-    Create list from string where the values are marked between curly brackets {example}
-    :param keywords: string with the information
-    :type keywords: str
-    :return: list with collected keywords
-    """
-    results = []
-    if keywords:
-        for value in re.findall('{(.*?)}', keywords):
-            results.append(value)
-    return results
-
-
-def process_keywords(provider, text, filtering):
-    """
-    Process the keywords in the query
-    :param text: string to process
-    :type text: str
-    :return: str
-    """
-    keywords = read_keywords(text)
-
-    for keyword in keywords:
-        keyword = keyword.lower()
-        if 'title' in keyword:
-            title = filtering.info["title"]
-            language = definitions[provider]['language']
-            use_language = None
-            if ':' in keyword:
-                use_language = keyword.split(':')[1]
-            if use_language and filtering.info['titles']:
-                try:
-                    if use_language not in filtering.info['titles']:
-                        use_language = language
-                    if use_language in filtering.info['titles'] and filtering.info['titles'][use_language]:
-                        title = filtering.info['titles'][use_language]
-                        title = title.replace('.', '')  # FIXME shouldn't be here...
-                        log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
-                                                                          repr(title)))
-                        log.debug("[%s] Translated titles from Quasar: %s" % (provider,
-                                                                              repr(filtering.info['titles'])))
-                except Exception as e:
-                    import traceback
-                    log.error("%s failed with: %s" % (provider, repr(e)))
-                    map(log.debug, traceback.format_exc().split("\n"))
-            text = text.replace('{%s}' % keyword, title)
-
-        if 'year' in keyword:
-            text = text.replace('{%s}' % keyword, str(filtering.info["year"]))
-
-        if 'season' in keyword:
-            if '+' in keyword:
-                keys = keyword.split('+')
-                if keys[1] == "t411season":
-                    season = str(t411season(filtering.info['season']))
-                else:
-                    season = str(filtering.info["season"] + get_int(keys[1]))
-            elif ':' in keyword:
-                keys = keyword.split(':')
-                season = ('%%.%sd' % keys[1]) % filtering.info["season"]
-            else:
-                season = '%s' % filtering.info["season"]
-            text = text.replace('{%s}' % keyword, season)
-
-        if 'episode' in keyword:
-            if '+' in keyword:
-                keys = keyword.split('+')
-                if keys[1] == "t411episode":
-                    episode = str(t411episode(filtering.info['episode']))
-                else:
-                    episode = str(filtering.info["episode"] + get_int(keys[1]))
-            elif ':' in keyword:
-                keys = keyword.split(':')
-                episode = ('%%.%sd' % keys[1]) % filtering.info["episode"]
-            else:
-                episode = '%s' % filtering.info["episode"]
-            text = text.replace('{%s}' % keyword, episode)
-
-    return text
-
-
 def process(provider, generator, filtering, verify_name=True, verify_size=True):
     log.debug("execute_process for %s with %s" % (provider, repr(generator)))
     definition = definitions[provider]
@@ -137,8 +55,8 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
 
     for query, extra in zip(filtering.queries, filtering.extras):
         log.debug("[%s] Before keywords - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
-        query = process_keywords(provider, query, filtering)
-        extra = process_keywords(provider, extra, filtering)
+        query = filtering.process_keywords(provider, query)
+        extra = filtering.process_keywords(provider, extra)
         log.debug("[%s] After keywords  - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
         if not query:
             return filtering.results
@@ -242,9 +160,9 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                             log.debug("Auth token for %s: %s" % (provider, browser.token))
                         else:
                             log.warning('%s: Unable to get auth token for %s' % (provider, url_search))
-                        log.info('[%s] Login successful' % provider)
+                        log.info('[%s] Token auth successful' % provider)
                     else:
-                        log.error("[%s] Login failed for token authorization: %s" % (provider, repr(browser.content)))
+                        log.error("[%s] Token auth failed with response: %s" % (provider, repr(browser.content)))
                         return filtering.results
                 elif not logged_in and browser.login(definition['root_url'] + definition['login_path'],
                                                      eval(login_object), definition['login_failed']):

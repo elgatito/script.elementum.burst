@@ -6,7 +6,7 @@ from urllib import unquote
 from quasar.provider import log, get_setting
 from parser.HTMLParser import HTMLParser
 from parser.ehp import normalize_string
-from providers.definitions import definitions
+from providers.definitions import definitions, t411season, t411episode
 from utils import Magnet, get_int, get_float, clean_number, size_int
 
 
@@ -16,20 +16,21 @@ class Filtering:
             'filter_480p': ['480p'],
             'filter_720p': ['720p'],
             'filter_1080p': ['1080p'],
-            'filter_2k': ['2k', '1440p'],
-            'filter_4k': ['4k', '2160p'],
+            'filter_2k': ['_2k_', '1440p'],
+            'filter_4k': ['_4k_', '2160p'],
             'filter_brrip': ['brrip', 'bdrip', 'bluray'],
             'filter_webdl': ['webdl', 'webrip'],
             'filter_hdrip': ['hdrip'],
             'filter_hdtv': ['hdtv'],
             'filter_dvd': ['_dvd_', 'dvdrip'],
             'filter_dvdscr': ['dvdscr'],
-            'filter_screener': ['screener', 'scr'],
-            'filter_3d': ['3d'],
+            'filter_screener': ['screener', '_scr_'],
+            'filter_3d': ['_3d_'],
             'filter_telesync': ['telesync', '_ts_', '_tc_'],
-            'filter_cam': ['cam', 'hdcam'],
+            'filter_cam': ['_cam_', 'hdcam'],
             'filter_trailer': ['trailer']
         }
+
         qualities_allow = []
         qualities_deny = []
         for quality in self.filters:
@@ -37,6 +38,13 @@ class Filtering:
                 qualities_allow.extend(self.filters[quality])
             else:
                 qualities_deny.extend(self.filters[quality])
+
+        if get_setting('additional_filters', bool):
+            accept = re.split(r',\s?', get_setting('accept'))
+            block = re.split(r',\s?', get_setting('block'))
+            qualities_allow.extend(accept)
+            qualities_deny.extend(block)
+
         self.quality_allow = qualities_allow
         self.quality_deny = qualities_deny
 
@@ -143,6 +151,86 @@ class Filtering:
             log.warning("Minimum size above maximum, using max size minus 1 GB")
             self.min_size = self.max_size - 1
 
+    def read_keywords(self, keywords):
+        """
+        Create list from string where the values are marked between curly brackets {example}
+        :param keywords: string with the information
+        :type keywords: str
+        :return: list with collected keywords
+        """
+        results = []
+        if keywords:
+            for value in re.findall('{(.*?)}', keywords):
+                results.append(value)
+        return results
+
+    def process_keywords(self, provider, text):
+        """
+        Process the keywords in the query
+        :param text: string to process
+        :type text: str
+        :return: str
+        """
+        keywords = self.read_keywords(text)
+
+        for keyword in keywords:
+            keyword = keyword.lower()
+            if 'title' in keyword:
+                title = self.info["title"]
+                language = definitions[provider]['language']
+                use_language = None
+                if ':' in keyword:
+                    use_language = keyword.split(':')[1]
+                if use_language and self.info['titles']:
+                    try:
+                        if use_language not in self.info['titles']:
+                            use_language = language
+                        if use_language in self.info['titles'] and self.info['titles'][use_language]:
+                            title = self.info['titles'][use_language]
+                            title = title.replace('.', '')  # FIXME shouldn't be here...
+                            log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
+                                                                              repr(title)))
+                            log.debug("[%s] Translated titles from Quasar: %s" % (provider,
+                                                                                  repr(self.info['titles'])))
+                    except Exception as e:
+                        import traceback
+                        log.error("%s failed with: %s" % (provider, repr(e)))
+                        map(log.debug, traceback.format_exc().split("\n"))
+                text = text.replace('{%s}' % keyword, title)
+
+            if 'year' in keyword:
+                text = text.replace('{%s}' % keyword, str(self.info["year"]))
+
+            if 'season' in keyword:
+                if '+' in keyword:
+                    keys = keyword.split('+')
+                    if keys[1] == "t411season":
+                        season = str(t411season(self.info['season']))
+                    else:
+                        season = str(self.info["season"] + get_int(keys[1]))
+                elif ':' in keyword:
+                    keys = keyword.split(':')
+                    season = ('%%.%sd' % keys[1]) % self.info["season"]
+                else:
+                    season = '%s' % self.info["season"]
+                text = text.replace('{%s}' % keyword, season)
+
+            if 'episode' in keyword:
+                if '+' in keyword:
+                    keys = keyword.split('+')
+                    if keys[1] == "t411episode":
+                        episode = str(t411episode(self.info['episode']))
+                    else:
+                        episode = str(self.info["episode"] + get_int(keys[1]))
+                elif ':' in keyword:
+                    keys = keyword.split(':')
+                    episode = ('%%.%sd' % keys[1]) % self.info["episode"]
+                else:
+                    episode = '%s' % self.info["episode"]
+                text = text.replace('{%s}' % keyword, episode)
+
+        return text
+
     def verify(self, provider, name, size):
         """
         Check the name matches with the title and the filtering keywords, and the size with filtering size values
@@ -164,9 +252,10 @@ class Filtering:
         self.reason = "[%s] %70s ***" % (provider, name.decode('utf-8'))
 
         list_to_verify = [self.title, normalized_title] if self.title != normalized_title else [self.title]
+
         if self.included(name, list_to_verify, True):
             result = True
-            if name is not None:
+            if name:
                 if not self.included(name, self.quality_allow):
                     self.reason += " Missing required tag"
                     result = False
@@ -174,7 +263,7 @@ class Filtering:
                     self.reason += " Blocked by tag"
                     result = False
 
-            if size is not None and size is not '':
+            if size:
                 if not self.in_size_range(size):
                     result = False
                     self.reason += " Size out of range"
@@ -217,8 +306,7 @@ class Filtering:
 
         return value
 
-    @staticmethod
-    def included(value, keys, strict=False):
+    def included(self, value, keys, strict=False):
         """
         Check if the keys are present in the string
         :param value: string to test
@@ -237,8 +325,8 @@ class Filtering:
             res1 = []
             for key in keys:
                 res2 = []
-                for item in re.split('\s', key):
-                    item = item.replace('?', ' ').replace('_', ' ')
+                for item in re.split(r'\s', key):
+                    item = item.replace('_', ' ')
                     if strict:
                         item = ' ' + item + ' '
 
@@ -253,8 +341,7 @@ class Filtering:
 
         return res
 
-    @staticmethod
-    def uncode_name(name):
+    def uncode_name(self, name):
         """
         Convert all the &# codes to char, remove extra-space and normalize
         :param name: string to convert
@@ -266,8 +353,7 @@ class Filtering:
 
         return name
 
-    @staticmethod
-    def exception(title=None):
+    def exception(self, title=None):
         """
         Change the title to the standard name in the torrent sites
         :param title: title to check
@@ -312,6 +398,9 @@ def cleanup_results(results_list):
     hashes = []
     filtered_list = []
     for result in results_list:
+        if not result['seeds']:
+            continue
+
         if not result['uri']:
             if not result['name']:
                 continue
@@ -321,7 +410,6 @@ def cleanup_results(results_list):
                 import traceback
                 log.warning("%s logging failed with: %s" % (result['provider'], repr(e)))
                 map(log.debug, traceback.format_exc().split("\n"))
-
             continue
 
         hash_ = result['info_hash'].upper()
