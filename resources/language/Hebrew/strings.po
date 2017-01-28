@@ -30,6 +30,10 @@ msgctxt "#32002"
 msgid "Resolutions"
 msgstr "רזולוציות"
 
+msgctxt "#32004"
+msgid "Advanced"
+msgstr "מתקדם"
+
 msgctxt "#32012"
 msgid "Public trackers"
 msgstr "טראקרים ציבוריים"
@@ -47,11 +51,11 @@ msgid "Password"
 msgstr "סיסמה"
 
 msgctxt "#32033"
-msgid "Minimum size"
+msgid "Minimum size (GB)"
 msgstr "גודל מינימלי"
 
 msgctxt "#32034"
-msgid "Maximum size"
+msgid "Maximum size (GB)"
 msgstr "גודל מקסימלי"
 
 msgctxt "#32040"

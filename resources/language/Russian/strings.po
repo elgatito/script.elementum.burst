@@ -23,16 +23,20 @@ msgctxt "#32000"
 msgid "General"
 msgstr "Общие"
 
+msgctxt "#32004"
+msgid "Advanced"
+msgstr "Дополнительно"
+
 msgctxt "#32015"
 msgid "Username"
 msgstr "Имя пользователя"
 
 msgctxt "#32033"
-msgid "Minimum size"
+msgid "Minimum size (GB)"
 msgstr "Минимальный размер"
 
 msgctxt "#32034"
-msgid "Maximum size"
+msgid "Maximum size (GB)"
 msgstr "Максимальный размер"
 
 msgctxt "#32040"

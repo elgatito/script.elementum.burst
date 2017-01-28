@@ -42,6 +42,8 @@ class Filtering:
 
         self.min_size = get_float(get_setting('min_size'))
         self.max_size = get_float(get_setting('max_size'))
+        self.check_sizes()
+
         self.filter_title = False  # TODO ???
 
         self.queries = []
@@ -69,6 +71,10 @@ class Filtering:
         definition = definitions[provider]
         movie_query = definition['movie_query'] if definition['movie_query'] else ''
         log.debug("Movies URL: %s%s" % (definition['base_url'], movie_query))
+        if get_setting('separate_sizes', bool):
+            self.min_size = get_float(get_setting('min_size_movies'))
+            self.max_size = get_float(get_setting('max_size_movies'))
+            self.check_sizes()
         self.info = payload
         self.url = "%s%s" % (definition['base_url'], movie_query)
         if definition['movie_keywords']:
@@ -79,6 +85,10 @@ class Filtering:
         definition = definitions[provider]
         show_query = definition['show_query'] if definition['show_query'] else ''
         log.debug("Episode URL: %s%s" % (definition['base_url'], show_query))
+        if get_setting('separate_sizes', bool):
+            self.min_size = get_float(get_setting('min_size_episodes'))
+            self.max_size = get_float(get_setting('max_size_episodes'))
+            self.check_sizes()
         self.info = payload
         self.url = "%s%s" % (definition['base_url'], show_query)
         if definition['tv_keywords']:
@@ -93,6 +103,10 @@ class Filtering:
         definition = definitions[provider]
         season_query = definition['season_query'] if definition['season_query'] else ''
         log.debug("Season URL: %s%s" % (definition['base_url'], season_query))
+        if get_setting('separate_sizes', bool):
+            self.min_size = get_float(get_setting('min_size_seasons'))
+            self.max_size = get_float(get_setting('max_size_seasons'))
+            self.check_sizes()
         self.info = info
         self.url = "%s%s" % (definition['base_url'], season_query)
         if definition['season_keywords']:
@@ -106,6 +120,10 @@ class Filtering:
         definition = definitions[provider]
         anime_query = definition['anime_query'] if definition['anime_query'] else ''
         log.debug("Anime URL: %s%s" % (definition['base_url'], anime_query))
+        if get_setting('separate_sizes', bool):
+            self.min_size = get_float(get_setting('min_size_episodes'))
+            self.max_size = get_float(get_setting('max_size_episodes'))
+            self.check_sizes()
         self.info = info
         self.url = "%s%s" % (definition['base_url'], anime_query)
         if self.info['absolute_number']:
@@ -119,6 +137,11 @@ class Filtering:
         log.debug('[%s] Blocked keywords: %s' % (provider, self.quality_deny))
         log.debug('[%s] Minimum size: %s' % (provider, str(self.min_size) + ' GB'))
         log.debug('[%s] Maximum size: %s' % (provider, str(self.max_size) + ' GB'))
+
+    def check_sizes(self):
+        if self.min_size > self.max_size:
+            log.warning("Minimum size above maximum, using max size minus 1 GB")
+            self.min_size = self.max_size - 1
 
     def verify(self, provider, name, size):
         """

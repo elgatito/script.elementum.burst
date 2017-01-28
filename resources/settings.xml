@@ -2,8 +2,8 @@
 <settings>
   <category label="32000">
     <setting label="32041" id="use_cloudhole" type="bool" default="false" />
-    <setting label="32033" id="min_size" type="slider" option="float" range="0,0.25,10" default="0" />
-    <setting label="32034" id="max_size" type="slider" option="float" range="10,1,200" default="100" />
+    <setting label="32033" id="min_size" type="slider" option="float" range="0,0.25,100" default="0" />
+    <setting label="32034" id="max_size" type="slider" option="float" range="1,1,200" default="100" />
     <setting label="32040" id="max_results" type="slider" default="25" option="int" range="1,5,100" />
     <setting label="32070" id="timeout" type="slider" default="15" option="int" range="5,5,50" />
   </category>
@@ -93,5 +93,17 @@
     <setting label="3D" id="filter_3d" type="bool" default="false" />
     <setting label="Trailer" id="filter_trailer" type="bool" default="false" />
     <setting label="Workprint" id="filter_workprint" type="bool" default="false" />
+  </category>
+  <category label="32004">
+    <setting label="32035" id="separate_sizes" type="bool" default="false" />
+    <setting label="32006" type="lsep" subsetting="true" visible="eq(-1,true)" />
+    <setting label="32033" id="min_size_movies" type="slider" option="float" range="0,0.25,100" default="0" subsetting="true" visible="eq(-2,true)" />
+    <setting label="32034" id="max_size_movies" type="slider" option="float" range="1,1,200" default="100" subsetting="true" visible="eq(-3,true)" />
+    <setting label="32008" type="lsep" subsetting="true" visible="eq(-4,true)" />
+    <setting label="32033" id="min_size_seasons" type="slider" option="float" range="0,0.25,100" default="0" subsetting="true" visible="eq(-5,true)" />
+    <setting label="32034" id="max_size_seasons" type="slider" option="float" range="1,1,200" default="100" subsetting="true" visible="eq(-6,true)" />
+    <setting label="32009" type="lsep" subsetting="true" visible="eq(-7,true)" />
+    <setting label="32033" id="min_size_episodes" type="slider" option="float" range="0,0.25,100" default="0" subsetting="true" visible="eq(-8,true)" />
+    <setting label="32034" id="max_size_episodes" type="slider" option="float" range="1,1,200" default="100" subsetting="true" visible="eq(-9,true)" />
   </category>
 </settings>

@@ -35,6 +35,26 @@ msgctxt "#32003"
 msgid "Release types"
 msgstr
 
+msgctxt "#32004"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32006"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32007"
+msgid "TV Shows"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Seasons"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Episodes"
+msgstr ""
+
 msgctxt "#32012"
 msgid "Public trackers"
 msgstr ""
@@ -52,11 +72,15 @@ msgid "Password"
 msgstr ""
 
 msgctxt "#32033"
-msgid "Minimum size"
+msgid "Minimum size (GB)"
 msgstr ""
 
 msgctxt "#32034"
-msgid "Maximum size"
+msgid "Maximum size (GB)"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Use separate size range for movies, seasons and episodes"
 msgstr ""
 
 msgctxt "#32040"

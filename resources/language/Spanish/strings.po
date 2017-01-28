@@ -23,6 +23,10 @@ msgctxt "#32000"
 msgid "General"
 msgstr "General"
 
+msgctxt "#32004"
+msgid "Advanced"
+msgstr "Avanzado"
+
 msgctxt "#32015"
 msgid "Username"
 msgstr "Nombre de Usuario"
@@ -32,11 +36,11 @@ msgid "Password"
 msgstr "Contraseña"
 
 msgctxt "#32033"
-msgid "Minimum size"
+msgid "Minimum size (GB)"
 msgstr "Tamaño mínimo"
 
 msgctxt "#32034"
-msgid "Maximum size"
+msgid "Maximum size (GB)"
 msgstr "Tamaño máximo"
 
 msgctxt "#32040"

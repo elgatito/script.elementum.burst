@@ -32,11 +32,11 @@ msgid "Password"
 msgstr "Lösenord"
 
 msgctxt "#32033"
-msgid "Minimum size"
+msgid "Minimum size (GB)"
 msgstr "Minsta storlek"
 
 msgctxt "#32034"
-msgid "Maximum size"
+msgid "Maximum size (GB)"
 msgstr "Maximal storlek"
 
 msgctxt "#32040"
