@@ -33,7 +33,7 @@ msgstr ""
 
 msgctxt "#32003"
 msgid "Release types"
-msgstr
+msgstr ""
 
 msgctxt "#32004"
 msgid "Advanced"

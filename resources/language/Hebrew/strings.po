@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Quasar Burst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-19 10:43+0200\n"
-"PO-Revision-Date: 2017-01-19 10:44+0200\n"
+"POT-Creation-Date: 2017-01-29 09:19+0200\n"
+"PO-Revision-Date: 2017-01-29 09:19+0200\n"
 "Last-Translator: ShlomiD\n"
 "Language-Team: ShlomiD\n"
 "Language: he\n"
@@ -30,9 +30,29 @@ msgctxt "#32002"
 msgid "Resolutions"
 msgstr "רזולוציות"
 
+msgctxt "#32003"
+msgid "Release types"
+msgstr "סוגי הפצות"
+
 msgctxt "#32004"
 msgid "Advanced"
 msgstr "מתקדם"
+
+msgctxt "#32006"
+msgid "Movies"
+msgstr "סרטים"
+
+msgctxt "#32007"
+msgid "TV Shows"
+msgstr "סדרות"
+
+msgctxt "#32008"
+msgid "Seasons"
+msgstr "עונות"
+
+msgctxt "#32009"
+msgid "Episodes"
+msgstr "פרקים"
 
 msgctxt "#32012"
 msgid "Public trackers"
@@ -57,6 +77,26 @@ msgstr "גודל מינימלי"
 msgctxt "#32034"
 msgid "Maximum size (GB)"
 msgstr "גודל מקסימלי"
+
+msgctxt "#32035"
+msgid "Use separate size range for movies, seasons and episodes"
+msgstr "להשתמש בהגדרות גודל שונות עבור סרטים, עונות ופרקים"
+
+msgctxt "#32036"
+msgid "Additional keyword filters (comma separated)"
+msgstr "מילים נוספות לסינון (מופרדות בפסיק)"
+
+msgctxt "#32037"
+msgid "Use underscores around keywords to require a space/dot, ie. _HEVC_"
+msgstr "להשתמש בקו תחתון סביב מילות מפתח כדי להשתמש ברווח/נקודה וכד'. לדוגמה: _HEVC_"
+
+msgctxt "#32038"
+msgid "Accept"
+msgstr "לקבל"
+
+msgctxt "#32039"
+msgid "Block"
+msgstr "לחסום"
 
 msgctxt "#32040"
 msgid "Maximum results per provider"
