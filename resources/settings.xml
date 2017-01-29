@@ -109,5 +109,6 @@
     <setting label="32037" id="filtering_help" type="text" enable="false" subsetting="true" visible="eq(-1,true)" />
     <setting label="32038" id="accept" type="text" default="" subsetting="true" visible="eq(-2,true)" />
     <setting label="32039" id="block" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+    <setting label="32017" id="require" type="text" default="" subsetting="true" visible="eq(-4,true)" />
   </category>
 </settings>

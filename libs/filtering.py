@@ -33,6 +33,7 @@ class Filtering:
 
         qualities_allow = []
         qualities_deny = []
+        require = []
         for quality in self.filters:
             if get_setting(quality, bool):
                 qualities_allow.extend(self.filters[quality])
@@ -40,13 +41,23 @@ class Filtering:
                 qualities_deny.extend(self.filters[quality])
 
         if get_setting('additional_filters', bool):
-            accept = re.split(r',\s?', get_setting('accept'))
-            block = re.split(r',\s?', get_setting('block'))
-            qualities_allow.extend(accept)
-            qualities_deny.extend(block)
+            accept = get_setting('accept').strip()
+            if accept:
+                accept = re.split(r',\s?', accept)
+                qualities_allow.extend(accept)
+
+            block = get_setting('block')
+            if block:
+                block = re.split(r',\s?', block)
+                qualities_deny.extend(block)
+
+            require = get_setting('require')
+            if require:
+                require = re.split(r',\s?', require)
 
         self.quality_allow = qualities_allow
         self.quality_deny = qualities_deny
+        self.require_keywords = require
 
         self.min_size = get_float(get_setting('min_size'))
         self.max_size = get_float(get_setting('max_size'))
@@ -253,14 +264,20 @@ class Filtering:
 
         list_to_verify = [self.title, normalized_title] if self.title != normalized_title else [self.title]
 
-        if self.included(name, list_to_verify, True):
+        if self.included(name, keys=list_to_verify, strict=True):
             result = True
             if name:
-                if not self.included(name, self.quality_allow):
-                    self.reason += " Missing required tag"
+                if self.require_keywords:
+                    for required in self.require_keywords:
+                        if required not in name:
+                            self.reason += " Missing required keyword"
+                            result = False
+                            break
+                elif not self.included(name, keys=self.quality_allow):
+                    self.reason += " Missing any required keyword"
                     result = False
-                elif self.included(name, self.quality_deny):
-                    self.reason += " Blocked by tag"
+                elif self.included(name, keys=self.quality_deny):
+                    self.reason += " Blocked by keyword"
                     result = False
 
             if size:

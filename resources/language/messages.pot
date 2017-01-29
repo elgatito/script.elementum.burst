@@ -71,6 +71,10 @@ msgctxt "#32016"
 msgid "Password"
 msgstr ""
 
+msgctxt "#32017"
+msgid "Require"
+msgstr ""
+
 msgctxt "#32033"
 msgid "Minimum size (GB)"
 msgstr ""
