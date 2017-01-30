@@ -169,7 +169,7 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                     log.info('[%s] Login successful' % provider)
                 elif not logged_in:
                     log.error("[%s] Login failed: %s", provider, browser.status)
-                    log.debug("[%s] Failed login content: %s" % repr(browser.content))
+                    log.debug("[%s] Failed login content: %s", provider, repr(browser.content))
                     return filtering.results
 
                 if logged_in:

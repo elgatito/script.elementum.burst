@@ -4,6 +4,7 @@ import re
 import json
 import time
 import xbmcgui
+from Queue import Queue
 from threading import Thread
 from urlparse import urlparse
 from quasar.provider import append_headers, get_setting, set_setting, log
@@ -138,14 +139,11 @@ def extract_torrents(provider, browser):
 
     log.debug("[%s] Parser: %s" % (provider, repr(definition['parser'])))
 
-    from Queue import Queue
     q = Queue()
     threads = []
     needs_subpage = 'subpage' in definition and definition['subpage']
 
     if needs_subpage:
-        from threading import Thread
-
         def extract_subpage(q, name, torrent, size, seeds, peers, info_hash):
             try:
                 log.debug("[%s] Getting subpage at %s" % (provider, repr(torrent)))
@@ -195,7 +193,7 @@ def extract_torrents(provider, browser):
         info_hash = eval(info_hash_search) if info_hash_search else ""
 
         # Pass browser cookies with torrent if private
-        if definition['private'] or get_setting("use_cloudhole", bool):
+        if (definition['private'] or get_setting("use_cloudhole", bool)) and not torrent.startswith('magnet'):
             user_agent = USER_AGENT
             if get_setting("use_cloudhole", bool):
                 user_agent = get_setting("user_agent")

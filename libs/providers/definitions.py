@@ -148,8 +148,9 @@ definitions['yts']['api_format'] = {
 
 # RARBG
 definitions['rarbg']['is_api'] = True
-definitions['rarbg']['token'] = '?get_token=get_token&app_id=script.magnetic.rarbg-mc'
-definitions['rarbg']['general_query'] = '?mode=search&search_string=QUERY&format=json_extended&app_id=script.magnetic.rarbg-mc&token=TOKEN'
+definitions['rarbg']['base_url'] = 'https://torrentapi.org/pubapi_v2.php'
+definitions['rarbg']['token'] = '?get_token=get_token&app_id=script.quasar.burst'
+definitions['rarbg']['general_query'] = '?mode=search&search_string=QUERY&format=json_extended&app_id=script.quasar.burst&token=TOKEN'
 definitions['rarbg']['movie_query'] = definitions['rarbg']['general_query']
 definitions['rarbg']['show_query'] = definitions['rarbg']['general_query']
 definitions['rarbg']['season_query'] = definitions['rarbg']['general_query']
