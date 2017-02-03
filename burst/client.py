@@ -18,7 +18,10 @@ USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 " \
 PATH_TEMP = translatePath("special://temp")
 
 
-class Browser:
+class Client:
+    """
+    Web page client
+    """
     def __init__(self):
         self._counter = 0
         self._cookies_filename = ''
@@ -75,12 +78,25 @@ class Browser:
             sleep(0.25)
 
     def cookies(self):
+        """ Saved client cookies
+
+        Returns:
+            list: A list of saved Cookie objects
+        """
         return self._cookies
 
-    def open(self, url='', language='en', post_data=None, get_data=None):
-        if post_data is None:
+    def open(self, url, language='en', post_data=None, get_data=None):
+        """ Opens a connection to a webpage and saves its HTML content in ``self.content``
+
+        Args:
+            url        (str): The URL to open
+            language   (str): The language code for the ``Content-Language`` header
+            post_data (dict): POST data for the request
+            get_data  (dict): GET data for the request
+        """
+        if not post_data:
             post_data = {}
-        if get_data is not None:
+        if get_data:
             url += '?' + urlencode(get_data)
 
         log.debug("Opening URL: %s" % url)
@@ -132,7 +148,17 @@ class Browser:
 
         return result
 
-    def login(self, url='', data=None, fails_with=''):
+    def login(self, url, data, fails_with):
+        """ Login wrapper around ``open``
+
+        Args:
+            url        (str): The URL to open
+            data      (dict): POST login data
+            fails_with (str): String that must **not** be included in the response's content
+
+        Returns:
+            bool: Whether or not login was successful
+        """
         result = False
         if self.open(url, post_data=data):
             result = True
@@ -143,6 +169,11 @@ class Browser:
 
 
 def get_cloudhole_key():
+    """ CloudHole API key fetcher
+
+    Returns:
+        str: A CloudHole API key
+    """
     cloudhole_key = None
     try:
         r = urllib2.Request("https://cloudhole.herokuapp.com/key")
@@ -152,14 +183,19 @@ def get_cloudhole_key():
         log.info("CloudHole key: %s" % content)
         data = json.loads(content)
         cloudhole_key = data['key']
-
     except Exception as e:
         log.error("Getting CloudHole key error: %s" % repr(e))
-
     return cloudhole_key
 
 
-def get_cloudhole_clearance(cloudhole_key=None):
+def get_cloudhole_clearance(cloudhole_key):
+    """ CloudHole clearance fetcher
+
+    Args:
+        cloudhole_key (str): The CloudHole API key saved in settings or from ``get_cloudhole_key`` directly
+    Returns:
+        tuple: A CloudHole clearance cookie and user-agent string
+    """
     user_agent = USER_AGENT
     clearance = None
     if cloudhole_key:
@@ -174,8 +210,6 @@ def get_cloudhole_clearance(cloudhole_key=None):
             user_agent = data[0]['userAgent']
             clearance = data[0]['cookies']
             log.info("New UA and clearance: %s / %s" % (user_agent, clearance))
-
         except Exception as e:
             log.error("CloudHole error: %s" % repr(e))
-
     return clearance, user_agent

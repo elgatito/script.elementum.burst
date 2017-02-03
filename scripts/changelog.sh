@@ -1,6 +1,6 @@
 #!/bin/sh
 echo "Burst changelog"
-echo "====="
+echo "==============="
 git tag -l | sort -u -r | while read TAG ; do
     if [ $NEXT ];then
         TAG_DATE=$(git log --no-merges --date=short --format="%ad" $TAG..$NEXT | head -1)

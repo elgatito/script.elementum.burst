@@ -23,13 +23,14 @@ Get the latest release from https://burst.surge.sh
 
 Install the add-on and enjoy.
 
+Detailed documentation available at https://quasar-burst.readthedocs.io
 
 ### Adding / editing providers
 
 **Do NOT add definitions to the `definitions.json` file**, it is generated
 automatically by the Magnetic extraction script.
 
-Default fixes and overrides are located in `libs/providers/definitions.py`, and
+Default fixes and overrides are located in `burst/providers/definitions.py`, and
 although you can edit that file directly, keep in mind that you will lose your
 changes on the next update. You can override existing definitions by adding
 another file named `overrides.py` in your profile folder, ie. in

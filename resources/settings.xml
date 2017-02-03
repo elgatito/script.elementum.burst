@@ -5,7 +5,7 @@
     <setting label="32033" id="min_size" type="slider" option="float" range="0,0.25,100" default="0" />
     <setting label="32034" id="max_size" type="slider" option="float" range="1,1,200" default="100" />
     <setting label="32040" id="max_results" type="slider" default="25" option="int" range="1,5,100" />
-    <setting label="32070" id="timeout" type="slider" default="15" option="int" range="5,5,50" />
+    <setting label="32070" id="timeout" type="slider" default="9" option="int" range="3,1,30" />
   </category>
   <category label="32001">
     <setting label="32012" type="lsep" />
@@ -110,5 +110,6 @@
     <setting label="32038" id="accept" type="text" default="" subsetting="true" visible="eq(-2,true)" />
     <setting label="32039" id="block" type="text" default="" subsetting="true" visible="eq(-3,true)" />
     <setting label="32017" id="require" type="text" default="" subsetting="true" visible="eq(-4,true)" />
+    <setting label="32018" id="kodi_language" type="bool" default="false" />
   </category>
 </settings>

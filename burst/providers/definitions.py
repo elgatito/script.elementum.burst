@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-
+"""
+Overrides for provider definitions
+"""
 import os
 import json
 import xbmc
@@ -10,8 +12,13 @@ from quasar.provider import log
 ADDON = xbmcaddon.Addon()
 
 definitions = {}
-with open(os.path.join(ADDON.getAddonInfo("path"), 'libs', 'providers', 'definitions.json')) as defs:
-    definitions = json.load(defs)
+# print type(xbmcaddon)
+if "%s" % type(xbmcaddon) != "<class 'sphinx.ext.autodoc._MockModule'>":
+    with open(os.path.join(ADDON.getAddonInfo("path"), 'burst', 'providers', 'definitions.json')) as defs:
+        definitions = json.load(defs)
+else:
+    with open(os.path.join('..', 'burst', 'providers', 'definitions.json')) as defs:
+        definitions = json.load(defs)
 
 for provider in definitions:
     parsed_url = urlparse(definitions[provider]['base_url'])
@@ -23,7 +30,10 @@ for provider in definitions:
         definitions[provider]['season_keywords2'] = definitions[provider]['season_keywords2'].replace('Season{season}', 's{season:2}')
 
 # Load custom providers
-custom_providers = os.path.join(xbmc.translatePath(ADDON.getAddonInfo("profile")), "providers")
+if "%s" % type(xbmcaddon) != "<class 'sphinx.ext.autodoc._MockModule'>":
+    custom_providers = os.path.join(xbmc.translatePath(ADDON.getAddonInfo("profile")), "providers")
+else:
+    custom_providers = '.'
 if not os.path.exists(custom_providers):
     try:
         os.makedirs(custom_providers)
@@ -47,7 +57,10 @@ for provider_file in glob(os.path.join(custom_providers, "*.json")):
         map(log.error, traceback.format_exc().split("\n"))
 
 # Load custom overrides
-overrides = os.path.join(xbmc.translatePath(ADDON.getAddonInfo("profile")), "overrides.py")
+if "%s" % type(xbmcaddon) != "<class 'sphinx.ext.autodoc._MockModule'>":
+    overrides = os.path.join(xbmc.translatePath(ADDON.getAddonInfo("profile")), "overrides.py")
+else:
+    overrides = '.'
 if os.path.exists(overrides):
     try:
         import sys
@@ -69,6 +82,7 @@ if os.path.exists(overrides):
 definitions['torlock']['parser']['torrent'] = "'" + definitions['torlock']['root_url'] + definitions['torlock']['parser']['torrent'][1:]
 definitions['torlock']['season_keywords'] = '{title} s{season:2}'
 definitions['torlock']['season_keywords2'] = None
+definitions['torlock']['filter_title'] = True
 
 # 1337x
 definitions['1337x']['root_url'] = definitions['1337x']['root_url'].replace('http://', 'https://')
@@ -113,6 +127,7 @@ definitions['monova']['parser']['torrent'] = definitions['monova']['parser']['to
 
 # TorrentZ
 definitions['torrentz']['parser']['torrent'] = "'magnet:?xt=urn:btih:%s' % " + definitions['torrentz']['parser']['infohash']
+definitions['torrentz']['filter_title'] = True
 
 # Ilcorsaronero
 definitions['ilcorsaronero']['parser']['torrent'] = "'magnet:?xt=urn:btih:%s' % " + definitions['ilcorsaronero']['parser']['infohash']
@@ -198,8 +213,7 @@ definitions['myxzorg']['parser']['torrent'] = "item(tag='a', attribute='href', o
 
 # T411
 def t411season(season):
-    if season < 25 or 27 < season < 31:
-        real_s = season + 967
+    real_s = season + 967
     if season == 25:
         real_s = 994
     if 25 < season < 28:
@@ -208,8 +222,7 @@ def t411season(season):
 
 
 def t411episode(episode):
-    if episode < 9:
-        real_ep = episode + 936
+    real_ep = 936
     if 8 < episode < 31:
         real_ep = episode + 937
     if 30 < episode < 61:
@@ -218,6 +231,7 @@ def t411episode(episode):
 
 
 definitions['t411']['is_api'] = True
+definitions['t411']['filter_title'] = True
 definitions['t411']['base_url'] = 'https://api.t411.li'
 definitions['t411']['root_url'] = definitions['t411']['base_url']
 definitions['t411']['token_auth'] = '/auth'

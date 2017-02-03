@@ -43,3 +43,13 @@ surge:
 	cp addon.xml changelog.txt icon.png fanart.jpg burst-website/html/release/
 	cp *.zip burst-website/html/release/
 	cd burst-website && surge html burst.surge.sh
+
+docs-init:
+	cd docs && sphinx-apidoc --no-toc -o source/ ../burst
+
+docs-dev:
+	cd docs && sphinx-autobuild . _build_dev
+	rm -rf docs/_build_dev
+
+docs:
+	cd docs && make html

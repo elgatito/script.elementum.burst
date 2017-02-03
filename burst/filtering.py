@@ -1,16 +1,41 @@
 # -*- coding: utf-8 -*-
 
 import re
+import string
 import hashlib
 from urllib import unquote
-from quasar.provider import log, get_setting
-from parser.HTMLParser import HTMLParser
 from parser.ehp import normalize_string
+from parser.HTMLParser import HTMLParser
+from quasar.provider import log, get_setting
 from providers.definitions import definitions, t411season, t411episode
 from utils import Magnet, get_int, get_float, clean_number, size_int
 
 
 class Filtering:
+    """
+    Filtering class
+
+    Attributes:
+        filters (dict): Dictionary of filters to be used depending on settings
+        quality_allow (list): List of qualities to allow in search results
+        quality_deny  (list): List of qualities to deny in search results
+        require_keywords (list): List of keywords to require in search results
+        min_size (float): Minimum required size
+        max_size (float): Maximum possible size
+        filter_title (bool): Whether or not this provider needs titles to be double-checked,
+            typically used for providers that return too many results from their search
+            engine when no results are found (eg. TorLock and TorrentZ)
+        queries (list): List of queries to be filtered
+        extras (list): List of extras to be filtered
+        info (dict): Payload from Quasar
+        kodi_language (str): Language code from Kodi if kodi_language setting is enabled
+        url (str): URL of this filtering request
+        get_data (dict): GET data for client request
+        post_data (dict): POST data for client request
+        title (str): Result title to be used when matching with ``filter_title`` enabled
+        reason (str): Rejection reason when result does not match
+        results (list): Filtered, accepted results
+    """
     def __init__(self):
         self.filters = {
             'filter_480p': ['480p'],
@@ -63,20 +88,27 @@ class Filtering:
         self.max_size = get_float(get_setting('max_size'))
         self.check_sizes()
 
-        self.filter_title = False  # TODO ???
+        self.filter_title = False
 
         self.queries = []
         self.extras = []
 
         self.info = dict(title="", titles=[])
-        self.get_data = None
+        self.kodi_language = ''
+        self.get_data = {}
         self.post_data = {}
-        self.reason = ''
-        self.title = ''
-        self.results = []
         self.url = ''
+        self.title = ''
+        self.reason = ''
+        self.results = []
 
     def use_general(self, provider, payload):
+        """ Setup method to define general search parameters
+
+        Args:
+            provider (str): Provider ID
+            payload (dict): Quasar search payload
+        """
         definition = definitions[provider]
         general_query = definition['general_query'] if definition['general_query'] else ''
         log.debug("General URL: %s%s" % (definition['base_url'], general_query))
@@ -87,6 +119,12 @@ class Filtering:
             self.extras = [definition['general_extra']]
 
     def use_movie(self, provider, payload):
+        """ Setup method to define movie search parameters
+
+        Args:
+            provider (str): Provider ID
+            payload (dict): Quasar search payload
+        """
         definition = definitions[provider]
         movie_query = definition['movie_query'] if definition['movie_query'] else ''
         log.debug("Movies URL: %s%s" % (definition['base_url'], movie_query))
@@ -101,6 +139,12 @@ class Filtering:
             self.extras = ["%s" % definition['movie_extra']]
 
     def use_episode(self, provider, payload):
+        """ Setup method to define episode search parameters
+
+        Args:
+            provider (str): Provider ID
+            payload (dict): Quasar search payload
+        """
         definition = definitions[provider]
         show_query = definition['show_query'] if definition['show_query'] else ''
         log.debug("Episode URL: %s%s" % (definition['base_url'], show_query))
@@ -119,6 +163,12 @@ class Filtering:
                 self.extras.append(definition['tv_extra2'] if definition['tv_extra2'] else '')
 
     def use_season(self, provider, info):
+        """ Setup method to define season search parameters
+
+        Args:
+            provider (str): Provider ID
+            payload (dict): Quasar search payload
+        """
         definition = definitions[provider]
         season_query = definition['season_query'] if definition['season_query'] else ''
         log.debug("Season URL: %s%s" % (definition['base_url'], season_query))
@@ -136,6 +186,12 @@ class Filtering:
                 self.extras.append("%s" % definition['season_extra2'] if definition['season_extra2'] else '')
 
     def use_anime(self, provider, info):
+        """ Setup method to define anime search parameters
+
+        Args:
+            provider (str): Provider ID
+            payload (dict): Quasar search payload
+        """
         definition = definitions[provider]
         anime_query = definition['anime_query'] if definition['anime_query'] else ''
         log.debug("Anime URL: %s%s" % (definition['base_url'], anime_query))
@@ -152,22 +208,28 @@ class Filtering:
             self.extras = ["%s" % definition['anime_extra'] if definition['anime_extra'] else '']
 
     def information(self, provider):
+        """ Debugging method to print keywords and file sizes
+        """
         log.debug('[%s] Accepted keywords: %s' % (provider, self.quality_allow))
         log.debug('[%s] Blocked keywords: %s' % (provider, self.quality_deny))
         log.debug('[%s] Minimum size: %s' % (provider, str(self.min_size) + ' GB'))
         log.debug('[%s] Maximum size: %s' % (provider, str(self.max_size) + ' GB'))
 
     def check_sizes(self):
+        """ Internal method to trigger comparison of file sizes
+        """
         if self.min_size > self.max_size:
             log.warning("Minimum size above maximum, using max size minus 1 GB")
             self.min_size = self.max_size - 1
 
     def read_keywords(self, keywords):
-        """
-        Create list from string where the values are marked between curly brackets {example}
-        :param keywords: string with the information
-        :type keywords: str
-        :return: list with collected keywords
+        """ Create list from keywords where the values are marked between curly brackets, ie. {title}
+
+        Args:
+            keywords (str): String with all the keywords, ie. '{title} {year} movie'
+
+        Returns:
+            list: List of keywords, ie. ['{title}', '{year}']
         """
         results = []
         if keywords:
@@ -176,11 +238,14 @@ class Filtering:
         return results
 
     def process_keywords(self, provider, text):
-        """
-        Process the keywords in the query
-        :param text: string to process
-        :type text: str
-        :return: str
+        """ Processes the query payload from a provider's keyword definitions
+
+        Args:
+            provider (str): Provider ID
+            text     (str): Keyword placeholders from definitions, ie. {title}
+
+        Returns:
+            str: Processed query keywords
         """
         keywords = self.read_keywords(text)
 
@@ -192,13 +257,15 @@ class Filtering:
                 use_language = None
                 if ':' in keyword:
                     use_language = keyword.split(':')[1]
-                if use_language and self.info['titles']:
+                if (use_language or self.kodi_language) and 'titles' in self.info:
                     try:
+                        if self.kodi_language and self.kodi_language in self.info['titles']:
+                            use_language = self.kodi_language
                         if use_language not in self.info['titles']:
                             use_language = language
                         if use_language in self.info['titles'] and self.info['titles'][use_language]:
                             title = self.info['titles'][use_language]
-                            title = title.replace('.', '')  # FIXME shouldn't be here...
+                            title = self.normalize_name(title)
                             log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
                                                                               repr(title)))
                             log.debug("[%s] Translated titles from Quasar: %s" % (provider,
@@ -243,55 +310,61 @@ class Filtering:
         return text
 
     def verify(self, provider, name, size):
+        """ Main filtering method to match torrent names and quality/size filters
+
+        Args:
+            provider (str): Provider ID
+            name     (str): Torrent name
+            size     (str): Arbitrary torrent size to be parsed
+
+        Returns:
+            bool: ``True`` if torrent name passed filtering, ``False`` otherwise.
         """
-        Check the name matches with the title and the filtering keywords, and the size with filtering size values
-        :param name: name of the torrent
-        :type name: str
-        :param size: size of the torrent
-        :type size: str
-        :return: True is complied with the filtering.  False, otherwise.
-        """
-        if name is None or name is '':
+        if not name:
             self.reason = '[%s] %s' % (provider, '*** Empty name ***')
             return False
 
         name = self.exception(name)
-        name = self.safe_name(name)
-        self.title = self.safe_name(self.title) if self.filter_title else name
-        normalized_title = normalize_string(self.title)  # because sometimes there are missing accents in the results
+        name = self.normalize_name(name)
+        if self.filter_title and self.title:
+            self.title = self.normalize_name(self.title)
 
         self.reason = "[%s] %70s ***" % (provider, name.decode('utf-8'))
 
-        list_to_verify = [self.title, normalized_title] if self.title != normalized_title else [self.title]
+        if self.filter_title:
+            if not all(map(lambda match: match in name, re.split(r'\s', self.title))):
+                self.reason += " Name mismatch"
+                return False
 
-        if self.included(name, keys=list_to_verify, strict=True):
-            result = True
-            if name:
-                if self.require_keywords:
-                    for required in self.require_keywords:
-                        if required not in name:
-                            self.reason += " Missing required keyword"
-                            result = False
-                            break
-                elif not self.included(name, keys=self.quality_allow):
-                    self.reason += " Missing any required keyword"
-                    result = False
-                elif self.included(name, keys=self.quality_deny):
-                    self.reason += " Blocked by keyword"
-                    result = False
+        if self.require_keywords:
+            for required in self.require_keywords:
+                if not self.included(name, keys=[required]):
+                    self.reason += " Missing required keywords"
+                    return False
 
-            if size:
-                if not self.in_size_range(size):
-                    result = False
-                    self.reason += " Size out of range"
+        if not self.included(name, keys=self.quality_allow):
+            self.reason += " Missing any required keyword"
+            return False
 
-        else:
-            result = False
-            self.reason += " Name mismatch"
+        if self.included(name, keys=self.quality_deny):
+            self.reason += " Blocked by keyword"
+            return False
 
-        return result
+        if size and not self.in_size_range(size):
+            self.reason += " Size out of range"
+            return False
+
+        return True
 
     def in_size_range(self, size):
+        """ Compares size ranges
+
+        Args:
+            size (str): File size string, ie. ``1.21 GB``
+
+        Returns:
+            bool: ``True`` if file size is within desired range, ``False`` otherwise
+        """
         res = False
         value = size_int(clean_number(size))
         min_size = self.min_size * 1e9
@@ -300,44 +373,46 @@ class Filtering:
             res = True
         return res
 
-    def safe_name(self, value):
-        """
-        Make the name directory and filename safe
-        :param value: string to convert
-        :type value: str
-        :return: converted string
+    def normalize_name(self, value):
+        """ Method to normalize strings
+
+        Replaces punctuation with spaces, unquotes and unescapes HTML characters.
+
+        Args:
+            value (str): File name or directory string to convert
+
+        Returns:
+            str: Converted file name or directory string
         """
         # First normalization
         value = normalize_string(value)
         value = unquote(value)
-        value = self.uncode_name(value)
+        value = self.unescape(value)
         # Last normalization, because some unicode char could appear from the previous steps
         value = normalize_string(value)
         value = value.lower()
-        keys = {'"': ' ', '*': ' ', '/': ' ', ':': ' ', '<': ' ', '>': ' ', '?': ' ', '|': ' ', '_': ' ',
-                "'": '', 'Of': 'of', 'De': 'de', '.': ' ', ')': ' ', '(': ' ', '[': ' ', ']': ' ', '-': ' '}
-        for key in keys.keys():
-            value = value.replace(key, keys[key])
+
+        for p in string.punctuation:
+            value = value.replace(p, ' ')
 
         value = ' '.join(value.split())
 
         return value
 
     def included(self, value, keys, strict=False):
-        """
-        Check if the keys are present in the string
-        :param value: string to test
-        :type value: str
-        :param keys: values to check
-        :type keys: list
-        :param strict: if it accepts partial results
-        :type strict: bool
-        :return: True is any key is included. False, otherwise.
+        """ Check if the keys are present in the string
+
+        Args:
+            value   (str): Name of the torrent to check
+            keys   (list): List of strings that must be included in ``value``
+            strict (bool): Boolean flag to accept or not partial results
+
+        Returns:
+            bool: True if any (or all if ``strict``) keys are included, False otherwise.
         """
         value = ' ' + value + ' '
         if '*' in keys:
             res = True
-
         else:
             res1 = []
             for key in keys:
@@ -346,24 +421,23 @@ class Filtering:
                     item = item.replace('_', ' ')
                     if strict:
                         item = ' ' + item + ' '
-
                     if item.upper() in value.upper():
                         res2.append(True)
-
                     else:
                         res2.append(False)
-
                 res1.append(all(res2))
             res = any(res1)
-
         return res
 
-    def uncode_name(self, name):
-        """
-        Convert all the &# codes to char, remove extra-space and normalize
-        :param name: string to convert
-        :type name: str
-        :return: converted string
+    def unescape(self, name):
+        """ Unescapes all HTML entities from a string using
+            HTMLParser().unescape()
+
+        Args:
+            name (str): String to convert
+
+        Returns:
+            str: Converted string
         """
         name = name.replace('<![CDATA[', '').replace(']]', '')
         name = HTMLParser().unescape(name.lower())
@@ -371,11 +445,13 @@ class Filtering:
         return name
 
     def exception(self, title=None):
-        """
-        Change the title to the standard name in the torrent sites
-        :param title: title to check
-        :type title: str
-        :return: the new title
+        """ Change the title to the standard name in torrent sites
+
+        Args:
+            title (str): Title to check
+
+        Returns:
+            str: Standard title
         """
         if title:
             title = title.lower()
@@ -388,26 +464,28 @@ class Filtering:
 
 
 def apply_filters(results_list):
-    """
-    Filter the results
-    :param results_list: values to filter
-    :type results_list: list
-    :return: list of filtered results
+    """ Applies final result de-duplicating, hashing and sorting
+
+    Args:
+        results_list (list): Formatted results in any order
+
+    Returns:
+        list: Filtered and sorted results
     """
     results_list = cleanup_results(results_list)
     log.debug("Filtered results: %s" % repr(results_list))
-    # results_list = sort_by_quality(results_list)
-    # log.info("Sorted results: %s" % repr(results_list))
 
     return results_list
 
 
 def cleanup_results(results_list):
-    """
-    Remove dupes and sort by seeds
-    :param results_list: values to filter
-    :type results_list: list
-    :return: list of cleaned results
+    """ Remove duplicate results, hash results without an info_hash, and sort by seeders
+
+    Args:
+        results_list (list): Results to clean-up
+
+    Returns:
+        list: De-duplicated, hashed and sorted results
     """
     if len(results_list) == 0:
         return []
@@ -449,57 +527,3 @@ def cleanup_results(results_list):
             hashes.append(hash_)
 
     return sorted(filtered_list, key=lambda r: (get_int(r['seeds'])), reverse=True)
-
-
-def check_quality(text=""):
-    """
-    Get the quality values from string
-    :param text: string with the name of the file
-    :type text: str
-    :return:
-    """
-    text = text.lower()
-    quality = "480p"
-
-    if "480p" in text:
-        quality = "480p"
-
-    if "720p" in text:
-        quality = "720p"
-
-    if "1080p" in text:
-        quality = "1080p"
-
-    if "3d" in text:
-        quality = "1080p"
-
-    if "4k" in text:
-        quality = "2160p"
-
-    return quality
-
-
-def sort_by_quality(results_list):
-    """
-    Apply sorting based on seeds and quality
-    :param results_list: list of values to be sorted
-    :type results_list: list
-    :return: list of sorted results
-    """
-    log.info("Applying quality sorting")
-    for result in results_list:
-        # hd streams
-        quality = check_quality(result['name'])
-        if "1080p" in quality:
-            result['quality'] = 3
-            result['hd'] = 1
-
-        elif "720p" in quality:
-            result['quality'] = 2
-            result['hd'] = 1
-
-        else:
-            result['quality'] = 1
-            result['hd'] = 0
-
-    return sorted(results_list, key=lambda r: (r["seeds"], r['hd'], r['quality'], r["peers"]), reverse=True)

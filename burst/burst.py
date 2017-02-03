@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 
+"""
+Burst processing thread
+"""
+
 import re
 import json
 import time
+import xbmc
 import xbmcgui
 from Queue import Queue
 from threading import Thread
@@ -13,8 +18,8 @@ from parser.ehp import Html
 from provider import process
 from providers.definitions import definitions
 from filtering import apply_filters, Filtering
-from browser import USER_AGENT, Browser, get_cloudhole_key, get_cloudhole_clearance
-from utils import ADDON_ICON, notify, string, sizeof, get_icon_path, get_enabled_providers
+from client import USER_AGENT, Client, get_cloudhole_key, get_cloudhole_clearance
+from utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers
 
 provider_names = []
 provider_results = []
@@ -24,6 +29,15 @@ timeout = get_setting("timeout", int)
 
 
 def search(payload, method="general"):
+    """ Main search entrypoint
+
+    Args:
+        payload (dict): Search payload from Quasar.
+        method   (str): Type of search, can be ``general``, ``movie``, ``show``, ``season`` or ``anime``
+
+    Returns:
+        list: All filtered results in the format Quasar expects
+    """
     log.debug("Searching with payload (%s): %s" % (method, repr(payload)))
 
     if method == 'general':
@@ -44,7 +58,7 @@ def search(payload, method="general"):
     providers = get_enabled_providers()
 
     if len(providers) == 0:
-        notify(string(32060), image=get_icon_path())
+        notify(translation(32060), image=get_icon_path())
         log.error("No providers enabled")
         return []
 
@@ -55,8 +69,17 @@ def search(payload, method="general"):
         set_setting('clearance', clearance)
         set_setting('user_agent', user_agent)
 
+    if get_setting('kodi_language', bool):
+        kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
+        if not kodi_language:
+            log.warning("Kodi returned empty language code...")
+        elif 'titles' not in payload:
+            log.info("No translations available...")
+        elif kodi_language not in payload['titles']:
+            log.info("No '%s' translation available..." % kodi_language)
+
     p_dialog = xbmcgui.DialogProgressBG()
-    p_dialog.create('Quasar [COLOR FFFF6B00]Burst[/COLOR]', string(32061))
+    p_dialog.create('Quasar [COLOR FFFF6B00]Burst[/COLOR]', translation(32061))
     for provider in providers:
         available_providers += 1
         provider_names.append(definitions[provider]['name'])
@@ -72,7 +95,7 @@ def search(payload, method="general"):
         log.debug("Timer: %ds / %ds" % (timer, timeout))
         if timer > timeout:
             break
-        message = string(32062) % available_providers if available_providers > 1 else string(32063)
+        message = translation(32062) % available_providers if available_providers > 1 else translation(32063)
         p_dialog.update(int((total - available_providers) / total * 100), message=message)
         time.sleep(0.25)
 
@@ -81,7 +104,7 @@ def search(payload, method="general"):
 
     if available_providers > 0:
         message = ', '.join(provider_names)
-        message = message + string(32064)
+        message = message + translation(32064)
         log.warning(message)
         notify(message, ADDON_ICON)
 
@@ -97,6 +120,12 @@ def search(payload, method="general"):
 
 
 def got_results(provider, results):
+    """ Results callback once a provider found all its results, or not
+
+    Args:
+        provider (str): The provider ID
+        results (list): The list of results
+    """
     global provider_names
     global provider_results
     global available_providers
@@ -117,17 +146,23 @@ def got_results(provider, results):
         provider_names.remove(definition['name'])
 
 
-def extract_torrents(provider, browser):
-    """
-     Main torrent extractor
+def extract_torrents(provider, client):
+    """ Main torrent extraction generator for non-API based providers
+
+    Args:
+        provider  (str): Provider ID
+        client (Client): Client class instance
+
+    Yields:
+        tuple: A torrent result
     """
     definition = definitions[provider]
     log.debug("Extracting torrents from %s using definitions: %s" % (provider, repr(definition)))
 
-    if browser.content is None:
+    if not client.content:
         raise StopIteration
 
-    dom = Html().feed(browser.content)
+    dom = Html().feed(client.content)
 
     row_search = "dom." + definition['parser']['row']
     name_search = definition['parser']['name']
@@ -152,23 +187,23 @@ def extract_torrents(provider, browser):
                 log.error("[%s] Subpage logging failed with: %s" % (provider, repr(e)))
                 map(log.debug, traceback.format_exc().split("\n"))
 
-            # New browser instance, otherwise it's race conditions all over the place
-            subbrowser = Browser()
+            # New client instance, otherwise it's race conditions all over the place
+            subclient = Client()
 
             if get_setting("use_cloudhole", bool):
-                subbrowser.clearance = get_setting('clearance')
-                subbrowser.user_agent = get_setting('user_agent')
+                subclient.clearance = get_setting('clearance')
+                subclient.user_agent = get_setting('user_agent')
 
             uri = torrent.split('|')  # Split cookies for private trackers
-            subbrowser.open(uri[0])
+            subclient.open(uri[0])
 
-            if 'bittorrent' in subbrowser.headers.get('content-type', ''):
+            if 'bittorrent' in subclient.headers.get('content-type', ''):
                 log.debug('[%s] bittorrent content-type for %s' % (provider, repr(torrent)))
                 if len(uri) > 1:  # Stick back cookies if needed
                     torrent = '%s|%s' % (torrent, uri[1])
             else:
                 try:
-                    torrent = extract_from_page(provider, subbrowser.content)
+                    torrent = extract_from_page(provider, subclient.content)
                     if torrent and not torrent.startswith('magnet') and len(uri) > 1:  # Stick back cookies if needed
                         torrent = '%s|%s' % (torrent, uri[1])
                 except Exception as e:
@@ -179,11 +214,11 @@ def extract_torrents(provider, browser):
             ret = (name, info_hash, torrent, size, seeds, peers)
             q.put_nowait(ret)
 
-    if dom is None:
+    if not dom:
         raise StopIteration
 
     for item in eval(row_search):
-        if item is None:
+        if not item:
             continue
         name = eval(name_search)
         torrent = eval(torrent_search) if torrent_search else ""
@@ -192,23 +227,23 @@ def extract_torrents(provider, browser):
         peers = eval(peers_search) if peers_search else ""
         info_hash = eval(info_hash_search) if info_hash_search else ""
 
-        # Pass browser cookies with torrent if private
+        # Pass client cookies with torrent if private
         if (definition['private'] or get_setting("use_cloudhole", bool)) and not torrent.startswith('magnet'):
             user_agent = USER_AGENT
             if get_setting("use_cloudhole", bool):
                 user_agent = get_setting("user_agent")
-            if browser.token:
-                headers = {'Authorization': browser.token, 'User-Agent': user_agent}
+            if client.token:
+                headers = {'Authorization': client.token, 'User-Agent': user_agent}
                 log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                 torrent = append_headers(torrent, headers)
                 log.debug("[%s] Torrent with headers: %s" % (provider, torrent))
             else:
-                log.debug("[%s] Cookies: %s" % (provider, repr(browser.cookies())))
+                log.debug("[%s] Cookies: %s" % (provider, repr(client.cookies())))
                 parsed_url = urlparse(definition['root_url'])
                 cookie_domain = '{uri.netloc}'.format(uri=parsed_url).replace('www.', '')
                 cookies = []
                 log.debug("[%s] cookie_domain: %s" % (provider, cookie_domain))
-                for cookie in browser._cookies:
+                for cookie in client._cookies:
                     log.debug("[%s] cookie for domain: %s (%s=%s)" % (provider, cookie.domain, cookie.name, cookie.value))
                     if cookie_domain in cookie.domain:
                         cookies.append(cookie)
@@ -241,12 +276,20 @@ def extract_torrents(provider, browser):
             yield ret
 
 
-def extract_from_api(provider, browser):
-    """
-     An almost clever API parser, mostly just for YTS, RARBG and T411
+def extract_from_api(provider, client):
+    """ Main API parsing generator for API-based providers
+
+    An almost clever API parser, mostly just for YTS, RARBG and T411
+
+    Args:
+        provider  (str): Provider ID
+        client (Client): Client class instance
+
+    Yields:
+        tuple: A torrent result
     """
     try:
-        data = json.loads(browser.content)
+        data = json.loads(client.content)
     except:
         data = []
     log.debug("[%s] JSON response from API: %s" % (provider, repr(data)))
@@ -293,11 +336,11 @@ def extract_from_api(provider, browser):
             torrent = result[api_format['torrent']]
             if 'download_path' in definition:
                 torrent = definition['base_url'] + definition['download_path'] + torrent
-            if browser.token:
+            if client.token:
                 user_agent = USER_AGENT
                 if get_setting("use_cloudhole", bool):
                     user_agent = get_setting("user_agent")
-                headers = {'Authorization': browser.token, 'User-Agent': user_agent}
+                headers = {'Authorization': client.token, 'User-Agent': user_agent}
                 log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                 torrent = append_headers(torrent, headers)
                 log.debug("[%s] Torrent with headers: %s" % (provider, torrent))
@@ -323,6 +366,15 @@ def extract_from_api(provider, browser):
 
 
 def extract_from_page(provider, content):
+    """ Sub-page extraction method
+
+    Args:
+        provider (str): Provider ID
+        content  (str): Page content from Client instance
+
+    Returns:
+        str: Torrent or magnet link extracted from sub-page
+    """
     definition = definitions[provider]
 
     matches = re.findall(r'magnet:\?[^\'"\s<>\[\]]+', content)
@@ -360,6 +412,13 @@ def extract_from_page(provider, content):
 
 
 def run_provider(provider, payload, method):
+    """ Provider thread entrypoint
+
+    Args:
+        provider (str): Provider ID
+        payload (dict): Search payload from Quasar
+        method   (str): Type of search, can be ``general``, ``movie``, ``show``, ``season`` or ``anime``
+    """
     log.debug("Processing %s with %s method" % (provider, method))
 
     filterInstance = Filtering()

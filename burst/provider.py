@@ -3,14 +3,27 @@
 import os
 import re
 import json
+import xbmc
 import xbmcaddon
-from browser import Browser
+from client import Client
 from quasar.provider import log, get_setting, set_setting
 from providers.definitions import definitions
 from utils import ADDON_PATH, get_int, clean_size
 
 
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
+    """ Payload formatter to format results the way Quasar expects them
+
+    Args:
+        provider        (str): Provider ID
+        generator  (function): Generator method, can be either ``extract_torrents`` or ``extract_from_api``
+        filtering (Filtering): Filtering class instance
+        verify_name    (bool): Whether to double-check the results' names match the query or not
+        verify_size    (bool): Whether to check the results' file sizes
+
+    Returns:
+        list: Formatted results
+    """
     filtering.information(provider)
     results = []
 
@@ -30,7 +43,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
                             "peers": get_int(peers),
                             "language": definition["language"] if 'language' in definition else 'en',
                             "provider": '[COLOR %s]%s[/COLOR]' % (definition['color'], definition['name']),
-                            "icon": os.path.join(ADDON_PATH, 'libs', 'providers', 'icons', '%s.png' % provider),
+                            "icon": os.path.join(ADDON_PATH, 'burst', 'providers', 'icons', '%s.png' % provider),
                             })
         else:
             log.debug(filtering.reason.encode('ascii', 'ignore'))
@@ -41,14 +54,28 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
 
 
 def process(provider, generator, filtering, verify_name=True, verify_size=True):
+    """ Method for processing provider results using its generator and Filtering class instance
+
+    Args:
+        provider        (str): Provider ID
+        generator  (function): Generator method, can be either ``extract_torrents`` or ``extract_from_api``
+        filtering (Filtering): Filtering class instance
+        verify_name    (bool): Whether to double-check the results' names match the query or not
+        verify_size    (bool): Whether to check the results' file sizes
+    """
     log.debug("execute_process for %s with %s" % (provider, repr(generator)))
     definition = definitions[provider]
 
-    browser = Browser()
+    client = Client()
 
     if get_setting("use_cloudhole", bool):
-        browser.clearance = get_setting('clearance')
-        browser.user_agent = get_setting('user_agent')
+        client.clearance = get_setting('clearance')
+        client.user_agent = get_setting('user_agent')
+
+    if get_setting('kodi_language', bool):
+        kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
+        if kodi_language:
+            filtering.kodi_language = kodi_language
 
     log.debug("[%s] Queries: %s" % (provider, filtering.queries))
     log.debug("[%s] Extras:  %s" % (provider, filtering.extras))
@@ -81,7 +108,7 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
 
         # Creating the payload for GET method
         data = None
-        if filtering.get_data is not None:
+        if filtering.get_data:
             data = dict()
             for key, value in filtering.get_data.iteritems():
                 if 'QUERY' in value:
@@ -94,14 +121,20 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
         log.debug("--- %s using POST payload: %s" % (provider, repr(payload)))
         log.debug("----%s filtering with post_data: %s" % (provider, repr(filtering.post_data)))
 
-        # to do filtering by name.. TODO what?
-        filtering.title = query
+        # Set search's "title" in filtering to double-check results' names
+        if 'filter_title' in definition and definition['filter_title']:
+            filtering.filter_title = True
+            filtering.title = query
 
         if 'token' in definition:
             token_url = definition['base_url'] + definition['token']
             log.debug("Getting token for %s at %s" % (provider, token_url))
-            browser.open(token_url)
-            token_data = json.loads(browser.content)
+            client.open(token_url)
+            try:
+                token_data = json.loads(client.content)
+            except:
+                log.error('%s: Failed to get token for %s' % (provider, url_search))
+                return filtering.results
             log.debug("Token response for %s: %s" % (provider, repr(token_data)))
             if 'token' in token_data:
                 token = token_data['token']
@@ -132,19 +165,19 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
 
                 # TODO generic flags in definitions for those...
                 if provider == 'alphareign':
-                    browser.open(definition['root_url'] + definition['login_path'])
-                    if browser.content:
-                        csrf_name = re.search(r'name="csrf_name" value="(.*?)"', browser.content)
-                        csrf_value = re.search(r'name="csrf_value" value="(.*?)"', browser.content)
+                    client.open(definition['root_url'] + definition['login_path'])
+                    if client.content:
+                        csrf_name = re.search(r'name="csrf_name" value="(.*?)"', client.content)
+                        csrf_value = re.search(r'name="csrf_value" value="(.*?)"', client.content)
                         if csrf_name and csrf_value:
                             login_object = login_object.replace("CSRF_NAME", '"%s"' % csrf_name.group(1))
                             login_object = login_object.replace("CSRF_VALUE", '"%s"' % csrf_value.group(1))
                         else:
                             logged_in = True
                 if provider == 'hd-torrents':
-                    browser.open(definition['root_url'] + definition['login_path'])
-                    if browser.content:
-                        csrf_token = re.search(r'name="csrfToken" value="(.*?)"', browser.content)
+                    client.open(definition['root_url'] + definition['login_path'])
+                    if client.content:
+                        csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         if csrf_token:
                             login_object = login_object.replace('CSRF_TOKEN', '"%s"' % csrf_token.group(1))
                         else:
@@ -152,38 +185,42 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
 
                 if 'token_auth' in definition:
                     # log.debug("[%s] logging in with: %s" % (provider, login_object))
-                    if browser.open(definition['root_url'] + definition['token_auth'], post_data=eval(login_object)):
-                        token_data = json.loads(browser.content)
+                    if client.open(definition['root_url'] + definition['token_auth'], post_data=eval(login_object)):
+                        try:
+                            token_data = json.loads(client.content)
+                        except:
+                            log.error('%s: Failed to get token from %s' % (provider, definition['token_auth']))
+                            return filtering.results
                         log.debug("Token response for %s: %s" % (provider, repr(token_data)))
                         if 'token' in token_data:
-                            browser.token = token_data['token']
-                            log.debug("Auth token for %s: %s" % (provider, browser.token))
+                            client.token = token_data['token']
+                            log.debug("Auth token for %s: %s" % (provider, client.token))
                         else:
                             log.warning('%s: Unable to get auth token for %s' % (provider, url_search))
                         log.info('[%s] Token auth successful' % provider)
                     else:
-                        log.error("[%s] Token auth failed with response: %s" % (provider, repr(browser.content)))
+                        log.error("[%s] Token auth failed with response: %s" % (provider, repr(client.content)))
                         return filtering.results
-                elif not logged_in and browser.login(definition['root_url'] + definition['login_path'],
-                                                     eval(login_object), definition['login_failed']):
+                elif not logged_in and client.login(definition['root_url'] + definition['login_path'],
+                                                    eval(login_object), definition['login_failed']):
                     log.info('[%s] Login successful' % provider)
                 elif not logged_in:
-                    log.error("[%s] Login failed: %s", provider, browser.status)
-                    log.debug("[%s] Failed login content: %s", provider, repr(browser.content))
+                    log.error("[%s] Login failed: %s", provider, client.status)
+                    log.debug("[%s] Failed login content: %s", provider, repr(client.content))
                     return filtering.results
 
                 if logged_in:
                     if provider == 'hd-torrents':
-                        browser.open(definition['root_url'] + '/torrents.php')
-                        csrf_token = re.search(r'name="csrfToken" value="(.*?)"', browser.content)
+                        client.open(definition['root_url'] + '/torrents.php')
+                        csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
 
         log.info("> %s search URL: %s" % (provider, url_search))
 
-        browser.open(url_search, post_data=payload, get_data=data)
+        client.open(url_search, post_data=payload, get_data=data)
         filtering.results.extend(
             generate_payload(provider,
-                             generator(provider, browser),
+                             generator(provider, client),
                              filtering,
                              verify_name,
                              verify_size))

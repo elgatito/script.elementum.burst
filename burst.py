@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from libs.burst import search
+from burst.burst import search
 from quasar.provider import register
 
 
