@@ -139,6 +139,10 @@ msgctxt "#32070"
 msgid "Search timeout (seconds)"
 msgstr ""
 
+msgctxt "#32071"
+msgid "Timeout setting must be lower than Quasar's"
+msgstr ""
+
 msgctxt "#32075"
 msgid "No torrents found"
 msgstr ""

@@ -6,6 +6,7 @@
     <setting label="32034" id="max_size" type="slider" option="float" range="1,1,200" default="100" />
     <setting label="32040" id="max_results" type="slider" default="10" option="int" range="1,1,20" />
     <setting label="32070" id="timeout" type="slider" default="9" option="int" range="3,1,20" />
+    <setting label="32071" id="timeout_help" type="text" enable="false" subsetting="true" />
   </category>
   <category label="32001">
     <setting label="32012" type="lsep" />
