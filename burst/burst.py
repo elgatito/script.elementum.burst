@@ -324,6 +324,8 @@ def extract_from_api(provider, client):
         log.debug("%s with subresults: %s" % (provider, repr(results)))
 
     for result in results:
+        if not result or not isinstance(result, dict):
+            continue
         name = ''
         info_hash = ''
         torrent = ''

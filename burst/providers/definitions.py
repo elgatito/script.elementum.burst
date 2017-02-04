@@ -238,7 +238,7 @@ definitions['t411']['token_auth'] = '/auth'
 definitions['t411']['login_object'] = "{'username': USERNAME, 'password': PASSWORD}"
 definitions['t411']['download_path'] = '/torrents/download/'
 definitions['t411']['general_query'] = '/torrents/search/QUERY?limit=100&cid=0'
-definitions['t411']['movie_query'] = '/torrents/search/QUERY?limit=100&cid=0'
+definitions['t411']['movie_query'] = '/torrents/search/QUERY?limit=100&cid=631'
 definitions['t411']['show_query'] = '/torrents/search/QUERY?limit=100&cid=433&EXTRA'
 definitions['t411']['season_query'] = '/torrents/search/QUERY?limit=100&cid=433&EXTRA'
 definitions['t411']['anime_query'] = '/torrents/search/QUERY?limit=100&cid=637&EXTRA'
