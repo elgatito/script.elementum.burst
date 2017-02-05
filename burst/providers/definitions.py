@@ -205,10 +205,13 @@ definitions['filelist']['parser']['torrent'] = "'/%s' % " + definitions['filelis
 definitions['filelist']['movie_query'] = '19&searchin=0&sort=0'
 
 # XtremeZone
-definitions['myxzorg']['parser']['torrent'] = "'/%s' % " + definitions['myxzorg']['parser']['torrent']
+definitions['myxzorg']['root_url'] = definitions['myxzorg']['root_url'].replace('http://', 'https://')
+definitions['myxzorg']['base_url'] = definitions['myxzorg']['base_url'].replace('http://', 'https://')
+definitions['myxzorg']['subpage'] = False
 definitions['myxzorg']['parser']['peers'] = "item(tag='td', order=9)"
 definitions['myxzorg']['parser']['seeds'] = "item(tag='td', order=7)"
 definitions['myxzorg']['parser']['torrent'] = "item(tag='a', attribute='href', order=5)"
+definitions['myxzorg']['parser']['torrent'] = "'" + definitions['myxzorg']['root_url'] + "/%s' % " + definitions['myxzorg']['parser']['torrent']
 
 
 # T411
