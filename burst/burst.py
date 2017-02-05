@@ -310,6 +310,7 @@ def extract_from_api(provider, client):
     log.debug("%s results: %s" % (provider, repr(results)))
 
     if 'subresults' in api_format:
+        from copy import deepcopy
         for result in results:  # A little too specific to YTS but who cares...
             result['name'] = result[api_format['name']]
         subresults = []
@@ -317,9 +318,10 @@ def extract_from_api(provider, client):
         for key in subresults_keys:
             for result in results:
                 if key in result:
-                    for torrent in result[key]:
-                        torrent.update(result)
-                        subresults.append(torrent)
+                    for subresult in result[key]:
+                        sub = deepcopy(result)
+                        sub.update(subresult)
+                        subresults.append(sub)
         results = subresults
         log.debug("%s with subresults: %s" % (provider, repr(results)))
 
