@@ -244,7 +244,7 @@ def notify(message, image=None):
         image   (str): Path to an icon for this dialog
     """
     dialog = xbmcgui.Dialog()
-    dialog.notification(ADDON_NAME, message, icon=image)
+    dialog.notification(ADDON_NAME, message, icon=image, sound=False)
     del dialog
 
 
