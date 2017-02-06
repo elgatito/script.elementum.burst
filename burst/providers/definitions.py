@@ -12,7 +12,6 @@ from quasar.provider import log
 ADDON = xbmcaddon.Addon()
 
 definitions = {}
-# print type(xbmcaddon)
 if "%s" % type(xbmcaddon) != "<class 'sphinx.ext.autodoc._MockModule'>":
     with open(os.path.join(ADDON.getAddonInfo("path"), 'burst', 'providers', 'definitions.json')) as defs:
         definitions = json.load(defs)
@@ -211,7 +210,9 @@ definitions['myxzorg']['subpage'] = False
 definitions['myxzorg']['parser']['peers'] = "item(tag='td', order=9)"
 definitions['myxzorg']['parser']['seeds'] = "item(tag='td', order=7)"
 definitions['myxzorg']['parser']['torrent'] = "item(tag='a', attribute='href', order=5)"
-definitions['myxzorg']['parser']['torrent'] = "'" + definitions['myxzorg']['root_url'] + "/%s' % " + definitions['myxzorg']['parser']['torrent']
+definitions['myxzorg']['parser']['torrent'] = "'" + definitions['myxzorg']['root_url'] + "/%s' % " + \
+                                              definitions['myxzorg']['parser']['torrent'] + \
+                                              ".replace('details.php', 'dwn.php')"
 
 
 # T411
