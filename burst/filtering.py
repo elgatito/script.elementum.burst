@@ -257,7 +257,7 @@ class Filtering:
                 use_language = None
                 if ':' in keyword:
                     use_language = keyword.split(':')[1]
-                if (use_language or self.kodi_language) and 'titles' in self.info:
+                if (use_language or self.kodi_language) and 'titles' in self.info and self.info['titles']:
                     try:
                         if self.kodi_language and self.kodi_language in self.info['titles']:
                             use_language = self.kodi_language
