@@ -4,6 +4,7 @@ import re
 import string
 import hashlib
 from urllib import unquote
+from collections import OrderedDict
 from parser.ehp import normalize_string
 from parser.HTMLParser import HTMLParser
 from quasar.provider import log, get_setting
@@ -16,15 +17,17 @@ class Filtering:
     Filtering class
 
     Attributes:
-        filters (dict): Dictionary of filters to be used depending on settings
-        quality_allow (list): List of qualities to allow in search results
-        quality_deny  (list): List of qualities to deny in search results
+        resolutions (OrderedDict): Ordered dictionary of resolution filters to be used depending on settings
+        resolutions_allow  (list): List of resolutions to allow in search results
+        release_types  (dict): Dictionary of release types to be used depending on settings
+        releases_allow (list): List of release types to allow in search results
+        releases_deny  (list): List of release types to deny in search results
         require_keywords (list): List of keywords to require in search results
         min_size (float): Minimum required size
         max_size (float): Maximum possible size
         filter_title (bool): Whether or not this provider needs titles to be double-checked,
             typically used for providers that return too many results from their search
-            engine when no results are found (eg. TorLock and TorrentZ)
+            engine when no results are found (ie. TorLock and TorrentZ)
         queries (list): List of queries to be filtered
         extras (list): List of extras to be filtered
         info (dict): Payload from Quasar
@@ -37,12 +40,15 @@ class Filtering:
         results (list): Filtered, accepted results
     """
     def __init__(self):
-        self.filters = {
-            'filter_480p': ['480p'],
-            'filter_720p': ['720p'],
-            'filter_1080p': ['1080p'],
-            'filter_2k': ['_2k_', '1440p'],
-            'filter_4k': ['_4k_', '2160p'],
+        resolutions = OrderedDict()
+        resolutions['filter_480p'] = ['480p', 'xvid', 'dvd', 'dvdrip', 'hdtv']
+        resolutions['filter_720p'] = ['720p', 'hdrip', 'bluray', 'brrip', 'bdrip']
+        resolutions['filter_1080p'] = ['1080p', 'fullhd', '_fhd_']
+        resolutions['filter_2k'] = ['_2k_', '1440p']
+        resolutions['filter_4k'] = ['_4k_', '2160p']
+        self.resolutions = resolutions
+
+        self.release_types = {
             'filter_brrip': ['brrip', 'bdrip', 'bluray'],
             'filter_webdl': ['webdl', 'webrip'],
             'filter_hdrip': ['hdrip'],
@@ -56,32 +62,44 @@ class Filtering:
             'filter_trailer': ['trailer']
         }
 
-        qualities_allow = []
-        qualities_deny = []
         require = []
-        for quality in self.filters:
-            if get_setting(quality, bool):
-                qualities_allow.extend(self.filters[quality])
+        resolutions_allow = []
+        releases_allow = []
+        releases_deny = []
+
+        for resolution in self.resolutions:
+            if get_setting(resolution, bool):
+                resolutions_allow.append(resolution)
+        self.resolutions_allow = resolutions_allow
+
+        # Skip resolution filtering if we're allowing all of them anyway
+        self.filter_resolutions = True
+        if len(self.resolutions_allow) == len(self.resolutions):
+            self.filter_resolutions = False
+
+        for release_type in self.release_types:
+            if get_setting(release_type, bool):
+                releases_allow.extend(self.release_types[release_type])
             else:
-                qualities_deny.extend(self.filters[quality])
+                releases_deny.extend(self.release_types[release_type])
+        self.releases_allow = releases_allow
+        self.releases_deny = releases_deny
 
         if get_setting('additional_filters', bool):
-            accept = get_setting('accept').strip()
+            accept = get_setting('accept').strip().lower()
             if accept:
                 accept = re.split(r',\s?', accept)
-                qualities_allow.extend(accept)
+                releases_allow.extend(accept)
 
-            block = get_setting('block')
+            block = get_setting('block').strip().lower()
             if block:
                 block = re.split(r',\s?', block)
-                qualities_deny.extend(block)
+                releases_deny.extend(block)
 
-            require = get_setting('require')
+            require = get_setting('require').strip().lower()
             if require:
                 require = re.split(r',\s?', require)
 
-        self.quality_allow = qualities_allow
-        self.quality_deny = qualities_deny
         self.require_keywords = require
 
         self.min_size = get_float(get_setting('min_size'))
@@ -210,8 +228,9 @@ class Filtering:
     def information(self, provider):
         """ Debugging method to print keywords and file sizes
         """
-        log.debug('[%s] Accepted keywords: %s' % (provider, self.quality_allow))
-        log.debug('[%s] Blocked keywords: %s' % (provider, self.quality_deny))
+        log.debug('[%s] Accepted resolutions: %s' % (provider, self.resolutions_allow))
+        log.debug('[%s] Accepted release types: %s' % (provider, self.releases_allow))
+        log.debug('[%s] Blocked release types: %s' % (provider, self.releases_deny))
         log.debug('[%s] Minimum size: %s' % (provider, str(self.min_size) + ' GB'))
         log.debug('[%s] Maximum size: %s' % (provider, str(self.max_size) + ' GB'))
 
@@ -310,7 +329,7 @@ class Filtering:
         return text
 
     def verify(self, provider, name, size):
-        """ Main filtering method to match torrent names and quality/size filters
+        """ Main filtering method to match torrent names, resolutions, release types and size filters
 
         Args:
             provider (str): Provider ID
@@ -331,6 +350,12 @@ class Filtering:
 
         self.reason = "[%s] %70s ***" % (provider, name.decode('utf-8'))
 
+        if self.filter_resolutions:
+            resolution = self.determine_resolution(name)
+            if resolution not in self.resolutions_allow:
+                self.reason += " Resolution not allowed"
+                return False
+
         if self.filter_title:
             if not all(map(lambda match: match in name, re.split(r'\s', self.title))):
                 self.reason += " Name mismatch"
@@ -339,15 +364,15 @@ class Filtering:
         if self.require_keywords:
             for required in self.require_keywords:
                 if not self.included(name, keys=[required]):
-                    self.reason += " Missing required keywords"
+                    self.reason += " Missing required keyword"
                     return False
 
-        if not self.included(name, keys=self.quality_allow):
-            self.reason += " Missing any required keyword"
+        if not self.included(name, keys=self.releases_allow):
+            self.reason += " Missing release type keyword"
             return False
 
-        if self.included(name, keys=self.quality_deny):
-            self.reason += " Blocked by keyword"
+        if self.included(name, keys=self.releases_deny):
+            self.reason += " Blocked by release type keyword"
             return False
 
         if size and not self.in_size_range(size):
@@ -371,6 +396,21 @@ class Filtering:
         max_size = self.max_size * 1e9
         if min_size <= value <= max_size:
             res = True
+        return res
+
+    def determine_resolution(self, name):
+        """ Determine torrent resolution from defined filters. Defaults to ``filter_480p``.
+
+        Args:
+            name (str): Name of the torrent to determine the resolution for
+
+        Returns:
+            str: The filter key of the determined resolution, see self.resolutions
+        """
+        res = 'filter_480p'  # Default to 480p
+        for resolution in self.resolutions:
+            if self.included(name, keys=self.resolutions[resolution], strict=True):
+                res = resolution
         return res
 
     def normalize_name(self, value):
@@ -421,7 +461,7 @@ class Filtering:
                     item = item.replace('_', ' ')
                     if strict:
                         item = ' ' + item + ' '
-                    if item.upper() in value.upper():
+                    if item in value:
                         res2.append(True)
                     else:
                         res2.append(False)
