@@ -135,7 +135,7 @@ class Filtering:
         general_query = definition['general_query'] if definition['general_query'] else ''
         log.debug("General URL: %s%s" % (definition['base_url'], general_query))
         self.info = payload
-        self.url = "%s%s" % (definition['base_url'], general_query)
+        self.url = u"%s%s" % (definition['base_url'], general_query)
         if definition['general_keywords']:
             self.queries = [definition['general_keywords']]
             self.extras = [definition['general_extra']]
@@ -155,7 +155,7 @@ class Filtering:
             self.max_size = get_float(get_setting('max_size_movies'))
             self.check_sizes()
         self.info = payload
-        self.url = "%s%s" % (definition['base_url'], movie_query)
+        self.url = u"%s%s" % (definition['base_url'], movie_query)
         if definition['movie_keywords']:
             self.queries = ["%s" % definition['movie_keywords']]
             self.extras = ["%s" % definition['movie_extra']]
@@ -175,7 +175,7 @@ class Filtering:
             self.max_size = get_float(get_setting('max_size_episodes'))
             self.check_sizes()
         self.info = payload
-        self.url = "%s%s" % (definition['base_url'], show_query)
+        self.url = u"%s%s" % (definition['base_url'], show_query)
         if definition['tv_keywords']:
             self.queries = ["%s" % definition['tv_keywords']]
             self.extras = ["%s" % definition['tv_extra'] if definition['tv_extra'] else '']
@@ -199,7 +199,7 @@ class Filtering:
             self.max_size = get_float(get_setting('max_size_seasons'))
             self.check_sizes()
         self.info = info
-        self.url = "%s%s" % (definition['base_url'], season_query)
+        self.url = u"%s%s" % (definition['base_url'], season_query)
         if definition['season_keywords']:
             self.queries = ["%s" % definition['season_keywords']]
             self.extras = ["%s" % definition['season_extra'] if definition['season_extra'] else '']
@@ -222,7 +222,7 @@ class Filtering:
             self.max_size = get_float(get_setting('max_size_episodes'))
             self.check_sizes()
         self.info = info
-        self.url = "%s%s" % (definition['base_url'], anime_query)
+        self.url = u"%s%s" % (definition['base_url'], anime_query)
         if self.info['absolute_number']:
             self.info['episode'] = self.info['absolute_number']
         if definition['anime_keywords']:

@@ -99,14 +99,14 @@ class Client:
         if get_data:
             url += '?' + urlencode(get_data)
 
-        log.debug("Opening URL: %s" % url)
+        log.debug("Opening URL: %s" % repr(url))
         result = False
 
         data = urlencode(post_data) if len(post_data) > 0 else None
         req = urllib2.Request(url, data)
 
         self._read_cookies(url)
-        log.debug("Cookies for %s: %s" % (url, repr(self._cookies)))
+        log.debug("Cookies for %s: %s" % (repr(url), repr(self._cookies)))
 
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self._cookies))
         req.add_header('User-Agent', self.user_agent)
@@ -131,20 +131,20 @@ class Client:
 
         except urllib2.HTTPError as e:
             self.status = e.code
-            log.warning("Status for %s : %s" % (url, str(self.status)))
+            log.warning("Status for %s : %s" % (repr(url), str(self.status)))
             if e.code == 403 or e.code == 503:
                 log.warning("CloudFlared at %s, try enabling CloudHole" % url)
 
         except urllib2.URLError as e:
             self.status = e.reason
-            log.warning("Status for %s : %s" % (url, str(self.status)))
+            log.warning("Status for %s : %s" % (repr(url), str(self.status)))
 
         except Exception as e:
             import traceback
-            log.error("%s failed with %s:" % (url, repr(e)))
+            log.error("%s failed with %s:" % (repr(url), repr(e)))
             map(log.debug, traceback.format_exc().split("\n"))
 
-        log.debug("Status for %s : %s" % (url, str(self.status)))
+        log.debug("Status for %s : %s" % (repr(url), str(self.status)))
 
         return result
 
@@ -160,7 +160,7 @@ class Client:
             bool: Whether or not login was successful
         """
         result = False
-        if self.open(url, post_data=data):
+        if self.open(url.encode('utf-8'), post_data=data):
             result = True
             if fails_with in self.content.decode('utf-8'):
                 self.status = 'Wrong username or password'

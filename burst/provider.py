@@ -88,9 +88,9 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
         if not query:
             return filtering.results
 
-        url_search = filtering.url.replace('QUERY', query.encode('utf-8'))
+        url_search = filtering.url.replace('QUERY', query)
         if extra:
-            url_search = url_search.replace('EXTRA', extra.encode('utf-8'))
+            url_search = url_search.replace('EXTRA', extra)
         else:
             url_search = url_search.replace('EXTRA', '')
         url_search = url_search.replace(' ', definition['separator'])
@@ -112,12 +112,12 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
             data = dict()
             for key, value in filtering.get_data.iteritems():
                 if 'QUERY' in value:
-                    data[key] = filtering.get_data[key].replace('QUERY', query.encode('utf-8'))
+                    data[key] = filtering.get_data[key].replace('QUERY', query)
                 else:
                     data[key] = filtering.get_data[key]
 
         log.debug("-   %s query: %s" % (provider, repr(query)))
-        log.debug("--  %s url_search before token: %s" % (provider, url_search))
+        log.debug("--  %s url_search before token: %s" % (provider, repr(url_search)))
         log.debug("--- %s using POST payload: %s" % (provider, repr(payload)))
         log.debug("----%s filtering with post_data: %s" % (provider, repr(filtering.post_data)))
 
@@ -128,20 +128,20 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
 
         if 'token' in definition:
             token_url = definition['base_url'] + definition['token']
-            log.debug("Getting token for %s at %s" % (provider, token_url))
-            client.open(token_url)
+            log.debug("Getting token for %s at %s" % (provider, repr(token_url)))
+            client.open(token_url.encode('utf-8'))
             try:
                 token_data = json.loads(client.content)
             except:
-                log.error('%s: Failed to get token for %s' % (provider, url_search))
+                log.error('%s: Failed to get token for %s' % (provider, repr(url_search)))
                 return filtering.results
             log.debug("Token response for %s: %s" % (provider, repr(token_data)))
             if 'token' in token_data:
                 token = token_data['token']
-                log.debug("Got token for %s: %s" % (provider, token))
+                log.debug("Got token for %s: %s" % (provider, repr(token)))
                 url_search = url_search.replace('TOKEN', token)
             else:
-                log.warning('%s: Unable to get token for %s' % (provider, url_search))
+                log.warning('%s: Unable to get token for %s' % (provider, repr(url_search)))
 
         if 'private' in definition and definition['private']:
             username = get_setting('%s_username' % provider)
@@ -194,9 +194,9 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                         log.debug("Token response for %s: %s" % (provider, repr(token_data)))
                         if 'token' in token_data:
                             client.token = token_data['token']
-                            log.debug("Auth token for %s: %s" % (provider, client.token))
+                            log.debug("Auth token for %s: %s" % (provider, repr(client.token)))
                         else:
-                            log.warning('%s: Unable to get auth token for %s' % (provider, url_search))
+                            log.warning('%s: Unable to get auth token for %s' % (provider, repr(url_search)))
                         log.info('[%s] Token auth successful' % provider)
                     else:
                         log.error("[%s] Token auth failed with response: %s" % (provider, repr(client.content)))
@@ -215,9 +215,9 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
 
-        log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search))
+        log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search.encode('utf-8')))
 
-        client.open(url_search, post_data=payload, get_data=data)
+        client.open(url_search.encode('utf-8'), post_data=payload, get_data=data)
         filtering.results.extend(
             generate_payload(provider,
                              generator(provider, client),

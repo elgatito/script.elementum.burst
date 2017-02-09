@@ -103,9 +103,9 @@ def search(payload, method="general"):
     del p_dialog
 
     if available_providers > 0:
-        message = ', '.join(provider_names)
+        message = u', '.join(provider_names)
         message = message + translation(32064)
-        log.warning(message)
+        log.warning(message.encode('utf-8'))
         notify(message, ADDON_ICON)
 
     log.debug("all provider_results: %s" % repr(provider_results))
@@ -195,7 +195,7 @@ def extract_torrents(provider, client):
                 subclient.user_agent = get_setting('user_agent')
 
             uri = torrent.split('|')  # Split cookies for private trackers
-            subclient.open(uri[0])
+            subclient.open(uri[0].encode('utf-8'))
 
             if 'bittorrent' in subclient.headers.get('content-type', ''):
                 log.debug('[%s] bittorrent content-type for %s' % (provider, repr(torrent)))
@@ -208,7 +208,7 @@ def extract_torrents(provider, client):
                         torrent = '%s|%s' % (torrent, uri[1])
                 except Exception as e:
                     import traceback
-                    log.error("[%s] Subpage extraction for %s failed with: %s" % (provider, uri[0], repr(e)))
+                    log.error("[%s] Subpage extraction for %s failed with: %s" % (provider, repr(uri[0]), repr(e)))
                     map(log.debug, traceback.format_exc().split("\n"))
 
             ret = (name, info_hash, torrent, size, seeds, peers)
@@ -236,7 +236,7 @@ def extract_torrents(provider, client):
                 headers = {'Authorization': client.token, 'User-Agent': user_agent}
                 log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                 torrent = append_headers(torrent, headers)
-                log.debug("[%s] Torrent with headers: %s" % (provider, torrent))
+                log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
             else:
                 log.debug("[%s] Cookies: %s" % (provider, repr(client.cookies())))
                 parsed_url = urlparse(definition['root_url'])
@@ -251,7 +251,7 @@ def extract_torrents(provider, client):
                     headers = {'Cookie': ";".join(["%s=%s" % (c.name, c.value) for c in cookies]), 'User-Agent': user_agent}
                     log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                     torrent = append_headers(torrent, headers)
-                    log.debug("[%s] Torrent with headers: %s" % (provider, torrent))
+                    log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
 
         if name and torrent and needs_subpage:
             if not torrent.startswith('http'):
@@ -347,7 +347,7 @@ def extract_from_api(provider, client):
                 headers = {'Authorization': client.token, 'User-Agent': user_agent}
                 log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                 torrent = append_headers(torrent, headers)
-                log.debug("[%s] Torrent with headers: %s" % (provider, torrent))
+                log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
         if 'info_hash' in api_format:
             info_hash = result[api_format['info_hash']]
         if 'quality' in api_format:  # Again quite specific to YTS...
@@ -384,32 +384,32 @@ def extract_from_page(provider, content):
     matches = re.findall(r'magnet:\?[^\'"\s<>\[\]]+', content)
     if matches:
         result = matches[0]
-        log.debug('[%s] Matched magnet link: %s' % (provider, result))
+        log.debug('[%s] Matched magnet link: %s' % (provider, repr(result)))
         return result
 
     matches = re.findall('http(.*?).torrent["\']', content)
     if matches:
         result = 'http' + matches[0] + '.torrent'
         result = result.replace('torcache.net', 'itorrents.org')
-        log.debug('[%s] Matched torrent link: %s' % (provider, result))
+        log.debug('[%s] Matched torrent link: %s' % (provider, repr(result)))
         return result
 
     matches = re.findall('/download\?token=[A-Za-z0-9%]+', content)
     if matches:
         result = definition['root_url'] + matches[0]
-        log.debug('[%s] Matched download link with token: %s' % (provider, result))
+        log.debug('[%s] Matched download link with token: %s' % (provider, repr(result)))
         return result
 
     matches = re.findall('/telechargement/[a-z0-9-_.]+', content)  # cpasbien
     if matches:
         result = definition['root_url'] + matches[0]
-        log.debug('[%s] Matched some french link: %s' % (provider, result))
+        log.debug('[%s] Matched some french link: %s' % (provider, repr(result)))
         return result
 
     matches = re.findall('/torrents/download/\?id=[a-z0-9-_.]+', content)  # t411
     if matches:
         result = definition['root_url'] + matches[0]
-        log.debug('[%s] Matched download link with an ID: %s' % (provider, result))
+        log.debug('[%s] Matched download link with an ID: %s' % (provider, repr(result)))
         return result
 
     return None
