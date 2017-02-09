@@ -50,7 +50,7 @@ class Filtering:
 
         self.release_types = {
             'filter_brrip': ['brrip', 'bdrip', 'bluray'],
-            'filter_webdl': ['webdl', 'webrip'],
+            'filter_webdl': ['webdl', 'webrip', 'web_dl', 'dlrip', '_yts_'],
             'filter_hdrip': ['hdrip'],
             'filter_hdtv': ['hdtv'],
             'filter_dvd': ['_dvd_', 'dvdrip'],
@@ -70,6 +70,10 @@ class Filtering:
         for resolution in self.resolutions:
             if get_setting(resolution, bool):
                 resolutions_allow.append(resolution)
+                # Add enabled resolutions to allowed release types to match
+                # previous versions' behavior with certain providers
+                # with no release types in torrent names, ie. YTS
+                releases_allow.extend(self.resolutions[resolution])
         self.resolutions_allow = resolutions_allow
 
         # Skip resolution filtering if we're allowing all of them anyway
@@ -235,7 +239,7 @@ class Filtering:
         log.debug('[%s] Maximum size: %s' % (provider, str(self.max_size) + ' GB'))
 
     def check_sizes(self):
-        """ Internal method to trigger comparison of file sizes
+        """ Internal method to make sure size range settings are valid
         """
         if self.min_size > self.max_size:
             log.warning("Minimum size above maximum, using max size minus 1 GB")

@@ -7,7 +7,7 @@ import xbmc
 import xbmcaddon
 from client import Client
 from quasar.provider import log, get_setting, set_setting
-from providers.definitions import definitions
+from providers.definitions import definitions, longest
 from utils import ADDON_PATH, get_int, clean_size
 
 
@@ -46,7 +46,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
                             "icon": os.path.join(ADDON_PATH, 'burst', 'providers', 'icons', '%s.png' % provider),
                             })
         else:
-            log.debug(filtering.reason.encode('ascii', 'ignore'))
+            log.debug(filtering.reason.encode('utf-8'))
 
     log.debug('>>>>>> %s would send %d torrents to Quasar <<<<<<<' % (provider, len(results)))
 
@@ -215,7 +215,7 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
 
-        log.info("> %s search URL: %s" % (provider, url_search))
+        log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search))
 
         client.open(url_search, post_data=payload, get_data=data)
         filtering.results.extend(

@@ -16,7 +16,7 @@ from quasar.provider import append_headers, get_setting, set_setting, log
 
 from parser.ehp import Html
 from provider import process
-from providers.definitions import definitions
+from providers.definitions import definitions, longest
 from filtering import apply_filters, Filtering
 from client import USER_AGENT, Client, get_cloudhole_key, get_cloudhole_clearance
 from utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers
@@ -136,8 +136,8 @@ def got_results(provider, results):
     if len(sorted_results) > max_results:
         sorted_results = sorted_results[:max_results]
 
-    log.info(">> %s provider returned %d results in %.1f seconds%s" % (
-            definition['name'], len(results), round(time.time() - request_time, 2),
+    log.info(">> %s returned %2d results in %.1f seconds%s" % (
+            definition['name'].rjust(longest), len(results), round(time.time() - request_time, 2),
             (", sending %d best ones" % max_results) if len(results) > max_results else ""))
 
     provider_results.extend(sorted_results)
@@ -351,7 +351,7 @@ def extract_from_api(provider, client):
         if 'info_hash' in api_format:
             info_hash = result[api_format['info_hash']]
         if 'quality' in api_format:  # Again quite specific to YTS...
-            name = "%s (%s)" % (name, result[api_format['quality']])
+            name = "%s - %s" % (name, result[api_format['quality']])
         if 'size' in api_format:
             size = result[api_format['size']]
             if type(size) in (long, int):

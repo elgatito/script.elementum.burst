@@ -299,3 +299,5 @@ definitions['hd-torrents'] = {
     "tv_keywords": "{title} s{season:2}e{episode:2}",
     "tv_keywords2": ""
 }
+
+longest = len(definitions[sorted(definitions, key=lambda p: len(definitions[p]['name']), reverse=True)[0]]['name'])
