@@ -76,6 +76,9 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
         kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
         if kodi_language:
             filtering.kodi_language = kodi_language
+        language_exceptions = get_setting('language_exceptions')
+        if language_exceptions.strip().lower():
+            filtering.language_exceptions = re.split(r',\s?', language_exceptions)
 
     log.debug("[%s] Queries: %s" % (provider, filtering.queries))
     log.debug("[%s] Extras:  %s" % (provider, filtering.extras))

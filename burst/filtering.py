@@ -32,6 +32,7 @@ class Filtering:
         extras (list): List of extras to be filtered
         info (dict): Payload from Quasar
         kodi_language (str): Language code from Kodi if kodi_language setting is enabled
+        language_exceptions (list): List of providers for which not to apply ``kodi_language`` setting
         url (str): URL of this filtering request
         get_data (dict): GET data for client request
         post_data (dict): POST data for client request
@@ -117,6 +118,7 @@ class Filtering:
 
         self.info = dict(title="", titles=[])
         self.kodi_language = ''
+        self.language_exceptions = []
         self.get_data = {}
         self.post_data = {}
         self.url = ''
@@ -280,7 +282,9 @@ class Filtering:
                 use_language = None
                 if ':' in keyword:
                     use_language = keyword.split(':')[1]
-                if (use_language or self.kodi_language) and 'titles' in self.info and self.info['titles']:
+                if provider not in self.language_exceptions and \
+                   (use_language or self.kodi_language) and \
+                   'titles' in self.info and self.info['titles']:
                     try:
                         if self.kodi_language and self.kodi_language in self.info['titles']:
                             use_language = self.kodi_language

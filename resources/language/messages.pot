@@ -92,11 +92,11 @@ msgid "Use separate size range for movies, seasons and episodes"
 msgstr ""
 
 msgctxt "#32036"
-msgid "Additional keyword filters (comma separated)"
+msgid "Additional keyword filters (comma-separated)"
 msgstr ""
 
 msgctxt "#32037"
-msgid "Use underscores around keywords to require a space/dot, ie. _HEVC_"
+msgid "Use underscores around keywords to require a space/dot, eg. _HEVC_"
 msgstr ""
 
 msgctxt "#32038"
@@ -113,6 +113,14 @@ msgstr ""
 
 msgctxt "#32041"
 msgid "Use CloudHole"
+msgstr ""
+
+msgctxt "#32050"
+msgid "Exceptions"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
 msgstr ""
 
 msgctxt "#32060"
