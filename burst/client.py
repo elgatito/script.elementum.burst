@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import os
 import json
 import urllib2
-from os import path
 from time import sleep
 from urlparse import urlparse
 from contextlib import closing
@@ -37,8 +37,14 @@ class Client:
         return urlencode(payload)
 
     def _read_cookies(self, url=''):
-        self._cookies_filename = path.join(PATH_TEMP, 'burst', urlparse(url).netloc + '_cookies.jar')
-        if path.exists(self._cookies_filename):
+        cookies_path = os.path.join(PATH_TEMP, 'burst')
+        if not os.path.exists(cookies_path):
+            try:
+                os.makedirs(cookies_path)
+            except Exception as e:
+                log.debug("Error creating cookies directory: %s" % repr(e))
+        self._cookies_filename = os.path.join(cookies_path, urlparse(url).netloc + '_cookies.jar')
+        if os.path.exists(self._cookies_filename):
             try:
                 self._cookies.load(self._cookies_filename)
             except Exception as e:
