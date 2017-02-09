@@ -37,7 +37,7 @@ class Client:
         return urlencode(payload)
 
     def _read_cookies(self, url=''):
-        self._cookies_filename = path.join(PATH_TEMP, urlparse(url).netloc + '_cookies.jar')
+        self._cookies_filename = path.join(PATH_TEMP, 'burst', urlparse(url).netloc + '_cookies.jar')
         if path.exists(self._cookies_filename):
             try:
                 self._cookies.load(self._cookies_filename)

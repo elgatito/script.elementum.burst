@@ -67,6 +67,9 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
     definition = definitions[provider]
 
     client = Client()
+    token = None
+    logged_in = False
+    token_auth = False
 
     if get_setting("use_cloudhole", bool):
         client.clearance = get_setting('clearance')
@@ -129,7 +132,10 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
             filtering.filter_title = True
             filtering.title = query
 
-        if 'token' in definition:
+        if token:
+            log.info('[%s] Reusing existing token' % provider)
+            url_search = url_search.replace('TOKEN', token)
+        elif 'token' in definition:
             token_url = definition['base_url'] + definition['token']
             log.debug("Getting token for %s at %s" % (provider, repr(token_url)))
             client.open(token_url.encode('utf-8'))
@@ -146,7 +152,11 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
             else:
                 log.warning('%s: Unable to get token for %s' % (provider, repr(url_search)))
 
-        if 'private' in definition and definition['private']:
+        if logged_in:
+            log.info("[%s] Reusing previous login" % provider)
+        elif token_auth:
+            log.info("[%s] Reusing previous token authorization" % provider)
+        elif 'private' in definition and definition['private']:
             username = get_setting('%s_username' % provider)
             password = get_setting('%s_password' % provider)
             if not username and not password:
@@ -199,14 +209,17 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                             client.token = token_data['token']
                             log.debug("Auth token for %s: %s" % (provider, repr(client.token)))
                         else:
-                            log.warning('%s: Unable to get auth token for %s' % (provider, repr(url_search)))
+                            log.error('%s: Unable to get auth token for %s' % (provider, repr(url_search)))
+                            return filtering.results
                         log.info('[%s] Token auth successful' % provider)
+                        token_auth = True
                     else:
                         log.error("[%s] Token auth failed with response: %s" % (provider, repr(client.content)))
                         return filtering.results
                 elif not logged_in and client.login(definition['root_url'] + definition['login_path'],
                                                     eval(login_object), definition['login_failed']):
                     log.info('[%s] Login successful' % provider)
+                    logged_in = True
                 elif not logged_in:
                     log.error("[%s] Login failed: %s", provider, client.status)
                     log.debug("[%s] Failed login content: %s", provider, repr(client.content))
@@ -218,7 +231,7 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
 
-        log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search.encode('utf-8')))
+        log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search))
 
         client.open(url_search.encode('utf-8'), post_data=payload, get_data=data)
         filtering.results.extend(
