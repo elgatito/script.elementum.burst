@@ -179,6 +179,11 @@ definitions['rarbg']['api_format'] = {
     'size': 'size',
 }
 
+# Nyaa
+definitions['nyaa']['root_url'] = "https://www.nyaa.se/"
+definitions['nyaa']['base_url'] = "https://www.nyaa.se/?page=search&cats=1_0&term=QUERY&EXTRA&sort=2"
+definitions['nyaa']['parser']['torrent'] = "'https:%s' % item(tag='a', select=('title', 'Download'), attribute='href', order=1)"
+
 
 #
 # Private trackers
