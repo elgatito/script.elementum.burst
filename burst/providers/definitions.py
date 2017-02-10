@@ -133,10 +133,24 @@ definitions['ilcorsaronero']['parser']['torrent'] = "'magnet:?xt=urn:btih:%s' % 
 
 # Ruhunt
 definitions['ruhunt']['base_url'] = "http://ruhunt.org/search?q=QUERYEXTRA&i=s"
+definitions['ruhunt']['season_keywords'] = "{title} \"Сезон {season}\""
+definitions['ruhunt']['season_keywords2'] = "{title} [S{season:2}]"
+definitions['ruhunt']['tv_keywords'] = '{title} s{season:2}e{episode:2}'
+definitions['ruhunt']['tv_keywords2'] = '{title} \"Сезон {season}\"'
 
 # Rutor
-definitions['rutor']['tv_keywords'] = '{title} s{season:2}'
-definitions['rutor']['tv_keywords2'] = '{title} s{season:2}e{episode:2}'
+definitions['rutor']['anime_query'] = "0/10/100/2/QUERYEXTRA"
+definitions['rutor']['movie_query'] = "0/1/100/2/QUERYEXTRA"
+definitions['rutor']['season_query'] = "0/4/100/2/QUERYEXTRA"
+definitions['rutor']['show_query'] = "0/4/100/2/QUERYEXTRA"
+definitions['rutor']['season_keywords'] = "{title} [{season:2}x01"
+definitions['rutor']['season_keywords2'] = "{title} [S{season:2}]"
+definitions['rutor']['tv_keywords'] = '{title} s{season:2}e{episode:2}'
+definitions['rutor']['tv_keywords2'] = '{title} s{season:2}'
+definitions['rutor']['parser']['row'] = "find_once('table', order=3).find_all('tr', start=2)"
+definitions['rutor']['parser']['seeds'] = "item(tag='span', order=1, select=('class', 'green'))"
+definitions['rutor']['parser']['peers'] = "item(tag='span', order=1, select=('class', 'red'))"
+definitions['rutor']['parser']['size'] = "item.find_all('td', ('align', 'right'))[-1].text()"
 
 # YTS
 definitions['yts']['is_api'] = True
@@ -303,6 +317,313 @@ definitions['hd-torrents'] = {
     "tv_extra2": "",
     "tv_keywords": "{title} s{season:2}e{episode:2}",
     "tv_keywords2": ""
+}
+
+# Toloka
+definitions['toloka'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "",
+    "base_url": "https://toloka.to/tracker.php?nm=QUERYEXTRA&o=10",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": "Такий псевдонім не існує, або не збігається пароль.",
+    "login_object": "{'username': USERNAME, 'password': PASSWORD, 'autologin': '1', 'login': 'Enter'}",
+    "login_path": "/login.php",
+    "movie_extra": "",
+    "movie_keywords": "{title} {year}",
+    "movie_query": "",
+    "name": "Toloka",
+    "parser": {
+        "infohash": "",
+        "name": "item('a', order=2)",
+        "peers": "item(tag='td', order=11)",
+        "row": "find_once('table', ('class', 'forumline'), order=2).find_all('tr', start=2)",
+        "seeds": "item(tag='td', order=10)",
+        "size": "item(tag='td', order=7)",
+        "torrent": "'https://toloka.to/%s' % item(tag='a', attribute='href', order=4)"
+    },
+    "private": True,
+    "root_url": "https://toloka.to",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "{title} Сезон_{season}",
+    "season_keywords2": "{title} S{season:2}",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": False,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "{title} s{season:2}e{episode:2}",
+    "tv_keywords2": "{title} Сезон_{season}"
+}
+
+# 0day
+definitions['0day'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "",
+    "base_url": "https://tracker.0day.kiev.ua/browse.php" +
+                "?c10=1&c11=1&c29=1&c34=1&c20=1&c12=1&c13=1&c21=1&c15=1&c16=1&c27=1&c28=1&c41=1" +
+                "&c19=1&c30=1&c23=1&search=QUERYEXTRA&incldead=0&where=0&sort=7&type=desc",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": "Ошибка входа",
+    "login_object": "{'username': USERNAME, 'password': PASSWORD, 'returnto': '/browse.php'}",
+    "login_path": "/takelogin.php",
+    "movie_extra": "",
+    "movie_keywords": "{title} {year}",
+    "movie_query": "",
+    "name": "0day",
+    "parser": {
+        "infohash": "",
+        "name": "item(tag='a', order=2)",
+        "row": "find_once('table', ('class', 'row'), order=1).find_all('tr', start=27)",
+        "seeds": "item(tag='td', order=6, divider=('|', 0))",
+        "peers": "item(tag='td', order=6, divider=('|', 1))",
+        "size": "item(tag='td', order=4)",
+        "torrent": "'https://tracker.0day.kiev.ua/%s' % item(tag='a', attribute='href', order=3)"
+    },
+    "private": True,
+    "root_url": "https://tracker.0day.kiev.ua",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "{title} %D1%E5%E7%EE%ED {season}",
+    "season_keywords2": "{title} S{season:2}",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": False,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "{title} s{season:2}e{episode:2}",
+    "tv_keywords2": "{title} %D1%E5%E7%EE%ED {season}"
+}
+
+# NNM-Club
+definitions['nnmclub'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "",
+    "base_url": "https://nnm-club.me/forum/tracker.php?nm=QUERYEXTRA&prev_sd=1&prev_a=1&prev_my=0&" +
+                "prev_n=0&prev_shc=1&prev_shf=0&prev_sha=0&prev_shs=1&prev_shr=0&prev_sht=0" +
+                "&o=10&s=2&tm=-1&a=1&sd=1&ta=-1&sns=-1&sds=-1&pn&submit=1",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": "Вы ввели",
+    "login_object": "{'username': USERNAME, 'password': PASSWORD, 'autologin': '1', 'login': 'Вход'}",
+    "login_path": "/forum/login.php",
+    "movie_extra": "",
+    "movie_keywords": "{title} {year}",
+    "movie_query": "",
+    "name": "NNM-Club",
+    "parser": {
+        "infohash": "",
+        "name": "item('a', order=1)",
+        "peers": "item(tag='td', order=7)",
+        "row": "find_once('table', ('class', 'tablesorter'), order=1).find_all('tr', ('class', ['prow1', 'prow2']))",
+        "seeds": "item(tag='td', order=6)",
+        "size": "item(tag='td', order=4).split(' ', 1)[1]",
+        "torrent": "'http://nnmclub.to/forum/%s' % item(tag='a', attribute='href', order=2)"
+    },
+    "private": True,
+    "root_url": "https://nnm-club.me",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "{title} \"Сезон {season}\"",
+    "season_keywords2": "{title} S{season:2}",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": False,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "{title} s{season:2}e{episode:2}",
+    "tv_keywords2": "{title} \"Сезон {season}\""
+}
+
+# Kinozal
+definitions['kinozal'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "",
+    "base_url": "http://kinozal.tv/browse.php?s=QUERYEXTRA&g=0&c=0&v=0&d=0&w=0&t=1&f=0",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": "Восстановление",
+    "login_object": "{'username': USERNAME, 'password': PASSWORD, 'autologin': '1', 'login': 'Вход'}",
+    "login_path": "/takelogin.php",
+    "movie_extra": "",
+    "movie_keywords": "{title} {year}",
+    "movie_query": "",
+    "name": "Kinozal",
+    "parser": {
+        "infohash": "",
+        "name": "item('a', order=1)",
+        "peers": "item(tag='td', order=5)",
+        "row": "find_once('table', ('class', 't_peer'), order=1).find_all('tr', start=2)",
+        "seeds": "item(tag='td', order=4)",
+        "size": "item(tag='td', order=3)",
+        "torrent": "'http://dl.kinozal.tv/download.php?id=%s' % item(tag='a', attribute='href', order=1).split('=', 1)[1]"
+    },
+    "private": True,
+    "root_url": "http://kinozal.tv",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "{title} {season}+Сезон",
+    "season_keywords2": "",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": False,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "{title} s{season:2}e{episode:2}",
+    "tv_keywords2": "{title} {season}+Сезон"
+}
+
+# NewStudio
+definitions['newstudio'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "",
+    "base_url": "http://newstudio.tv/tracker.php?nm=QUERYEXTRA&prev_sd=1&prev_a=1&prev_my=0&prev_n=0&" +
+                "prev_shc=1&prev_shf=0&prev_sha=0&prev_shs=1&prev_shr=0&prev_sht=0&o=10&s=2&tm=-1&" +
+                "a=1&sd=1&ds=1&ta=-1&sns=-1&sds=-1&pn&submit=1",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": "You have specified an incorrect or inactive username",
+    "login_object": "{'login_username': USERNAME, 'login_password': PASSWORD, 'autologin': '1', 'login': '1'}",
+    "login_path": "/login.php",
+    "movie_extra": "",
+    "movie_keywords": "{title} {year}",
+    "movie_query": "",
+    "name": "NewStudio",
+    "parser": {
+        "infohash": "",
+        "name": "item('a', order=2)",
+        "row": "find_once('table', ('class', 'well-small'), order=1).find_all('tr', start=2)",
+        "size": "item('a', order=3)",
+        "seeds": "1",  # No value on the tracker
+        "peers": "",   # No value on the tracker
+        "torrent": "'http://newstudio.tv%s' % item(tag='a', attribute='href', order=4)"
+    },
+    "private": True,
+    "root_url": "http://newstudio.tv",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "\"{title}\" \"Сезон {season}\"",
+    "season_keywords2": "",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": False,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "{title} s{season:2}e{episode:2}",
+    "tv_keywords2": "{title} \"Сезон {season}\""
+}
+
+# RuTracker
+definitions['rutracker'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "",
+    "base_url": "https://rutracker.org/forum/tracker.php?nm=QUERYEXTRA&prev_new=0&prev_oop=1&f[]=-1&o=10&s=2&oop=1&pn=",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": "Вы ввели неверное",
+    "login_object": "{'login_username': USERNAME, 'login_password': PASSWORD, 'login': 'Login'}",
+    "login_path": "/forum/login.php",
+    "movie_extra": "",
+    "movie_keywords": "{title} {year}",
+    "movie_query": "",
+    "name": "RuTracker",
+    "parser": {
+        "infohash": "",
+        "name": "item('a', order=2)",
+        "row": "find_once('table', ('class', 'forumline'), order=1).find_all('tr', start=2)",
+        "size": "item('a', order=4)",
+        "seeds": "item(tag='b', order=1, select=('class', 'seedmed'))",
+        "peers": "item(tag='b', order=2)",
+        "torrent": "'https://rutracker.org/forum/%s' % item(tag='a', attribute='href', order=4)"
+    },
+    "private": True,
+    "root_url": "https://rutracker.org",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "\"{title}\" \"Сезон {season}\"",
+    "season_keywords2": "",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": False,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "{title} s{season:2}e{episode:2}",
+    "tv_keywords2": "{title} \"Сезон {season}\""
+}
+
+# MegaPeer
+definitions['megapeer'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "",
+    "base_url": "http://megapeer.org/browse.php?search=QUERYEXTRA&age=&cat=0&stype=0&sort=0&ascdesc=0",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": "",
+    "login_object": "",
+    "login_path": None,
+    "movie_extra": "",
+    "movie_keywords": "{title} {year}",
+    "movie_query": "",
+    "name": "MegaPeer",
+    "parser": {
+        "infohash": "",
+        "row": "find_once('table', ('id', 'tor-tbl'), order=1).find_all('tr')",
+        "name": "item(tag='div', select=('class', 't-title'), order=1)",
+        "size": "item(tag='a', select=('class', 'tr-dl'), order=1)",
+        "seeds": "item(tag='span', select=('class', 'seedmed'), order=1)",
+        "peers": "",  # No value on the tracker
+        "torrent": "'http://megapeer.org/%s' % item(tag='a', select=('class', 'tr-dl'), attribute='href', order=1)"
+    },
+    "private": False,
+    "root_url": "http://http://megapeer.org",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "{title} {season} %D1%E5%E7%EE%ED",
+    "season_keywords2": "{title} S{season:2}",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": False,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "{title} s{season:2}e{episode:2}",
+    "tv_keywords2": "{title} {season} %D1%E5%E7%EE%ED"
 }
 
 longest = len(definitions[sorted(definitions, key=lambda p: len(definitions[p]['name']), reverse=True)[0]]['name'])

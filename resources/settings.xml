@@ -19,6 +19,7 @@
     <setting label="The Pirate Bay" id="use_thepiratebay" type="bool" default="false" />
     <setting label="Ruhunt" id="use_ruhunt" type="bool" default="false" />
     <setting label="Rutor" id="use_rutor" type="bool" default="false" />
+    <setting label="MegaPeer" id="use_megapeer" type="bool" default="false" />
     <setting label="Nextorrent" id="use_nextorrent" type="bool" default="false" />
     <setting label="Torrent9" id="use_torrent9" type="bool" default="false" />
     <setting label="Cpasbien" id="use_cpasbien" type="bool" default="false" />
@@ -73,6 +74,24 @@
     <setting label="XtremeZone" id="use_myxzorg" type="bool" default="false" />
       <setting id="myxzorg_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="myxzorg_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+    <setting label="Toloka" id="use_toloka" type="bool" default="false" />
+      <setting id="toloka_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="toloka_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+    <setting label="0day" id="use_0day" type="bool" default="false" />
+      <setting id="0day_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="0day_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+    <setting label="NewStudio" id="use_newstudio" type="bool" default="false" />
+      <setting id="newstudio_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="newstudio_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+    <setting label="Kinozal" id="use_kinozal" type="bool" default="false" />
+      <setting id="kinozal_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="kinozal_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+    <setting label="NNM-Club" id="use_nnmclub" type="bool" default="false" />
+      <setting id="nnmclub_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="nnmclub_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+    <setting label="RuTracker" id="use_rutracker" type="bool" default="false" />
+      <setting id="rutracker_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="rutracker_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
   </category>
   <category label="32002">
     <setting label="480p" id="filter_480p" type="bool" default="true" />
