@@ -4,12 +4,16 @@ import re
 import string
 import hashlib
 from urllib import unquote
-from collections import OrderedDict
 from parser.ehp import normalize_string
 from parser.HTMLParser import HTMLParser
 from quasar.provider import log, get_setting
 from providers.definitions import definitions, t411season, t411episode
 from utils import Magnet, get_int, get_float, clean_number, size_int
+
+try:
+    from collections import OrderedDict
+except:
+    from ordereddict import OrderedDict
 
 
 class Filtering:
