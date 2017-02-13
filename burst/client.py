@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import json
 import urllib2
 from time import sleep
@@ -9,6 +10,7 @@ from contextlib import closing
 from quasar.provider import log
 from cookielib import Cookie, LWPCookieJar
 from urllib import urlencode
+from utils import encode_dict
 
 from xbmc import translatePath
 
@@ -132,6 +134,20 @@ class Client:
                 else:
                     self.content = response.read()
 
+                charset = response.headers.getparam('charset')
+
+                if not charset:
+                    match = re.search("""<meta(?!\s*(?:name|value)\s*=)[^>]*?charset\s*=[\s"']*([^\s"'/>]*)""", self.content)
+                    if match:
+                        charset = match.group(1)
+
+                if charset and charset.lower() == 'utf-8':
+                    charset = 'utf-8-sig'  # Changing to utf-8-sig to remove BOM if found on decode from utf-8
+
+                if charset:
+                    log.debug('Decoding charset from %s' % (charset))
+                    self.content = self.content.decode(charset, 'replace')
+
                 self.status = response.getcode()
             result = True
 
@@ -166,9 +182,9 @@ class Client:
             bool: Whether or not login was successful
         """
         result = False
-        if self.open(url.encode('utf-8'), post_data=data):
+        if self.open(url.encode('utf-8'), post_data=encode_dict(data)):
             result = True
-            if fails_with in self.content.decode('utf-8'):
+            if fails_with in self.content:
                 self.status = 'Wrong username or password'
                 result = False
         return result

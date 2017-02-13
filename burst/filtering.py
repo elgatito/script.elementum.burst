@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import re
+import types
 import string
 import hashlib
 from urllib import unquote
-from parser.ehp import normalize_string
+from unicodedata import normalize
 from parser.HTMLParser import HTMLParser
 from quasar.provider import log, get_setting
 from providers.definitions import definitions, t411season, t411episode
@@ -579,3 +580,23 @@ def cleanup_results(results_list):
             hashes.append(hash_)
 
     return sorted(filtered_list, key=lambda r: (get_int(r['seeds'])), reverse=True)
+
+
+def normalize_string(name):
+    """ String normalization method
+
+    Args:
+        name (unicode): Unicode string to be normalized
+
+    Returns:
+        str: Normalized ascii string
+    """
+    try:
+        normalize_name = name.decode('unicode-escape').encode('latin-1')
+    except:
+        if types.StringType == type(name):
+            unicode_name = unicode(name, 'utf-8', 'ignore')
+        else:
+            unicode_name = name
+        normalize_name = normalize('NFKD', unicode_name).encode('ascii', 'ignore')
+    return normalize_name

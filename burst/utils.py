@@ -256,3 +256,22 @@ def clear_cache():
         for f in os.listdir(cookies_path):
             if re.search('.jar', f):
                 os.remove(os.path.join(cookies_path, f))
+
+
+def encode_dict(dict_in):
+    """ Encodes dict values to UTF-8
+
+    Args:
+        dict_in (dict): Input dictionary with unicode values
+
+    Returns:
+        dict: Output dictionary with UTF-8 encoded values
+    """
+    dict_out = {}
+    for k, v in dict_in.iteritems():
+        if isinstance(v, unicode):
+            v = v.encode('utf8')
+        elif isinstance(v, str):
+            v.decode('utf8')
+        dict_out[k] = v
+    return dict_out

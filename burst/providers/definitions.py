@@ -133,10 +133,10 @@ definitions['ilcorsaronero']['parser']['torrent'] = "'magnet:?xt=urn:btih:%s' % 
 
 # Ruhunt
 definitions['ruhunt']['base_url'] = "http://ruhunt.org/search?q=QUERYEXTRA&i=s"
-definitions['ruhunt']['season_keywords'] = "{title} \"Сезон {season}\""
+definitions['ruhunt']['season_keywords'] = u"{title} \"Сезон {season}\""
 definitions['ruhunt']['season_keywords2'] = "{title} [S{season:2}]"
-definitions['ruhunt']['tv_keywords'] = '{title} s{season:2}e{episode:2}'
-definitions['ruhunt']['tv_keywords2'] = '{title} \"Сезон {season}\"'
+definitions['ruhunt']['tv_keywords'] = "{title} s{season:2}e{episode:2}"
+definitions['ruhunt']['tv_keywords2'] = u"{title} \"Сезон {season}\""
 
 # Rutor
 definitions['rutor']['anime_query'] = "0/10/100/2/QUERYEXTRA"
@@ -330,7 +330,7 @@ definitions['toloka'] = {
     "general_keywords": "{title}",
     "general_query": "",
     "language": None,
-    "login_failed": "Такий псевдонім не існує, або не збігається пароль.",
+    "login_failed": u"Такий псевдонім не існує, або не збігається пароль.",
     "login_object": "{'username': USERNAME, 'password': PASSWORD, 'autologin': '1', 'login': 'Enter'}",
     "login_path": "/login.php",
     "movie_extra": "",
@@ -350,7 +350,7 @@ definitions['toloka'] = {
     "root_url": "https://toloka.to",
     "season_extra": "",
     "season_extra2": "",
-    "season_keywords": "{title} Сезон_{season}",
+    "season_keywords": u"{title} Сезон_{season}",
     "season_keywords2": "{title} S{season:2}",
     "season_query": "",
     "separator": "+",
@@ -359,7 +359,7 @@ definitions['toloka'] = {
     "tv_extra": "",
     "tv_extra2": "",
     "tv_keywords": "{title} s{season:2}e{episode:2}",
-    "tv_keywords2": "{title} Сезон_{season}"
+    "tv_keywords2": u"{title} Сезон_{season}"
 }
 
 # 0day
@@ -375,7 +375,7 @@ definitions['0day'] = {
     "general_keywords": "{title}",
     "general_query": "",
     "language": None,
-    "login_failed": "Ошибка входа",
+    "login_failed": u"Ошибка входа",
     "login_object": "{'username': USERNAME, 'password': PASSWORD, 'returnto': '/browse.php'}",
     "login_path": "/takelogin.php",
     "movie_extra": "",
@@ -420,8 +420,8 @@ definitions['nnmclub'] = {
     "general_keywords": "{title}",
     "general_query": "",
     "language": None,
-    "login_failed": "Вы ввели",
-    "login_object": "{'username': USERNAME, 'password': PASSWORD, 'autologin': '1', 'login': 'Вход'}",
+    "login_failed": u"Вы ввели",
+    "login_object": "{'username': USERNAME, 'password': PASSWORD, 'autologin': '1', 'login': u'Вход'}",
     "login_path": "/forum/login.php",
     "movie_extra": "",
     "movie_keywords": "{title} {year}",
@@ -440,7 +440,7 @@ definitions['nnmclub'] = {
     "root_url": "https://nnm-club.me",
     "season_extra": "",
     "season_extra2": "",
-    "season_keywords": "{title} \"Сезон {season}\"",
+    "season_keywords": u"{title} \"Сезон {season}\"",
     "season_keywords2": "{title} S{season:2}",
     "season_query": "",
     "separator": "+",
@@ -449,7 +449,7 @@ definitions['nnmclub'] = {
     "tv_extra": "",
     "tv_extra2": "",
     "tv_keywords": "{title} s{season:2}e{episode:2}",
-    "tv_keywords2": "{title} \"Сезон {season}\""
+    "tv_keywords2": u"{title} \"Сезон {season}\""
 }
 
 # Kinozal
@@ -463,8 +463,8 @@ definitions['kinozal'] = {
     "general_keywords": "{title}",
     "general_query": "",
     "language": None,
-    "login_failed": "Восстановление",
-    "login_object": "{'username': USERNAME, 'password': PASSWORD, 'autologin': '1', 'login': 'Вход'}",
+    "login_failed": u"Восстановление",
+    "login_object": "{'username': USERNAME, 'password': PASSWORD, 'autologin': '1', 'login': u'Вход'}",
     "login_path": "/takelogin.php",
     "movie_extra": "",
     "movie_keywords": "{title} {year}",
@@ -483,7 +483,7 @@ definitions['kinozal'] = {
     "root_url": "http://kinozal.tv",
     "season_extra": "",
     "season_extra2": "",
-    "season_keywords": "{title} {season}+Сезон",
+    "season_keywords": u"{title} {season}+Сезон",
     "season_keywords2": "",
     "season_query": "",
     "separator": "+",
@@ -492,7 +492,7 @@ definitions['kinozal'] = {
     "tv_extra": "",
     "tv_extra2": "",
     "tv_keywords": "{title} s{season:2}e{episode:2}",
-    "tv_keywords2": "{title} {season}+Сезон"
+    "tv_keywords2": u"{title} {season}+Сезон"
 }
 
 # NewStudio
@@ -528,7 +528,7 @@ definitions['newstudio'] = {
     "root_url": "http://newstudio.tv",
     "season_extra": "",
     "season_extra2": "",
-    "season_keywords": "\"{title}\" \"Сезон {season}\"",
+    "season_keywords": u"\"{title}\" \"Сезон {season}\"",
     "season_keywords2": "",
     "season_query": "",
     "separator": "+",
@@ -537,7 +537,7 @@ definitions['newstudio'] = {
     "tv_extra": "",
     "tv_extra2": "",
     "tv_keywords": "{title} s{season:2}e{episode:2}",
-    "tv_keywords2": "{title} \"Сезон {season}\""
+    "tv_keywords2": u"{title} \"Сезон {season}\""
 }
 
 # RuTracker
@@ -551,7 +551,7 @@ definitions['rutracker'] = {
     "general_keywords": "{title}",
     "general_query": "",
     "language": None,
-    "login_failed": "Вы ввели неверное",
+    "login_failed": u"Вы ввели неверное",
     "login_object": "{'login_username': USERNAME, 'login_password': PASSWORD, 'login': 'Login'}",
     "login_path": "/forum/login.php",
     "movie_extra": "",
@@ -571,7 +571,7 @@ definitions['rutracker'] = {
     "root_url": "https://rutracker.org",
     "season_extra": "",
     "season_extra2": "",
-    "season_keywords": "\"{title}\" \"Сезон {season}\"",
+    "season_keywords": u"\"{title}\" \"Сезон {season}\"",
     "season_keywords2": "",
     "season_query": "",
     "separator": "+",
@@ -580,7 +580,7 @@ definitions['rutracker'] = {
     "tv_extra": "",
     "tv_extra2": "",
     "tv_keywords": "{title} s{season:2}e{episode:2}",
-    "tv_keywords2": "{title} \"Сезон {season}\""
+    "tv_keywords2": u"{title} \"Сезон {season}\""
 }
 
 # MegaPeer

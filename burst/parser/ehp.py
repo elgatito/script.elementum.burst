@@ -826,7 +826,7 @@ class Tag(Root):
 
         html += '</%s>' % self.name
 
-        return normalize_string(html)
+        return html
 
 
 class Data(Root):
@@ -1158,7 +1158,7 @@ class Html(HTMLParser):
         """
 
         self.structure.clear()
-        HTMLParser.feed(self, normalize_string(data))
+        HTMLParser.feed(self, data)
 
         return self.structure.outmost
 
@@ -1230,17 +1230,3 @@ class Html(HTMLParser):
         """
 
         self.structure.mnest(data)
-
-
-def normalize_string(name):
-    from unicodedata import normalize
-    import types
-    try:
-        normalize_name = name.decode('unicode-escape').encode('latin-1')
-    except:
-        if types.StringType == type(name):
-            unicode_name = unicode(name, 'utf-8', 'ignore')
-        else:
-            unicode_name = name
-        normalize_name = normalize('NFKD', unicode_name).encode('ascii', 'ignore')
-    return normalize_name
