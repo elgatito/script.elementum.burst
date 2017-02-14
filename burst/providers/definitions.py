@@ -626,4 +626,50 @@ definitions['megapeer'] = {
     "tv_keywords2": "{title} {season} %D1%E5%E7%EE%ED"
 }
 
+# Serialz.tv
+definitions['serialz'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "",
+    "base_url": "http://serialz.tv/tracker.php?prev_allw=1&prev_a=0&prev_dla=0"
+                "&prev_dlc=0&prev_dld=0&prev_dlw=0&prev_my=0&prev_new=0&prev_sd=0&prev_da=1"
+                "&prev_dc=0&prev_df=1&prev_ds=0&prev_tor_type=0&df=1&da=1&f[]=-1&o=10&s=2"
+                "&tm=-1&sns=-1&srg=0&pn=&nm=QUERYEXTRA&allw=1",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": "",
+    "login_object": "",
+    "login_path": None,
+    "movie_extra": "",
+    "movie_keywords": "{title} {year}",
+    "movie_query": "",
+    "name": "Serialz.tv",
+    "parser": {
+        "infohash": "",
+        "row": "find_once('table', ('id', 'tor-tbl'), order=1).find_all('tr', start=2)",
+        "name": "item(tag='a', select=('class', 'tLink'), order=1)",
+        "size": "item(tag='a', order=3)",
+        "seeds": "item(tag='span', order=4)",
+        "peers": "item(tag='span', order=5)",
+        "torrent": "'http://serialz.tv%s' % item(tag='a', attribute='href', order=5)"
+    },
+    "private": False,
+    "root_url": "http://http://serialz.tv",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": u"{title} Сезон {season}",
+    "season_keywords2": "{title} S{season:2}",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": True,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": u"{title} Сезон {season} Серия {episode:2}",
+    "tv_keywords2": ""
+}
+
 longest = len(definitions[sorted(definitions, key=lambda p: len(definitions[p]['name']), reverse=True)[0]]['name'])
