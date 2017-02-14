@@ -1,5 +1,5 @@
 Adding providers
-================
+----------------
 
 
 Adding a custom provider is similar to using overrides, although you'll be
@@ -57,7 +57,92 @@ and make sure it follows the format below (hopefully with
         }
     }
 
-**TODO**: A more detailed description of all the fields and a tutorial on how
+
+Provider fields
+===============
+
+name
+""""
+The provider's name as displayed to the user, typically with color.
+
+color
+"""""
+The color of the provider name using Kodi's ARGB (alpha-red-green-blue) color
+format.
+
+base_url
+""""""""
+The ``base_url`` is the part of the provider's URL that is **always** found in
+your browser bar when you visit or more importantly, search the site. It may or
+may not contain the ``QUERY`` part (more on that later); it really only depends
+on the **common** part of the different search queries.
+
+language
+""""""""
+Forces a language preference for translations if they're available, eg. ``es``
+
+private
+"""""""
+Boolean flag to mark this provider as private.
+
+separator
+"""""""""
+Space separator used in URL queries by this provider, typically ``%20`` for an
+encoded white-space or ``+``
+
+subpage
+"""""""
+The most expensive boolean flag, to be avoided as much as possible. This tells
+Burst that we have no choice but to open **each and every** link to get to the
+torrent or magnet link. As it stands, we also waste the ``torrent`` (more on
+that later) definition under ``parser``, which becomes the link to follow, and
+the page at that link gets automatically processed to find a magnet or torrent
+link in it.
+
+\*_query
+""""""""
+Second part of the URL after ``base_url`` which will contain the ``QUERY``
+keyword if it's not already in the ``base_url``. This typically include
+category parameters specific to each provider, ie. ``/movies/QUERY``
+
+\*_extra
+""""""""
+The most confusing part of queries. Those will contain *extra* parameters,
+typically categories also, replacing the ``EXTRA`` keyword often found in the
+respective ``*_query`` definition, and often simply for the convenience of
+shorter ``*_query`` definitions. Note that this is mostly always just an empty
+string and not being used.
+
+\*_keywords
+"""""""""""
+Keyword definitions for the different search types, with special placeholders
+like ``{title}`` for a movie or TV show title.
+
+List of keyword types
+^^^^^^^^^^^^^^^^^^^^^
+    - ``{title}`` Movie or TV show title
+    - ``{year}`` Release date, typically for movies only
+    - ``{season}`` Season number. Using ``{season:2}`` pads to 2 characters with
+      leading zeros, eg. ``s{season:2}`` would become ``s01`` for an episode of
+      season 1.
+    - ``{episode}`` Episode number, same formatting as ``{season}`` with regards
+      to padding, ie. ``{episode:2}``. Typically used with season as such:
+      ``s{season:2}e{episode:2}``
+
+
+parser
+""""""
+This is the most important part of every provider, and tells Burst how to
+find torrents within search result pages. The first parser definition to be used
+is the ``row``, and is also the "parent" to all to the others. It most usually
+ends with a ``find_all('tr')``, and tells Burst which HTML tags, typically table
+rows, hold the results we're interested in. All other parser definitions will
+then look **within** each row for their respective information. Each other
+parser definition tells Burst what HTML tag has its information, for example
+``item(tag='td', order=1)`` for ``name`` tells Burst that the torrent name is
+in the first table column of each row.
+
+**TODO**: A more detailed description of parser fields and a tutorial on how
 to actually create providers will soon be added.
 
 .. _userdata: http://kodi.wiki/view/Userdata
