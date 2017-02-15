@@ -302,6 +302,8 @@ definitions['hd-torrents'] = {
         "seeds": "item(tag='td', order=10)",
         "size": "item(tag='td', order=8)",
         "torrent": "'https://hd-torrents.org/%s' % item(tag='a', attribute='href', order=5)"
+                   ".replace('wishlist.php', 'download.php')"
+                   ".replace('torrent_id=', 'id=')"
     },
     "private": True,
     "root_url": "https://hd-torrents.org",
