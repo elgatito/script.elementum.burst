@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import re
-import types
 import string
 import hashlib
 from urllib import unquote
-from unicodedata import normalize
 from parser.HTMLParser import HTMLParser
 from quasar.provider import log, get_setting
 from providers.definitions import definitions, t411season, t411episode
@@ -65,7 +63,7 @@ class Filtering:
             'filter_3d': ['_3d_'],
             'filter_telesync': ['telesync', '_ts_', '_tc_'],
             'filter_cam': ['_cam_', 'hdcam'],
-            'filter_trailer': ['trailer']
+            'filter_trailer': ['trailer', u'трейлер']
         }
 
         require = []
@@ -361,7 +359,7 @@ class Filtering:
         if self.filter_title and self.title:
             self.title = self.normalize_name(self.title)
 
-        self.reason = "[%s] %70s ***" % (provider, name.decode('utf-8'))
+        self.reason = "[%s] %70s ***" % (provider, name)
 
         if self.filter_resolutions:
             resolution = self.determine_resolution(name)
@@ -437,12 +435,8 @@ class Filtering:
         Returns:
             str: Converted file name or directory string
         """
-        # First normalization
-        value = normalize_string(value)
         value = unquote(value)
         value = self.unescape(value)
-        # Last normalization, because some unicode char could appear from the previous steps
-        value = normalize_string(value)
         value = value.lower()
 
         for p in string.punctuation:
@@ -580,23 +574,3 @@ def cleanup_results(results_list):
             hashes.append(hash_)
 
     return sorted(filtered_list, key=lambda r: (get_int(r['seeds'])), reverse=True)
-
-
-def normalize_string(name):
-    """ String normalization method
-
-    Args:
-        name (unicode): Unicode string to be normalized
-
-    Returns:
-        str: Normalized ascii string
-    """
-    try:
-        normalize_name = name.decode('unicode-escape').encode('latin-1')
-    except:
-        if types.StringType == type(name):
-            unicode_name = unicode(name, 'utf-8', 'ignore')
-        else:
-            unicode_name = name
-        normalize_name = normalize('NFKD', unicode_name).encode('ascii', 'ignore')
-    return normalize_name
