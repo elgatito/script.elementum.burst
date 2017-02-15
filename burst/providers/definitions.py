@@ -329,7 +329,7 @@ definitions['toloka'] = {
     "general_extra": "",
     "general_keywords": "{title}",
     "general_query": "",
-    "language": None,
+    "language": "en",
     "login_failed": u"Такий псевдонім не існує, або не збігається пароль.",
     "login_object": "{'username': USERNAME, 'password': PASSWORD, 'autologin': '1', 'login': 'Enter'}",
     "login_path": "/login.php",
@@ -368,13 +368,13 @@ definitions['0day'] = {
     "anime_keywords": "{title} {episode}",
     "anime_query": "",
     "base_url": "https://tracker.0day.kiev.ua/browse.php" +
-                "?c10=1&c11=1&c29=1&c34=1&c20=1&c12=1&c13=1&c21=1&c15=1&c16=1&c27=1&c28=1&c41=1" +
+                "?c10=1&c11=1&c29=1&c34=1&c20=1&c12=1&c13=1&c21=1&c15=1&c16=1&c27=1&c28=1&c41=1"
                 "&c19=1&c30=1&c23=1&search=QUERYEXTRA&incldead=0&where=0&sort=7&type=desc",
     "color": "FFFFFFFF",
     "general_extra": "",
     "general_keywords": "{title}",
     "general_query": "",
-    "language": None,
+    "language": "en",
     "login_failed": u"Ошибка входа",
     "login_object": "{'username': USERNAME, 'password': PASSWORD, 'returnto': '/browse.php'}",
     "login_path": "/takelogin.php",
@@ -412,8 +412,8 @@ definitions['nnmclub'] = {
     "anime_extra": "",
     "anime_keywords": "{title} {episode}",
     "anime_query": "",
-    "base_url": "https://nnm-club.me/forum/tracker.php?nm=QUERYEXTRA&prev_sd=1&prev_a=1&prev_my=0&" +
-                "prev_n=0&prev_shc=1&prev_shf=0&prev_sha=0&prev_shs=1&prev_shr=0&prev_sht=0" +
+    "base_url": "https://nnmclub.to/forum/tracker.php?nm=QUERYEXTRA&prev_sd=1&prev_a=1&prev_my=0&"
+                "prev_n=0&prev_shc=1&prev_shf=0&prev_sha=0&prev_shs=1&prev_shr=0&prev_sht=0"
                 "&o=10&s=2&tm=-1&a=1&sd=1&ta=-1&sns=-1&sds=-1&pn&submit=1",
     "color": "FFFFFFFF",
     "general_extra": "",
@@ -437,7 +437,7 @@ definitions['nnmclub'] = {
         "torrent": "'http://nnmclub.to/forum/%s' % item(tag='a', attribute='href', order=2)"
     },
     "private": True,
-    "root_url": "https://nnm-club.me",
+    "root_url": "https://nnmclub.to",
     "season_extra": "",
     "season_extra2": "",
     "season_keywords": u"{title} \"Сезон {season}\"",
@@ -457,7 +457,7 @@ definitions['kinozal'] = {
     "anime_extra": "",
     "anime_keywords": "{title} {episode}",
     "anime_query": "",
-    "base_url": "http://kinozal.tv/browse.php?s=QUERYEXTRA&g=0&c=0&v=0&d=0&w=0&t=1&f=0",
+    "base_url": "https://kinozal-tv.appspot.com/browse.php?s=QUERYEXTRA&g=0&c=0&v=0&d=0&w=0&t=1&f=0",
     "color": "FFFFFFFF",
     "general_extra": "",
     "general_keywords": "{title}",
@@ -477,10 +477,10 @@ definitions['kinozal'] = {
         "row": "find_once('table', ('class', 't_peer'), order=1).find_all('tr', start=2)",
         "seeds": "item(tag='td', order=4)",
         "size": "item(tag='td', order=3)",
-        "torrent": "'http://dl.kinozal.tv/download.php?id=%s' % item(tag='a', attribute='href', order=1).split('=', 1)[1]"
+        "torrent": "'https://kinozal-tv.appspot.com/dl./download.php?id=%s' % item(tag='a', attribute='href', order=1).split('=', 1)[1]"
     },
     "private": True,
-    "root_url": "http://kinozal.tv",
+    "root_url": "https://kinozal-tv.appspot.com",
     "season_extra": "",
     "season_extra2": "",
     "season_keywords": u"{title} {season}+Сезон",
@@ -500,8 +500,8 @@ definitions['newstudio'] = {
     "anime_extra": "",
     "anime_keywords": "{title} {episode}",
     "anime_query": "",
-    "base_url": "http://newstudio.tv/tracker.php?nm=QUERYEXTRA&prev_sd=1&prev_a=1&prev_my=0&prev_n=0&" +
-                "prev_shc=1&prev_shf=0&prev_sha=0&prev_shs=1&prev_shr=0&prev_sht=0&o=10&s=2&tm=-1&" +
+    "base_url": "http://newstudio.tv/tracker.php?nm=QUERYEXTRA&prev_sd=1&prev_a=1&prev_my=0&prev_n=0&"
+                "prev_shc=1&prev_shf=0&prev_sha=0&prev_shs=1&prev_shr=0&prev_sht=0&o=10&s=2&tm=-1&"
                 "a=1&sd=1&ds=1&ta=-1&sns=-1&sds=-1&pn&submit=1",
     "color": "FFFFFFFF",
     "general_extra": "",
@@ -545,7 +545,7 @@ definitions['rutracker'] = {
     "anime_extra": "",
     "anime_keywords": "{title} {episode}",
     "anime_query": "",
-    "base_url": "https://rutracker.org/forum/tracker.php?nm=QUERYEXTRA&prev_new=0&prev_oop=1&f[]=-1&o=10&s=2&oop=1&pn=",
+    "base_url": "https://rutracker.cr/forum/tracker.php?nm=QUERYEXTRA&prev_new=0&prev_oop=1&f[]=-1&o=10&s=2&oop=1&pn=",
     "color": "FFFFFFFF",
     "general_extra": "",
     "general_keywords": "{title}",
@@ -565,10 +565,10 @@ definitions['rutracker'] = {
         "size": "item('a', order=4)",
         "seeds": "item(tag='b', order=1, select=('class', 'seedmed'))",
         "peers": "item(tag='b', order=2)",
-        "torrent": "'https://rutracker.org/forum/%s' % item(tag='a', attribute='href', order=4)"
+        "torrent": "'https://rutracker.cr/forum/%s' % item(tag='a', attribute='href', order=4)"
     },
     "private": True,
-    "root_url": "https://rutracker.org",
+    "root_url": "https://rutracker.cr",
     "season_extra": "",
     "season_extra2": "",
     "season_keywords": u"\"{title}\" \"Сезон {season}\"",
@@ -670,6 +670,49 @@ definitions['serialz'] = {
     "tv_extra2": "",
     "tv_keywords": u"{title} Сезон {season} Серия {episode:2}",
     "tv_keywords2": ""
+}
+
+# tfile
+definitions['tfile'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "",
+    "base_url": "http://search.tfile.co/?q=QUERYEXTRA&c=0&g=&act=&y=&ql=&a=&d=&o=&size_min=0&size_max=0",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": "",
+    "login_object": "",
+    "login_path": None,
+    "movie_extra": "",
+    "movie_keywords": "{title} {year}",
+    "movie_query": "",
+    "name": "tfile.me",
+    "parser": {
+        "infohash": "",
+        "row": "find_once('table', ('id', 'topics'), order=1).find_all('tr', start=2)",
+        "name": "item(tag='td', order=3)",
+        "seeds": "item(tag='td', order=5)",
+        "peers": "item(tag='td', order=6)",
+        "size": "item(tag='td', order=4)",
+        "torrent": "'http://tfile.co/forum/viewtopic.php?t=%s' % item(attribute='id')[1:]"
+    },
+    "private": True,
+    "root_url": "http://tfile.co/",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "{title} %D1%E5%E7%EE%ED {season}",
+    "season_keywords2": "{title} S{season:2}",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": True,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "{title} s{season:2}e{episode:2}",
+    "tv_keywords2": "{title} %D1%E5%E7%EE%ED {season}"
 }
 
 longest = len(definitions[sorted(definitions, key=lambda p: len(definitions[p]['name']), reverse=True)[0]]['name'])

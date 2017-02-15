@@ -21,6 +21,7 @@
     <setting label="Rutor" id="use_rutor" type="bool" default="false" />
     <setting label="MegaPeer" id="use_megapeer" type="bool" default="false" />
     <setting label="Serialz.tv" id="use_serialz" type="bool" default="false" />
+    <setting label="tfile.me" id="use_tfile" type="bool" default="false" />
     <setting label="Nextorrent" id="use_nextorrent" type="bool" default="false" />
     <setting label="Torrent9" id="use_torrent9" type="bool" default="false" />
     <setting label="Cpasbien" id="use_cpasbien" type="bool" default="false" />
