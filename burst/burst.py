@@ -189,6 +189,7 @@ def extract_torrents(provider, client):
 
             # New client instance, otherwise it's race conditions all over the place
             subclient = Client()
+            subclient.passkey = client.passkey
 
             if get_setting("use_cloudhole", bool):
                 subclient.clearance = get_setting('clearance')
@@ -232,7 +233,10 @@ def extract_torrents(provider, client):
             user_agent = USER_AGENT
             if get_setting("use_cloudhole", bool):
                 user_agent = get_setting("user_agent")
-            if client.token:
+
+            if client.passkey:
+                torrent = torrent.replace('PASSKEY', client.passkey)
+            elif client.token:
                 headers = {'Authorization': client.token, 'User-Agent': user_agent}
                 log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                 torrent = append_headers(torrent, headers)

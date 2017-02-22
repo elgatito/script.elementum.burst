@@ -22,6 +22,7 @@
     <setting label="MegaPeer" id="use_megapeer" type="bool" default="false" />
     <setting label="Serialz.tv" id="use_serialz" type="bool" default="false" />
     <setting label="tfile.me" id="use_tfile" type="bool" default="false" />
+    <setting label="Kinozal" id="use_kinozal" type="bool" default="false" />
     <setting label="Nextorrent" id="use_nextorrent" type="bool" default="false" />
     <setting label="Torrent9" id="use_torrent9" type="bool" default="false" />
     <setting label="Cpasbien" id="use_cpasbien" type="bool" default="false" />
@@ -85,15 +86,23 @@
     <setting label="NewStudio" id="use_newstudio" type="bool" default="false" />
       <setting id="newstudio_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="newstudio_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
-    <setting label="Kinozal" id="use_kinozal" type="bool" default="false" />
-      <setting id="kinozal_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="kinozal_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
     <setting label="NNM-Club" id="use_nnmclub" type="bool" default="false" />
       <setting id="nnmclub_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="nnmclub_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
     <setting label="RuTracker" id="use_rutracker" type="bool" default="false" />
       <setting id="rutracker_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="rutracker_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+    <setting label="HDCLUB.org" id="use_hdclub" type="bool" default="false" />
+      <setting id="hdclub_passkey" label="32076" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+    <setting label="BaibaKo.TV" id="use_baibako" type="bool" default="false" />
+      <setting id="baibako_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="baibako_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+    <setting label="torrent3d.ru" id="use_torrent3dru" type="bool" default="false" />
+      <setting id="torrent3dru_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="torrent3dru_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+    <setting label="3d-tracker.ru" id="use_3dtrackerru" type="bool" default="false" />
+      <setting id="3dtrackerru_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="3dtrackerru_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
   </category>
   <category label="32002">
     <setting label="480p" id="filter_480p" type="bool" default="true" />

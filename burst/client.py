@@ -33,6 +33,7 @@ class Client:
         self.content = None
         self.status = None
         self.token = None
+        self.passkey = None
         self.headers = dict()
 
     def _create_cookies(self, payload):
@@ -145,7 +146,7 @@ class Client:
                     charset = 'utf-8-sig'  # Changing to utf-8-sig to remove BOM if found on decode from utf-8
 
                 if charset:
-                    log.debug('Decoding charset from %s' % (charset))
+                    log.debug('Decoding charset from %s for %s' % (charset, repr(url)))
                     self.content = self.content.decode(charset, 'replace')
 
                 self.status = response.getcode()

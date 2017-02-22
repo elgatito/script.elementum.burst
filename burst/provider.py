@@ -159,7 +159,8 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
         elif 'private' in definition and definition['private']:
             username = get_setting('%s_username' % provider)
             password = get_setting('%s_password' % provider)
-            if not username and not password:
+            passkey = get_setting('%s_passkey' % provider)
+            if not username and not password and not passkey:
                 for addon_name in ('script.magnetic.%s' % provider, 'script.magnetic.%s-mc' % provider):
                     for setting in ('username', 'password'):
                         try:
@@ -172,7 +173,12 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                         except:
                             pass
 
-            if username and password:
+            if passkey:
+                logged_in = True
+                client.passkey = passkey
+                url_search = url_search.replace('PASSKEY', passkey)
+
+            elif username and password:
                 logged_in = False
                 login_object = definition['login_object'].replace('USERNAME', '"%s"' % username).replace('PASSWORD', '"%s"' % password)
 

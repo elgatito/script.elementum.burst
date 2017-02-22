@@ -139,18 +139,19 @@ definitions['ruhunt']['tv_keywords'] = "{title} s{season:2}e{episode:2}"
 definitions['ruhunt']['tv_keywords2'] = u"{title} \"Сезон {season}\""
 
 # Rutor
-definitions['rutor']['anime_query'] = "0/10/100/2/QUERYEXTRA"
-definitions['rutor']['movie_query'] = "0/1/100/2/QUERYEXTRA"
-definitions['rutor']['season_query'] = "0/4/100/2/QUERYEXTRA"
-definitions['rutor']['show_query'] = "0/4/100/2/QUERYEXTRA"
-definitions['rutor']['season_keywords'] = "{title} [{season:2}x01"
-definitions['rutor']['season_keywords2'] = "{title} [S{season:2}]"
+definitions['rutor']['anime_query'] = "0/10/300/2/QUERYEXTRA"
+definitions['rutor']['movie_query'] = "0/1/300/2/QUERYEXTRA"
+definitions['rutor']['season_query'] = "0/4/300/2/QUERYEXTRA"
+definitions['rutor']['show_query'] = "0/4/300/2/QUERYEXTRA"
+definitions['rutor']['season_keywords'] = "{title} {season:2}x01|S{season:2}"
+definitions['rutor']['season_keywords2'] = ""
 definitions['rutor']['tv_keywords'] = '{title} s{season:2}e{episode:2}'
-definitions['rutor']['tv_keywords2'] = '{title} s{season:2}'
+definitions['rutor']['tv_keywords2'] = '{title} {season:2}x01|S{season:2}'
 definitions['rutor']['parser']['row'] = "find_once('table', order=3).find_all('tr', start=2)"
 definitions['rutor']['parser']['seeds'] = "item(tag='span', order=1, select=('class', 'green'))"
 definitions['rutor']['parser']['peers'] = "item(tag='span', order=1, select=('class', 'red'))"
 definitions['rutor']['parser']['size'] = "item.find_all('td', ('align', 'right'))[-1].text()"
+definitions['rutor']['parser']['torrent'] = "'http://rutor.info%s' % (item(tag='a', order=1, attribute='href').split('.info', 1)[-1])"
 
 # YTS
 definitions['yts']['is_api'] = True
@@ -436,7 +437,7 @@ definitions['nnmclub'] = {
         "row": "find_once('table', ('class', 'tablesorter'), order=1).find_all('tr', ('class', ['prow1', 'prow2']))",
         "seeds": "item(tag='td', order=6)",
         "size": "item(tag='td', order=4).split(' ', 1)[1]",
-        "torrent": "'http://nnmclub.to/forum/%s' % item(tag='a', attribute='href', order=2)"
+        "torrent": "'https://nnmclub.to/forum/%s' % item(tag='a', attribute='href', order=2)"
     },
     "private": True,
     "root_url": "https://nnmclub.to",
@@ -465,9 +466,9 @@ definitions['kinozal'] = {
     "general_keywords": "{title}",
     "general_query": "",
     "language": None,
-    "login_failed": u"Восстановление",
-    "login_object": "{'username': USERNAME, 'password': PASSWORD, 'autologin': '1', 'login': u'Вход'}",
-    "login_path": "/takelogin.php",
+    "login_failed": "",
+    "login_object": "",
+    "login_path": "",
     "movie_extra": "",
     "movie_keywords": "{title} {year}",
     "movie_query": "",
@@ -479,9 +480,9 @@ definitions['kinozal'] = {
         "row": "find_once('table', ('class', 't_peer'), order=1).find_all('tr', start=2)",
         "seeds": "item(tag='td', order=4)",
         "size": "item(tag='td', order=3)",
-        "torrent": "'https://kinozal-tv.appspot.com/dl./download.php?id=%s' % item(tag='a', attribute='href', order=1).split('=', 1)[1]"
+        "torrent": "'https://s-kinozal-tv.appspot.com/getmagnet?%s' % item(tag='a', attribute='href', order=1).split('?', 1)[1]"
     },
-    "private": True,
+    "private": False,
     "root_url": "https://kinozal-tv.appspot.com",
     "season_extra": "",
     "season_extra2": "",
@@ -490,7 +491,7 @@ definitions['kinozal'] = {
     "season_query": "",
     "separator": "+",
     "show_query": "",
-    "subpage": False,
+    "subpage": True,
     "tv_extra": "",
     "tv_extra2": "",
     "tv_keywords": "{title} s{season:2}e{episode:2}",
@@ -715,6 +716,179 @@ definitions['tfile'] = {
     "tv_extra2": "",
     "tv_keywords": "{title} s{season:2}e{episode:2}",
     "tv_keywords2": "{title} %D1%E5%E7%EE%ED {season}"
+}
+
+# baibako
+definitions['baibako'] = {
+    "anime_extra": "",
+    "anime_keywords": "",
+    "anime_query": "",
+    "base_url": "http://baibako.tv/browse.php?search=QUERYEXTRA&incldead=0&cat=0&videoformat=0&sort=7&type=desc",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "",
+    "general_query": "",
+    "language": None,
+    "login_failed": u"Пустите",
+    "login_object": "{'username': USERNAME, 'password': PASSWORD, 'commit': u'Пустите меня'}",
+    "login_path": "/takelogin.php",
+    "movie_extra": "",
+    "movie_keywords": "",
+    "movie_query": "",
+    "name": "BaibaKo.TV",
+    "parser": {
+        "infohash": "",
+        "row": "find_once('tbody', ('id', 'highlighted'), order=1).find_all('tr', start=1)",
+        "name": "item(tag='a', order=2)",
+        "seeds": "item(tag='td', order=7, divider=('|', 0))",
+        "peers": "item(tag='td', order=7, divider=('|', 1))",
+        "size": "item(tag='td', order=6)",
+        "torrent": "item(tag='a', attribute='href', order=3)"
+    },
+    "private": True,
+    "root_url": "http://baibako.tv/",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "{title} %2Fs{season:2}e{episode:2}-",
+    "season_keywords2": "{title} S{season:2}",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": False,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "{title} %2Fs{season:2}e{episode:2}",
+    "tv_keywords2": ""
+}
+
+# torrent3d.ru
+definitions['torrent3dru'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "",
+    "base_url": "http://torrent3d.ru/browse.php?search=QUERYEXTRA&x=0&y=0",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": u"Регистрация",
+    "login_object": "{'email': USERNAME, 'password': PASSWORD}",
+    "login_path": "/takelogin.php",
+    "movie_extra": "",
+    "movie_keywords": "{title} {year}",
+    "movie_query": "",
+    "name": "torrent3d.ru",
+    "parser": {
+        "infohash": "",
+        "row": "find_once('div', ('id', 'releases-table'), order=1).find_all('tr', start=3)",
+        "name": "item(tag='a', order=2)",
+        "seeds": "item(tag='td', order=5, divider=('|', 0))",
+        "peers": "item(tag='td', order=5, divider=('|', 1))",
+        "size": "item(tag='td', order=4)",
+        "torrent": "'%s&ok' % item(tag='a', attribute='href', order=1).split('&', 1)[0]"
+    },
+    "private": True,
+    "root_url": "http://torrent3d.ru/",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "",
+    "season_keywords2": "",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": False,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "",
+    "tv_keywords2": ""
+}
+
+# 3d-tracker.ru
+definitions['3dtrackerru'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "",
+    "base_url": "http://3d-tracker.ru/search.php?tracker_search=tracker&keywords=QUERYEXTRA&terms=all&author=&"
+                "sc=1&sf=titleonly&sk=ts&sd=d&sr=topics&st=0&ch=300&t=0&submit=%D0%9F%D0%BE%D0%B8%D1%81%D0%BA",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": u"Регистрация",
+    "login_object": "{'username': USERNAME, 'password': PASSWORD, 'login': u'Вход'}",
+    "login_path": "/ucp.php?mode=login",
+    "movie_extra": "",
+    "movie_keywords": "{title} {year}",
+    "movie_query": "",
+    "name": "3d-tracker.ru",
+    "parser": {
+        "infohash": "",
+        "row": "find_once('table', ('class', 'tablebg'), order=1).find_all('tr', select=('valign', 'middle'), start=1)",
+        "name": "item(tag='a', select=('class', 'nav'), order=1)",
+        "seeds": "item(tag='a', select=('class', 'seed'), order=1)",
+        "peers": "item(tag='a', select=('class', 'leech'), order=1)",
+        "size": "item(tag='b', order=5)",
+        "torrent": "'http://3d-tracker.ru%s' % (item(tag='a', attribute='href', order=1)[1:])"
+    },
+    "private": True,
+    "root_url": "http://3d-tracker.ru/",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "",
+    "season_keywords2": "",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": False,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "",
+    "tv_keywords2": ""
+}
+
+# HDCLUB.org
+definitions['hdclub'] = {
+    "anime_extra": "",
+    "anime_keywords": "{title} {episode}",
+    "anime_query": "",
+    "base_url": "https://hdclub.org/browse.php?webdl=0&3d=0&search=QUERYEXTRA&incldead=0&dsearch=&stype=and&sort=7&type=desc&passkey=PASSKEY",
+    "color": "FFFFFFFF",
+    "general_extra": "",
+    "general_keywords": "{title}",
+    "general_query": "",
+    "language": None,
+    "login_failed": "",
+    "login_object": "",
+    "login_path": "",
+    "movie_extra": "",
+    "movie_keywords": "{title} ({year})",
+    "movie_query": "",
+    "name": "HDCLUB.org",
+    "parser": {
+        "infohash": "",
+        "name": "item('a', order=3)",
+        "row": "find_once('tbody', ('id', 'highlighted'), order=1).find_all('tr', start=1)",
+        "size": "item('td', order=9)",
+        "seeds": "item(tag='td', order=7)",
+        "peers": "item(tag='td', order=8)",
+        "torrent": "'https://hdclub.org/%s&passkey=PASSKEY' % item(tag='a', attribute='href', order=3).replace('details.php', 'download.php')"
+    },
+    "private": True,
+    "root_url": "https://hdclub.org/",
+    "season_extra": "",
+    "season_extra2": "",
+    "season_keywords": "",
+    "season_keywords2": "",
+    "season_query": "",
+    "separator": "+",
+    "show_query": "",
+    "subpage": False,
+    "tv_extra": "",
+    "tv_extra2": "",
+    "tv_keywords": "",
+    "tv_keywords2": ""
 }
 
 longest = len(definitions[sorted(definitions, key=lambda p: len(definitions[p]['name']), reverse=True)[0]]['name'])
