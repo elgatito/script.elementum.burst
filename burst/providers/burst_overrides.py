@@ -1,5 +1,5 @@
-# -*- coding: UTF-8 -*-
-from shared import definitions
+# -*- coding: utf-8 -*-
+from definitions import definitions
 
 
 overrides = {
@@ -258,7 +258,7 @@ overrides = {
     }
 }
 
-# Overrides that change overrides[]
+# Overrides that change overrides
 overrides['1337x']['parser']['torrent'] = "'" + overrides['1337x']['root_url'] + "%s' % " + definitions['1337x']['parser']['torrent']
 
 overrides['myxzorg']['parser']['torrent'] = "'" + overrides['myxzorg']['root_url'] + "/%s' % " + \

@@ -227,7 +227,7 @@
             "row": "find_once('table', ('class', 'well-small'), order=1).find_all('tr', start=2)",
             "size": "item('a', order=3)",
             "seeds": "1",
-            "peers": "",  
+            "peers": "",
             "torrent": "'http://newstudio.tv%s' % item(tag='a', attribute='href', order=4)"
         },
         "private": true,
