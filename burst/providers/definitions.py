@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Overrides for provider definitions
+Definitions and overrides loader
 """
+
 import os
 import sys
 import json
@@ -13,15 +14,26 @@ from urlparse import urlparse
 from quasar.provider import log
 
 ADDON = xbmcaddon.Addon()
+ADDON_PATH = ADDON.getAddonInfo("path").decode('utf-8')
+ADDON_PROFILE = ADDON.getAddonInfo("profile").decode('utf-8')
+if not ADDON_PATH:
+    ADDON_PATH = ".."
+
 definitions = {}
 
 
 def load_providers(path, fix_seasons=False):
+    """ Definitions loader for json files
+
+    Args:
+        path         (str): Path to json file to be loaded
+        fix_seasons (bool): Boolean flag to apply default fix to seasons keywords
+    """
     try:
         with open(path) as file:
             providers = json.load(file)
         for provider in providers:
-            update_definition(provider, providers[provider], fix_seasons)
+            update_definitions(provider, providers[provider], fix_seasons)
     except Exception as e:
         import traceback
         log.error("Failed importing providers from %s: %s", path, repr(e))
@@ -29,6 +41,15 @@ def load_providers(path, fix_seasons=False):
 
 
 def load_overrides(path, custom=False):
+    """ Overrides loader for Python files
+
+    Note:
+        Overrides must be in an ``overrides`` dictionary.
+
+    Args:
+        path    (str): Path to Python file to be loaded
+        custom (bool): Boolean flag to specify if this is a custom overrides file
+    """
     try:
         if custom:
             sys.path.append(path)
@@ -38,7 +59,7 @@ def load_overrides(path, custom=False):
         if custom:
             log.debug("Imported overrides: %s", repr(overrides))
         for provider in overrides:
-            update_definition(provider, overrides[provider])
+            update_definitions(provider, overrides[provider])
         if custom:
             log.info("Successfully loaded overrides from %s", os.path.join(path, "overrides.py"))
     except Exception as e:
@@ -47,7 +68,14 @@ def load_overrides(path, custom=False):
         map(log.error, traceback.format_exc().split("\n"))
 
 
-def update_definition(provider, definition, fix_seasons=False):
+def update_definitions(provider, definition, fix_seasons=False):
+    """ Updates global definitions with a single provider's definitions
+
+    Args:
+        provider     (str): Provider ID
+        definition  (dict): Loaded provider's definitions to be merged with the global definitions
+        fix_seasons (bool): Boolean flag to apply default fix to seasons keywords
+    """
     if 'base_url' in definition:
         parsed_url = urlparse(definition['base_url'])
         root_url = '%s://%s' % (parsed_url.scheme, parsed_url.netloc)
@@ -66,6 +94,12 @@ def update_definition(provider, definition, fix_seasons=False):
 
 
 def update(d, u):
+    """ Utility method to recursively merge dictionary values of definitions
+
+    Args:
+        d (dict): Current provider definitions
+        u (dict): Dictionary of definitions to be updated
+    """
     for k, v in u.iteritems():
         if isinstance(v, collections.Mapping):
             r = update(d.get(k, {}), v)
@@ -75,50 +109,17 @@ def update(d, u):
     return d
 
 
-# T411
-def t411season(season):
-    real_s = season + 967
-    if season == 25:
-        real_s = 994
-    if 25 < season < 28:
-        real_s = season + 966
-    return real_s
-
-
-def t411episode(episode):
-    real_ep = 936
-    if 8 < episode < 31:
-        real_ep = episode + 937
-    if 30 < episode < 61:
-        real_ep = episode + 1057
-    return real_ep
-
-
-is_mock = "%s" % type(xbmcaddon) == "<class 'sphinx.ext.autodoc._MockModule'>"
-
 # Load generated providers
-if not is_mock:
-    load_providers(os.path.join(ADDON.getAddonInfo("path"), 'burst', 'providers', 'definitions.json'), True)
-else:
-    load_providers(os.path.join('..', 'burst', 'providers', 'definitions.json'))
+load_providers(os.path.join(ADDON_PATH, 'burst', 'providers', 'definitions.json'), True)
 
 # Load built-in providers
-if not is_mock:
-    load_providers(os.path.join(ADDON.getAddonInfo("path"), 'burst', 'providers', 'providers.json'))
-else:
-    load_providers(os.path.join('..', 'burst', 'providers', 'providers.json'))
+load_providers(os.path.join(ADDON_PATH, 'burst', 'providers', 'providers.json'))
 
 # Load providers overrides
-if not is_mock:
-    load_overrides(os.path.join(ADDON.getAddonInfo("path"), 'burst', 'providers'))
-else:
-    load_overrides(os.path.join('..', 'burst', 'providers'))
+load_overrides(os.path.join(ADDON_PATH, 'burst', 'providers'))
 
 # Load user's custom providers
-if not is_mock:
-    custom_providers = os.path.join(xbmc.translatePath(ADDON.getAddonInfo("profile")), "providers")
-else:
-    custom_providers = '.'
+custom_providers = os.path.join(xbmc.translatePath(ADDON_PROFILE), "providers")
 if not os.path.exists(custom_providers):
     try:
         os.makedirs(custom_providers)
@@ -130,11 +131,10 @@ for provider_file in glob(os.path.join(custom_providers, "*.json")):
     load_providers(provider_file)
 
 # Load user's custom overrides
-if not is_mock:
-    custom_overrides = xbmc.translatePath(ADDON.getAddonInfo("profile"))
-    if os.path.exists(custom_overrides):
-        load_overrides(custom_overrides, True)
-else:
-    load_overrides('.')
+custom_overrides = xbmc.translatePath(ADDON_PROFILE)
+if os.path.exists(custom_overrides):
+    load_overrides(custom_overrides, True)
 
-longest = len(definitions[sorted(definitions, key=lambda p: len(definitions[p]['name']), reverse=True)[0]]['name'])
+longest = 10
+if len(definitions) > 0:
+    longest = len(definitions[sorted(definitions, key=lambda p: len(definitions[p]['name']), reverse=True)[0]]['name'])

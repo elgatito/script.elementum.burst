@@ -1,5 +1,22 @@
 # -*- coding: utf-8 -*-
+"""
+Default Burst overrides
+
+.. data:: overrides
+
+    Default overrides dictionary
+"""
+
 from definitions import definitions
+
+
+def source():
+    """ See source
+
+    Note:
+        This just a dummy method for documentation
+    """
+    return repr(overrides)
 
 
 overrides = {

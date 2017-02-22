@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+"""
+Burst utilities
+"""
+
 import os
 import re
 import xbmc
@@ -9,17 +13,16 @@ from quasar.provider import get_setting
 from providers.definitions import definitions
 
 ADDON = xbmcaddon.Addon()
-if "%s" % type(xbmcaddon) != "<class 'sphinx.ext.autodoc._MockModule'>":
-    ADDON_ID = ADDON.getAddonInfo("id")
-    ADDON_ICON = ADDON.getAddonInfo("icon")
-    ADDON_NAME = ADDON.getAddonInfo("name")
-    ADDON_PATH = ADDON.getAddonInfo("path")
-    ADDON_VERSION = ADDON.getAddonInfo("version")
-    PATH_ADDONS = xbmc.translatePath("special://home/addons/")
-    PATH_TEMP = xbmc.translatePath("special://temp")
-else:
-    ADDON_PATH = '.'
-    ADDON_ICON = ''
+ADDON_ID = ADDON.getAddonInfo("id")
+ADDON_NAME = ADDON.getAddonInfo("name")
+ADDON_PATH = ADDON.getAddonInfo("path").decode('utf-8')
+ADDON_ICON = ADDON.getAddonInfo("icon").decode('utf-8')
+ADDON_PROFILE = ADDON.getAddonInfo("profile")
+ADDON_VERSION = ADDON.getAddonInfo("version")
+PATH_ADDONS = xbmc.translatePath("special://home/addons/")
+PATH_TEMP = xbmc.translatePath("special://temp")
+if not ADDON_PATH:
+    ADDON_PATH = '..'
 
 
 class Magnet:
@@ -156,7 +159,7 @@ def size_int(size_txt):
     """ Utility method to convert a file size contained in a string to an integer of bytes
 
     Args:
-        string (str): File size with suffix contained in a string, ie. ``1.21 GB``
+        string (str): File size with suffix contained in a string, eg. ``1.21 GB``
 
     Returns:
         float: The number of bytes as a float, or 0.0
@@ -204,7 +207,7 @@ def clean_number(string):
 
 
 def clean_size(string):
-    """ Utility method to remove unnecessary information from a file size string, ie. '6.5 GBytes' -> '6.5 GB'
+    """ Utility method to remove unnecessary information from a file size string, eg. '6.5 GBytes' -> '6.5 GB'
 
     Args:
         string (str): File size string to clean up
@@ -227,7 +230,7 @@ def sizeof(num, suffix='B'):
         suffix (str): Suffix for 'bytes'
 
     Returns:
-        str: The formatted file size as a string, ie. ``1.21 GB``
+        str: The formatted file size as a string, eg. ``1.21 GB``
     """
     for unit in ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']:
         if abs(num) < 1024.0:

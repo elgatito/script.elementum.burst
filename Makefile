@@ -45,7 +45,7 @@ surge:
 	cd burst-website && surge html burst.surge.sh
 
 docs-init:
-	cd docs && sphinx-apidoc --no-toc -o source/ ../burst
+	cd docs && sphinx-apidoc --no-toc -M -o source/ ../burst
 
 docs-dev:
 	cd docs && sphinx-autobuild . _build_dev

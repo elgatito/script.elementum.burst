@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 
+"""
+Burst filtering class and methods
+"""
+
 import re
 import string
 import hashlib
 from urllib import unquote
 from parser.HTMLParser import HTMLParser
 from quasar.provider import log, get_setting
-from providers.definitions import definitions, t411season, t411episode
+from providers.definitions import definitions
+from providers.helpers import t411season, t411episode
 from utils import Magnet, get_int, get_float, clean_number, size_int
 
 try:

@@ -24,6 +24,7 @@ from UserDict import DictMixin
 
 
 class OrderedDict(dict, DictMixin):
+    """ Backport of ``collections.OrderedDict`` for Python 2.6 (Kodi 16) """
 
     def __init__(self, *args, **kwds):
         if len(args) > 1:

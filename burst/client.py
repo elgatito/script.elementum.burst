@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+"""
+Burst web client
+"""
+
 import os
 import re
 import json
@@ -22,7 +26,7 @@ PATH_TEMP = translatePath("special://temp")
 
 class Client:
     """
-    Web page client
+    Web client class with automatic charset detection and decoding
     """
     def __init__(self):
         self._counter = 0

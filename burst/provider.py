@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+"""
+Provider thread methods
+"""
+
 import os
 import re
 import json

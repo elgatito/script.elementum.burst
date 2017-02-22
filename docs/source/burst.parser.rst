@@ -1,6 +1,11 @@
 burst.parser package
 ====================
 
+.. automodule:: burst.parser
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -29,10 +34,3 @@ burst.parser.markupbase module
     :show-inheritance:
 
 
-Module contents
----------------
-
-.. automodule:: burst.parser
-    :members:
-    :undoc-members:
-    :show-inheritance:

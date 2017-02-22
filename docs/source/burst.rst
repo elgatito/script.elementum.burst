@@ -1,6 +1,11 @@
 burst package
 =============
 
+.. automodule:: burst
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Subpackages
 -----------
 
@@ -36,6 +41,14 @@ burst.filtering module
     :undoc-members:
     :show-inheritance:
 
+burst.ordereddict module
+------------------------
+
+.. automodule:: burst.ordereddict
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 burst.provider module
 ---------------------
 
@@ -51,3 +64,5 @@ burst.utils module
     :members:
     :undoc-members:
     :show-inheritance:
+
+

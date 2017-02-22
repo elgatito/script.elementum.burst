@@ -1,8 +1,21 @@
 burst.providers package
 =======================
 
+.. automodule:: burst.providers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
+
+burst.providers.burst_overrides module
+--------------------------------------
+
+.. automodule:: burst.providers.burst_overrides
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 burst.providers.definitions module
 ----------------------------------
@@ -12,11 +25,12 @@ burst.providers.definitions module
     :undoc-members:
     :show-inheritance:
 
+burst.providers.helpers module
+------------------------------
 
-Module contents
----------------
-
-.. automodule:: burst.providers
+.. automodule:: burst.providers.helpers
     :members:
     :undoc-members:
     :show-inheritance:
+
+
