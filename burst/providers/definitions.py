@@ -6,6 +6,7 @@ Definitions and overrides loader
 import os
 import sys
 import json
+import time
 import xbmc
 import xbmcaddon
 import collections
@@ -13,6 +14,7 @@ from glob import glob
 from urlparse import urlparse
 from quasar.provider import log
 
+start_time = time.time()
 ADDON = xbmcaddon.Addon()
 ADDON_PATH = ADDON.getAddonInfo("path").decode('utf-8')
 ADDON_PROFILE = ADDON.getAddonInfo("profile").decode('utf-8')
@@ -138,3 +140,5 @@ if os.path.exists(custom_overrides):
 longest = 10
 if len(definitions) > 0:
     longest = len(definitions[sorted(definitions, key=lambda p: len(definitions[p]['name']), reverse=True)[0]]['name'])
+
+log.info("Loading definitions took %fs", time.time() - start_time)
