@@ -134,7 +134,7 @@ for provider_file in glob(os.path.join(custom_providers, "*.json")):
 
 # Load user's custom overrides
 custom_overrides = xbmc.translatePath(ADDON_PROFILE)
-if os.path.exists(custom_overrides):
+if os.path.exists(os.path.join(custom_overrides, 'overrides.py')):
     load_overrides(custom_overrides, True)
 
 longest = 10
