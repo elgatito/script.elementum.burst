@@ -433,7 +433,7 @@
             "seeds": "item(tag='td', order=7, divider=('|', 0))",
             "peers": "item(tag='td', order=7, divider=('|', 1))",
             "size": "item(tag='td', order=6)",
-            "torrent": "item(tag='a', attribute='href', order=3)"
+            "torrent": "'http://baibako.tv/%s' % item(tag='a', attribute='href', order=3)"
         },
         "private": true,
         "root_url": "http://baibako.tv/",
