@@ -24,7 +24,7 @@ if not ADDON_PATH:
 definitions = {}
 
 
-def load_providers(path, fix_seasons=False):
+def load_providers(path, custom=False, fix_seasons=False):
     """ Definitions loader for json files
 
     Args:
@@ -35,7 +35,7 @@ def load_providers(path, fix_seasons=False):
         with open(path) as file:
             providers = json.load(file)
         for provider in providers:
-            update_definitions(provider, providers[provider], fix_seasons)
+            update_definitions(provider, providers[provider], custom, fix_seasons)
     except Exception as e:
         import traceback
         log.error("Failed importing providers from %s: %s", path, repr(e))
@@ -70,7 +70,7 @@ def load_overrides(path, custom=False):
         map(log.error, traceback.format_exc().split("\n"))
 
 
-def update_definitions(provider, definition, fix_seasons=False):
+def update_definitions(provider, definition, custom=False, fix_seasons=False):
     """ Updates global definitions with a single provider's definitions
 
     Args:
@@ -88,6 +88,9 @@ def update_definitions(provider, definition, fix_seasons=False):
             definition['season_keywords'] = definition['season_keywords'].replace('Season_{season}', 'season {season:2}')
         if 'season_keywords2' in definition and definition['season_keywords2']:
             definition['season_keywords2'] = definition['season_keywords2'].replace('Season{season}', 's{season:2}')
+
+    if custom:
+        definition['custom'] = True
 
     if provider in definitions:
         update(definitions[provider], definition)
@@ -112,7 +115,7 @@ def update(d, u):
 
 
 # Load generated providers
-load_providers(os.path.join(ADDON_PATH, 'burst', 'providers', 'definitions.json'), True)
+load_providers(os.path.join(ADDON_PATH, 'burst', 'providers', 'definitions.json'), fix_seasons=True)
 
 # Load built-in providers
 load_providers(os.path.join(ADDON_PATH, 'burst', 'providers', 'providers.json'))
@@ -130,12 +133,12 @@ if not os.path.exists(custom_providers):
         pass
 for provider_file in glob(os.path.join(custom_providers, "*.json")):
     log.info("Importing and enabling %s" % provider_file)
-    load_providers(provider_file)
+    load_providers(provider_file, custom=True)
 
 # Load user's custom overrides
 custom_overrides = xbmc.translatePath(ADDON_PROFILE)
 if os.path.exists(os.path.join(custom_overrides, 'overrides.py')):
-    load_overrides(custom_overrides, True)
+    load_overrides(custom_overrides, custom=True)
 
 longest = 10
 if len(definitions) > 0:
