@@ -163,8 +163,8 @@ class Client:
                 log.warning("CloudFlared at %s, try enabling CloudHole" % url)
 
         except urllib2.URLError as e:
-            self.status = e.reason
-            log.warning("Status for %s : %s" % (repr(url), str(self.status)))
+            self.status = repr(e.reason)
+            log.warning("Status for %s : %s" % (repr(url), self.status))
 
         except Exception as e:
             import traceback
