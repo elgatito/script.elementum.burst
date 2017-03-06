@@ -50,6 +50,7 @@ class Filtering:
     """
     def __init__(self):
         resolutions = OrderedDict()
+        resolutions['filter_240p'] = ['240p', 'tvrip', 'satrip', 'vhsrip']
         resolutions['filter_480p'] = ['480p', 'xvid', 'dvd', 'dvdrip', 'hdtv']
         resolutions['filter_720p'] = ['720p', 'hdrip', 'bluray', 'brrip', 'bdrip']
         resolutions['filter_1080p'] = ['1080p', 'fullhd', '_fhd_']
@@ -68,7 +69,10 @@ class Filtering:
             'filter_3d': ['_3d_'],
             'filter_telesync': ['telesync', '_ts_', '_tc_'],
             'filter_cam': ['_cam_', 'hdcam'],
-            'filter_trailer': ['trailer', u'трейлер']
+            'filter_tvrip': ['tvrip', 'satrip'],
+            'filter_vhsrip': ['vhsrip'],
+            'filter_trailer': ['trailer'],
+            'filter_workprint': ['workprint']
         }
 
         require = []
