@@ -83,7 +83,7 @@ Forces a language preference for translations if they're available, eg. ``es``
 
 private
 """""""
-Boolean flag to mark this provider as private.
+Boolean flag to mark this provider as private, see PrivateProviders_.
 
 separator
 """""""""
@@ -144,5 +144,32 @@ in the first table column of each row.
 
 **TODO**: A more detailed description of parser fields and a tutorial on how
 to actually create providers will soon be added.
+
+
+.. _PrivateProviders:
+
+Private providers
+========================
+
+login_path
+""""""""""
+The ``login_path`` is the part of the URL used for logging in, typically
+something like ``"/login.php"``. This can be found by inspecting the login
+form's HTML and taking its ``action`` attribute.
+
+login_object
+""""""""""""
+The ``login_object`` represents the form elements sent to the ``login_path``.
+For built-in private providers, placeholders are used to replace setting values
+for the username and password (``USERNAME`` and ``PASSWORD`` respectively).
+Custom providers cannot define new settings, and must therefore put the username
+and password in the ``login_object`` directly.
+
+login_failed
+""""""""""""
+String that must **not** be included in the response's content. If this string
+is present in the page when trying to login, it returns as having failed and no
+search queries will be sent.
+
 
 .. _userdata: http://kodi.wiki/view/Userdata

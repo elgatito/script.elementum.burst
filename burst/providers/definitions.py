@@ -29,6 +29,7 @@ def load_providers(path, custom=False, fix_seasons=False):
 
     Args:
         path         (str): Path to json file to be loaded
+        custom      (bool): Boolean flag to specify if this is a custom provider
         fix_seasons (bool): Boolean flag to apply default fix to seasons keywords
     """
     try:
@@ -76,6 +77,7 @@ def update_definitions(provider, definition, custom=False, fix_seasons=False):
     Args:
         provider     (str): Provider ID
         definition  (dict): Loaded provider's definitions to be merged with the global definitions
+        custom      (bool): Boolean flag to specify if this is a custom provider
         fix_seasons (bool): Boolean flag to apply default fix to seasons keywords
     """
     if 'base_url' in definition:
