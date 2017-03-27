@@ -182,7 +182,7 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
                 client.passkey = passkey
                 url_search = url_search.replace('PASSKEY', passkey)
 
-            elif username and password:
+            elif 'login_object' in definition and definition['login_object']:
                 logged_in = False
                 login_object = definition['login_object'].replace('USERNAME', '"%s"' % username).replace('PASSWORD', '"%s"' % password)
 
