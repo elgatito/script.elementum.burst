@@ -253,8 +253,8 @@ overrides = {
     't411': {
         'is_api': True,
         'filter_title': True,
-        'base_url': 'https://api.t411.li',
-        'root_url': 'https://api.t411.li',
+        'base_url': 'https://api.t411.ai',
+        'root_url': 'https://api.t411.ai',
         'token_auth': '/auth',
         'login_object': "{'username': USERNAME, 'password': PASSWORD}",
         'download_path': '/torrents/download/',
