@@ -273,7 +273,15 @@ overrides = {
             'seeds': 'seeders',
             'peers': 'leechers',
         }
-    }
+    },
+
+    # UhdBits
+    'uhdbits': {
+        'subpage': False,
+        'parser': {
+            "torrent": "'https://uhdbits.org/%s' % item(tag='a', attribute='href', order=1)"
+        }
+    },
 }
 
 # Overrides that change overrides
