@@ -103,6 +103,9 @@
     <setting label="3d-tracker.ru" id="use_3dtrackerru" type="bool" default="false" />
       <setting id="3dtrackerru_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="3dtrackerru_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+    <setting label="nCore" id="use_ncore" type="bool" default="false" />
+      <setting id="ncore_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="ncore_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
   </category>
   <category label="32002">
     <setting label="4K/2160p" id="filter_4k" type="bool" default="true" />
