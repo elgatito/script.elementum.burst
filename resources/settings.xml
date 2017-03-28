@@ -60,8 +60,8 @@
       <setting id="uhdbits_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="uhdbits_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
     <setting label="AlphaReign" id="use_alphareign" type="bool" default="false" />
-      <setting id="uhdbits_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="uhdbits_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="alphareign_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="alphareign_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
     <setting label="FinBytes" id="use_finbytes" type="bool" default="false" />
       <setting id="finbytes_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="finbytes_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
