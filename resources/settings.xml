@@ -56,7 +56,7 @@
     <setting label="T411" id="use_t411" type="bool" default="false" />
       <setting id="t411_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="t411_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
-    <setting label="UhdBits" id="use_uhdbits" type="bool" default="false" />
+    <setting label="UHDBits" id="use_uhdbits" type="bool" default="false" />
       <setting id="uhdbits_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="uhdbits_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
     <setting label="AlphaReign" id="use_alphareign" type="bool" default="false" />

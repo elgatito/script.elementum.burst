@@ -275,11 +275,19 @@ overrides = {
         }
     },
 
-    # UhdBits
+    # UHDBits
     'uhdbits': {
         'subpage': False,
+        'base_url': "https://uhdbits.org/torrents.php?order_way=desc&order_by=seeders&rating=0&rating1=10&"
+                    "searchstr=QUERYEXTRA&taglist=&tags_type=1&action=basic&searchsubmit=1",
+        'name': "UHDBits",
         'parser': {
-            "torrent": "'https://uhdbits.org/%s' % item(tag='a', attribute='href', order=1)"
+            "row": "find_all('tr', ('class', 'torrent'))",
+            "name": "'%s %s' % (item(tag='a', order=4), item(tag='div', order=1, select=('class', 'torrent_info')))",
+            "size": "item(tag='td', order=5)",
+            "seeds": "item(tag='td', order=6)",
+            "peers": "item(tag='td', order=7)",
+            "torrent": "'https://uhdbits.org/%s' % item(tag='a', attribute='href', order=2)"
         }
     },
 }
