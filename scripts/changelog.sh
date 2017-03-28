@@ -1,7 +1,7 @@
 #!/bin/sh
 echo "Burst changelog"
 echo "==============="
-git tag -l | sort -u -r | while read TAG ; do
+git tag -l | sort -u -r -V | while read TAG ; do
     if [ $NEXT ];then
         TAG_DATE=$(git log --no-merges --date=short --format="%ad" $TAG..$NEXT | head -1)
         echo "[B]$NEXT[/B] - $TAG_DATE"
