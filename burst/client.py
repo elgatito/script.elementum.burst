@@ -22,7 +22,10 @@ from xbmc import translatePath
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 " \
              "(KHTML, like Gecko) Chrome/53.0.2785.21 Safari/537.36"
-PATH_TEMP = translatePath("special://temp").decode(sys.getfilesystemencoding(), 'ignore')
+try:
+    PATH_TEMP = translatePath("special://temp").decode(sys.getfilesystemencoding(), 'ignore')
+except:
+    PATH_TEMP = translatePath("special://temp").decode('utf-8')
 
 
 class Client:
