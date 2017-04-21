@@ -1,0 +1,159 @@
+# Kodi Media Center language file
+# Add-on Name: Quasar Burst
+# Add-on id: script.quasar.burst
+# Add-on provider: scakemyer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Quasar Burst\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-05 05:53-0400\n"
+"PO-Revision-Date: 2017-04-21 19:23-0200\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Mr Dini <mrdini@movieshark.hu>\n"
+"Language-Team: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgctxt "#32000"
+msgid "General"
+msgstr "Általános"
+
+msgctxt "#32001"
+msgid "Providers"
+msgstr "Kiszolgálók"
+
+msgctxt "#32002"
+msgid "Resolutions"
+msgstr "Felbontások"
+
+msgctxt "#32003"
+msgid "Release types"
+msgstr "Kiadási típusok"
+
+msgctxt "#32004"
+msgid "Advanced"
+msgstr "Haladó"
+
+msgctxt "#32006"
+msgid "Movies"
+msgstr "Filmek"
+
+msgctxt "#32007"
+msgid "TV Shows"
+msgstr "Sorozatok"
+
+msgctxt "#32008"
+msgid "Seasons"
+msgstr "Évadok"
+
+msgctxt "#32009"
+msgid "Episodes"
+msgstr "Epizódok"
+
+msgctxt "#32012"
+msgid "Public trackers"
+msgstr "Nyilvános trackerek"
+
+msgctxt "#32014"
+msgid "Private trackers"
+msgstr "Privát trackerek"
+
+msgctxt "#32015"
+msgid "Username"
+msgstr "Felhasználónév"
+
+msgctxt "#32016"
+msgid "Password"
+msgstr "Jelszó"
+
+msgctxt "#32017"
+msgid "Require"
+msgstr "Kötelező"
+
+msgctxt "#32018"
+msgid "Use language preference from Kodi when a translation is available"
+msgstr "Használjon Kodi nyelvi elemeket, amennyiben fordítás elérhető"
+
+msgctxt "#32033"
+msgid "Minimum size (GB)"
+msgstr "Minimum méret (GB)"
+
+msgctxt "#32034"
+msgid "Maximum size (GB)"
+msgstr "Maximum méret (GB)"
+
+msgctxt "#32035"
+msgid "Use separate size range for movies, seasons and episodes"
+msgstr "Használjon különböző méretbeli skálát a filmek, évadok és epizódok számára"
+
+msgctxt "#32036"
+msgid "Additional keyword filters (comma-separated)"
+msgstr "További kulcsszó szűrők (vesszővel elválasztva)"
+
+msgctxt "#32037"
+msgid "Use underscores around keywords to require a space/dot, eg. _HEVC_"
+msgstr "Használjon aláhúzásokat a kulcsszavak körül, hogy helyettesítsen egy space/pont karaktert (pl. _HEVC_)"
+
+msgctxt "#32038"
+msgid "Accept"
+msgstr "Elfogad"
+
+msgctxt "#32039"
+msgid "Block"
+msgstr "Tilt"
+
+msgctxt "#32040"
+msgid "Maximum results per provider"
+msgstr "Maximum találatok kiszolgálónként"
+
+msgctxt "#32041"
+msgid "Use CloudHole"
+msgstr "Használjon CloudHole-t"
+
+msgctxt "#32050"
+msgid "Exceptions"
+msgstr "Kivételek"
+
+msgctxt "#32051"
+msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
+msgstr "Kihagyott kiszolgálók listája vesszővel elválasztva (pl. yts, rargb)"
+
+msgctxt "#32060"
+msgid "No providers enabled"
+msgstr "Egy kiszolgáló sincs engedélyezve"
+
+msgctxt "#32061"
+msgid "Starting..."
+msgstr "Indul..."
+
+msgctxt "#32062"
+msgid "%d providers left"
+msgstr "%d kiszolgáló van hátra"
+
+msgctxt "#32063"
+msgid "1 provider left"
+msgstr "1 kiszolgáló van hátra"
+
+msgctxt "#32064"
+msgid " timed out"
+msgstr "időtúllépés"
+
+msgctxt "#32070"
+msgid "Search timeout (seconds)"
+msgstr "Keresési időkorlát (másodpercekben)"
+
+msgctxt "#32071"
+msgid "Timeout setting must be lower than Quasar's"
+msgstr "Az időkorlát beállításnak muszáj kisebbnek lennie a Quasarénál!"
+
+msgctxt "#32075"
+msgid "No torrents found"
+msgstr "Nincs találat"
+
+msgctxt "#32076"
+msgid "Passkey"
+msgstr "Passkey"
