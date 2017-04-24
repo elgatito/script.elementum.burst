@@ -70,7 +70,7 @@ def extract_magnetic(provider):
         with ZipFile(StringIO(r.content)) as zf:
             if '--exclude-icons' not in args:
                 with zf.open(os.path.join('script.magnetic.%s' % provider, 'icon.png')) as icon:
-                    target = file(os.path.join('libs', 'providers', 'icons', '%s.png' % new_provider), 'wb')
+                    target = file(os.path.join('burst', 'providers', 'icons', '%s.png' % new_provider), 'wb')
                     with icon, target:
                         shutil.copyfileobj(icon, target)
                 print "Extracted %s icon" % new_provider
@@ -97,7 +97,7 @@ for t in threads:
     t.join()
 
 if '--exclude-defs' not in args and '--print' not in args:
-    save_path = os.path.join('libs', 'providers', 'definitions.json')
+    save_path = os.path.join('burst', 'providers', 'definitions.json')
     with open(save_path, 'w') as defs:
         defs.write(json.dumps(definitions, indent=4, sort_keys=True, separators=(',', ': ')) + "\n")
     print "Extracted %d providers and wrote definitions to %s" % (len(definitions), save_path)
