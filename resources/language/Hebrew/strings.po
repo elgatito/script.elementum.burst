@@ -1,11 +1,11 @@
 # Kodi Media Center language file
-# Add-on Name: Quasar Burst
-# Add-on id: script.quasar.burst
-# Add-on provider: scakemyer
+# Add-on Name: Elementum Burst
+# Add-on id: script.elementum.burst
+# Add-on provider: elgatito
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Quasar Burst\n"
+"Project-Id-Version: Elementum Burst\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-06 19:44+0200\n"
 "PO-Revision-Date: 2017-03-06 19:45+0200\n"
@@ -147,8 +147,8 @@ msgid "Search timeout (seconds)"
 msgstr "מקסימום זמן לחיפוש (בשניות)"
 
 msgctxt "#32071"
-msgid "Timeout setting must be lower than Quasar's"
-msgstr "הגדרת מקסימום זמן לחיפוש חייבת להיות נמוכה יותר מאשר ההגדרה של Quqasar"
+msgid "Timeout setting must be lower than Elementum's"
+msgstr "הגדרת מקסימום זמן לחיפוש חייבת להיות נמוכה יותר מאשר ההגדרה של Elementum"
 
 msgctxt "#32075"
 msgid "No torrents found"

@@ -8,7 +8,7 @@ add them all in your custom `overrides.py`, which also works.
 
 To add a provider, simply create a file with the ``.json`` extension under the
 ``providers`` folder in your `userdata`_, ie. as
-``~/.kodi/userdata/addon_data/script.quasar.burst/providers/nice_provider.json``,
+``~/.kodi/userdata/addon_data/script.elementum.burst/providers/nice_provider.json``,
 and make sure it follows the format below (hopefully with
 ``"subpage": false``):
 

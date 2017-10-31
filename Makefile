@@ -1,4 +1,4 @@
-NAME = script.quasar.burst
+NAME = script.elementum.burst
 GIT = git
 GIT_VERSION = $(shell $(GIT) describe --abbrev=0 --tags)
 TAG_VERSION = $(subst v,,$(GIT_VERSION))

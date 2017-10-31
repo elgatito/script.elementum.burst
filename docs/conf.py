@@ -19,7 +19,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../'))
-autodoc_mock_imports = ['quasar.provider']
+autodoc_mock_imports = ['elementum.provider']
 autodoc_member_order = 'bysource'
 
 # -- General configuration ------------------------------------------------
@@ -52,8 +52,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Burst'
-copyright = u'2017, scakemyer'
-author = u'scakemyer'
+copyright = u'2017, elgatito, scakemyer'
+author = u'elgatito'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -137,7 +137,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'Burst.tex', u'Burst Documentation',
-     u'scakemyer', 'manual'),
+     u'elgatito', 'manual'),
 ]
 
 

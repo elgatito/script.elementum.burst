@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from burst.burst import search
-from quasar.provider import register
+from elementum.provider import register
 
 
 def search_movie(payload):

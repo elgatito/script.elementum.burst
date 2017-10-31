@@ -9,7 +9,7 @@ import string
 import hashlib
 from urllib import unquote
 from parser.HTMLParser import HTMLParser
-from quasar.provider import log, get_setting
+from elementum.provider import log, get_setting
 from providers.definitions import definitions
 from providers.helpers import t411season, t411episode
 from utils import Magnet, get_int, get_float, clean_number, size_int
@@ -38,7 +38,7 @@ class Filtering:
             engine when no results are found (ie. TorLock and TorrentZ)
         queries (list): List of queries to be filtered
         extras (list): List of extras to be filtered
-        info (dict): Payload from Quasar
+        info (dict): Payload from Elementum
         kodi_language (str): Language code from Kodi if kodi_language setting is enabled
         language_exceptions (list): List of providers for which not to apply ``kodi_language`` setting
         url (str): URL of this filtering request
@@ -143,7 +143,7 @@ class Filtering:
 
         Args:
             provider (str): Provider ID
-            payload (dict): Quasar search payload
+            payload (dict): Elementum search payload
         """
         definition = definitions[provider]
         general_query = definition['general_query'] if definition['general_query'] else ''
@@ -159,7 +159,7 @@ class Filtering:
 
         Args:
             provider (str): Provider ID
-            payload (dict): Quasar search payload
+            payload (dict): Elementum search payload
         """
         definition = definitions[provider]
         movie_query = definition['movie_query'] if definition['movie_query'] else ''
@@ -179,7 +179,7 @@ class Filtering:
 
         Args:
             provider (str): Provider ID
-            payload (dict): Quasar search payload
+            payload (dict): Elementum search payload
         """
         definition = definitions[provider]
         show_query = definition['show_query'] if definition['show_query'] else ''
@@ -203,7 +203,7 @@ class Filtering:
 
         Args:
             provider (str): Provider ID
-            payload (dict): Quasar search payload
+            payload (dict): Elementum search payload
         """
         definition = definitions[provider]
         season_query = definition['season_query'] if definition['season_query'] else ''
@@ -226,7 +226,7 @@ class Filtering:
 
         Args:
             provider (str): Provider ID
-            payload (dict): Quasar search payload
+            payload (dict): Elementum search payload
         """
         definition = definitions[provider]
         anime_query = definition['anime_query'] if definition['anime_query'] else ''
@@ -307,7 +307,7 @@ class Filtering:
                             title = self.normalize_name(title)
                             log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
                                                                               repr(title)))
-                            log.debug("[%s] Translated titles from Quasar: %s" % (provider,
+                            log.debug("[%s] Translated titles from Elementum: %s" % (provider,
                                                                                   repr(self.info['titles'])))
                     except Exception as e:
                         import traceback

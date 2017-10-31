@@ -1,29 +1,29 @@
-# Quasar Burst
+# Elementum Burst
 
 A burst of providers.
 
 
 ### Features
 - Fast, very fast
-- Compatible with Magnetic/Magnetizer, but **disable the Quasar Connector**
+- Compatible with Magnetic/Magnetizer, but **disable the Quasar/Elementum Connector**
 - Can extract providers, parsers and settings from Magnetic
 - No extra add-ons to install, all providers are included
 - No extra service running in the background
 - Easy settings to enable or disable providers and filters
-- First-class support with Quasar, and only Quasar (don't even ask)
+- First-class support with Elementum, and only Elementum (don't even ask)
 - Simple definitions-based architecture with overrides
 - Clean, PEP8 compliant code
 
 
 ### Installation
 
-**IMPORTANT: Disable the Magnetic Quasar Connector before anything else.**
+**IMPORTANT: Disable the Magnetic Quasar/Elementum Connector before anything else.**
 
 Get the latest release from https://burst.surge.sh
 
 Install the add-on and enjoy.
 
-Detailed documentation available at https://quasar-burst.readthedocs.io
+Detailed documentation available at https://quasar-burst.readthedocs.io (old)
 
 ### Adding / editing providers
 
@@ -34,7 +34,7 @@ Default fixes and overrides are located in `burst/providers/definitions.py`, and
 although you can edit that file directly, keep in mind that you will lose your
 changes on the next update. You can override existing definitions by adding
 another file named `overrides.py` in your profile folder, ie. in
-`~/.kodi/userdata/addon_data/script.quasar.burst/overrides.py`. Put all your
+`~/.kodi/userdata/addon_data/script.elementum.burst/overrides.py`. Put all your
 overrides in the `overrides` variable within that file, as such:
 ```
 overrides = {
@@ -48,7 +48,7 @@ Adding a custom provider is similar, although you'll be using a JSON file, per
 provider or with all your custom providers, unless you add them all in your
 custom `overrides.py`, which also works. Simply create a file with the `.json`
 extension under the `providers` folder in your profile, ie. in
-`~/.kodi/userdata/addon_data/script.quasar.burst/providers/nice_provider.json`
+`~/.kodi/userdata/addon_data/script.elementum.burst/providers/nice_provider.json`
 and make sure it follows the format below (hopefully with `"subpage": false`):
 ```
 {
@@ -96,6 +96,7 @@ and make sure it follows the format below (hopefully with `"subpage": false`):
 ```
 
 ### Credits
+- @scakemyer for initial Quasar Burst module!
 - @mancuniancol for all his work on Magnetic, this add-on wouldn't have been
   possible without him.
 - All the alpha and beta testers that led to the first stable release.

@@ -1,11 +1,11 @@
 # Kodi Media Center language file
-# Add-on Name: Quasar Burst
-# Add-on id: script.quasar.burst
-# Add-on provider: scakemyer
+# Add-on Name: Elementum Burst
+# Add-on id: script.elementum.burst
+# Add-on provider: elgatito
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Quasar Burst\n"
+"Project-Id-Version: Elementum Burst\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-05 05:53-0400\n"
 "PO-Revision-Date: 2016-12-26 10:41-0500\n"

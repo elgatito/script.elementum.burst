@@ -10,13 +10,13 @@ import json
 import xbmc
 import xbmcaddon
 from client import Client
-from quasar.provider import log, get_setting, set_setting
+from elementum.provider import log, get_setting, set_setting
 from providers.definitions import definitions, longest
 from utils import ADDON_PATH, get_int, clean_size
 
 
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
-    """ Payload formatter to format results the way Quasar expects them
+    """ Payload formatter to format results the way Elementum expects them
 
     Args:
         provider        (str): Provider ID
@@ -52,7 +52,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
         else:
             log.debug(filtering.reason.encode('utf-8'))
 
-    log.debug('>>>>>> %s would send %d torrents to Quasar <<<<<<<' % (provider, len(results)))
+    log.debug('>>>>>> %s would send %d torrents to Elementum <<<<<<<' % (provider, len(results)))
 
     return results
 

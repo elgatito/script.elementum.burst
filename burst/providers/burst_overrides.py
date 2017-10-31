@@ -175,12 +175,12 @@ overrides = {
     'rarbg': {
         'is_api': True,
         'base_url': 'https://torrentapi.org/pubapi_v2.php',
-        'token': '?get_token=get_token&app_id=script.quasar.burst',
-        'general_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.quasar.burst&token=TOKEN',
-        'movie_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.quasar.burst&token=TOKEN',
-        'show_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.quasar.burst&token=TOKEN',
-        'season_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.quasar.burst&token=TOKEN',
-        'anime_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.quasar.burst&token=TOKEN',
+        'token': '?get_token=get_token&app_id=script.elementum.burst',
+        'general_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.elementum.burst&token=TOKEN',
+        'movie_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.elementum.burst&token=TOKEN',
+        'show_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.elementum.burst&token=TOKEN',
+        'season_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.elementum.burst&token=TOKEN',
+        'anime_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.elementum.burst&token=TOKEN',
         'season_keywords': '{title} s{season:2}',
         'api_format': {
             'results': 'torrent_results',

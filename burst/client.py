@@ -12,7 +12,7 @@ import urllib2
 from time import sleep
 from urlparse import urlparse
 from contextlib import closing
-from quasar.provider import log
+from elementum.provider import log
 from cookielib import Cookie, LWPCookieJar
 from urllib import urlencode
 from utils import encode_dict

@@ -11,23 +11,23 @@ A burst of providers.
 Features
 --------
 - Fast, very fast
-- Compatible with Magnetic/Magnetizer, but **disable the Quasar Connector**
+- Compatible with Magnetic/Magnetizer, but **disable the Elementum Connector**
 - Can extract providers, parsers and settings from Magnetic
 - No extra add-ons to install, all providers are included
 - No extra service running in the background
 - Easy settings to enable or disable providers and filters
-- First-class support with Quasar, and only Quasar (don't even ask)
+- First-class support with Elementum, and only Elementum (don't even ask)
 - Simple definitions-based architecture with overrides
 - Clean, PEP8 compliant code
 
 Installation
 ------------
 
-**IMPORTANT: Disable the Magnetic Quasar Connector before anything else.**
+**IMPORTANT: Disable the Magnetic Elementum Connector before anything else.**
 
 Get the latest release from https://burst.surge.sh and *Install from zip*
-within Kodi, or install the add-on from the Quasar Repository if you already
-have Quasar installed.
+within Kodi, or install the add-on from the Elementum Repository if you already
+have Elementum installed.
 
 Topics
 ------

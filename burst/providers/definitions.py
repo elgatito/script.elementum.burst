@@ -12,7 +12,7 @@ import xbmcaddon
 import collections
 from glob import glob
 from urlparse import urlparse
-from quasar.provider import log
+from elementum.provider import log
 
 start_time = time.time()
 ADDON = xbmcaddon.Addon()

@@ -12,7 +12,7 @@ import xbmcgui
 from Queue import Queue
 from threading import Thread
 from urlparse import urlparse
-from quasar.provider import append_headers, get_setting, set_setting, log
+from elementum.provider import append_headers, get_setting, set_setting, log
 
 from parser.ehp import Html
 from provider import process
@@ -32,11 +32,11 @@ def search(payload, method="general"):
     """ Main search entrypoint
 
     Args:
-        payload (dict): Search payload from Quasar.
+        payload (dict): Search payload from Elementum.
         method   (str): Type of search, can be ``general``, ``movie``, ``show``, ``season`` or ``anime``
 
     Returns:
-        list: All filtered results in the format Quasar expects
+        list: All filtered results in the format Elementum expects
     """
     log.debug("Searching with payload (%s): %s" % (method, repr(payload)))
 
@@ -79,7 +79,7 @@ def search(payload, method="general"):
             log.info("No '%s' translation available..." % kodi_language)
 
     p_dialog = xbmcgui.DialogProgressBG()
-    p_dialog.create('Quasar [COLOR FFFF6B00]Burst[/COLOR]', translation(32061))
+    p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', translation(32061))
     for provider in providers:
         available_providers += 1
         provider_names.append(definitions[provider]['name'])
@@ -424,7 +424,7 @@ def run_provider(provider, payload, method):
 
     Args:
         provider (str): Provider ID
-        payload (dict): Search payload from Quasar
+        payload (dict): Search payload from Elementum
         method   (str): Type of search, can be ``general``, ``movie``, ``show``, ``season`` or ``anime``
     """
     log.debug("Processing %s with %s method" % (provider, method))

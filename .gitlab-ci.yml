@@ -24,7 +24,7 @@ build:
     - tags
 
 release:
-  image: quasarhq/burst-website:latest
+  image: elgatito/burst-website:latest
   stage: release
   script:
     - make
@@ -33,7 +33,7 @@ release:
   after_script:
     - |
         lftp -c "open 'ftp://$FTP_USER:$FTP_PASS@$FTP_HOST'; \
-        cd script.quasar.burst; \
+        cd script.elementum.burst; \
         mirror --reverse --verbose --exclude '.*' --exclude '.*/' --include-glob addon.xml \
                                                                   --include-glob icon.png \
                                                                   --include-glob fanart.jpg \
@@ -42,6 +42,6 @@ release:
         exit;"
   artifacts:
     paths:
-    - script.quasar.burst-${CI_BUILD_TAG:1}.zip
+    - script.elementum.burst-${CI_BUILD_TAG:1}.zip
   only:
     - tags

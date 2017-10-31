@@ -9,7 +9,7 @@ import re
 import xbmc
 import xbmcgui
 import xbmcaddon
-from quasar.provider import get_setting
+from elementum.provider import get_setting
 from providers.definitions import definitions
 
 ADDON = xbmcaddon.Addon()
