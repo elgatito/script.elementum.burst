@@ -17,7 +17,6 @@
     <setting label="MagnetDL" id="use_magnetdl" type="bool" default="true" />
 
     <setting label="The Pirate Bay" id="use_thepiratebay" type="bool" default="false" />
-    <setting label="Ruhunt" id="use_ruhunt" type="bool" default="false" />
     <setting label="Rutor" id="use_rutor" type="bool" default="false" />
     <setting label="MegaPeer" id="use_megapeer" type="bool" default="false" />
     <setting label="Serialz.tv" id="use_serialz" type="bool" default="false" />
