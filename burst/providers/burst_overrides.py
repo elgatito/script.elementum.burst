@@ -119,15 +119,6 @@ overrides = {
         }
     },
 
-    # Ruhunt
-    'ruhunt': {
-        'base_url': "http://ruhunt.org/search?q=QUERYEXTRA&i=s",
-        'season_keywords': u"{title} \"Сезон {season}\"",
-        'season_keywords2': "{title} [S{season:2}]",
-        'tv_keywords': "{title} s{season:2}e{episode:2}",
-        'tv_keywords2': u"{title} \"Сезон {season}\""
-    },
-
     # Rutor
     'rutor': {
         'anime_query': "0/10/300/2/QUERYEXTRA",
