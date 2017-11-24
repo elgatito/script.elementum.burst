@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.elementum.burst" name="Elementum [COLOR FFFF6B00]Burst[/COLOR]" version="0.0.3" provider-name="elgatito">
+<addon id="script.elementum.burst" name="Elementum [COLOR FFFF6B00]Burst[/COLOR]" version="0.0.4" provider-name="elgatito">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="plugin.video.elementum" optional="false"/>
+        <import addon="plugin.video.elementum" optional="true"/>
     </requires>
     <extension point="xbmc.python.script" library="burst.py">
         <provides>executable</provides>
