@@ -19,7 +19,7 @@ from provider import process
 from providers.definitions import definitions, longest
 from filtering import apply_filters, Filtering
 from client import USER_AGENT, Client, get_cloudhole_key, get_cloudhole_clearance
-from utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers
+from utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias
 
 provider_names = []
 provider_results = []
@@ -130,6 +130,7 @@ def got_results(provider, results):
     global provider_results
     global available_providers
     definition = definitions[provider]
+    definition = get_alias(definition, get_setting("%s_alias" % provider))
 
     max_results = get_setting('max_results', int)
     sorted_results = sorted(results, key=lambda r: (r['seeds']), reverse=True)
@@ -157,6 +158,7 @@ def extract_torrents(provider, client):
         tuple: A torrent result
     """
     definition = definitions[provider]
+    definition = get_alias(definition, get_setting("%s_alias" % provider))
     log.debug("Extracting torrents from %s using definitions: %s" % (provider, repr(definition)))
 
     if not client.content:
@@ -299,6 +301,7 @@ def extract_from_api(provider, client):
     log.debug("[%s] JSON response from API: %s" % (provider, repr(data)))
 
     definition = definitions[provider]
+    definition = get_alias(definition, get_setting("%s_alias" % provider))
     api_format = definition['api_format']
 
     results = []
@@ -384,6 +387,7 @@ def extract_from_page(provider, content):
         str: Torrent or magnet link extracted from sub-page
     """
     definition = definitions[provider]
+    definition = get_alias(definition, get_setting("%s_alias" % provider))
 
     matches = re.findall(r'magnet:\?[^\'"\s<>\[\]]+', content)
     if matches:

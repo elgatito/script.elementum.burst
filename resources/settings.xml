@@ -11,100 +11,203 @@
   <category label="32001">
     <setting label="32012" type="lsep" />
     <setting label="YTS" id="use_yts" type="bool" default="true" />
+      <setting id="yts_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="RARBG" id="use_rarbg" type="bool" default="true" />
+      <setting id="rarbg_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="1337x" id="use_1337x" type="bool" default="true" />
+      <setting id="1337x_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="TorLock" id="use_torlock" type="bool" default="true" />
+      <setting id="torlock_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="MagnetDL" id="use_magnetdl" type="bool" default="true" />
+      <setting id="magnetdl_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
 
     <setting label="The Pirate Bay" id="use_thepiratebay" type="bool" default="false" />
+      <setting id="thepiratebay_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Rutor" id="use_rutor" type="bool" default="false" />
+      <setting id="rutor_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="MegaPeer" id="use_megapeer" type="bool" default="false" />
+      <setting id="megapeer_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Serialz.tv" id="use_serialz" type="bool" default="false" />
+      <setting id="serialz_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="tfile.me" id="use_tfile" type="bool" default="false" />
+      <setting id="tfile_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Kinozal" id="use_kinozal" type="bool" default="false" />
+      <setting id="kinozal_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Nextorrent" id="use_nextorrent" type="bool" default="false" />
+      <setting id="nextorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Torrent9" id="use_torrent9" type="bool" default="false" />
+      <setting id="torrent9_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Cpasbien" id="use_cpasbien" type="bool" default="false" />
+      <setting id="cpasbien_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Nyaa" id="use_nyaa" type="bool" default="false" />
+      <setting id="nyaa_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="BTjunkie" id="use_btjunkie" type="bool" default="false" />
+      <setting id="btjunkie_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Divxatope" id="use_divxatope" type="bool" default="false" />
+      <setting id="divxatope_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="TorrentFunk" id="use_torrentfunk" type="bool" default="false" />
+      <setting id="torrentfunk_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="idope" id="use_idope" type="bool" default="false" />
+      <setting id="idope_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="EZTV" id="use_eztv" type="bool" default="false" />
+      <setting id="eztv_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="KickAss" id="use_kickass" type="bool" default="false" />
+      <setting id="kickass_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="TorrentZ" id="use_torrentz" type="bool" default="false" />
+      <setting id="torrentz_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="EliteTorrent" id="use_elitetorrent" type="bool" default="false" />
+      <setting id="elitetorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Bitsnoop" id="use_bitsnoop" type="bool" default="false" />
+      <setting id="bitsnoop_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="YourBitTorrent" id="use_yourbittorrent" type="bool" default="false" />
+      <setting id="yourbittorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Ilcorsaronero" id="use_ilcorsaronero" type="bool" default="false" />
+      <setting id="ilcorsaronero_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Monova" id="use_monova" type="bool" default="false" />
+      <setting id="monova_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Btstorrent" id="use_btstorrent" type="bool" default="false" />
+      <setting id="btstorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="GloTorrents" id="use_glotorrents" type="bool" default="false" />
+      <setting id="glotorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="ExtraTorrent" id="use_extratorrent" type="bool" default="false" />
+      <setting id="extratorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="TorrentDownloads" id="use_torrentdownloads" type="bool" default="false" />
+      <setting id="torrentdownloads_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Zoogle" id="use_zoogle" type="bool" default="false" />
+      <setting id="zoogle_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+
     <setting label="Zooqle" id="use_zooqle" type="bool" default="false" />
+      <setting id="zooqle_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
 
     <setting label="32014" type="lsep" />
     <setting label="TorrentLeech" id="use_torrentleech" type="bool" default="false" />
       <setting id="torrentleech_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrentleech_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="torrentleech_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="FileList" id="use_filelist" type="bool" default="false" />
       <setting id="filelist_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="filelist_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="filelist_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="T411" id="use_t411" type="bool" default="false" />
       <setting id="t411_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="t411_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="t411_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="UHDBits" id="use_uhdbits" type="bool" default="false" />
       <setting id="uhdbits_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="uhdbits_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="uhdbits_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="AlphaReign" id="use_alphareign" type="bool" default="false" />
       <setting id="alphareign_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="alphareign_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="alphareign_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="FinBytes" id="use_finbytes" type="bool" default="false" />
       <setting id="finbytes_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="finbytes_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="finbytes_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="GimmePeers" id="use_gimmepeers" type="bool" default="false" />
       <setting id="gimmepeers_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="gimmepeers_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="gimmepeers_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="Tv Torrents.ro" id="use_freshon.tv" type="bool" default="false" />
       <setting id="freshon.tv_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="freshon.tv_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="freshon.tv_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="HD Torrents" id="use_hd-torrents" type="bool" default="false" />
       <setting id="hd-torrents_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="hd-torrents_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="hd-torrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="XtremeZone" id="use_myxzorg" type="bool" default="false" />
       <setting id="myxzorg_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="myxzorg_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="myxzorg_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="Toloka" id="use_toloka" type="bool" default="false" />
       <setting id="toloka_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="toloka_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="toloka_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="0day" id="use_0day" type="bool" default="false" />
       <setting id="0day_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="0day_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="0day_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="NewStudio" id="use_newstudio" type="bool" default="false" />
       <setting id="newstudio_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="newstudio_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="newstudio_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="NNM-Club" id="use_nnmclub" type="bool" default="false" />
       <setting id="nnmclub_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="nnmclub_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="nnmclub_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="RuTracker" id="use_rutracker" type="bool" default="false" />
       <setting id="rutracker_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="rutracker_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="rutracker_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="HDCLUB.org" id="use_hdclub" type="bool" default="false" />
       <setting id="hdclub_passkey" label="32076" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="hdclub_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-2,true)" />
+
     <setting label="BaibaKo.TV" id="use_baibako" type="bool" default="false" />
       <setting id="baibako_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="baibako_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="baibako_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="torrent3d.ru" id="use_torrent3dru" type="bool" default="false" />
       <setting id="torrent3dru_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrent3dru_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="torrent3dru_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="3d-tracker.ru" id="use_3dtrackerru" type="bool" default="false" />
       <setting id="3dtrackerru_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="3dtrackerru_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="3dtrackerru_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
     <setting label="nCore" id="use_ncore" type="bool" default="false" />
       <setting id="ncore_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="ncore_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="ncore_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
   </category>
   <category label="32002">
     <setting label="4K/2160p" id="filter_4k" type="bool" default="true" />

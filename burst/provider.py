@@ -12,8 +12,7 @@ import xbmcaddon
 from client import Client
 from elementum.provider import log, get_setting, set_setting
 from providers.definitions import definitions, longest
-from utils import ADDON_PATH, get_int, clean_size
-
+from utils import ADDON_PATH, get_int, clean_size, get_alias
 
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
     """ Payload formatter to format results the way Elementum expects them
@@ -32,6 +31,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
     results = []
 
     definition = definitions[provider]
+    definition = get_alias(definition, get_setting("%s_alias" % provider))
 
     for name, info_hash, uri, size, seeds, peers in generator:
         size = clean_size(size)
@@ -69,6 +69,7 @@ def process(provider, generator, filtering, verify_name=True, verify_size=True):
     """
     log.debug("execute_process for %s with %s" % (provider, repr(generator)))
     definition = definitions[provider]
+    definition = get_alias(definition, get_setting("%s_alias" % provider))
 
     client = Client()
     token = None

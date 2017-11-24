@@ -12,7 +12,7 @@ from parser.HTMLParser import HTMLParser
 from elementum.provider import log, get_setting
 from providers.definitions import definitions
 from providers.helpers import t411season, t411episode
-from utils import Magnet, get_int, get_float, clean_number, size_int
+from utils import Magnet, get_int, get_float, clean_number, size_int, get_alias
 
 try:
     from collections import OrderedDict
@@ -146,6 +146,7 @@ class Filtering:
             payload (dict): Elementum search payload
         """
         definition = definitions[provider]
+        definition = get_alias(definition, get_setting("%s_alias" % provider))
         general_query = definition['general_query'] if definition['general_query'] else ''
         log.debug("General URL: %s%s" % (definition['base_url'], general_query))
         self.info = payload
@@ -162,6 +163,7 @@ class Filtering:
             payload (dict): Elementum search payload
         """
         definition = definitions[provider]
+        definition = get_alias(definition, get_setting("%s_alias" % provider))
         movie_query = definition['movie_query'] if definition['movie_query'] else ''
         log.debug("Movies URL: %s%s" % (definition['base_url'], movie_query))
         if get_setting('separate_sizes', bool):
@@ -182,6 +184,7 @@ class Filtering:
             payload (dict): Elementum search payload
         """
         definition = definitions[provider]
+        definition = get_alias(definition, get_setting("%s_alias" % provider))
         show_query = definition['show_query'] if definition['show_query'] else ''
         log.debug("Episode URL: %s%s" % (definition['base_url'], show_query))
         if get_setting('separate_sizes', bool):
@@ -206,6 +209,7 @@ class Filtering:
             payload (dict): Elementum search payload
         """
         definition = definitions[provider]
+        definition = get_alias(definition, get_setting("%s_alias" % provider))
         season_query = definition['season_query'] if definition['season_query'] else ''
         log.debug("Season URL: %s%s" % (definition['base_url'], season_query))
         if get_setting('separate_sizes', bool):
@@ -229,6 +233,7 @@ class Filtering:
             payload (dict): Elementum search payload
         """
         definition = definitions[provider]
+        definition = get_alias(definition, get_setting("%s_alias" % provider))
         anime_query = definition['anime_query'] if definition['anime_query'] else ''
         log.debug("Anime URL: %s%s" % (definition['base_url'], anime_query))
         if get_setting('separate_sizes', bool):

@@ -11,6 +11,7 @@ import xbmcgui
 import xbmcaddon
 from elementum.provider import get_setting
 from providers.definitions import definitions
+from urlparse import urlparse
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo("id")
@@ -50,6 +51,42 @@ class Magnet:
             self.name = name.group(1).replace('+', ' ').title()
 
         self.trackers = re.findall('tr=(.*?)&', self.magnet)
+
+
+def get_domain(url):
+    if "//" not in url:
+        url = "http://" + url
+
+    parsed_uri = urlparse(url)
+    domain = '{uri.netloc}'.format(uri=parsed_uri)
+    return domain
+
+
+def get_alias(definition, alias):
+    definition["alias"] = ""
+
+    if alias:
+        old_domain = ""
+        for k in ["root_url", "base_url"]:
+            domain = get_domain(definition[k])
+            if domain:
+                old_domain = domain
+                break
+
+        new_domain = get_domain(alias)
+        if old_domain and new_domain:
+            definition["alias"] = new_domain
+            definition["old_domain"] = old_domain
+
+            # Substitue all ocurrences of old domain name and replace with new one
+            for k in definition:
+                if isinstance(definition[k], basestring):
+                    definition[k] = definition[k].replace(old_domain, new_domain)
+            for k in definition["parser"]:
+                if isinstance(definition["parser"][k], basestring):
+                    definition["parser"][k] = definition["parser"][k].replace(old_domain, new_domain)
+
+    return definition
 
 
 def get_providers():

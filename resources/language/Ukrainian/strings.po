@@ -154,6 +154,10 @@ msgctxt "#32075"
 msgid "No torrents found"
 msgstr "Не знайдено жодного торренту"
 
-#~ msgctxt "#32040"
-#~ msgid "Maximum torrents"
-#~ msgstr "Максимально торрентів"
+msgctxt "#32076"
+msgid "Passkey"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Domain Alias [Optional]"
+msgstr "Альтернативний домен [Опціонально]"
