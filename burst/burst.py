@@ -138,8 +138,8 @@ def got_results(provider, results):
         sorted_results = sorted_results[:max_results]
 
     log.info(">> %s returned %2d results in %.1f seconds%s" % (
-            definition['name'].rjust(longest), len(results), round(time.time() - request_time, 2),
-            (", sending %d best ones" % max_results) if len(results) > max_results else ""))
+        definition['name'].rjust(longest), len(results), round(time.time() - request_time, 2),
+        (", sending %d best ones" % max_results) if len(results) > max_results else ""))
 
     provider_results.extend(sorted_results)
     available_providers -= 1

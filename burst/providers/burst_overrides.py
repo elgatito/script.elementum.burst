@@ -287,5 +287,5 @@ overrides = {
 overrides['1337x']['parser']['torrent'] = "'" + overrides['1337x']['root_url'] + "%s' % " + definitions['1337x']['parser']['torrent']
 
 overrides['myxzorg']['parser']['torrent'] = "'" + overrides['myxzorg']['root_url'] + "/%s' % " + \
-                                              overrides['myxzorg']['parser']['torrent'] + \
-                                              ".replace('details.php', 'dwn.php')"
+    overrides['myxzorg']['parser']['torrent'] + \
+    ".replace('details.php', 'dwn.php')"
