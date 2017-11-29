@@ -21,12 +21,12 @@ script:
       make zip
     fi
 
-deploy:
-  provider: releases
-  api_key: $GH_TOKEN
-  file:
-    - script.elementum.burst-${TRAVIS_TAG:1}.zip
-  skip_cleanup: true
-  overwrite: true
-  on:
-    tags: true
+# deploy:
+#   provider: releases
+#   api_key: $GH_TOKEN
+#   file:
+#     - script.elementum.burst-${TRAVIS_TAG:1}.zip
+#   skip_cleanup: true
+#   overwrite: true
+#   on:
+#     tags: true
