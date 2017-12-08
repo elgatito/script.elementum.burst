@@ -129,6 +129,9 @@ class Client:
         req.add_header('User-Agent', self.user_agent)
         req.add_header('Content-Language', language)
         req.add_header("Accept-Encoding", "gzip")
+        req.add_header("Origin", url)
+        req.add_header("Referer", url)
+
         if self.token:
             req.add_header("Authorization", self.token)
 

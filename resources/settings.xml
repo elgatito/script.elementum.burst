@@ -185,10 +185,6 @@
       <setting id="rutracker_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="rutracker_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
 
-    <setting label="HDCLUB.org" id="use_hdclub" type="bool" default="false" />
-      <setting id="hdclub_passkey" label="32076" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="hdclub_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-2,true)" />
-
     <setting label="BaibaKo.TV" id="use_baibako" type="bool" default="false" />
       <setting id="baibako_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="baibako_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
@@ -208,6 +204,11 @@
       <setting id="ncore_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="ncore_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="ncore_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
+    <setting label="Rustorka" id="use_rustorka" type="bool" default="false" />
+      <setting id="rustorka_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="rustorka_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="rustorka_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
   </category>
   <category label="32002">
     <setting label="4K/2160p" id="filter_4k" type="bool" default="true" />
