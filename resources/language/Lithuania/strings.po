@@ -76,7 +76,7 @@ msgstr "Būtini"
 
 msgctxt "#32018"
 msgid "Use language preference from Kodi when a translation is available"
-msgstr "Naudoti "Kodi" kalba pasirinkitinai, kai yra vertimas"
+msgstr "Naudoti Kodi kalba pasirinkitinai, kai yra vertimas"
 
 msgctxt "#32033"
 msgid "Minimum size (GB)"
