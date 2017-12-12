@@ -209,6 +209,11 @@
       <setting id="rustorka_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="rustorka_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="rustorka_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
+    <setting label="BlueBird" id="use_bluebird" type="bool" default="false" />
+      <setting id="bluebird_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="bluebird_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="bluebird_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
   </category>
   <category label="32002">
     <setting label="4K/2160p" id="filter_4k" type="bool" default="true" />
