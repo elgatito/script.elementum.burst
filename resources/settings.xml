@@ -214,6 +214,10 @@
       <setting id="bluebird_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="bluebird_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="bluebird_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+
+    <setting label="Yggtorrent" id="use_yggtorrent" type="bool" default="false" />
+      <setting id="yggtorrent_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="yggtorrent_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
   </category>
   <category label="32002">
     <setting label="4K/2160p" id="filter_4k" type="bool" default="true" />
