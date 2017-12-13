@@ -312,8 +312,7 @@ class Filtering:
                             title = self.normalize_name(title)
                             log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
                                                                               repr(title)))
-                            log.debug("[%s] Translated titles from Elementum: %s" % (provider,
-                                                                                  repr(self.info['titles'])))
+                            log.debug("[%s] Translated titles from Elementum: %s" % (provider, repr(self.info['titles'])))
                     except Exception as e:
                         import traceback
                         log.error("%s failed with: %s" % (provider, repr(e)))

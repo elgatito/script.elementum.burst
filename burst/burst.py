@@ -26,6 +26,7 @@ provider_results = []
 available_providers = 0
 request_time = time.time()
 timeout = get_setting("timeout", int)
+special_chars = "()\"':.[]<>/\\?"
 
 
 def search(payload, method="general"):
@@ -42,8 +43,15 @@ def search(payload, method="general"):
 
     if method == 'general':
         payload = {
-            'title': payload
+            'title': payload,
+            'titles': {
+                'Original': payload
+            }
         }
+
+    payload['has_special'] = 'Original' in payload['titles'] and any(c in payload['titles']['Original'] for c in special_chars)
+    if payload['has_special']:
+        log.debug("Query title contains special chars, so removing any quotes in the search query")
 
     global request_time
     global provider_names
@@ -447,8 +455,8 @@ def run_provider(provider, payload, method):
         filterInstance.use_general(provider, payload)
 
     if 'is_api' in definitions[provider]:
-        results = process(provider=provider, generator=extract_from_api, filtering=filterInstance)
+        results = process(provider=provider, generator=extract_from_api, filtering=filterInstance, has_special=payload['has_special'])
     else:
-        results = process(provider=provider, generator=extract_torrents, filtering=filterInstance)
+        results = process(provider=provider, generator=extract_torrents, filtering=filterInstance, has_special=payload['has_special'])
 
     got_results(provider, results)
