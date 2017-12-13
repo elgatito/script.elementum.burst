@@ -24,37 +24,11 @@ clean:
 	rm -f $(ZIP_FILE)
 	rm -rf $(NAME)
 
-extract:
-	./scripts/extract.py --exclude-icons
-
-extract-icons:
-	./scripts/extract.py --exclude-defs
-
-bump:
-	sed -i "s/COLOR\]\" version=\"\([0-9a-z\.\-]*\)\"/COLOR\]\" version=\"${TAG_VERSION}\"/" addon.xml
-	$(GIT) reset --soft @{1}
-	$(GIT) add addon.xml
-	$(GIT) commit -m "${LAST_COMMIT}"
-	$(GIT) tag -f $(GIT_VERSION)
-
-surge:
-	$(GIT) clone --depth=1 https://bitbucket.com/scakemyer/burst-website.git
-	sed -i "s/version\s=\s\"\([0-9a-z\.\-]*\)\"/version = \"${VERSION}\"/" burst-website/public/index.jade
-	cd burst-website && harp compile . html/
-	mkdir -p burst-website/html/release/
-	cp addon.xml changelog.txt icon.png fanart.jpg burst-website/html/release/
-	cp *.zip burst-website/html/release/
-	cd burst-website && surge html burst.surge.sh
-
-docs-init:
-	cd docs && sphinx-apidoc --no-toc -M -o source/ ../burst
-
-docs-dev:
-	cd docs && sphinx-autobuild . _build_dev
-	rm -rf docs/_build_dev
-
-docs:
-	cd docs && make html
+# extract:
+# 	./scripts/extract.py --exclude-icons
+#
+# extract-icons:
+# 	./scripts/extract.py --exclude-defs
 
 upload:
 	$(eval EXISTS := $(shell github-release info --user $(GIT_USER) --repo $(GIT_REPOSITORY) --tag v$(VERSION) 1>&2 2>/dev/null; echo $$?))
