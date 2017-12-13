@@ -20,7 +20,11 @@ from utils import encode_dict
 from xbmc import translatePath
 
 import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
+try:
+    ssl._create_default_https_context = ssl._create_unverified_context
+except:
+    log.debug("Skipping SSL workaround due to old Python version")
+    pass
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 " \
              "(KHTML, like Gecko) Chrome/53.0.2785.21 Safari/537.36"
