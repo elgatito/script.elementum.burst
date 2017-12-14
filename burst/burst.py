@@ -49,7 +49,12 @@ def search(payload, method="general"):
             }
         }
 
-    payload['has_special'] = 'Original' in payload['titles'] and any(c in payload['titles']['Original'] for c in special_chars)
+    # If titles[] exists in payload and there are special chars in titles[Original]
+    #   then we set a flag to possibly modify the search query
+    payload['has_special'] = 'titles' in payload and \
+                             bool(payload['titles']) and \
+                             'Original' in payload['titles'] and \
+                             any(c in payload['titles']['Original'] for c in special_chars)
     if payload['has_special']:
         log.debug("Query title contains special chars, so removing any quotes in the search query")
 
