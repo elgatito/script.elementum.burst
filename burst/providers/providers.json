@@ -677,7 +677,7 @@
             "row": "find_all('tr', start=2)",
             "seeds": "item(tag='td', order=3)",
             "size": "item(tag='td', order=2)",
-            "torrent": "definitions['torrent9']['root_url']+item(tag='a', attribute='href', order=1).replace('/torrent/', '/get_torrent/')+'.torrent'"
+            "torrent": "item(tag='a', attribute='href', order=1).replace('/torrent/', '/get_torrent/')+'.torrent'"
         },
         "private": false,
         "season_extra": "",
