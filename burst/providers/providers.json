@@ -697,7 +697,7 @@
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
-        "base_url": "https://ww1.yggtorrent.com/engine/search?q=QUERYEXTRA",
+        "base_url": "https://yggtorrent.com/engine/search?q=QUERYEXTRA",
         "color": "FFF7A62D",
         "general_extra": "&category=2145",
         "general_keywords": "{title:fr}",
