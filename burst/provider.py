@@ -211,6 +211,15 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                             login_object = login_object.replace('CSRF_TOKEN', '"%s"' % csrf_token.group(1))
                         else:
                             logged_in = True
+                if provider == 'lostfilm':
+                    client.login(definition['root_url'] + definition['login_path'], eval(login_object), definition['login_failed'])
+                    if client.content:
+                        auth_data = json.loads(client.content)
+                        if 'error' in auth_data and auth_data['error'] == 2:
+                            log.error('[%s] Auth failed: %s' % (provider, repr(auth_data)))
+                        else:
+                            log.info('[%s] Login successful' % provider)
+                            logged_in = True
 
                 if 'token_auth' in definition:
                     # log.debug("[%s] logging in with: %s" % (provider, login_object))
@@ -247,6 +256,17 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
 
+        if provider == 'lostfilm':
+            log.info('[%s] Need open page before search', provider)
+            client.open(url_search.encode('utf-8'), post_data=payload, get_data=data)
+            search_info = re.search(r'PlayEpisode\((.*?)\)">', client.content)
+            if search_info:
+                series_details = re.search('\'(\d+)\',\'(\d+)\',\'(\d+)\'',search_info.group(1))
+                client.open(definition['root_url'] + '/v_search.php?c=%s&s=%s&e=%s' % (series_details.group(1), series_details.group(2), series_details.group(3)))
+                url_search = re.search(ur'url=(.*?)">', client.content).group(1)
+            else:
+                return filtering.results
+ 
         log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search))
 
         client.open(url_search.encode('utf-8'), post_data=payload, get_data=data)
