@@ -122,7 +122,7 @@ overrides = {
     # Rutor
     'rutor': {
         'anime_query': "0/10/300/2/QUERYEXTRA",
-        'movie_query': "0/1/300/2/QUERYEXTRA",
+        'movie_query': "0/0/300/2/QUERYEXTRA",
         'season_query': "0/4/300/2/QUERYEXTRA",
         'show_query': "0/4/300/2/QUERYEXTRA",
         'season_keywords': "{title} {season:2}x01|S{season:2}",

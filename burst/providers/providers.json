@@ -372,7 +372,7 @@
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
-        "base_url": "http://search.tfile.co/?q=QUERYEXTRA&c=0&g=&act=&y=&ql=&a=&d=&o=&size_min=0&size_max=0",
+        "base_url": "http://search.tfile.cс/?q=QUERYEXTRA&c=0&g=&act=&y=&ql=&a=&d=&o=&size_min=0&size_max=0",
         "color": "FFFFFFFF",
         "general_extra": "",
         "general_keywords": "{title}",
