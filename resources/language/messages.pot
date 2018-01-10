@@ -162,3 +162,7 @@ msgstr ""
 msgctxt "#32077"
 msgid "Domain Alias [Optional]"
 msgstr ""
+
+msgctxt "#32078"
+msgid "Allow results without seeds"
+msgstr ""

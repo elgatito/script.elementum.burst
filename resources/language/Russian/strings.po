@@ -161,3 +161,7 @@ msgstr ""
 msgctxt "#32077"
 msgid "Domain Alias [Optional]"
 msgstr "Альтернативный домен [Опционально]"
+
+msgctxt "#32078"
+msgid "Allow results without seeds"
+msgstr "Разрешать результаты без сидов"
