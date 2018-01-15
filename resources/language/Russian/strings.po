@@ -165,3 +165,7 @@ msgstr "Альтернативный домен [Опционально]"
 msgctxt "#32078"
 msgid "Allow results without seeds"
 msgstr "Разрешать результаты без сидов"
+
+msgctxt "#32079"
+msgid "E-mail"
+msgstr ""

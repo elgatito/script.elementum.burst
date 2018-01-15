@@ -220,7 +220,7 @@
       <setting id="yggtorrent_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
 
     <setting label="LostFilm.TV" id="use_lostfilm" type="bool" default="false" />
-      <setting id="lostfilm_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="lostfilm_username" label="32079" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="lostfilm_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="lostfilm_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
   </category>
