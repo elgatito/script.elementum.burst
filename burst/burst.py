@@ -68,7 +68,7 @@ def search(payload, method="general"):
     available_providers = 0
     request_time = time.time()
 
-    providers = get_enabled_providers()
+    providers = get_enabled_providers(method)
 
     if len(providers) == 0:
         notify(translation(32060), image=get_icon_path())
