@@ -170,3 +170,19 @@ msgstr ""
 msgctxt "#32079"
 msgid "E-mail"
 msgstr ""
+
+msgctxt "#32080"
+msgid "Contains only"
+msgstr ""
+
+msgctxt "#32081"
+msgid "All"
+msgstr ""
+
+msgctxt "#32082"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Serials"
+msgstr ""

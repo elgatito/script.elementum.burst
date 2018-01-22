@@ -101,16 +101,25 @@ def get_providers():
     return results
 
 
-def get_enabled_providers():
+def get_enabled_providers(method):
     """ Utility method to get all enabled provider IDs
 
     Returns:
         list: All available enabled provider IDs
     """
     results = []
+    type = "2"
+    if method == "general":
+        type = "0"
+    elif method == "movie":
+        type = "1"
     for provider in definitions:
         if get_setting('use_%s' % provider, bool):
-            results.append(provider)
+            contains = get_setting('%s_contains' % provider, choices=('All', 'Movies', 'Serials'))
+            if contains == "0":
+                results.append(provider)
+            elif contains == type:
+                results.append(provider)
         if 'custom' in definitions[provider] and definitions[provider]['custom']:
             results.append(provider)
     return results
