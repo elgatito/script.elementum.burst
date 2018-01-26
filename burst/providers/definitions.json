@@ -883,7 +883,7 @@
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
-        "base_url": "http://www.nyaa.se/?page=search&cats=1_0&term=QUERY&EXTRA&sort=2",
+        "base_url": "http://www.nyaa.si/?page=search&cats=1_0&term=QUERY&EXTRA&sort=2",
         "color": "FF88D201",
         "general_extra": "",
         "general_keywords": "{title}",

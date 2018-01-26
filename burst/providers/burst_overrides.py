@@ -122,7 +122,7 @@ overrides = {
     # Rutor
     'rutor': {
         'anime_query': "0/10/300/2/QUERYEXTRA",
-        'movie_query': "0/1/300/2/QUERYEXTRA",
+        'movie_query': "0/0/300/2/QUERYEXTRA",
         'season_query': "0/4/300/2/QUERYEXTRA",
         'show_query': "0/4/300/2/QUERYEXTRA",
         'season_keywords': "{title} {season:2}x01|S{season:2}",
@@ -185,8 +185,8 @@ overrides = {
 
     # Nyaa
     'nyaa': {
-        'root_url': "https://www.nyaa.se/",
-        'base_url': "https://www.nyaa.se/?page=search&cats=1_0&term=QUERY&EXTRA&sort=2",
+        'root_url': "https://www.nyaa.si/",
+        'base_url': "https://www.nyaa.si/?page=search&cats=1_0&term=QUERY&EXTRA&sort=2",
         'parser': {
             'torrent': "'https:%s' % item(tag='a', select=('title', 'Download'), attribute='href', order=1)"
         }

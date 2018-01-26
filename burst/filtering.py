@@ -552,8 +552,9 @@ def cleanup_results(results_list):
 
     hashes = []
     filtered_list = []
+    allow_noseeds = get_setting('allow_noseeds', bool)
     for result in results_list:
-        if not result['seeds']:
+        if not result['seeds'] and not allow_noseeds:
             continue
 
         if not result['uri']:

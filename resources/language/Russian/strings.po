@@ -161,3 +161,27 @@ msgstr ""
 msgctxt "#32077"
 msgid "Domain Alias [Optional]"
 msgstr "Альтернативный домен [Опционально]"
+
+msgctxt "#32078"
+msgid "Allow results without seeds"
+msgstr "Разрешать результаты без сидов"
+
+msgctxt "#32079"
+msgid "E-mail"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Contains only"
+msgstr "Содержит"
+
+msgctxt "#32081"
+msgid "All"
+msgstr "Всё"
+
+msgctxt "#32082"
+msgid "Movies"
+msgstr "Фильмы"
+
+msgctxt "#32083"
+msgid "Serials"
+msgstr "Сериалы"

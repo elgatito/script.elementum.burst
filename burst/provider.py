@@ -12,7 +12,7 @@ import xbmcaddon
 from client import Client
 from elementum.provider import log, get_setting, set_setting
 from providers.definitions import definitions, longest
-from utils import ADDON_PATH, get_int, clean_size, get_alias
+from utils import ADDON_PATH, get_int, clean_size, get_alias, iri2uri
 
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
     """ Payload formatter to format results the way Elementum expects them
@@ -100,6 +100,10 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         query = filtering.process_keywords(provider, query)
         extra = filtering.process_keywords(provider, extra)
+        if 'charset' in definition and definition['charset'] == 'windows-1251':
+            query = iri2uri(query)
+            extra = iri2uri(extra)
+
         log.debug("[%s] After keywords  - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
         if not query:
             return filtering.results
@@ -211,6 +215,10 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                             login_object = login_object.replace('CSRF_TOKEN', '"%s"' % csrf_token.group(1))
                         else:
                             logged_in = True
+                if provider == 'lostfilm':
+                    client.open(definition['root_url'] + '/v_search.php?c=111&s=1&e=1')
+                    if client.content is not 'log in first':
+                        logged_in = True
 
                 if 'token_auth' in definition:
                     # log.debug("[%s] logging in with: %s" % (provider, login_object))
@@ -246,6 +254,19 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         client.open(definition['root_url'] + '/torrents.php')
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
+
+                    if provider == 'lostfilm':
+                        log.info('[%s] Need open page before search', provider)
+                        client.open(url_search.encode('utf-8'), post_data=payload, get_data=data)
+                        search_info = re.search(r'PlayEpisode\((.*?)\)">', client.content)
+                        if search_info:
+                            series_details = re.search('\'(\d+)\',\'(\d+)\',\'(\d+)\'', search_info.group(1))
+                            client.open(definition['root_url'] + '/v_search.php?c=%s&s=%s&e=%s' % (series_details.group(1), series_details.group(2), series_details.group(3)))
+                            redirect_url = re.search(ur'url=(.*?)">', client.content)
+                            if redirect_url is not None:
+                                url_search = redirect_url.group(1)
+                        else:
+                            return filtering.results
 
         log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search))
 
