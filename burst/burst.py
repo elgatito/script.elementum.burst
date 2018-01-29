@@ -45,16 +45,18 @@ def search(payload, method="general"):
         payload = {
             'title': payload,
             'titles': {
-                'Original': payload
+                'original': payload
             }
         }
 
-    # If titles[] exists in payload and there are special chars in titles[Original]
+    payload['titles'] = dict((k.lower(), v) for k, v in payload['titles'].iteritems())
+
+    # If titles[] exists in payload and there are special chars in titles[original]
     #   then we set a flag to possibly modify the search query
     payload['has_special'] = 'titles' in payload and \
                              bool(payload['titles']) and \
-                             'Original' in payload['titles'] and \
-                             any(c in payload['titles']['Original'] for c in special_chars)
+                             'original' in payload['titles'] and \
+                             any(c in payload['titles']['original'] for c in special_chars)
     if payload['has_special']:
         log.debug("Query title contains special chars, so removing any quotes in the search query")
 
