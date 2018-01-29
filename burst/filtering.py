@@ -52,7 +52,7 @@ class Filtering:
         resolutions = OrderedDict()
         resolutions['filter_240p'] = ['240p', '_tvrip_', 'satrip', 'vhsrip']
         resolutions['filter_480p'] = ['480p', 'xvid', 'dvd', 'dvdrip', 'hdtv']
-        resolutions['filter_720p'] = ['720p', 'hdrip', 'bluray', 'brrip', 'bdrip']
+        resolutions['filter_720p'] = ['720p', 'hdrip', 'bluray', 'blu_ray', 'brrip', 'bdrip']
         resolutions['filter_1080p'] = ['1080p', 'fullhd', '_fhd_']
         resolutions['filter_2k'] = ['_2k_', '1440p']
         resolutions['filter_4k'] = ['_4k_', '2160p']
@@ -298,7 +298,7 @@ class Filtering:
                 language = definitions[provider]['language']
                 use_language = None
                 if ':' in keyword:
-                    use_language = keyword.split(':')[1]
+                    use_language = keyword.split(':')[1].lower()
                 if provider not in self.language_exceptions and \
                    (use_language or self.kodi_language) and \
                    'titles' in self.info and self.info['titles']:

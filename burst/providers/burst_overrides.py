@@ -29,7 +29,7 @@ overrides = {
         'parser': {
             'torrent': "'" + definitions['torlock']['root_url'] + definitions['torlock']['parser']['torrent'][1:]
         },
-        'season_keywords': '{title} s{season:2}',
+        'season_keywords': '{title:original} s{season:2}',
         'season_keywords2': None,
         'filter_title': True
     },
@@ -38,7 +38,7 @@ overrides = {
     '1337x': {
         'root_url': definitions['1337x']['root_url'].replace('http://', 'https://'),
         'base_url': definitions['1337x']['base_url'].replace('http://', 'https://'),
-        'season_keywords': '{title} s{season:2}',
+        'season_keywords': '{title:original} s{season:2}',
         'season_keywords2': None,
         'parser': {}
     },
@@ -48,7 +48,7 @@ overrides = {
         'name': 'MagnetDL',
         'base_url': 'http://www.magnetdl.com/FIRSTLETTER/QUERYEXTRA/',
         'separator': '-',
-        'season_keywords': '{title} s{season:2}',
+        'season_keywords': '{title:original} s{season:2}',
         'season_keywords2': None
 
     },
@@ -93,8 +93,8 @@ overrides = {
         'parser': {
             'torrent': "'magnet:?xt=urn:btih:%s' % " + definitions['idope']['parser']['infohash']
         },
-        'tv_keywords': '{title} s{season:2}',
-        'tv_keywords2': '{title} s{season:2}e{episode:2}'
+        'tv_keywords': '{title:original} s{season:2}',
+        'tv_keywords2': '{title:original} s{season:2}e{episode:2}'
     },
 
     # Monova
@@ -148,7 +148,7 @@ overrides = {
         'show_query': '?query_term=QUERY&sort_by=seeds&order_by=desc',
         'season_query': '?query_term=QUERY&sort_by=seeds&order_by=desc',
         'anime_query': '?query_term=QUERY&sort_by=seeds&order_by=desc',
-        'movie_keywords': '{title}',
+        'movie_keywords': '{title:original}',
         'api_format': {
             'results': 'data.movies',
             'name': 'title_long',
@@ -172,7 +172,7 @@ overrides = {
         'show_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.elementum.burst&token=TOKEN',
         'season_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.elementum.burst&token=TOKEN',
         'anime_query': '?mode=search&search_string=QUERY&format=json_extended&app_id=script.elementum.burst&token=TOKEN',
-        'season_keywords': '{title} s{season:2}',
+        'season_keywords': '{title:original} s{season:2}',
         'api_format': {
             'results': 'torrent_results',
             'torrent': 'download',
@@ -211,9 +211,9 @@ overrides = {
     'freshon.tv': {
         'spoof': 'Deluge 1.3.12.0',
         'subpage': False,
-        'tv_keywords': '{title} S{season:2}',
+        'tv_keywords': '{title:original} S{season:2}',
         'tv_keywords2': None,
-        'season_keywords': '{title} S{season:2}',
+        'season_keywords': '{title:original} S{season:2}',
         'season_keywords2': None,
         'parser': {
             'torrent': "'" + definitions['freshon.tv']['root_url'] + "%s' % " + definitions['freshon.tv']['parser']['torrent']

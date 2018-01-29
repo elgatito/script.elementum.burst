@@ -116,11 +116,8 @@ def update(d, u):
     return d
 
 
-# Load generated providers
-load_providers(os.path.join(ADDON_PATH, 'burst', 'providers', 'definitions.json'), fix_seasons=True)
-
-# Load built-in providers
-load_providers(os.path.join(ADDON_PATH, 'burst', 'providers', 'providers.json'))
+# Load providers
+load_providers(os.path.join(ADDON_PATH, 'burst', 'providers', 'providers.json'), fix_seasons=True)
 
 # Load providers overrides
 load_overrides(os.path.join(ADDON_PATH, 'burst', 'providers'))

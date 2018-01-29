@@ -116,7 +116,7 @@ def get_enabled_providers(method):
     for provider in definitions:
         if get_setting('use_%s' % provider, bool):
             contains = get_setting('%s_contains' % provider, choices=('All', 'Movies', 'Serials'))
-            if contains == "0":
+            if not contains or contains == "0":
                 results.append(provider)
             elif contains == type:
                 results.append(provider)
@@ -324,50 +324,3 @@ def encode_dict(dict_in):
             v.decode('utf8')
         dict_out[k] = v
     return dict_out
-
-def iri2uri(iri):
-    """ Convert IRI to URI
-
-    Args:
-        iri (str) Input string
-
-    Returns:
-        iri: Converted string
-    """
-    iri = "".join([encode(c) for c in iri])
-    return iri
-
-def encode(c):
-    retval = c
-    i = ord(c)
-    for low, high in escape_range:
-        if i < low:
-            break
-        if i >= low and i <= high:
-            retval = "".join(["%%%2X" % ord(o) for o in c.encode('cp1251')])
-            break
-    return retval
-
-
-escape_range = [
-    (0xA0, 0xD7FF),
-    (0xE000, 0xF8FF),
-    (0xF900, 0xFDCF),
-    (0xFDF0, 0xFFEF),
-    (0x10000, 0x1FFFD),
-    (0x20000, 0x2FFFD),
-    (0x30000, 0x3FFFD),
-    (0x40000, 0x4FFFD),
-    (0x50000, 0x5FFFD),
-    (0x60000, 0x6FFFD),
-    (0x70000, 0x7FFFD),
-    (0x80000, 0x8FFFD),
-    (0x90000, 0x9FFFD),
-    (0xA0000, 0xAFFFD),
-    (0xB0000, 0xBFFFD),
-    (0xC0000, 0xCFFFD),
-    (0xD0000, 0xDFFFD),
-    (0xE1000, 0xEFFFD),
-    (0xF0000, 0xFFFFD),
-    (0x100000, 0x10FFFD),
-]

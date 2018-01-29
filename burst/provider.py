@@ -7,12 +7,13 @@ Provider thread methods
 import os
 import re
 import json
+import urllib
 import xbmc
 import xbmcaddon
 from client import Client
 from elementum.provider import log, get_setting, set_setting
 from providers.definitions import definitions, longest
-from utils import ADDON_PATH, get_int, clean_size, get_alias, iri2uri
+from utils import ADDON_PATH, get_int, clean_size, get_alias
 
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
     """ Payload formatter to format results the way Elementum expects them
@@ -100,9 +101,12 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         query = filtering.process_keywords(provider, query)
         extra = filtering.process_keywords(provider, extra)
-        if 'charset' in definition and definition['charset'] == 'windows-1251':
-            query = iri2uri(query)
-            extra = iri2uri(extra)
+        if 'charset' in definition and 'utf' not in definition['charset'].lower():
+            try:
+                query = urllib.quote(query.encode(definition['charset']))
+                extra = urllib.quote(extra.encode(definition['charset']))
+            except:
+                pass
 
         log.debug("[%s] After keywords  - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
         if not query:
