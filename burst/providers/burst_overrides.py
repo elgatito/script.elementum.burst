@@ -125,10 +125,10 @@ overrides = {
         'movie_query': "0/0/300/2/QUERYEXTRA",
         'season_query': "0/4/300/2/QUERYEXTRA",
         'show_query': "0/4/300/2/QUERYEXTRA",
-        'season_keywords': "{title} {season:2}x01|S{season:2}",
+        'season_keywords': "{title:original} {season:2}x01|S{season:2}",
         'season_keywords2': "",
-        'tv_keywords': '{title} s{season:2}e{episode:2}',
-        'tv_keywords2': '{title} {season:2}x01|S{season:2}',
+        'tv_keywords': '{title:original} s{season:2}e{episode:2}',
+        'tv_keywords2': '{title:original} {season:2}x01|S{season:2}',
         'parser': {
             'row': "find_once('table', order=3).find_all('tr', start=2)",
             'seeds': "item(tag='span', order=1, select=('class', 'green'))",
