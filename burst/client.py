@@ -9,6 +9,9 @@ import re
 import sys
 import json
 import urllib2
+import httplib
+import socket
+import dns.resolver
 from time import sleep
 from urlparse import urlparse
 from contextlib import closing
@@ -33,6 +36,65 @@ try:
 except:
     PATH_TEMP = translatePath("special://temp").decode('utf-8')
 
+dns_cache = {}
+
+def MyResolver(host):
+    if '.' not in host:
+        return host
+
+    try:
+        return dns_cache[host]
+    except KeyError:
+        pass
+
+    ip = ResolvePublic(host)
+    if not ip:
+        ip = ResolveOpennic(host)
+
+    if ip:
+        log.debug("Host %s resolved to %s" % (host, ip))
+        dns_cache[host] = ip
+        return ip
+    else:
+        return host
+
+def ResolvePublic(host):
+    try:
+        log.debug("Custom DNS resolving with public DNS for: %s" % host)
+        resolver = dns.resolver.Resolver()
+        resolver.nameservers = ['9.9.9.9', '8.8.8.8', '8.8.4.4']
+        answer = resolver.query(host, 'A')
+        return answer.rrset.items[0].address
+    except:
+        return
+
+def ResolveOpennic(host):
+    try:
+        log.debug("Custom DNS resolving with public DNS for: %s" % host)
+        resolver = dns.resolver.Resolver()
+        resolver.nameservers = ['193.183.98.66', '172.104.136.243', '89.18.27.167']
+        answer = resolver.query(host, 'A')
+        return answer.rrset.items[0].address
+    except:
+        return
+
+
+class MyHTTPConnection(httplib.HTTPConnection):
+    def connect(self):
+        self.sock = socket.create_connection((MyResolver(self.host), self.port), self.timeout)
+
+class MyHTTPSConnection(httplib.HTTPSConnection):
+    def connect(self):
+        sock = socket.create_connection((MyResolver(self.host), self.port), self.timeout)
+        self.sock = ssl.wrap_socket(sock, self.key_file, self.cert_file)
+
+class MyHTTPHandler(urllib2.HTTPHandler):
+    def http_open(self, req):
+        return self.do_open(MyHTTPConnection, req)
+
+class MyHTTPSHandler(urllib2.HTTPSHandler):
+    def https_open(self, req):
+        return self.do_open(MyHTTPSConnection, req)
 
 class Client:
     """
@@ -131,7 +193,9 @@ class Client:
         self._read_cookies(url)
         log.debug("Cookies for %s: %s" % (repr(url), repr(self._cookies)))
 
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self._cookies))
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self._cookies), MyHTTPHandler, MyHTTPSHandler)
+        # opener = urllib2.build_opener(MyHTTPHandler,MyHTTPSHandler)
+        urllib2.install_opener(opener)
         req.add_header('User-Agent', self.user_agent)
         req.add_header('Content-Language', language)
         req.add_header("Accept-Encoding", "gzip")
