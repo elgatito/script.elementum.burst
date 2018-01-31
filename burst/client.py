@@ -6,6 +6,7 @@ Burst web client
 
 import os
 import re
+import ssl
 import sys
 import json
 import urllib2
@@ -22,7 +23,6 @@ from utils import encode_dict
 
 from xbmc import translatePath
 
-import ssl
 try:
     ssl._create_default_https_context = ssl._create_unverified_context
 except:
@@ -83,18 +83,32 @@ class MyHTTPConnection(httplib.HTTPConnection):
     def connect(self):
         self.sock = socket.create_connection((MyResolver(self.host), self.port), self.timeout)
 
-class MyHTTPSConnection(httplib.HTTPSConnection):
-    def connect(self):
-        sock = socket.create_connection((MyResolver(self.host), self.port), self.timeout)
-        self.sock = ssl.wrap_socket(sock, self.key_file, self.cert_file)
+# HTTPS requests are not working, because of handshakes fails, so disabling now
+# class MyHTTPSConnection(httplib.HTTPSConnection):
+#     def connect(self):
+#         self.verify_mode = ssl.CERT_NONE
+#         self.check_hostname = False
+#
+#         sock = socket.create_connection((MyResolver(self.host), self.port), self.timeout)
+#         # self.sock = ssl.wrap_socket(sock, self.key_file, self.cert_file)
+#         if self._tunnel_host:
+#             self.sock = sock
+#             self._tunnel()
+#         try:
+#             self.sock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_SSLv23)
+#         except Exception, e:
+#             log.debug("Trying SSLv3.: %s --- %s" % (e, self))
+#             # self.sock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_TLSv1, ciphers="ADH-AES256-SHA")
+#             self.sock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_TLSv1)
+
 
 class MyHTTPHandler(urllib2.HTTPHandler):
     def http_open(self, req):
         return self.do_open(MyHTTPConnection, req)
 
-class MyHTTPSHandler(urllib2.HTTPSHandler):
-    def https_open(self, req):
-        return self.do_open(MyHTTPSConnection, req)
+# class MyHTTPSHandler(urllib2.HTTPSHandler):
+#     def https_open(self, req):
+#         return self.do_open(MyHTTPSConnection, req)
 
 class Client:
     """
@@ -193,8 +207,7 @@ class Client:
         self._read_cookies(url)
         log.debug("Cookies for %s: %s" % (repr(url), repr(self._cookies)))
 
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self._cookies), MyHTTPHandler, MyHTTPSHandler)
-        # opener = urllib2.build_opener(MyHTTPHandler,MyHTTPSHandler)
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self._cookies), MyHTTPHandler)
         urllib2.install_opener(opener)
         req.add_header('User-Agent', self.user_agent)
         req.add_header('Content-Language', language)
