@@ -185,3 +185,7 @@ msgstr "Фильмы"
 msgctxt "#32083"
 msgid "Serials"
 msgstr "Сериалы"
+
+msgctxt "#32084"
+msgid "Use Public DNS (Google, Quad9, Opennic)"
+msgstr "Использовать публичные DNS (Google, Quad9, Opennic)"

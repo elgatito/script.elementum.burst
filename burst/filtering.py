@@ -147,6 +147,9 @@ class Filtering:
         """
         definition = definitions[provider]
         definition = get_alias(definition, get_setting("%s_alias" % provider))
+        if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
+            definition = get_alias(definition, definition["public_dns_alias"])
+
         general_query = definition['general_query'] if definition['general_query'] else ''
         log.debug("General URL: %s%s" % (definition['base_url'], general_query))
         self.info = payload
@@ -164,6 +167,9 @@ class Filtering:
         """
         definition = definitions[provider]
         definition = get_alias(definition, get_setting("%s_alias" % provider))
+        if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
+            definition = get_alias(definition, definition["public_dns_alias"])
+
         movie_query = definition['movie_query'] if definition['movie_query'] else ''
         log.debug("Movies URL: %s%s" % (definition['base_url'], movie_query))
         if get_setting('separate_sizes', bool):
@@ -185,6 +191,9 @@ class Filtering:
         """
         definition = definitions[provider]
         definition = get_alias(definition, get_setting("%s_alias" % provider))
+        if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
+            definition = get_alias(definition, definition["public_dns_alias"])
+
         show_query = definition['show_query'] if definition['show_query'] else ''
         log.debug("Episode URL: %s%s" % (definition['base_url'], show_query))
         if get_setting('separate_sizes', bool):
@@ -210,6 +219,9 @@ class Filtering:
         """
         definition = definitions[provider]
         definition = get_alias(definition, get_setting("%s_alias" % provider))
+        if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
+            definition = get_alias(definition, definition["public_dns_alias"])
+
         season_query = definition['season_query'] if definition['season_query'] else ''
         log.debug("Season URL: %s%s" % (definition['base_url'], season_query))
         if get_setting('separate_sizes', bool):
@@ -234,6 +246,9 @@ class Filtering:
         """
         definition = definitions[provider]
         definition = get_alias(definition, get_setting("%s_alias" % provider))
+        if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
+            definition = get_alias(definition, definition["public_dns_alias"])
+
         anime_query = definition['anime_query'] if definition['anime_query'] else ''
         log.debug("Anime URL: %s%s" % (definition['base_url'], anime_query))
         if get_setting('separate_sizes', bool):

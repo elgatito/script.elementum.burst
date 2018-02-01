@@ -16,7 +16,7 @@ import dns.resolver
 from time import sleep
 from urlparse import urlparse
 from contextlib import closing
-from elementum.provider import log
+from elementum.provider import log, get_setting
 from cookielib import Cookie, LWPCookieJar
 from urllib import urlencode
 from utils import encode_dict
@@ -207,8 +207,11 @@ class Client:
         self._read_cookies(url)
         log.debug("Cookies for %s: %s" % (repr(url), repr(self._cookies)))
 
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self._cookies), MyHTTPHandler)
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self._cookies))
+        if get_setting("use_public_dns", bool):
+            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self._cookies), MyHTTPHandler)
         urllib2.install_opener(opener)
+
         req.add_header('User-Agent', self.user_agent)
         req.add_header('Content-Language', language)
         req.add_header("Accept-Encoding", "gzip")

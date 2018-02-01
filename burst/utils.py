@@ -62,6 +62,15 @@ def get_domain(url):
     return domain
 
 
+def get_protocol(url):
+    if "https://" in url:
+        return "https"
+    elif "http://" in url:
+        return "http"
+
+    return None
+
+
 def get_alias(definition, alias):
     definition["alias"] = ""
 
@@ -74,17 +83,25 @@ def get_alias(definition, alias):
                 break
 
         new_domain = get_domain(alias)
+        protocol = get_protocol(alias)
         if old_domain and new_domain:
             definition["alias"] = new_domain
             definition["old_domain"] = old_domain
 
-            # Substitue all ocurrences of old domain name and replace with new one
+            # Substitute all ocurrences of old domain name and replace with new one
             for k in definition:
                 if isinstance(definition[k], basestring):
                     definition[k] = definition[k].replace(old_domain, new_domain)
+                    if protocol:
+                        definition[k] = definition[k].replace("http://", protocol + "://")
+                        definition[k] = definition[k].replace("https://", protocol + "://")
+
             for k in definition["parser"]:
                 if isinstance(definition["parser"][k], basestring):
                     definition["parser"][k] = definition["parser"][k].replace(old_domain, new_domain)
+                    if protocol:
+                        definition["parser"][k] = definition["parser"][k].replace("http://", protocol + "://")
+                        definition["parser"][k] = definition["parser"][k].replace("https://", protocol + "://")
 
     return definition
 

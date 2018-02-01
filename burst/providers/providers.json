@@ -963,7 +963,8 @@
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "0/10/000/0/QUERYEXTRA",
-        "base_url": "http://rutor.lib/search/",
+        "base_url": "http://rutor.info/search/",
+        "public_dns_alias": "rutor.lib",
         "color": "FFFFDE00",
         "general_extra": "",
         "general_keywords": "{title}",
@@ -988,7 +989,7 @@
         "private": false,
         "season_extra": "",
         "season_extra2": "",
-        "season_keywords": "{title} \u0441\u0435\u0437\u043e\u043d {season}",
+        "season_keywords": "{title} Сезон {season}",
         "season_keywords2": "{title} S[{season:2}]",
         "season_query": "0/4/000/0/QUERYEXTRA",
         "separator": "%20",
@@ -997,7 +998,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title} \u0441\u0435\u0437\u043e\u043d {season}"
+        "tv_keywords2": "{title} Сезон {season}"
     },
     "t411": {
         "anime_extra": "",
@@ -1607,7 +1608,8 @@
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
-        "base_url": "http://nnm-club.lib/forum/tracker.php?nm=QUERYEXTRA&prev_sd=1&prev_a=1&prev_my=0&prev_n=0&prev_shc=1&prev_shf=0&prev_sha=0&prev_shs=1&prev_shr=0&prev_sht=0&o=10&s=2&tm=-1&a=1&sd=1&ta=-1&sns=-1&sds=-1&pn&submit=1",
+        "base_url": "https://nnmclub.to/forum/tracker.php?nm=QUERYEXTRA&prev_sd=1&prev_a=1&prev_my=0&prev_n=0&prev_shc=1&prev_shf=0&prev_sha=0&prev_shs=1&prev_shr=0&prev_sht=0&o=10&s=2&tm=-1&a=1&sd=1&ta=-1&sns=-1&sds=-1&pn&submit=1",
+        "public_dns_alias": "nnm-club.lib",
         "color": "FFFFFFFF",
         "general_extra": "",
         "general_keywords": "{title:original}",
@@ -1627,10 +1629,10 @@
             "row": "find_once('table', ('class', 'tablesorter'), order=1).find_all('tr', ('class', ['prow1', 'prow2']))",
             "seeds": "item(tag='td', order=6)",
             "size": "item(tag='td', order=4).split(' ', 1)[1]",
-            "torrent": "'http://nnm-club.lib/forum/%s' % item(tag='a', attribute='href', order=2)"
+            "torrent": "'https://nnmclub.to/forum/%s' % item(tag='a', attribute='href', order=2)"
         },
         "private": true,
-        "root_url": "http://nnm-club.lib",
+        "root_url": "https://nnmclub.to",
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} \"Сезон {season}\"",
@@ -1731,7 +1733,8 @@
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
-        "base_url": "http://rutracker.lib/forum/tracker.php?nm=QUERYEXTRA&prev_new=0&prev_oop=1&f[]=-1&o=10&s=2&oop=1&pn=",
+        "base_url": "https://rutracker.cr/forum/tracker.php?nm=QUERYEXTRA&prev_new=0&prev_oop=1&f[]=-1&o=10&s=2&oop=1&pn=",
+        "public_dns_alias": "rutracker.lib",
         "color": "FFFFFFFF",
         "charset": "windows-1251",
         "general_extra": "",
@@ -1752,10 +1755,10 @@
             "size": "item('a', order=4)",
             "seeds": "item(tag='b', order=1, select=('class', 'seedmed'))",
             "peers": "item(tag='b', order=2)",
-            "torrent": "'http://rutracker.lib/forum/%s' % item(tag='a', attribute='href', order=4)"
+            "torrent": "'https://rutracker.cr/forum/%s' % item(tag='a', attribute='href', order=4)"
         },
         "private": true,
-        "root_url": "http://rutracker.lib",
+        "root_url": "https://rutracker.cr",
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "\"{title:original}\" \"Сезон {season}\"",
@@ -1838,7 +1841,7 @@
             "torrent": "'http://serialz.tv%s' % item(tag='a', attribute='href', order=5)"
         },
         "private": false,
-        "root_url": "http://http://serialz.tv",
+        "root_url": "http://serialz.tv",
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} Сезон {season}",
@@ -1849,7 +1852,7 @@
         "subpage": true,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:original} Сезон {season} Серия {episode:2}",
+        "tv_keywords": "{title:original} Сезон {season} Серия {episode}",
         "tv_keywords2": ""
     },
     "tfile": {
@@ -2068,12 +2071,13 @@
         "language": null,
         "name": "Rustorka",
         "color": "FF5CB9FF",
-        "base_url": "http://rustorka.lib/forum/tracker.php?nm=QUERYEXTRA&prev_allw=1&prev_a=1&prev_not_checked=0&prev_closed=0&prev_d=0&prev_not_perfect=0&prev_part_perfect=0&prev_fishily=0&prev_copy=0&prev_temp=0&prev_pogl=0&prev_gold=0&prev_silver=0&prev_dla=0&prev_dlc=0&prev_dld=0&prev_dlw=0&prev_my=0&prev_new=0&prev_sd=1&prev_snotd=0&prev_da=0&prev_dc=0&prev_df=0&prev_ds=0&f%5B%5D=-1&o=1&s=2&tm=-1&sns=-1&a=1&sd=1&pn=&allw=1&submit=%A0%A0%CF%EE%E8%F1%EA%A0%A0",
+        "base_url": "http://rustorka.com/forum/tracker.php?nm=QUERYEXTRA&prev_allw=1&prev_a=1&prev_not_checked=0&prev_closed=0&prev_d=0&prev_not_perfect=0&prev_part_perfect=0&prev_fishily=0&prev_copy=0&prev_temp=0&prev_pogl=0&prev_gold=0&prev_silver=0&prev_dla=0&prev_dlc=0&prev_dld=0&prev_dlw=0&prev_my=0&prev_new=0&prev_sd=1&prev_snotd=0&prev_da=0&prev_dc=0&prev_df=0&prev_ds=0&f%5B%5D=-1&o=1&s=2&tm=-1&sns=-1&a=1&sd=1&pn=&allw=1&submit=%A0%A0%CF%EE%E8%F1%EA%A0%A0",
+        "public_dns_alias": "rustorka.lib",
         "private": true,
         "login_failed": "Вы ввели",
         "login_object": "{'login_username': USERNAME, 'login_password': PASSWORD, 'autologin': '1', 'login': 'Вход'}",
         "login_path": "/forum/login.php",
-        "root_url": "http://rustorka.lib",
+        "root_url": "http://rustorka.com",
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
@@ -2084,7 +2088,7 @@
             "size": "item(tag='td', select=('class', 'small'), order=1, divider=(' ', 2))",
             "seeds": "item(tag='td', select=('class', 'seedmed'), order=1)",
             "peers": "item(tag='td', select=('class', 'leechmed'), order=1)",
-            "torrent": "'http://rustorka.lib/forum/%s' % item(tag='a', select=('class', 'dLink'), attribute='href', order=1)"
+            "torrent": "'http://rustorka.com/forum/%s' % item(tag='a', select=('class', 'dLink'), attribute='href', order=1)"
         },
         "season_extra": "",
         "season_extra2": "",

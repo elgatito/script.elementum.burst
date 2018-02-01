@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
   <category label="32000">
+    <setting label="32084" id="use_public_dns" type="bool" default="false" />
     <setting label="32041" id="use_cloudhole" type="bool" default="false" />
     <setting label="32033" id="min_size" type="slider" option="float" range="0,0.25,100" default="0" />
     <setting label="32034" id="max_size" type="slider" option="float" range="1,1,200" default="100" />
