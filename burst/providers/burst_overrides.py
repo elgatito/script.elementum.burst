@@ -202,11 +202,6 @@ overrides = {
         'subpage': False
     },
 
-    # AlphaReign
-    'alphareign': {
-        'login_object': "{'username': USERNAME, 'password': PASSWORD, 'csrf_name': CSRF_NAME, 'csrf_value': CSRF_VALUE}"
-    },
-
     # freshon.tv
     'freshon.tv': {
         'spoof': 'Deluge 1.3.12.0',
