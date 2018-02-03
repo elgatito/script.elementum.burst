@@ -51,3 +51,4 @@ docs/_build_dev/
 
 # PyBuilder
 target/
+.idea
