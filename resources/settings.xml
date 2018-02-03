@@ -111,10 +111,6 @@
       <setting id="monova_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="monova_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="Btstorrent" id="use_btstorrent" type="bool" default="false" />
-      <setting id="btstorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="btstorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="GloTorrents" id="use_glotorrents" type="bool" default="false" />
       <setting id="glotorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="glotorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
