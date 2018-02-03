@@ -202,19 +202,6 @@ overrides = {
         'subpage': False
     },
 
-    # freshon.tv
-    'freshon.tv': {
-        'spoof': 'Deluge 1.3.12.0',
-        'subpage': False,
-        'tv_keywords': '{title:original} S{season:2}',
-        'tv_keywords2': None,
-        'season_keywords': '{title:original} S{season:2}',
-        'season_keywords2': None,
-        'parser': {
-            'torrent': "'" + definitions['freshon.tv']['root_url'] + "%s' % " + definitions['freshon.tv']['parser']['torrent']
-        }
-    },
-
     # FileList
     'filelist': {
         'parser': {
