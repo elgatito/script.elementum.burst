@@ -53,11 +53,6 @@ overrides = {
 
     },
 
-    # Cpasbien
-    'cpasbien': {
-        'language': 'fr'
-    },
-
     # Torrent9
     'torrent9': {
         'subpage': False,

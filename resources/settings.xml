@@ -59,10 +59,6 @@
       <setting id="torrent9_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrent9_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="Cpasbien" id="use_cpasbien" type="bool" default="false" />
-      <setting id="cpasbien_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="cpasbien_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="Nyaa" id="use_nyaa" type="bool" default="false" />
       <setting id="nyaa_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="nyaa_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
