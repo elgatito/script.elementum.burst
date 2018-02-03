@@ -58,12 +58,6 @@ overrides = {
         'language': 'fr'
     },
 
-    # Nextorrent
-    'nextorrent': {
-        'general_keywords': '{title:fr}',
-        'movie_keywords': '{title:fr} {year}'
-    },
-
     # Torrent9
     'torrent9': {
         'subpage': False,
