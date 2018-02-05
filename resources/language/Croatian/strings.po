@@ -186,5 +186,5 @@ msgid "Movies"
 msgstr "Filmove"
 
 msgctxt "#32083"
-msgid "Serials"
+msgid "Shows"
 msgstr "TV serije"

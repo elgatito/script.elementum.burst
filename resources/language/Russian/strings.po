@@ -183,7 +183,7 @@ msgid "Movies"
 msgstr "Фильмы"
 
 msgctxt "#32083"
-msgid "Serials"
+msgid "Shows"
 msgstr "Сериалы"
 
 msgctxt "#32084"
