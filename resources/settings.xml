@@ -55,29 +55,13 @@
       <setting id="kinozal_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="kinozal_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="Nextorrent" id="use_nextorrent" type="bool" default="false" />
-      <setting id="nextorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="nextorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="Torrent9" id="use_torrent9" type="bool" default="false" />
       <setting id="torrent9_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrent9_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="Cpasbien" id="use_cpasbien" type="bool" default="false" />
-      <setting id="cpasbien_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="cpasbien_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="Nyaa" id="use_nyaa" type="bool" default="false" />
       <setting id="nyaa_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="nyaa_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
-    <setting label="BTjunkie" id="use_btjunkie" type="bool" default="false" />
-      <setting id="btjunkie_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="btjunkie_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
-    <setting label="Divxatope" id="use_divxatope" type="bool" default="false" />
-      <setting id="divxatope_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="divxatope_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
     <setting label="TorrentFunk" id="use_torrentfunk" type="bool" default="false" />
       <setting id="torrentfunk_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -103,10 +87,6 @@
       <setting id="elitetorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="elitetorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="Bitsnoop" id="use_bitsnoop" type="bool" default="false" />
-      <setting id="bitsnoop_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="bitsnoop_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="YourBitTorrent" id="use_yourbittorrent" type="bool" default="false" />
       <setting id="yourbittorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="yourbittorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
@@ -118,10 +98,6 @@
     <setting label="Monova" id="use_monova" type="bool" default="false" />
       <setting id="monova_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="monova_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
-    <setting label="Btstorrent" id="use_btstorrent" type="bool" default="false" />
-      <setting id="btstorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="btstorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
     <setting label="GloTorrents" id="use_glotorrents" type="bool" default="false" />
       <setting id="glotorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -168,29 +144,11 @@
       <setting id="uhdbits_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="uhdbits_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
 
-    <setting label="AlphaReign" id="use_alphareign" type="bool" default="false" />
-      <setting id="alphareign_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="alphareign_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
-      <setting id="alphareign_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
-      <setting id="alphareign_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-
-    <setting label="FinBytes" id="use_finbytes" type="bool" default="false" />
-      <setting id="finbytes_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="finbytes_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
-      <setting id="finbytes_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
-      <setting id="finbytes_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-
     <setting label="GimmePeers" id="use_gimmepeers" type="bool" default="false" />
       <setting id="gimmepeers_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="gimmepeers_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="gimmepeers_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="gimmepeers_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-
-    <setting label="Tv Torrents.ro" id="use_freshon.tv" type="bool" default="false" />
-      <setting id="freshon.tv_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="freshon.tv_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
-      <setting id="freshon.tv_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
-      <setting id="freshon.tv_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
 
     <setting label="HD Torrents" id="use_hd-torrents" type="bool" default="false" />
       <setting id="hd-torrents_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />

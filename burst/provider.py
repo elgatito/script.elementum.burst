@@ -201,16 +201,6 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 login_object = definition['login_object'].replace('USERNAME', '"%s"' % username).replace('PASSWORD', '"%s"' % password)
 
                 # TODO generic flags in definitions for those...
-                if provider == 'alphareign':
-                    client.open(definition['root_url'] + definition['login_path'])
-                    if client.content:
-                        csrf_name = re.search(r'name="csrf_name" value="(.*?)"', client.content)
-                        csrf_value = re.search(r'name="csrf_value" value="(.*?)"', client.content)
-                        if csrf_name and csrf_value:
-                            login_object = login_object.replace("CSRF_NAME", '"%s"' % csrf_name.group(1))
-                            login_object = login_object.replace("CSRF_VALUE", '"%s"' % csrf_value.group(1))
-                        else:
-                            logged_in = True
                 if provider == 'hd-torrents':
                     client.open(definition['root_url'] + definition['login_path'])
                     if client.content:

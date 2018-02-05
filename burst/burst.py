@@ -423,12 +423,6 @@ def extract_from_page(provider, content):
         log.debug('[%s] Matched download link with token: %s' % (provider, repr(result)))
         return result
 
-    matches = re.findall('/telechargement/[a-z0-9-_.]+', content)  # cpasbien
-    if matches:
-        result = definition['root_url'] + matches[0]
-        log.debug('[%s] Matched some french link: %s' % (provider, repr(result)))
-        return result
-
     matches = re.findall('/torrents/download/\?id=[a-z0-9-_.]+', content)  # t411
     if matches:
         result = definition['root_url'] + matches[0]
