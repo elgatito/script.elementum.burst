@@ -184,7 +184,7 @@ msgid "Movies"
 msgstr ""
 
 msgctxt "#32083"
-msgid "Serials"
+msgid "Shows"
 msgstr ""
 
 msgctxt "#32084"

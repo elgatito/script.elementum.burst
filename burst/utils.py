@@ -132,7 +132,7 @@ def get_enabled_providers(method):
         type = "1"
     for provider in definitions:
         if get_setting('use_%s' % provider, bool):
-            contains = get_setting('%s_contains' % provider, choices=('All', 'Movies', 'Serials'))
+            contains = get_setting('%s_contains' % provider, choices=('All', 'Movies', 'Shows'))
             if not contains or contains == "0":
                 results.append(provider)
             elif contains == type:
