@@ -974,7 +974,7 @@
         "login_object": "",
         "login_path": null,
         "movie_extra": "",
-        "movie_keywords": "{title} {year}",
+        "movie_keywords": "{title:original} {year}",
         "movie_query": "0/1/000/0/QUERYEXTRA",
         "name": "Rutor",
         "parser": {
