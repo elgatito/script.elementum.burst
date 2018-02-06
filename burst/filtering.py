@@ -11,7 +11,6 @@ from urllib import unquote
 from parser.HTMLParser import HTMLParser
 from elementum.provider import log, get_setting
 from providers.definitions import definitions
-from providers.helpers import t411season, t411episode
 from utils import Magnet, get_int, get_float, clean_number, size_int, get_alias
 
 try:
@@ -322,6 +321,8 @@ class Filtering:
                             use_language = self.kodi_language
                         if use_language not in self.info['titles']:
                             use_language = language
+                            if 'original' in self.info['titles']:
+                                title = self.info['titles']['original']
                         if use_language in self.info['titles'] and self.info['titles'][use_language]:
                             title = self.info['titles'][use_language]
                             title = self.normalize_name(title)
@@ -340,10 +341,7 @@ class Filtering:
             if 'season' in keyword:
                 if '+' in keyword:
                     keys = keyword.split('+')
-                    if keys[1] == "t411season":
-                        season = str(t411season(self.info['season']))
-                    else:
-                        season = str(self.info["season"] + get_int(keys[1]))
+                    season = str(self.info["season"] + get_int(keys[1]))
                 elif ':' in keyword:
                     keys = keyword.split(':')
                     season = ('%%.%sd' % keys[1]) % self.info["season"]
@@ -354,10 +352,7 @@ class Filtering:
             if 'episode' in keyword:
                 if '+' in keyword:
                     keys = keyword.split('+')
-                    if keys[1] == "t411episode":
-                        episode = str(t411episode(self.info['episode']))
-                    else:
-                        episode = str(self.info["episode"] + get_int(keys[1]))
+                    episode = str(self.info["episode"] + get_int(keys[1]))
                 elif ':' in keyword:
                     keys = keyword.split(':')
                     episode = ('%%.%sd' % keys[1]) % self.info["episode"]

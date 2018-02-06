@@ -5,7 +5,7 @@
     <setting label="32041" id="use_cloudhole" type="bool" default="false" />
     <setting label="32033" id="min_size" type="slider" option="float" range="0,0.25,100" default="0" />
     <setting label="32034" id="max_size" type="slider" option="float" range="1,1,200" default="100" />
-    <setting label="32040" id="max_results" type="slider" default="10" option="int" range="1,1,20" />
+    <setting label="32040" id="max_results" type="slider" default="10" option="int" range="1,1,25" />
     <setting label="32070" id="timeout" type="slider" default="9" option="int" range="3,1,20" />
     <setting label="32071" id="timeout_help" type="text" enable="false" subsetting="true" />
   </category>
@@ -26,6 +26,10 @@
     <setting label="TorLock" id="use_torlock" type="bool" default="true" />
       <setting id="torlock_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torlock_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+
+    <setting label="Zooqle" id="use_zooqle" type="bool" default="false" />
+      <setting id="zooqle_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="zooqle_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
     <setting label="MagnetDL" id="use_magnetdl" type="bool" default="true" />
       <setting id="magnetdl_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -59,6 +63,10 @@
       <setting id="torrent9_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrent9_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
+    <setting label="Cpasbien" id="use_cpasbien" type="bool" default="false" />
+      <setting id="cpasbien_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="cpasbien_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+
     <setting label="Nyaa" id="use_nyaa" type="bool" default="false" />
       <setting id="nyaa_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="nyaa_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
@@ -83,10 +91,6 @@
       <setting id="torrentz_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrentz_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="EliteTorrent" id="use_elitetorrent" type="bool" default="false" />
-      <setting id="elitetorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="elitetorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="YourBitTorrent" id="use_yourbittorrent" type="bool" default="false" />
       <setting id="yourbittorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="yourbittorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
@@ -95,29 +99,13 @@
       <setting id="ilcorsaronero_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="ilcorsaronero_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="Monova" id="use_monova" type="bool" default="false" />
-      <setting id="monova_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="monova_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="GloTorrents" id="use_glotorrents" type="bool" default="false" />
       <setting id="glotorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="glotorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="ExtraTorrent" id="use_extratorrent" type="bool" default="false" />
-      <setting id="extratorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="extratorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="TorrentDownloads" id="use_torrentdownloads" type="bool" default="false" />
       <setting id="torrentdownloads_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrentdownloads_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
-    <setting label="Zoogle" id="use_zoogle" type="bool" default="false" />
-      <setting id="zoogle_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="zoogle_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
-    <setting label="Zooqle" id="use_zooqle" type="bool" default="false" />
-      <setting id="zooqle_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="zooqle_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
     <setting label="32014" type="lsep" />
     <setting label="TorrentLeech" id="use_torrentleech" type="bool" default="false" />
@@ -131,12 +119,6 @@
       <setting id="filelist_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="filelist_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="filelist_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-
-    <setting label="T411" id="use_t411" type="bool" default="false" />
-      <setting id="t411_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="t411_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
-      <setting id="t411_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
-      <setting id="t411_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
 
     <setting label="UHDBits" id="use_uhdbits" type="bool" default="false" />
       <setting id="uhdbits_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
