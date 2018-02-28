@@ -1537,7 +1537,7 @@
         "general_query": "",
         "language": "",
         "login_failed": "Login Failed!",
-        "login_object": "{'nev': USERNAME, 'pass': PASSWORD}",
+        "login_object": "{'nev': USERNAME, 'pass': PASSWORD, 'ne_leptessen_ki': '1'}",
         "login_path": "/login.php",
         "movie_extra": "",
         "movie_keywords": "{title} {year}",
@@ -1550,7 +1550,7 @@
             "row": "find_all('div', ('class', ['box_nagy', 'box_nagy2']))",
             "seeds": "item(tag='a', order=4)",
             "size": "item(tag='div', select=('class', 'box_meret2'))",
-            "torrent": "item(tag='a', order=1, attribute='href').replace('torrents.php?action=details', 'https://ncore.cc/torrents.php?action=download')"
+            "torrent": "'/%s' % item(tag='a', order=1, attribute='href')"
         },
         "private": true,
         "season_keywords1": "{title} s{season:2}",
@@ -1559,7 +1559,8 @@
         "season_query": "&tipus=kivalasztottak_kozott&kivalasztott_tipus%5B%5D=xvidser_hun&kivalasztott_tipus%5B%5D=hdser_hun",
         "separator": "+",
         "show_query": "&tipus=kivalasztottak_kozott&kivalasztott_tipus%5B%5D=xvidser_hun&kivalasztott_tipus%5B%5D=hdser_hun",
-        "subpage": false,
+        "subpage": true,
+        "root_url": "https://ncore.cc",
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
