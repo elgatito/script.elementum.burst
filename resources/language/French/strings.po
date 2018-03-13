@@ -75,10 +75,6 @@ msgctxt "#32017"
 msgid "Require"
 msgstr "Exiger"
 
-msgctxt "#32018"
-msgid "Use language preference from Kodi when a translation is available"
-msgstr "Utilisez de la langue de Kodi lorsqu’une traduction est disponible"
-
 msgctxt "#32033"
 msgid "Minimum size (GB)"
 msgstr "Taille minimale"
@@ -114,14 +110,6 @@ msgstr "Maximum de résultats par provider"
 msgctxt "#32041"
 msgid "Use CloudHole"
 msgstr "Utiliser CloudHole"
-
-msgctxt "#32050"
-msgid "Exceptions"
-msgstr "Exceptions"
-
-msgctxt "#32051"
-msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
-msgstr "Séparée par des virgules pour exclure, par exemple. yts, rarbg"
 
 msgctxt "#32060"
 msgid "No providers enabled"

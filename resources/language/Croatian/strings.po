@@ -75,10 +75,6 @@ msgctxt "#32017"
 msgid "Require"
 msgstr "Zahtijevaj"
 
-msgctxt "#32018"
-msgid "Use language preference from Kodi when a translation is available"
-msgstr "Koristi osobitosti jezika iz Kodija kada je prijevod dostupan"
-
 msgctxt "#32033"
 msgid "Minimum size (GB)"
 msgstr "Najmanja veličina (GB)"
@@ -116,14 +112,6 @@ msgstr "Najviše rezultata po izvoru"
 msgctxt "#32041"
 msgid "Use CloudHole"
 msgstr "Koristi CloudHole"
-
-msgctxt "#32050"
-msgid "Exceptions"
-msgstr "Iznimke"
-
-msgctxt "#32051"
-msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
-msgstr "Zarezom odvojeni izvori za izuzimanje, npr. yts, rarbg"
 
 msgctxt "#32060"
 msgid "No providers enabled"

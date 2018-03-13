@@ -74,10 +74,6 @@ msgctxt "#32017"
 msgid "Require"
 msgstr "Būtini"
 
-msgctxt "#32018"
-msgid "Use language preference from Kodi when a translation is available"
-msgstr "Naudoti Kodi kalba pasirinkitinai, kai yra vertimas"
-
 msgctxt "#32033"
 msgid "Minimum size (GB)"
 msgstr "Minimalus dydis (GB)"
@@ -113,14 +109,6 @@ msgstr "Maksimalūs rezultatas vienam teikėjui"
 msgctxt "#32041"
 msgid "Use CloudHole"
 msgstr "Naudoti CloudHole"
-
-msgctxt "#32050"
-msgid "Exceptions"
-msgstr "Išimtys"
-
-msgctxt "#32051"
-msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
-msgstr "Sąrašas paslaugų teikėjų, kad būtų išvengta, per kablelį, pvz. yts, rarbg"
 
 msgctxt "#32060"
 msgid "No providers enabled"

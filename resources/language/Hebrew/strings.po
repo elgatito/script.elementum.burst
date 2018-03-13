@@ -74,10 +74,6 @@ msgctxt "#32017"
 msgid "Require"
 msgstr "נצרך"
 
-msgctxt "#32018"
-msgid "Use language preference from Kodi when a translation is available"
-msgstr "שימוש בהעדפות שפה של Kodi כאשר התרגום זמין"
-
 msgctxt "#32033"
 msgid "Minimum size (GB)"
 msgstr "גודל מינימלי"
@@ -113,14 +109,6 @@ msgstr "מקסימום תוצאות לספק"
 msgctxt "#32041"
 msgid "Use CloudHole"
 msgstr "שימוש ב CloudHole"
-
-msgctxt "#32050"
-msgid "Exceptions"
-msgstr "חריגות"
-
-msgctxt "#32051"
-msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
-msgstr "רשימה של ספקים אותם יש לא להכליל, מופרדים בפסיק. לדגומה: yts, rarbg"
 
 msgctxt "#32060"
 msgid "No providers enabled"

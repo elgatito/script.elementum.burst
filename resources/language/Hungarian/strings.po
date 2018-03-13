@@ -74,10 +74,6 @@ msgctxt "#32017"
 msgid "Require"
 msgstr "Kötelező"
 
-msgctxt "#32018"
-msgid "Use language preference from Kodi when a translation is available"
-msgstr "Használjon Kodi nyelvi elemeket, amennyiben fordítás elérhető"
-
 msgctxt "#32033"
 msgid "Minimum size (GB)"
 msgstr "Minimum méret (GB)"
@@ -113,14 +109,6 @@ msgstr "Maximum találatok kiszolgálónként"
 msgctxt "#32041"
 msgid "Use CloudHole"
 msgstr "Használjon CloudHole-t"
-
-msgctxt "#32050"
-msgid "Exceptions"
-msgstr "Kivételek"
-
-msgctxt "#32051"
-msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
-msgstr "Kihagyott kiszolgálók listája vesszővel elválasztva (pl. yts, rargb)"
 
 msgctxt "#32060"
 msgid "No providers enabled"

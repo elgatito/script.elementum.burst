@@ -273,9 +273,6 @@
     <setting label="32038" id="accept" type="text" default="" subsetting="true" visible="eq(-2,true)" />
     <setting label="32039" id="block" type="text" default="" subsetting="true" visible="eq(-3,true)" />
     <setting label="32017" id="require" type="text" default="" subsetting="true" visible="eq(-4,true)" />
-    <setting label="32018" id="kodi_language" type="bool" default="false" />
-    <setting label="32050" id="language_exceptions" type="text" subsetting="true" visible="eq(-1,true)" />
-    <setting label="32051" id="language_help" type="text" enable="false" subsetting="true" visible="eq(-2,true)" />
     <setting label="32078" id="allow_noseeds" type="bool" default="false" />
   </category>
 </settings>

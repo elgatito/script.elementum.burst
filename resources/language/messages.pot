@@ -75,10 +75,6 @@ msgctxt "#32017"
 msgid "Require"
 msgstr ""
 
-msgctxt "#32018"
-msgid "Use language preference from Kodi when a translation is available"
-msgstr ""
-
 msgctxt "#32033"
 msgid "Minimum size (GB)"
 msgstr ""
@@ -113,14 +109,6 @@ msgstr ""
 
 msgctxt "#32041"
 msgid "Use CloudHole"
-msgstr ""
-
-msgctxt "#32050"
-msgid "Exceptions"
-msgstr ""
-
-msgctxt "#32051"
-msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
 msgstr ""
 
 msgctxt "#32060"
