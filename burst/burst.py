@@ -84,15 +84,6 @@ def search(payload, method="general"):
         set_setting('clearance', clearance)
         set_setting('user_agent', user_agent)
 
-    if get_setting('kodi_language', bool):
-        kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
-        if not kodi_language:
-            log.warning("Kodi returned empty language code...")
-        elif 'titles' not in payload or not payload['titles']:
-            log.info("No translations available...")
-        elif payload['titles'] and kodi_language not in payload['titles']:
-            log.info("No '%s' translation available..." % kodi_language)
-
     p_dialog = xbmcgui.DialogProgressBG()
     p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', translation(32061))
     for provider in providers:

@@ -38,8 +38,6 @@ class Filtering:
         queries (list): List of queries to be filtered
         extras (list): List of extras to be filtered
         info (dict): Payload from Elementum
-        kodi_language (str): Language code from Kodi if kodi_language setting is enabled
-        language_exceptions (list): List of providers for which not to apply ``kodi_language`` setting
         url (str): URL of this filtering request
         get_data (dict): GET data for client request
         post_data (dict): POST data for client request
@@ -128,8 +126,6 @@ class Filtering:
         self.extras = []
 
         self.info = dict(title="", titles=[])
-        self.kodi_language = ''
-        self.language_exceptions = []
         self.get_data = {}
         self.post_data = {}
         self.url = ''
@@ -156,6 +152,7 @@ class Filtering:
         if definition['general_keywords']:
             self.queries = [definition['general_keywords']]
             self.extras = [definition['general_extra']]
+            self.add_extra_languages(definition['general_keywords'], definition['general_extra'], definition['language'], payload)
 
     def use_movie(self, provider, payload):
         """ Setup method to define movie search parameters
@@ -180,6 +177,8 @@ class Filtering:
         if definition['movie_keywords']:
             self.queries = ["%s" % definition['movie_keywords']]
             self.extras = ["%s" % definition['movie_extra']]
+            self.add_extra_languages(definition['movie_keywords'], definition['movie_extra'], definition['language'], payload)
+
 
     def use_episode(self, provider, payload):
         """ Setup method to define episode search parameters
@@ -204,10 +203,12 @@ class Filtering:
         if definition['tv_keywords']:
             self.queries = ["%s" % definition['tv_keywords']]
             self.extras = ["%s" % definition['tv_extra'] if definition['tv_extra'] else '']
+            self.add_extra_languages(definition['tv_keywords'], definition['tv_extra'], definition['language'], payload)
             # TODO this sucks, tv_keywords should be a list from the start..
             if definition['tv_keywords2']:
                 self.queries.append(definition['tv_keywords2'])
                 self.extras.append(definition['tv_extra2'] if definition['tv_extra2'] else '')
+                self.add_extra_languages(definition['tv_keywords2'], definition['tv_extra2'], definition['language'], payload)
 
     def use_season(self, provider, info):
         """ Setup method to define season search parameters
@@ -232,9 +233,11 @@ class Filtering:
         if definition['season_keywords']:
             self.queries = ["%s" % definition['season_keywords']]
             self.extras = ["%s" % definition['season_extra'] if definition['season_extra'] else '']
+            self.add_extra_languages(definition['season_keywords'], definition['season_extra'], definition['language'], payload)
             if definition['season_keywords2']:
                 self.queries.append("%s" % definition['season_keywords2'])
                 self.extras.append("%s" % definition['season_extra2'] if definition['season_extra2'] else '')
+                self.add_extra_languages(definition['season_keywords2'], definition['season_extra2'], definition['language'], payload)
 
     def use_anime(self, provider, info):
         """ Setup method to define anime search parameters
@@ -261,6 +264,7 @@ class Filtering:
         if definition['anime_keywords']:
             self.queries = ["%s" % definition['anime_keywords']]
             self.extras = ["%s" % definition['anime_extra'] if definition['anime_extra'] else '']
+            self.add_extra_languages(definition['anime_keywords'], definition['anime_extra'], definition['language'], payload)
 
     def information(self, provider):
         """ Debugging method to print keywords and file sizes
@@ -309,26 +313,18 @@ class Filtering:
             keyword = keyword.lower()
             if 'title' in keyword:
                 title = self.info["title"]
-                language = definitions[provider]['language']
                 use_language = None
                 if ':' in keyword:
                     use_language = keyword.split(':')[1].lower()
-                if provider not in self.language_exceptions and \
-                   (use_language or self.kodi_language) and \
-                   'titles' in self.info and self.info['titles']:
+                if use_language and \
+                   use_language in self.info['titles'] and \
+                   self.info['titles'][use_language]:
                     try:
-                        if self.kodi_language and self.kodi_language in self.info['titles']:
-                            use_language = self.kodi_language
-                        if use_language not in self.info['titles']:
-                            use_language = language
-                            if 'original' in self.info['titles']:
-                                title = self.info['titles']['original']
-                        if use_language in self.info['titles'] and self.info['titles'][use_language]:
-                            title = self.info['titles'][use_language]
-                            title = self.normalize_name(title)
-                            log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
-                                                                              repr(title)))
-                            log.debug("[%s] Translated titles from Elementum: %s" % (provider, repr(self.info['titles'])))
+                        title = self.info['titles'][use_language]
+                        title = self.normalize_name(title)
+                        log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
+                                                                          repr(title)))
+                        log.debug("[%s] Translated titles from Elementum: %s" % (provider, repr(self.info['titles'])))
                     except Exception as e:
                         import traceback
                         log.error("%s failed with: %s" % (provider, repr(e)))
@@ -531,6 +527,20 @@ class Filtering:
             title = title.replace('S H I E L D', 'SHIELD')
 
         return title
+
+
+    def add_extra_languages(self, keywords, extra, provider_language, payload):
+        keywords = '' if keywords is None else keywords
+        extra = '' if extra is None else extra
+        if 'titles' in payload and '{title}' in keywords + extra:
+            if 'original' in payload['titles'] and \
+                    payload['titles']['original'] != payload['title']:
+                self.queries.append(keywords.replace('{title}', '{title:original}'))
+                self.extras.append(extra.replace('{title}', '{title:original}'))
+            if provider_language in payload['titles'] and \
+                    payload['titles'][provider_language] != payload['title']:
+                self.queries.append(keywords.replace('{title}', '{title:%s}' % provider_language))
+                self.extras.append(extra.replace('{title}', '{title:%s}' % provider_language))
 
 
 def apply_filters(results_list):

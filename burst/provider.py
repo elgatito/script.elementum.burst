@@ -82,14 +82,6 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         client.clearance = get_setting('clearance')
         client.user_agent = get_setting('user_agent')
 
-    if get_setting('kodi_language', bool):
-        kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
-        if kodi_language:
-            filtering.kodi_language = kodi_language
-        language_exceptions = get_setting('language_exceptions')
-        if language_exceptions.strip().lower():
-            filtering.language_exceptions = re.split(r',\s?', language_exceptions)
-
     log.debug("[%s] Queries: %s" % (provider, filtering.queries))
     log.debug("[%s] Extras:  %s" % (provider, filtering.extras))
 
