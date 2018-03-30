@@ -756,7 +756,7 @@
             "row": "find_once('table', ('id', 'torrenttable')).find_all('tr')",
             "seeds": "item(tag='td', order=7)",
             "size": "item(tag='td', order=5)",
-            "torrent": "item(tag='a', attribute='href', order=5)"
+            "torrent": "item(tag='a', attribute='href', order=5).replace('/download', 'https://www.torrentleech.org/download')"
         },
         "private": true,
         "season_extra": "",
