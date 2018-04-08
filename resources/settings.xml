@@ -90,6 +90,10 @@
     <setting label="EZTV" id="use_eztv" type="bool" default="false" />
       <setting id="eztv_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="eztv_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+	  
+	<setting label="ETTV" id="use_ettv" type="bool" default="false" />
+      <setting id="ettv_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="ettv_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
     <setting label="KickAss" id="use_kickass" type="bool" default="false" />
       <setting id="kickass_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
