@@ -1845,7 +1845,7 @@
         "season_query": "",
         "separator": "%20",
         "show_query": "",
-        "subpage": null,
+        "subpage": true,
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
