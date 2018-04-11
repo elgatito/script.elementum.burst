@@ -48,7 +48,7 @@ class Attribute(dict):
 
     def __str__(self):
         # """
-        # It returns a htmlized representation for attributes 
+        # It returns a htmlized representation for attributes
         # which are inside self.
         # """
 
