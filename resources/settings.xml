@@ -55,10 +55,6 @@
       <setting id="tfile_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="tfile_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="Kinozal" id="use_kinozal" type="bool" default="false" />
-      <setting id="kinozal_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="kinozal_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="NewStudio" id="use_newstudio" type="bool" default="false" />
       <setting id="newstudio_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="newstudio_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
@@ -219,6 +215,13 @@
       <setting id="lostfilm_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="lostfilm_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="lostfilm_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+
+    <setting label="Kinozal" id="use_kinozal" type="bool" default="false" />
+      <setting id="kinozal_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="kinozal_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="kinozal_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="kinozal_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+
   </category>
   <category label="32002">
     <setting label="4K/2160p" id="filter_4k" type="bool" default="true" />
