@@ -27,10 +27,6 @@
       <setting id="torlock_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torlock_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="Sky torrents" id="use_skytorrents" type="bool" default="false" />
-      <setting id="skytorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="skytorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="MagnetDL" id="use_magnetdl" type="bool" default="true" />
       <setting id="magnetdl_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="magnetdl_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
