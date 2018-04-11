@@ -123,7 +123,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "24&searchin=0&sort=0",
-        "base_url": "http://filelist.ro/browse.php?search=QUERY&EXTRA&cat=",
+        "base_url": "https://filelist.ro/browse.php?search=QUERY&EXTRA&cat=",
         "color": "FF2E86CA",
         "general_extra": "",
         "general_keywords": "{title:original}",
