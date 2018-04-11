@@ -14,7 +14,7 @@ https://github.com/iogf/ehp
 from HTMLParser import HTMLParser
 from collections import deque
 
-version = '1.3a'
+version = '1.3b'
 DATA = 1
 META = 2
 COMMENT = 3
@@ -48,7 +48,7 @@ class Attribute(dict):
 
     def __str__(self):
         # """
-        # It returns a htmlized representation for attributes
+        # It returns a htmlized representation for attributes 
         # which are inside self.
         # """
 
@@ -133,13 +133,18 @@ class Root(list):
                 if isinstance(select, tuple):
                     select = [select]
                 values_tag = self.find(tag) if select is None else self.find(tag, 1, 1, *select)
-                cm = 0
                 value_tag = None
+                list_value_tag = list()
                 for item_tag in values_tag:
-                    cm += 1
-                    if cm == order:
-                        value_tag = item_tag
-                        break
+                    list_value_tag.append(item_tag)
+
+                if order <= len(list_value_tag):
+                    try:
+                        value_tag = list_value_tag[order - 1]
+
+                    except IndexError:
+                        pass
+
                 value_tag = value_tag if value_tag is not None else None
             else:
                 value_tag = self
@@ -294,9 +299,11 @@ class Root(list):
                     for value in (values if isinstance(values, list) else [values]):
                         for item in ind.attr[key].split():
                             results.append(value != item)
-                    if all(results):
-                        break
-                else:
+                    if not all(results):
+                        cm += 1
+                        if cm >= start and (cm - start) % every == 0:
+                            yield (ind)
+                if len(args) == 0:
                     cm += 1
                     if cm >= start and (cm - start) % every == 0:
                         yield (ind)
@@ -310,13 +317,18 @@ class Root(list):
             select = [select]
         if self is not None and tag is not None:
             values_tag = self.find(tag) if select is None else self.find(tag, 1, 1, *select)
-            cm = 0
             value_tag = Tag('html')
+            list_value_tag = list()
             for item_tag in values_tag:
-                cm += 1
-                if cm == order:
-                    value_tag = item_tag
-                    break
+                list_value_tag.append(item_tag)
+
+            if order <= len(list_value_tag):
+                try:
+                    value_tag = list_value_tag[order - 1]
+
+                except IndexError:
+                    pass
+
             value_tag = value_tag if value_tag is not None else None
         return value_tag
 
@@ -520,7 +532,7 @@ class Root(list):
         data = '<a><b>alpha</b><c>beta</c><b>gamma</a>'
         dom = html.feed(data)
 
-        print dom.join('\\n', DATA)
+        print dom.join('\n', DATA)
 
         It would print.
 
@@ -763,7 +775,7 @@ class Root(list):
             if str(j) == str_item:
                 return i
 
-    def list_(self, text=""):
+    def list(self, text=""):
         result = []
         for i in self[:]:
             text1 = text + ' ' + str(i.name)
@@ -775,19 +787,19 @@ class Root(list):
                 text1 += "#" + id_name
             if i.name != 1:
                 result.append((text1.strip(), i))
-            result.extend(i.list_(text1))
+            result.extend(i.list(text1))
         return result
 
     def select(self, text=""):
         result = []
-        for i, j in self.list_():
+        for i, j in self.list():
             if i.endswith(text):
                 result.append(j)
         return result
 
     def get_attributes(self, text):
         text = text.replace(' ', '').replace(';', '')
-        for i, j in self.list_():
+        for i, j in self.list():
             if text == str(j).replace(' ', ''):
                 return i
 
@@ -1154,9 +1166,12 @@ class Html(HTMLParser):
 
     def feed(self, data):
         """
+        :type data: string
+        :rtype: Root
 
         """
-
+        if not data:
+            return None
         self.structure.clear()
         HTMLParser.feed(self, data)
 

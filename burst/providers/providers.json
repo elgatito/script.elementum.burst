@@ -20,7 +20,7 @@
             "infohash": "",
             "name": "item('a', order=2)",
             "peers": "item(tag='td', order=3)",
-            "row": "find_once(tag='body').find_all('tr')",
+            "row": "find_once(tag='tbody').find_all('tr')",
             "seeds": "item(tag='td', order=2)",
             "size": "item(tag='td', order=5)",
             "torrent": "'https://www.1337x.to%s' % item(tag='a', attribute='href', order=2)"
@@ -756,7 +756,7 @@
             "row": "find_once('table', ('id', 'torrenttable')).find_all('tr')",
             "seeds": "item(tag='td', order=7)",
             "size": "item(tag='td', order=5)",
-            "torrent": "item(tag='a', attribute='href', order=5)"
+            "torrent": "item(tag='a', attribute='href', order=5).replace('/download', 'https://www.torrentleech.org/download')"
         },
         "private": true,
         "season_extra": "",
@@ -1769,6 +1769,46 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title}/season_{season}/episode_{episode}",
+        "tv_keywords2": ""
+    },
+    "ettv": {
+        "anime_extra": "",
+        "anime_keywords": "{title:original} {episode}",
+        "anime_query": "200",
+        "base_url": "https://www.ettv.tv/torrents-search.php?search=QUERYEXTRA&cat=0&incldead=0&lang=0",
+        "color": "FFA30000",
+        "general_extra": "",
+        "general_keywords": "{title:original}",
+        "general_query": "0",
+        "language": null,
+        "login_failed": "",
+        "login_object": "",
+        "login_path": null,
+        "movie_extra": "",
+        "movie_keywords": "{title:original} {year}",
+        "movie_query": "",
+        "name": "ETTV",
+        "parser": {
+            "infohash": "",
+            "name": "item(tag='a', order=2)",
+            "peers": "item(tag='td', order=-1)",
+            "row": "find_once(tag='table', order=2).find_all('tr', start=2)",
+            "seeds": "item(tag='td', order=-2)",
+            "size": "item(tag='td', order=-4)",
+            "torrent": "item(tag='a', attribute='href', order=2)"
+        },
+        "private": false,
+        "season_extra": "",
+        "season_extra2": "",
+        "season_keywords": "{title:original} \"Season {season}\"",
+        "season_keywords2": "{title:original} S{season:2}",
+        "season_query": "",
+        "separator": "%20",
+        "show_query": "",
+        "subpage": true,
+        "tv_extra": "",
+        "tv_extra2": "",
+        "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": ""
     }
 }
