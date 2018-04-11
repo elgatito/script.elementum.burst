@@ -1835,7 +1835,7 @@
             "peers": "item(tag='td', order=5)",
             "row": "find_once('table', ('id', 'torrentlist'), order=1).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=4)",
-            "size": "item(tag='td', order=7)",
+            "size": "1",
             "torrent": "item(tag='a', attribute='href', select=('class', 'magnetlink'), order=1)"
         },
         "private": true,
