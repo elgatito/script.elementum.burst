@@ -20,7 +20,7 @@
             "infohash": "",
             "name": "item('a', order=2)",
             "peers": "item(tag='td', order=3)",
-            "row": "find_once(tag='body').find_all('tr')",
+            "row": "find_once(tag='tbody').find_all('tr')",
             "seeds": "item(tag='td', order=2)",
             "size": "item(tag='td', order=5)",
             "torrent": "'https://www.1337x.to%s' % item(tag='a', attribute='href', order=2)"
