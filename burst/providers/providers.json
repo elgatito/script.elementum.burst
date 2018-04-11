@@ -534,7 +534,7 @@
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "0/10/300/2/QUERYEXTRA",
-        "base_url": "http://rutor.info/search/",
+        "base_url": "http://new-rutor.org/search/",
         "public_dns_alias": "rutor.lib",
         "color": "FFFFDE00",
         "general_extra": "",
