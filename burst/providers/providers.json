@@ -1654,7 +1654,7 @@
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
-        "base_url": "http://www.torrent9.bz/search_torrent/QUERYEXTRA.html",
+        "base_url": "http://www.torrent9.red/search_torrent/QUERYEXTRA.html",
         "color": "FF277A9C",
         "general_extra": "",
         "general_keywords": "{title:fr}",
@@ -1674,7 +1674,7 @@
             "row": "find_all('tr', start=2)",
             "seeds": "item(tag='td', order=3)",
             "size": "item(tag='td', order=2)",
-            "torrent": "'http://www.torrent9.bz' + re.sub('/torrent/\\d+/','/get_torrent/',item(tag='a', attribute='href', order=1))+'.torrent'"
+            "torrent": "'http://www.torrent9.red' + re.sub('/torrent/\\d+/','/get_torrent/',item(tag='a', attribute='href', order=1))+'.torrent'"
         },
         "private": false,
         "season_extra": "",
@@ -1694,7 +1694,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:fr} {episode}",
         "anime_query": "",
-        "base_url": "https://yggtorrent.com/engine/search?q=QUERYEXTRA",
+        "base_url": "https://yggtorrent.is/engine/search?do=search&name=QUERYEXTRA",
         "color": "FFF7A62D",
         "general_extra": "&category=2145",
         "general_keywords": "{title:fr}",
@@ -1709,12 +1709,12 @@
         "name": "Yggtorrent",
         "parser": {
             "infohash": "",
-            "name": "item('a')",
-            "peers": "item(tag='td', order=6)",
-            "row": "find_all('tr', start=2)",
-            "seeds": "item(tag='td', order=5)",
-            "size": "item(tag='td', order=4)",
-            "torrent": "item(tag='a', attribute='href', order=3)"
+            "name": "item('a', order=2)",
+            "peers": "item(tag='td', order=9)",
+            "row": "find_once('table', ('class', 'table')).find_all('tr', start=2)",
+            "seeds": "item(tag='td', order=8)",
+            "size": "item(tag='td', order=6)",
+            "torrent": "'https://yggtorrent.is/engine/download_torrent?id=%s' % item(tag='a', attribute='target', order=3)"
         },
         "private": true,
         "season_extra": "",
