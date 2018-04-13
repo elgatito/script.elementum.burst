@@ -775,7 +775,7 @@ class Root(list):
             if str(j) == str_item:
                 return i
 
-    def list(self, text=""):
+    def list_(self, text=""):
         result = []
         for i in self[:]:
             text1 = text + ' ' + str(i.name)
@@ -787,19 +787,19 @@ class Root(list):
                 text1 += "#" + id_name
             if i.name != 1:
                 result.append((text1.strip(), i))
-            result.extend(i.list(text1))
+            result.extend(i.list_(text1))
         return result
 
     def select(self, text=""):
         result = []
-        for i, j in self.list():
+        for i, j in self.list_():
             if i.endswith(text):
                 result.append(j)
         return result
 
     def get_attributes(self, text):
         text = text.replace(' ', '').replace(';', '')
-        for i, j in self.list():
+        for i, j in self.list_():
             if text == str(j).replace(' ', ''):
                 return i
 
