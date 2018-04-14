@@ -12,7 +12,7 @@ from parser.HTMLParser import HTMLParser
 from elementum.provider import log, get_setting
 from providers.definitions import definitions
 from utils import Magnet, get_int, get_float, clean_number, size_int, get_alias
-
+from normalize import normalize_string
 try:
     from collections import OrderedDict
 except:
@@ -378,9 +378,9 @@ class Filtering:
             return False
 
         name = self.exception(name)
-        name = self.normalize_name(name)
+        name = normalize_string(name)
         if self.filter_title and self.title:
-            self.title = self.normalize_name(self.title)
+            self.title = normalize_string(self.title)
 
         self.reason = "[%s] %70s ***" % (provider, name)
 
