@@ -4,15 +4,15 @@
 Burst filtering class and methods
 """
 
-import re
-import string
 import hashlib
-from urllib import unquote
-from parser.HTMLParser import HTMLParser
-from elementum.provider import log, get_setting
-from providers.definitions import definitions
-from utils import Magnet, get_int, get_float, clean_number, size_int, get_alias
+import re
+
+from elementum.provider import get_setting, log
 from normalize import normalize_string
+from parser.HTMLParser import HTMLParser
+from providers.definitions import definitions
+from utils import Magnet, clean_number, get_alias, get_float, get_int, size_int
+
 try:
     from collections import OrderedDict
 except:
@@ -325,7 +325,7 @@ class Filtering:
                                 title = self.info['titles']['original']
                         if use_language in self.info['titles'] and self.info['titles'][use_language]:
                             title = self.info['titles'][use_language]
-                            title = self.normalize_name(title)
+                            title = normalize_string(title)
                             log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
                                                                               repr(title)))
                             log.debug("[%s] Translated titles from Elementum: %s" % (provider, repr(self.info['titles'])))
@@ -446,28 +446,6 @@ class Filtering:
             if self.included(name, keys=self.resolutions[resolution], strict=True):
                 res = resolution
         return res
-
-    def normalize_name(self, value):
-        """ Method to normalize strings
-
-        Replaces punctuation with spaces, unquotes and unescapes HTML characters.
-
-        Args:
-            value (str): File name or directory string to convert
-
-        Returns:
-            str: Converted file name or directory string
-        """
-        value = unquote(value)
-        value = self.unescape(value)
-        value = value.lower()
-
-        for p in string.punctuation:
-            value = value.replace(p, ' ')
-
-        value = ' '.join(value.split())
-
-        return value
 
     def included(self, value, keys, strict=False):
         """ Check if the keys are present in the string
