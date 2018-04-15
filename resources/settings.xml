@@ -258,7 +258,6 @@
     <setting label="Workprint" id="filter_workprint" type="bool" default="false" />
   </category>
   <category label="32004">
-    <setting label="Debugging Mode" id="mode_debug" type="bool" default="false" />
     <setting label="32035" id="separate_sizes" type="bool" default="false" />
     <setting label="32006" type="lsep" subsetting="true" visible="eq(-1,true)" />
     <setting label="32033" id="min_size_movies" type="slider" option="float" range="0,0.25,100" default="0" subsetting="true" visible="eq(-2,true)" />
