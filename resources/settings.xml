@@ -250,7 +250,7 @@
     <setting label="DVDScr" id="filter_dvdscr" type="bool" default="true" />
     <setting label="Screener/SCR" id="filter_screener" type="bool" default="true" />
     <setting label="3D" id="filter_3d" type="bool" default="false" />
-    <setting label="TeleSync/TS/TC" id="filter_ts" type="bool" default="false" />
+    <setting label="TeleSync/TS/TC" id="filter_telesync" type="bool" default="false" />
     <setting label="Cam/HDCam" id="filter_cam" type="bool" default="false" />
     <setting label="TVRip/SATRip" id="filter_tvrip" type="bool" default="false" />
     <setting label="VHSRip" id="filter_vhsrip" type="bool" default="false" />
@@ -258,6 +258,7 @@
     <setting label="Workprint" id="filter_workprint" type="bool" default="false" />
   </category>
   <category label="32004">
+    <setting label="Debugging Mode" id="mode_debug" type="bool" default="false" />
     <setting label="32035" id="separate_sizes" type="bool" default="false" />
     <setting label="32006" type="lsep" subsetting="true" visible="eq(-1,true)" />
     <setting label="32033" id="min_size_movies" type="slider" option="float" range="0,0.25,100" default="0" subsetting="true" visible="eq(-2,true)" />

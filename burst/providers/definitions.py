@@ -21,7 +21,7 @@ ADDON_PROFILE = ADDON.getAddonInfo("profile").decode('utf-8')
 if not ADDON_PATH:
     ADDON_PATH = ".."
 
-definitions = {}
+definitions = dict()
 
 
 def load_providers(path, custom=False, fix_seasons=False):

@@ -4,24 +4,25 @@
 Burst web client
 """
 
+import httplib
+import json
 import os
 import re
+import socket
 import ssl
 import sys
-import json
 import urllib2
-import httplib
-import socket
-import dns.resolver
-from time import sleep
-from urlparse import urlparse
 from contextlib import closing
-from elementum.provider import log, get_setting
 from cookielib import Cookie, LWPCookieJar
+from time import sleep
 from urllib import urlencode
-from utils import encode_dict
-
+from urlparse import urlparse
 from xbmc import translatePath
+
+import dns.resolver
+
+from elementum.provider import get_setting, log
+from utils import encode_dict
 
 try:
     ssl._create_default_https_context = ssl._create_unverified_context
@@ -37,6 +38,7 @@ except:
     PATH_TEMP = translatePath("special://temp").decode('utf-8')
 
 dns_cache = {}
+
 
 def MyResolver(host):
     if '.' not in host:
@@ -58,6 +60,7 @@ def MyResolver(host):
     else:
         return host
 
+
 def ResolvePublic(host):
     try:
         log.debug("Custom DNS resolving with public DNS for: %s" % host)
@@ -67,6 +70,7 @@ def ResolvePublic(host):
         return answer.rrset.items[0].address
     except:
         return
+
 
 def ResolveOpennic(host):
     try:
@@ -82,6 +86,7 @@ def ResolveOpennic(host):
 class MyHTTPConnection(httplib.HTTPConnection):
     def connect(self):
         self.sock = socket.create_connection((MyResolver(self.host), self.port), self.timeout)
+
 
 # HTTPS requests are not working, because of handshakes fails, so disabling now
 # class MyHTTPSConnection(httplib.HTTPSConnection):
@@ -106,6 +111,7 @@ class MyHTTPHandler(urllib2.HTTPHandler):
     def http_open(self, req):
         return self.do_open(MyHTTPConnection, req)
 
+
 # class MyHTTPSHandler(urllib2.HTTPSHandler):
 #     def https_open(self, req):
 #         return self.do_open(MyHTTPSConnection, req)
@@ -114,6 +120,7 @@ class Client:
     """
     Web client class with automatic charset detection and decoding
     """
+
     def __init__(self):
         self._counter = 0
         self._cookies_filename = ''
@@ -176,12 +183,8 @@ class Client:
         if self._counter > 1:
             sleep(0.25)
 
+    @property
     def cookies(self):
-        """ Saved client cookies
-
-        Returns:
-            list: A list of saved Cookie objects
-        """
         return self._cookies
 
     def open(self, url, language='en', post_data=None, get_data=None):
@@ -229,13 +232,14 @@ class Client:
                 if response.headers.get("Content-Encoding", "") == "gzip":
                     import zlib
                     self.content = zlib.decompressobj(16 + zlib.MAX_WBITS).decompress(response.read())
+
                 else:
                     self.content = response.read()
 
                 charset = response.headers.getparam('charset')
-
                 if not charset:
-                    match = re.search("""<meta(?!\s*(?:name|value)\s*=)[^>]*?charset\s*=[\s"']*([^\s"'/>]*)""", self.content)
+                    match = re.search("""<meta(?!\s*(?:name|value)\s*=)[^>]*?charset\s*=[\s"']*([^\s"'/>]*)""",
+                                      self.content)
                     if match:
                         charset = match.group(1)
 

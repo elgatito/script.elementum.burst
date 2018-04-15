@@ -4,7 +4,7 @@
 # Created on:  30.05.2017
 # Licence:     GPL v.3: http://www.gnu.org/copyleft/gpl.html
 """
-Normalization strings to Unicode
+    Normalization strings to Unicode
 """
 import json
 import re
@@ -15,25 +15,27 @@ from urllib import unquote
 
 def clean_title(string=None):
     """
-    Checks if the two string are equals even without accents
+        Checks if the two string are equals even without accents
     :param string: first string
     :type: string: unicode
-    :return: str
+    :return: clean title
+    :rtype: unicode
     """
     if string:
-        string = re.sub(r'\((.*?)\)', '', string).strip()
+        string = re.sub(r'\((.*?)\)', u'', string).strip()
 
     return string
 
 
 def are_equals(string_1='', string_2=''):
     """
-    Checks if the two string are equals even without accents
+        Checks if the two string are equals even without accents
     :param string_1: first string
     :type: string_1: unicode
     :param string_2: second string
     :type: string_2: unicode
-    :return:
+    :return: True if it is equal, False otherwise
+    :rtype: bool
     """
     string_1 = safe_name(string_1)
     string_2 = safe_name(string_2)
@@ -44,20 +46,28 @@ def are_equals(string_1='', string_2=''):
 
 def remove_accents(string):
     """
-    Remove any accent in the string
+        Remove any accent in the string
     :param string: string to remove accents
     :type string: str or unicode
-    :return:
+    :return: string without accents
+    :rtype: unicode
     """
     if not isinstance(string, unicode):
         string = normalize_string(string)
 
     nfkd_form = unicodedata.normalize('NFKD', string)
     only_ascii = nfkd_form.encode('ASCII', 'ignore').strip()
-    return string if only_ascii == '' else only_ascii
+    return string if only_ascii == u'' else only_ascii
 
 
 def remove_control_chars(string):
+    """
+        remove control characters
+    :param string: string to modify
+    :type string: unicode
+    :return: modified string
+    :rtype: unicode
+    """
     control_chars = ''.join(map(unichr, range(0, 32) + range(127, 160)))
     control_char_re = re.compile(u'[%s]' % re.escape(control_chars))
     tem_string = control_char_re.sub('', string)
@@ -65,30 +75,37 @@ def remove_control_chars(string):
     return control_char_re.sub(' ', tem_string)
 
 
-def safe_name_torrent(value):  # Make the name directory and filename safe
+def safe_name_torrent(string):
+    """
+        Make the name directory and filename safe
+    :param string: string to modify
+    :type string: unicode
+    :return: modified string
+    :rtype: unicode
+    """
     # erase keyword
-    value = value.lower()
-    value = re.sub('^\[.*?\]', '', value)  # erase [HorribleSub] for ex.
+    string = string.lower()
+    string = re.sub(u'^\[.*?\]', u'', string)  # erase [HorribleSub] for ex.
     # check for anime
-    value = re.sub('- ([0-9][0-9][0-9][0-9]) ', ' \g<1>', value + " ")
-    value = re.sub('- ([0-9]+) ', '- EP\g<1>', value + " ")
-    if 'season' not in value.lower():
-        value = value.lower().replace(" episode ", " - EP")
+    string = re.sub(u'- ([0-9][0-9][0-9][0-9]) ', u' \g<1>', string + u' ')
+    string = re.sub(u'- ([0-9]+) ', u'- EP\g<1>', string + u' ')
+    if 'season' not in string.lower():
+        string = string.lower().replace(u' episode ', u' - EP')
 
     # check for qualities
-    value = value.replace("1920x1080", "1080p")
-    value = value.replace("1280x720", "720p")
-    value = value.replace("853x480", "480p")
-    value = value.replace("848x480", "480p")
-    value = value.replace("704x480", "480p")
-    value = value.replace("640x480", "480p")
-    value = value.replace("microhd", " microhd")  # sometimes comes with the year
-    value = value.replace("dvdrip", " dvdrip")  # sometimes comes with the year
-    value = value.replace("1080p", "")
-    value = value.replace("720p", "")
-    value = value.replace("480p", "")
-    value = safe_name(value)
-    return value.replace('s h i e l d', 'SHIELD').replace('c s i', 'CSI')
+    string = string.replace(u'1920x1080', u'1080p')
+    string = string.replace(u'1280x720', u'720p')
+    string = string.replace(u'853x480', u'480p')
+    string = string.replace(u'848x480', u'480p')
+    string = string.replace(u'704x480', u'480p')
+    string = string.replace(u'640x480', u'480p')
+    string = string.replace(u'microhd', u' microhd')  # sometimes comes with the year
+    string = string.replace(u'dvdrip', u' dvdrip')  # sometimes comes with the year
+    string = string.replace(u'1080p', u'')
+    string = string.replace(u'720p', u'')
+    string = string.replace(u'480p', u'')
+    string = safe_name(string)
+    return string.replace(u's h i e l d', u'SHIELD').replace(u'c s i', u'CSI')
 
 
 def safe_name(string, charset='utf-8'):
@@ -99,11 +116,12 @@ def safe_name(string, charset='utf-8'):
     :param string: string to convert
     :type string: str or unicode
     :return: converted string
+    :rtype: unicode
     """
     string = normalize_string(string, charset)
     string = string.lower().title()
-    keys = {'"': ' ', '*': ' ', '/': ' ', ':': ' ', '<': ' ', '>': ' ', '?': ' ', '|': ' ', '_': ' ',
-            "'": '', 'Of': 'of', 'De': 'de', '.': ' ', ')': ' ', '(': ' ', '[': ' ', ']': ' ', '-': ' '}
+    keys = {u'*': u' ', u'/': u' ', u':': u' ', u'<': u' ', u'>': u' ', u'?': u' ', u'|': u' ', u'_': u' ',
+            u'.': u' ', u')': u' ', u'(': u' ', u'[': u' ', u']': u' ', u'-': u' '}
     for key in keys.keys():
         string = string.replace(key, keys[key])
 
@@ -119,17 +137,18 @@ def normalize_string(string, charset=None):
     :param string: string to convert
     :type string: str or unicode
     :return: converted unicode
+    :rtype: unicode
     """
     if not isinstance(string, unicode):
         try:
-            if re.search('=[0-9a-fA-F]{2}', string):
+            if re.search(u'=[0-9a-fA-F]{2}', string):
                 string = string.decode('Quoted-printable')
 
-            string = json.loads('"%s"' % string, encoding=charset)
+            string = json.loads(u'%s' % string, encoding=charset)
 
         except ValueError:
             try:
-                string = unicode(eval(string), "raw_unicode_escape")
+                string = unicode(eval(string), 'raw_unicode_escape')
 
             except SyntaxError:
                 string = string.decode('latin-1')
@@ -146,12 +165,12 @@ def normalize_string(string, charset=None):
     string = remove_control_chars(string)
     string = fix_bad_unicode(string)
     string = unquote(string)
-    string = string.replace('<![CDATA[', '').replace(']]', '')
+    string = string.replace(u'<![CDATA[', u'').replace(u']]', u'')
     string = HTMLParser().unescape(string)
     return string
 
 
-def fix_bad_unicode(text):
+def fix_bad_unicode(string):
     """
     https://blog.luminoso.com/2012/08/20/fix-unicode-mistakes-with-python/
 
@@ -160,7 +179,7 @@ def fix_bad_unicode(text):
     latin-1 or even Windows codepage 1252, and encoded as utf-8 again.
 
     This causes your perfectly good Unicode-aware code to end up with garbage
-    text because someone else (or maybe "someone else") made a mistake.
+    text because someone else (or maybe 'someone else') made a mistake.
 
     This function looks for the evidence of that having happened and fixes it.
     It determines whether it should replace nonsense sequences of single-byte
@@ -217,38 +236,38 @@ def fix_bad_unicode(text):
         //>>> print fix_bad_unicode(u'This text was never Unicode at all\x85')
         This text was never Unicode at all…
     """
-    if not isinstance(text, unicode):
+    if not isinstance(string, unicode):
         raise TypeError("This isn't even decoded into Unicode yet. "
-                        "Decode it first.")
-    if len(text) == 0:
-        return text
+                        'Decode it first.')
+    if len(string) == 0:
+        return string
 
-    max_ord = max(ord(char) for char in text)
+    max_ord = max(ord(char) for char in string)
     if max_ord < 128:
         # Hooray! It's ASCII!
-        return text
+        return string
 
     else:
-        attempts = [(text, text_badness(text) + len(text))]
+        attempts = [(string, text_badness(string) + len(string))]
         if max_ord < 256:
-            tried_fixing = reinterpret_latin1_as_utf8(text)
-            tried_fixing2 = reinterpret_latin1_as_windows1252(text)
+            tried_fixing = reinterpret_latin1_as_utf8(string)
+            tried_fixing2 = reinterpret_latin1_as_windows1252(string)
             attempts.append((tried_fixing, text_cost(tried_fixing)))
             attempts.append((tried_fixing2, text_cost(tried_fixing2)))
 
-        elif all(ord(char) in WINDOWS_1252_CODEPOINTS for char in text):
-            tried_fixing = reinterpret_windows1252_as_utf8(text)
+        elif all(ord(char) in WINDOWS_1252_CODEPOINTS for char in string):
+            tried_fixing = reinterpret_windows1252_as_utf8(string)
             attempts.append((tried_fixing, text_cost(tried_fixing)))
 
         else:
             # We can't imagine how this would be anything but valid text.
-            return text
+            return string
 
         # Sort the results by badness
         attempts.sort(key=lambda x: x[1])
         # print attempts
         good_text = attempts[0][0]
-        if good_text == text:
+        if good_text == string:
             return good_text
 
         else:
@@ -261,6 +280,14 @@ def reinterpret_latin1_as_utf8(wrong_text):
 
 
 def reinterpret_windows1252_as_utf8(wrong_text):
+    """
+        Maybe this was always meant to be in a single-byte encoding, and it
+        makes the most sense in utf-8.
+    :param wrong_text: text with problems
+    :type: str or unicode
+    :return: corrected text
+    :rtype: str or unicode
+    """
     altered_bytes = []
     for char in wrong_text:
         if ord(char) in WINDOWS_1252_GREMLINS:
@@ -272,16 +299,20 @@ def reinterpret_windows1252_as_utf8(wrong_text):
     return ''.join(altered_bytes).decode('utf-8', 'replace')
 
 
-def reinterpret_latin1_as_windows1252(wrongtext):
+def reinterpret_latin1_as_windows1252(wrong_text):
     """
-    Maybe this was always meant to be in a single-byte encoding, and it
-    makes the most sense in Windows-1252.
+        Maybe this was always meant to be in a single-byte encoding, and it
+        makes the most sense in Windows-1252.
+    :param wrong_text: text with problems
+    :type: str or unicode
+    :return: corrected text
+    :rtype: str or unicode
     """
-    return wrongtext.encode('latin-1').decode('WINDOWS_1252', 'replace')
+    return wrong_text.encode('latin-1').decode('WINDOWS_1252', 'replace')
 
 
 def text_badness(text):
-    """"
+    """
     Look for red flags that text is encoded incorrectly:
 
     Obvious problems:
@@ -365,7 +396,7 @@ def text_cost(text):
 # The rest of this file is esoteric info about characters, scripts, and their
 # frequencies.
 #
-# Start with an inventory of "gremlins", which are characters from all over
+# Start with an inventory of 'gremlins', which are characters from all over
 # Unicode that Windows has instead assigned to the control characters
 # 0x80-0x9F. We might encounter them in their Unicode forms and have to figure
 # out what they were originally.
@@ -453,7 +484,7 @@ SINGLE_BYTE_LETTERS = [
 # A table telling us how to interpret the first word of a letter's Unicode
 # name. The number indicates how frequently we expect this script to be used
 # on computers. Many scripts not included here are assumed to have a frequency
-# of "0" -- if you're going to write in Linear B using Unicode, you're
+# of '0' -- if you're going to write in Linear B using Unicode, you're
 # probably aware enough of encoding issues to get it right.
 #
 # The lowercase name is a general category -- for example, Han characters and
@@ -491,215 +522,37 @@ SCRIPT_TABLE = {
 }
 
 
-def cleaning_title(value=''):
-    """
-    Removes extra words in the title
-    :param value: title
-    :type value: unicode
-    :return:
-    """
-    keywords_clean_title = ['version', 'extendida', 'extended', 'edition', 'hd', 'unrated', 'version', 'vose',
-                            'special', 'edtion', 'uncensored', 'fixed', 'censurada', 'episode', 'ova', 'complete',
-                            'swesub'
-                            ]
-    for keyword in keywords_clean_title:  # checking keywords
-        value = (value + ' ').replace(' ' + keyword.title() + ' ', ' ')
-    return value.strip()
-
-
-def exceptions_title(title=''):
+def exceptions_title(title=u''):
     """
     Changes title to which uses in Internet
     :param title: title
     :type title: unicode
-    :return:
+    :return: new title
+    :rtype: unicode
     """
-    value = title.lower() + " "
-    if "csi " in value and "ny" not in value and "miami" not in value and "cyber" not in value:
-        title = value.replace("csi", "CSI Crime Scene Investigation")
+    value = title.lower() + ' '
+    if u'csi ' in value and u'ny' not in value and u'miami' not in value and u'cyber' not in value:
+        title = value.replace(u'csi', u'CSI Crime Scene Investigation')
 
-    if "juego de tronos" in value:
-        title = value.replace("juego de tronos", "Game of Thrones")
+    if u'juego de tronos' in value:
+        title = value.replace(u'juego de tronos', u'Game of Thrones')
 
-    if "mentes criminales" in value:
-        title = value.replace("mentes criminales", "Criminal Minds")
+    if u'mentes criminales' in value:
+        title = value.replace(u'mentes criminales', u'Criminal Minds')
 
-    if "les revenants" in value:
-        title = value.replace("les revenants", "The Returned")
+    if u'les revenants' in value:
+        title = value.replace(u'les revenants', u'The Returned')
 
-    if "the great british baking show" in value:
-        title = value.replace("the great british baking show", "The Great British Bake Off")
+    if u'the great british baking show' in value:
+        title = value.replace(u'the great british baking show', u'The Great British Bake Off')
 
-    if "house of cards" in value and '[us]' in value in value:
-        title = value.replace("[us]", "")
+    if u'house of cards' in value and u'[us]' in value in value:
+        title = value.replace(u'[us]', u'')
 
-    if "house of cards" in value and '(us)' in value in value:
-        title = value.replace("(us)", "")
+    if u'house of cards' in value and u'(us)' in value in value:
+        title = value.replace(u'(us)', u'')
 
-    if "house of cards" in value and ' us ' in value in value:
-        title = value.replace(" us ", "")
+    if u'house of cards' in value and u' us ' in value in value:
+        title = value.replace(u' us ', u'')
 
     return title
-
-
-# noinspection PyPep8,PyBroadException
-def formatting_title(value='', type_video="MOVIE"):
-    """
-    Parsers the title from string
-    :param value:
-    :type value: str or unicode
-    :param type_video: type of video
-    :return:
-    """
-    pos = value.rfind("/")
-    value = value if pos < 0 else value[pos:]
-    value = safe_name_torrent(value).lower() + ' '
-    formats = [' ep[0-9]+', ' s[0-9]+e[0-9]+', ' s[0-9]+ e[0-9]+', ' [0-9]+x[0-9]+',
-               ' [0-9][0-9][0-9][0-9] [0-9][0-9] [0-9][0-9]',
-               ' [0-9][0-9] [0-9][0-9] [0-9][0-9]', ' season [0-9]+ episode [0-9]+',
-               ' season [0-9]+', ' season[0-9]+', ' s[0-9][0-9]',
-               ' temporada [0-9]+ capitulo [0-9]+', ' temporada[0-9]+', ' temporada [0-9]+',
-               ' seizoen [0-9]+ afl [0-9]+', ' saison[0-9]+', ' saison [0-9]+',
-               ' temp [0-9]+ cap [0-9]+', ' temp[0-9]+ cap[0-9]+',
-               ]
-    keywords = ['en 1080p', 'en 720p', 'en dvd', 'en dvdrip', 'en hdtv', 'en bluray', 'en blurayrip',
-                'en web', 'en rip', 'en ts screener', 'en screener', 'en cam', 'en camrip', 'pcdvd', 'bdremux',
-                'en ts-screener', 'en hdrip', 'en microhd', '1080p', '720p', 'dvd', 'dvdrip', 'hdtv', 'bluray',
-                'blurayrip', 'web', 'rip', 'ts screener', 'screener', 'cam', 'camrip', 'ts-screener', 'hdrip',
-                'brrip', 'blu', 'webrip', 'hdrip', 'bdrip', 'microhd', 'ita', 'eng', 'esp', "spanish espanol",
-                'castellano', '480p', 'bd', 'bdrip', 'hi10p', 'sub', 'x264', 'sbs', '3d', 'br', 'hdts', 'dts',
-                'dual audio', 'hevc', 'aac', 'batch', 'h264', 'gratis', 'descargar', 'hd', 'html', 'hdit',
-                'blurip', 'high definition', 'german', 'french', 'truefrench', 'vostfr', 'dvdscr', 'swesub',
-                '4k', 'uhd', 'subbed', 'mp4'
-                ]
-    s_show = None
-    for f_format in formats:  # search if it is a show
-        s_show = re.search(f_format, value)  # format shows
-        if s_show is not None:
-            break
-
-    if s_show is None and type_video != "MOVIE":
-        if type_video == 'SHOW':
-            value += ' s00e00'
-
-        if type_video == 'ANIME':
-            value += ' ep00'
-
-        for f_format in formats:  # search if it is a show
-            s_show = re.search(f_format, value)  # format shows
-            if s_show is not None:
-                break
-
-    if s_show is None:
-        # it is a movie
-        value += ' 0000 '  # checking year
-        s_year = re.search(' [0-9][0-9][0-9][0-9] ', value)
-        year = s_year.group(0).strip()
-        pos = value.find(year)
-        if pos > 0:
-            title = value[:pos].strip()
-            rest = value[pos + 5:].strip().replace('0000', '')
-
-        else:
-            title = value.replace('0000', '')
-            rest = ''
-
-        while pos != -1:  # loop until doesn't have any keyword in the title
-            value = title + ' '
-            for keyword in keywords:  # checking keywords
-                pos = value.find(' ' + keyword + ' ')
-                if pos > 0:
-                    title = value[:pos]
-                    rest = value[pos:].strip() + ' ' + rest
-                    break
-
-        title = title.title().strip().replace('Of ', 'of ').replace('De ', 'de ')
-        clean_title_value = cleaning_title(title)
-        # finishing clean_title
-        if '0000' not in year:
-            title += ' (' + year.strip() + ')'
-        year = year.replace('0000', '')
-        folder = title
-        result = {'title': title, 'folder': folder, 'rest': rest.strip(), 'type': 'MOVIE',
-                  'clean_title': clean_title_value,
-                  'year': year
-                  }
-        return result
-
-    else:
-        # it is a show
-        rest = value.strip()  # original name
-        season_episode = s_show.group(0)
-        # clean title
-        for keyword in keywords:  # checking keywords
-            value = value.replace(' ' + keyword + ' ', ' ')
-
-        title = value[:value.find(season_episode)].strip()
-        title = title.strip()
-        season_episode = season_episode.replace('temporada ', 's').replace(' capitulo ', 'e')
-        season_episode = season_episode.replace('season ', 's').replace(' episode ', 'e')
-        season_episode = season_episode.replace('temp ', 's').replace(' cap ', 'e')
-        season_episode = season_episode.replace('seizoen ', 's').replace(' afl ', 'e')
-
-        if 'x' in season_episode:
-            season_episode = 's' + season_episode.replace('x', 'e')
-
-        # force S00E00 instead S0E0
-        if 's' in season_episode and 'e' in season_episode and 'season' not in season_episode:
-            temp_episode = season_episode.replace('s', '').split('e')
-            season_episode = 's%02de%02d' % (int(temp_episode[0]), int(temp_episode[1]))
-
-        if 's' not in season_episode and 'e' not in season_episode:  # date format
-            date = season_episode.split()
-            if len(date[0]) == 4:  # yyyy-mm-dd format
-                season_episode = season_episode.replace(' ', '-')  # date style episode talk shows
-
-            else:  # dd mm yy format
-                if int(date[2]) > 50:
-                    date[2] = '19' + date[2]
-
-                else:
-                    date[2] = '20' + date[2]
-                season_episode = date[2] + '-' + date[1] + '-' + date[0]
-
-        season_episode = season_episode.replace(' ', '')  # remove spaces in the episode format
-        title = exceptions_title(title)
-        # finding year
-        value = title + ' 0000 '
-        s_year = re.search(' [0-9][0-9][0-9][0-9] ', value)
-        year = s_year.group(0).strip()
-        pos = value.find(year)
-        if pos > 0:
-            title = value[:pos].strip()
-
-        else:
-            title = value.replace('0000', '')
-
-        year = year.replace('0000', '')
-        # the rest
-        title = title.title().strip().replace('Of ', 'of ').replace('De ', 'de ')
-        folder = title  # with year
-        clean_title_value = cleaning_title(title.replace(year, '').strip())  # without year
-        title = folder + ' ' + season_episode.upper()
-        title = title.replace('S00E00', '').replace('EP00', '')
-        t_type = "SHOW"
-        result = {'title': title, 'folder': folder, 'rest': rest, 'type': t_type, 'clean_title': clean_title_value,
-                  'year': year
-                  }
-        if bool(re.search("EP[0-9]+", title)):
-            result['type'] = "ANIME"
-            result['season'] = 1
-            result['episode'] = int(season_episode.replace('ep', ''))
-
-        else:
-            temp = (season_episode.replace('s', '')).split('e')
-            result['season'] = 0
-            result['episode'] = 0
-            try:
-                result['season'] = int(temp[0])
-                result['episode'] = int(temp[1])
-
-            except:
-                pass
-
-        return result

@@ -7,11 +7,12 @@ Burst utilities
 import os
 import re
 import xbmc
-import xbmcgui
 import xbmcaddon
+import xbmcgui
+from urlparse import urlparse
+
 from elementum.provider import get_setting
 from providers.definitions import definitions
-from urlparse import urlparse
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo("id")
@@ -37,9 +38,9 @@ class Magnet:
         name      (str): Name of torrent
         trackers (list): List of trackers in magnet link
     """
+
     def __init__(self, magnet):
         self.magnet = magnet + '&'
-
         info_hash = re.search('urn:btih:(\w+)&', self.magnet, re.IGNORECASE)
         self.info_hash = None
         if info_hash:
@@ -54,6 +55,13 @@ class Magnet:
 
 
 def get_domain(url):
+    """
+        Get domain from url
+    :param url: url
+    :type url: str or unicode
+    :return: domain
+    :rtype: str
+    """
     if "//" not in url:
         url = "http://" + url
 
@@ -63,8 +71,16 @@ def get_domain(url):
 
 
 def get_protocol(url):
+    """
+        Get protocol from url
+    :param url: url
+    :type url: str or unicode
+    :return: protocol
+    :rtype: str or None
+    """
     if "https://" in url:
         return "https"
+
     elif "http://" in url:
         return "http"
 
@@ -72,6 +88,15 @@ def get_protocol(url):
 
 
 def get_alias(definition, alias):
+    """
+        Read the URL alias to replace it
+    :param definition: definitions for the provider
+    :type definition: dict
+    :param alias: new URL
+    :type alias: str
+    :return: new definition
+    :rtype: dict
+    """
     definition["alias"] = ""
 
     if alias:
@@ -87,7 +112,6 @@ def get_alias(definition, alias):
         if old_domain and new_domain:
             definition["alias"] = new_domain
             definition["old_domain"] = old_domain
-
             # Substitute all ocurrences of old domain name and replace with new one
             for k in definition:
                 if isinstance(definition[k], basestring):
@@ -107,10 +131,10 @@ def get_alias(definition, alias):
 
 
 def get_providers():
-    """ Utility method to get all provider IDs available in the definitions
-
-    Returns:
-        list: All available provider IDs
+    """
+        Utility method to get all provider IDs available in the definitions
+    :return: All available provider IDs
+    :rtype: list
     """
     results = []
     for provider in definitions:
@@ -119,23 +143,25 @@ def get_providers():
 
 
 def get_enabled_providers(method):
-    """ Utility method to get all enabled provider IDs
-
-    Returns:
-        list: All available enabled provider IDs
+    """
+        Utility method to get all enabled provider IDs
+    :param method:
+    :type method: str
+    :return: All available enabled provider IDs
+    :rtype: list
     """
     results = []
-    type = "2"
+    type_number = "2"
     if method == "general":
-        type = "0"
+        type_number = "0"
     elif method == "movie":
-        type = "1"
+        type_number = "1"
     for provider in definitions:
         if get_setting('use_%s' % provider, bool):
             contains = get_setting('%s_contains' % provider, choices=('All', 'Movies', 'Shows'))
             if not contains or contains == "0":
                 results.append(provider)
-            elif contains == type:
+            elif contains == type_number:
                 results.append(provider)
         if 'custom' in definitions[provider] and definitions[provider]['custom']:
             results.append(provider)
@@ -143,179 +169,167 @@ def get_enabled_providers(method):
 
 
 def get_icon_path():
-    """ Utility method to Burst's icon path
-
-    Returns:
-        str: Path to Burst's icon
+    """
+        Utility method to Burst's icon path
+    :return: path
+    :rtype: str
     """
     return os.path.join(ADDON_PATH, 'icon.png')
 
 
 def translation(id_value):
-    """ Utility method to get translations
-
-    Args:
-        id_value (int): Code of translation to get
-
-    Returns:
-        str: Translated string
+    """
+    Utility method to get translations
+    :param id_value: Code of translation to get
+    :type id_value: int
+    :return: Translated string
+    :rtype: str
     """
     return ADDON.getLocalizedString(id_value)
 
 
-def get_int(string):
-    """ Utility method to convert a number contained in a string to an integer
-
-    Args:
-        string (str): Number contained in a string
-
-    Returns:
-        int: The number as an integer, or 0
+def get_int(text):
     """
-    if not string:
-        return 0
-    try:
-        return int(string)
-    except:
-        try:
-            return int(get_float(string))
-        except:
-            pass
-    try:
-        return int(filter(type(string).isdigit, string))
-    except:
-        return 0
+        Convert string to integer number
+    :param text: string to convert
+    :type text: str or unicode
+    :return: converted string in integer
+    ;:rtype: int
+    """
+    return int(get_float(text))
 
 
 def get_float(string):
-    """ Utility method to convert a number contained in a string to a float
-
-    Args:
-        string (str): Number contained in a string
-
-    Returns:
-        float: The number as a float, or 0.0
     """
-    if not string:
-        return float(0)
-    try:
-        return float(string)
-    except:
+        Convert string to float number
+    :param string: string to convert
+    :type string: str or unicode
+    :return: converted string in float
+    :rtype: float
+    """
+    value = 0
+    if isinstance(string, (float, long, int)):
+        value = float(string)
+
+    elif isinstance(string, str) or isinstance(string, unicode):
+        # noinspection PEP8, PyBroadException
         try:
-            cleaned = clean_number(string)
-            floated = re.findall(r'[\d.]+', cleaned)[0]
-            return float(floated)
-        except:
-            pass
-    try:
-        string = string[:clean_number(string).find('.')]
-        return float(filter(type(string).isdigit, string))
-    except:
-        pass
-    try:
-        return float(filter(type(string).isdigit, string))
-    except:
-        return float(0)
+            string = clean_number(string)
+            match = re.search('([0-9]*\.[0-9]+|[0-9]+)', string)
+            if match:
+                value = float(match.group(0))
+
+        except Exception as e:
+            repr(e)
+            value = 0
+
+    return value
 
 
-def size_int(size_txt):
-    """ Utility method to convert a file size contained in a string to an integer of bytes
-
-    Args:
-        string (str): File size with suffix contained in a string, eg. ``1.21 GB``
-
-    Returns:
-        float: The number of bytes as a float, or 0.0
+def size_int(string):
+    """
+        Convert string with size format to integer
+    :param string: string to be converted
+    :type string: unicode
+    :return: converted string in integer
+    :rtype: int
     """
     try:
-        return float(size_txt)
-    except:
-        try:
-            size_txt = size_txt.upper()
-            size = get_float(size_txt)
-            if 'K' in size_txt:
-                size *= 1e3
-            if 'M' in size_txt:
-                size *= 1e6
-            if 'G' in size_txt:
-                size *= 1e9
-            if 'T' in size_txt:
-                size *= 1e12
-            return size
-        except:
-            pass
-    return 0
+        return int(string)
+
+    except Exception as e:
+        repr(e)
+        string = string.upper()
+        number = string.replace(u'B', u'').replace(u'I', u'').replace(u'K', u'').replace(u'M', u''). \
+            replace(u'G', '').replace(u'T', '')
+        size = get_float(number)
+        if u'K' in string:
+            size *= 1000
+
+        if u'M' in string:
+            size *= 1000000
+
+        if u'G' in string:
+            size *= 1e9
+
+        if u'T' in string:
+            size *= 1e12
+
+        return size
 
 
 def clean_number(string):
-    """ Utility method to clean up a number contained in a string to dot decimal format
-
-    Args:
-        string (str): Number contained in a string
-
-    Returns:
-        str: The formatted number as a string
     """
-    comma = string.find(',')
-    point = string.find('.')
+        Convert string with a number to USA decimal format
+    :param string: string with the number
+    :type string: unicode
+    :return: converted number in string
+    :rtype: unicode
+    """
+    comma = string.find(u',')
+    point = string.find(u'.')
     if comma > 0 and point > 0:
         if comma < point:
-            string = string.replace(',', '')
+            string = string.replace(u',', u'')
+
         else:
-            string = string.replace('.', '')
-            string = string.replace(',', '.')
-    elif comma > 0:
-        string = string.replace(',', '.')
+            string = string.replace(u'.', u'')
+            string = string.replace(u',', u'.')
+
     return string
 
 
 def clean_size(string):
-    """ Utility method to remove unnecessary information from a file size string, eg. '6.5 GBytes' -> '6.5 GB'
-
-    Args:
-        string (str): File size string to clean up
-
-    Returns:
-        str: Cleaned up file size
+    """
+        Utility method to remove unnecessary information from a file size string, eg. '6.5 GBytes' -> '6.5 GB'
+    :param string: File size string to clean up
+    :type string: unicode
+    :return: Cleaned up file size
+    :rtype: unicode
     """
     if string:
-        pos = string.rfind('B')
+        pos = string.rfind(u'B')
         if pos > 0:
-            string = string[:pos] + 'B'
+            string = string[:pos] + u'B'
+
     return string
 
 
 def sizeof(num, suffix='B'):
-    """ Utility method to convert a file size in bytes to a human-readable format
-
-    Args:
-        num    (int): Number of bytes
-        suffix (str): Suffix for 'bytes'
-
-    Returns:
-        str: The formatted file size as a string, eg. ``1.21 GB``
     """
-    for unit in ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z']:
+        Utility method to convert a file size in bytes to a human-readable format
+    :param num: Number of bytes
+    :type num: int
+    :param suffix: Suffix for 'bytes'
+    :type suffix: unicode
+    :return: The formatted file size as a string, eg. ``1.21 GB``
+    :rtype: unicode
+    """
+    for unit in [u'', u'K', u'M', u'G', u'T', u'P', u'E', u'Z']:
         if abs(num) < 1024.0:
-            return "%3.1f %s%s" % (num, unit, suffix)
+            return u"%3.1f %s%s" % (num, unit, suffix)
+
         num /= 1024.0
-    return "%.1f %s%s" % (num, 'Y', suffix)
+
+    return u"%.1f %s%s" % (num, u'Y', suffix)
 
 
 def notify(message, image=None):
-    """ Creates a notification dialog
-
-    Args:
-        message (str): The message to show in the dialog
-        image   (str): Path to an icon for this dialog
+    """
+        Create notification dialog
+    :param message: message to notify
+    :type message: str or unicode
+    :param image: path of the image
+    :type image: str
     """
     dialog = xbmcgui.Dialog()
-    dialog.notification(ADDON_NAME, message, icon=image, sound=False)
+    dialog.notification(ADDON_NAME, message, icon=image)
     del dialog
 
 
 def clear_cache():
-    """ Clears cookies from Burst's cache
+    """
+        Clears cookies from Burst's cache
     """
     cookies_path = os.path.join(xbmc.translatePath("special://temp"), "burst")
     if os.path.isdir(cookies_path):
@@ -325,19 +339,21 @@ def clear_cache():
 
 
 def encode_dict(dict_in):
-    """ Encodes dict values to UTF-8
-
-    Args:
-        dict_in (dict): Input dictionary with unicode values
-
-    Returns:
-        dict: Output dictionary with UTF-8 encoded values
+    """
+        Encodes dict values to UTF-8
+    :param dict_in: Input dictionary with unicode values
+    :type dict_in: dict
+    :return:  Output dictionary with UTF-8 encoded values
+    :rtype: dict
     """
     dict_out = {}
     for k, v in dict_in.iteritems():
         if isinstance(v, unicode):
             v = v.encode('utf8')
+
         elif isinstance(v, str):
             v.decode('utf8')
+
         dict_out[k] = v
+
     return dict_out

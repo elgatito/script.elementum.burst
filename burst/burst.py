@@ -4,22 +4,23 @@
 Burst processing thread
 """
 
-import re
 import json
+import re
 import time
 import xbmc
 import xbmcgui
 from Queue import Queue
 from threading import Thread
 from urlparse import urlparse
-from elementum.provider import append_headers, get_setting, set_setting, log
 
+from normalize import normalize_string
+from client import Client, USER_AGENT, get_cloudhole_clearance, get_cloudhole_key
+from elementum.provider import append_headers, get_setting, log, set_setting
+from filtering import Filtering, apply_filters
 from parser.ehp import Html
 from provider import process
 from providers.definitions import definitions, longest
-from filtering import apply_filters, Filtering
-from client import USER_AGENT, Client, get_cloudhole_key, get_cloudhole_clearance
-from utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias
+from utils import ADDON_ICON, get_alias, get_enabled_providers, get_icon_path, notify, sizeof, translation
 
 provider_names = []
 provider_results = []
@@ -30,14 +31,14 @@ special_chars = "()\"':.[]<>/\\?"
 
 
 def search(payload, method="general"):
-    """ Main search entrypoint
-
-    Args:
-        payload (dict): Search payload from Elementum.
-        method   (str): Type of search, can be ``general``, ``movie``, ``show``, ``season`` or ``anime``
-
-    Returns:
-        list: All filtered results in the format Elementum expects
+    """
+    Main search
+    :param payload:  Search payload from Elementum
+    :type payload: dict
+    :param method: Type of search, can be 'general', 'movie', 'show', 'season' or 'anime'
+    :type method: str
+    :return: All filtered results in the format Elementum expects
+    :rtype: list
     """
     log.debug("Searching with payload (%s): %s" % (method, repr(payload)))
 
@@ -88,8 +89,10 @@ def search(payload, method="general"):
         kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
         if not kodi_language:
             log.warning("Kodi returned empty language code...")
+
         elif 'titles' not in payload or not payload['titles']:
             log.info("No translations available...")
+
         elif payload['titles'] and kodi_language not in payload['titles']:
             log.info("No '%s' translation available..." % kodi_language)
 
@@ -110,6 +113,7 @@ def search(payload, method="general"):
         log.debug("Timer: %ds / %ds" % (timer, timeout))
         if timer > timeout:
             break
+
         message = translation(32062) % available_providers if available_providers > 1 else translation(32063)
         p_dialog.update(int((total - available_providers) / total * 100), message=message)
         time.sleep(0.25)
@@ -124,22 +128,21 @@ def search(payload, method="general"):
         notify(message, ADDON_ICON)
 
     log.debug("all provider_results: %s" % repr(provider_results))
-
     filtered_results = apply_filters(provider_results)
-
     log.debug("all filtered_results: %s" % repr(filtered_results))
-
-    log.info("Providers returned %d results in %s seconds" % (len(filtered_results), round(time.time() - request_time, 2)))
+    log.info("Providers returned %d results in %s seconds" %
+             (len(filtered_results), round(time.time() - request_time, 2)))
 
     return filtered_results
 
 
 def got_results(provider, results):
-    """ Results callback once a provider found all its results, or not
-
-    Args:
-        provider (str): The provider ID
-        results (list): The list of results
+    """
+        Results callback once a provider found all its results, or not
+    :param provider: The provider ID
+    :type provider: str
+    :param results: The list of results
+    :type results: list
     """
     global provider_names
     global provider_results
@@ -219,18 +222,20 @@ def extract_torrents(provider, client):
                 log.debug('[%s] bittorrent content-type for %s' % (provider, repr(torrent)))
                 if len(uri) > 1:  # Stick back cookies if needed
                     torrent = '%s|%s' % (torrent, uri[1])
+
             else:
                 try:
                     torrent = extract_from_page(provider, subclient.content)
                     if torrent and not torrent.startswith('magnet') and len(uri) > 1:  # Stick back cookies if needed
                         torrent = '%s|%s' % (torrent, uri[1])
+
                 except Exception as e:
                     import traceback
                     log.error("[%s] Subpage extraction for %s failed with: %s" % (provider, repr(uri[0]), repr(e)))
                     map(log.debug, traceback.format_exc().split("\n"))
 
-            ret = (name, info_hash, torrent, size, seeds, peers)
-            q.put_nowait(ret)
+            result = (name, info_hash, torrent, size, seeds, peers)
+            q.put_nowait(result)
 
     if not dom:
         raise StopIteration
@@ -238,12 +243,13 @@ def extract_torrents(provider, client):
     for item in eval(row_search):
         if not item:
             continue
-        name = eval(name_search)
-        torrent = eval(torrent_search) if torrent_search else ""
-        size = eval(size_search) if size_search else ""
-        seeds = eval(seeds_search) if seeds_search else ""
-        peers = eval(peers_search) if peers_search else ""
-        info_hash = eval(info_hash_search) if info_hash_search else ""
+
+        name = normalize_string(eval(name_search))
+        torrent = eval(torrent_search) if torrent_search else ''
+        size = eval(size_search) if size_search else ''
+        seeds = eval(seeds_search) if seeds_search else ''
+        peers = eval(peers_search) if peers_search else ''
+        info_hash = eval(info_hash_search) if info_hash_search else ''
 
         # Pass client cookies with torrent if private
         if (definition['private'] or get_setting("use_cloudhole", bool)) and not torrent.startswith('magnet'):
@@ -253,23 +259,28 @@ def extract_torrents(provider, client):
 
             if client.passkey:
                 torrent = torrent.replace('PASSKEY', client.passkey)
+
             elif client.token:
                 headers = {'Authorization': client.token, 'User-Agent': user_agent}
                 log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                 torrent = append_headers(torrent, headers)
                 log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
+
             else:
-                log.debug("[%s] Cookies: %s" % (provider, repr(client.cookies())))
+                log.debug("[%s] Cookies: %s" % (provider, repr(client.cookies)))
                 parsed_url = urlparse(definition['root_url'])
                 cookie_domain = '{uri.netloc}'.format(uri=parsed_url).replace('www.', '')
                 cookies = []
                 log.debug("[%s] cookie_domain: %s" % (provider, cookie_domain))
-                for cookie in client._cookies:
-                    log.debug("[%s] cookie for domain: %s (%s=%s)" % (provider, cookie.domain, cookie.name, cookie.value))
+                for cookie in client.cookies:
+                    log.debug(
+                        "[%s] cookie for domain: %s (%s=%s)" % (provider, cookie.domain, cookie.name, cookie.value))
                     if cookie_domain in cookie.domain:
                         cookies.append(cookie)
+
                 if cookies:
-                    headers = {'Cookie': ";".join(["%s=%s" % (c.name, c.value) for c in cookies]), 'User-Agent': user_agent}
+                    headers = {'Cookie': ";".join(["%s=%s" % (c.name, c.value) for c in cookies]),
+                               'User-Agent': user_agent}
                     log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                     torrent = append_headers(torrent, headers)
                     log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
@@ -279,6 +290,7 @@ def extract_torrents(provider, client):
                 torrent = definition['root_url'] + torrent.encode('utf-8')
             t = Thread(target=extract_subpage, args=(q, name, torrent, size, seeds, peers, info_hash))
             threads.append(t)
+
         else:
             yield (name, info_hash, torrent, size, seeds, peers)
 
@@ -286,6 +298,7 @@ def extract_torrents(provider, client):
         log.debug("[%s] Starting subpage threads..." % provider)
         for t in threads:
             t.start()
+
         for t in threads:
             t.join()
 
@@ -298,44 +311,44 @@ def extract_torrents(provider, client):
 
 
 def extract_from_api(provider, client):
-    """ Main API parsing generator for API-based providers
-
-    An almost clever API parser, mostly just for YTS, RARBG and T411
-
-    Args:
-        provider  (str): Provider ID
-        client (Client): Client class instance
-
-    Yields:
-        tuple: A torrent result
+    """
+        Main API parsing generator for API-based providers
+    :param provider: Provider ID
+    :type provider: str
+    :param client:  Client class instance
+    :type client: Client
+    :return: Torrent result
+    :rtype: tuple
     """
     try:
         data = json.loads(client.content)
-    except:
-        data = []
-    log.debug("[%s] JSON response from API: %s" % (provider, repr(data)))
 
+    except Exception as e:
+        log.debug(repr(e))
+        data = list()
+
+    log.debug("[%s] JSON response from API: %s" % (provider, repr(data)))
     definition = definitions[provider]
-    definition = get_alias(definition, get_setting("%s_alias" % provider))
+    definition = get_alias(definition, get_setting('%s_alias' % provider))
     api_format = definition['api_format']
 
-    results = []
     result_keys = api_format['results'].split('.')
     log.debug("%s result_keys: %s" % (provider, repr(result_keys)))
     for key in result_keys:
         if key in data:
             data = data[key]
+
         else:
-            data = []
-        # log.debug("%s nested results: %s" % (provider, repr(data)))
+            data = list()
+
     results = data
     log.debug("%s results: %s" % (provider, repr(results)))
 
     if 'subresults' in api_format:
         from copy import deepcopy
         for result in results:  # A little too specific to YTS but who cares...
-            result['name'] = result[api_format['name']]
-        subresults = []
+            result['name'] = normalize_string(result[api_format['name']])
+        subresults = list()
         subresults_keys = api_format['subresults'].split('.')
         for key in subresults_keys:
             for result in results:
@@ -344,12 +357,14 @@ def extract_from_api(provider, client):
                         sub = deepcopy(result)
                         sub.update(subresult)
                         subresults.append(sub)
+
         results = subresults
         log.debug("%s with subresults: %s" % (provider, repr(results)))
 
     for result in results:
         if not result or not isinstance(result, dict):
             continue
+
         name = ''
         info_hash = ''
         torrent = ''
@@ -357,49 +372,59 @@ def extract_from_api(provider, client):
         seeds = ''
         peers = ''
         if 'name' in api_format:
-            name = result[api_format['name']]
+            name = normalize_string(result[api_format['name']])
+
         if 'torrent' in api_format:
             torrent = result[api_format['torrent']]
             if 'download_path' in definition:
                 torrent = definition['base_url'] + definition['download_path'] + torrent
+
             if client.token:
                 user_agent = USER_AGENT
                 if get_setting("use_cloudhole", bool):
                     user_agent = get_setting("user_agent")
+
                 headers = {'Authorization': client.token, 'User-Agent': user_agent}
                 log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                 torrent = append_headers(torrent, headers)
                 log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
+
         if 'info_hash' in api_format:
             info_hash = result[api_format['info_hash']]
+
         if 'quality' in api_format:  # Again quite specific to YTS...
-            name = "%s - %s" % (name, result[api_format['quality']])
+            name = u'%s - %s' % (name, result[api_format['quality']])
+
         if 'size' in api_format:
             size = result[api_format['size']]
             if type(size) in (long, int):
                 size = sizeof(size)
+
             elif type(size) in (str, unicode) and size.isdigit():
                 size = sizeof(int(size))
+
         if 'seeds' in api_format:
             seeds = result[api_format['seeds']]
             if type(seeds) in (str, unicode) and seeds.isdigit():
                 seeds = int(seeds)
+
         if 'peers' in api_format:
             peers = result[api_format['peers']]
             if type(peers) in (str, unicode) and peers.isdigit():
                 peers = int(peers)
+
         yield (name, info_hash, torrent, size, seeds, peers)
 
 
 def extract_from_page(provider, content):
-    """ Sub-page extraction method
-
-    Args:
-        provider (str): Provider ID
-        content  (str): Page content from Client instance
-
-    Returns:
-        str: Torrent or magnet link extracted from sub-page
+    """
+        Sub-page extraction method
+    :param provider: Provider ID
+    :type provider: str
+    :param content: Page content from Client instance
+    :type content: str
+    :return: Torrent or magnet link extracted from sub-page
+    :rtype: str
     """
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
@@ -426,38 +451,68 @@ def extract_from_page(provider, content):
     matches = re.findall('/torrents/download/\?id=[a-z0-9-_.]+', content)  # t411
     if matches:
         result = definition['root_url'] + matches[0]
-        log.debug('[%s] Matched download link with an ID: %s' % (provider, repr(result)))
+        log.debug("[%s] Matched download link with an ID: %s" % (provider, repr(result)))
         return result
 
     return None
 
 
 def run_provider(provider, payload, method):
-    """ Provider thread entrypoint
-
-    Args:
-        provider (str): Provider ID
-        payload (dict): Search payload from Elementum
-        method   (str): Type of search, can be ``general``, ``movie``, ``show``, ``season`` or ``anime``
+    """
+        Provider thread
+    :param provider: Provider ID
+    :type provider: str
+    :param payload: Search payload from Elementum
+    :type payload: dict
+    :param method: Type of search, can be 'general', 'movie', 'show', 'season' or 'anime'
     """
     log.debug("Processing %s with %s method" % (provider, method))
 
-    filterInstance = Filtering()
+    filter_instance = Filtering()
 
     if method == 'movie':
-        filterInstance.use_movie(provider, payload)
-    elif method == 'season':
-        filterInstance.use_season(provider, payload)
-    elif method == 'episode':
-        filterInstance.use_episode(provider, payload)
-    elif method == 'anime':
-        filterInstance.use_anime(provider, payload)
-    else:
-        filterInstance.use_general(provider, payload)
+        filter_instance.use_movie(provider, payload)
 
-    if 'is_api' in definitions[provider]:
-        results = process(provider=provider, generator=extract_from_api, filtering=filterInstance, has_special=payload['has_special'])
+    elif method == 'season':
+        filter_instance.use_season(provider, payload)
+
+    elif method == 'episode':
+        filter_instance.use_episode(provider, payload)
+
+    elif method == 'anime':
+        filter_instance.use_anime(provider, payload)
+
     else:
-        results = process(provider=provider, generator=extract_torrents, filtering=filterInstance, has_special=payload['has_special'])
+        filter_instance.use_general(provider, payload)
+
+    results = get_results('is_api' in definitions[provider], provider, filter_instance, payload, False)
+    if u"'" in payload["title"]:
+        results.extend(get_results('is_api' in definitions[provider], provider, filter_instance, payload, True))
 
     got_results(provider, results)
+
+
+def get_results(is_api, provider, filter_instance, payload, replacing):
+    """
+        Search the torrents
+    :param replacing: Whether is ' is replaced
+    :type replacing: bool
+    :param filter_instance: Filtering instance
+    :type filter_instance: Filtering
+    :param is_api: Whether the provider is api
+    :param provider: Provider ID
+    :type provider: str
+    :param payload: Search payload from Elementum
+    :type payload: dict
+    :return: results
+    :rtype: list
+    """
+    if is_api:
+        results = process(provider=provider, generator=extract_from_api, filtering=filter_instance,
+                          has_special=payload['has_special'], replacing=replacing)
+
+    else:
+        results = process(provider=provider, generator=extract_torrents, filtering=filter_instance,
+                          has_special=payload['has_special'], replacing=replacing)
+
+    return results
