@@ -3,15 +3,16 @@
 Definitions and overrides loader
 """
 
+import collections
+import json
 import os
 import sys
-import json
 import time
 import xbmc
 import xbmcaddon
-import collections
 from glob import glob
 from urlparse import urlparse
+
 from elementum.provider import log
 
 start_time = time.time()
@@ -83,7 +84,8 @@ def update_definitions(provider, definition, custom=False, fix_seasons=False):
 
     if fix_seasons:
         if 'season_keywords' in definition and definition['season_keywords']:
-            definition['season_keywords'] = definition['season_keywords'].replace('Season_{season}', 'season {season:2}')
+            definition['season_keywords'] = definition['season_keywords'].replace('Season_{season}',
+                                                                                  'season {season:2}')
         if 'season_keywords2' in definition and definition['season_keywords2']:
             definition['season_keywords2'] = definition['season_keywords2'].replace('Season{season}', 's{season:2}')
 

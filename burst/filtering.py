@@ -336,7 +336,7 @@ class Filtering:
                 use_language = None
                 if u':' in keyword:
                     use_language = keyword.split(':')[1].lower()
-                
+
                 if provider not in self.language_exceptions and \
                         (use_language or self.kodi_language) and \
                         'titles' in self.info and self.info['titles']:
@@ -371,28 +371,28 @@ class Filtering:
                 if '+' in keyword:
                     keys = keyword.split('+')
                     season = str(self.info["season"] + get_int(keys[1]))
-                
+
                 elif ':' in keyword:
                     keys = keyword.split(':')
                     season = ('%%.%sd' % keys[1]) % self.info["season"]
-                
+
                 else:
                     season = '%s' % self.info["season"]
-                
+
                 text = text.replace('{%s}' % keyword, season)
 
             if u'episode' in keyword:
                 if u'+' in keyword:
                     keys = keyword.split('+')
                     episode = str(self.info["episode"] + get_int(keys[1]))
-                
+
                 elif u':' in keyword:
                     keys = keyword.split(':')
                     episode = ('%%.%sd' % keys[1]) % self.info["episode"]
-                
+
                 else:
                     episode = '%s' % self.info["episode"]
-                
+
                 text = text.replace('{%s}' % keyword, episode)
 
         return text

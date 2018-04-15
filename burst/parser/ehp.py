@@ -11,8 +11,9 @@ documents as well as look for patterns.
 https://github.com/iogf/ehp
 """
 
-from HTMLParser import HTMLParser
 from collections import deque
+
+from HTMLParser import HTMLParser
 
 version = '1.3b'
 DATA = 1

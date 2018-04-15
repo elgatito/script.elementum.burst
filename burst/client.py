@@ -20,7 +20,6 @@ from urlparse import urlparse
 from xbmc import translatePath
 
 import dns.resolver
-
 from elementum.provider import get_setting, log
 from utils import encode_dict
 

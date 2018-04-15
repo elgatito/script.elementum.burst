@@ -13,10 +13,10 @@ from Queue import Queue
 from threading import Thread
 from urlparse import urlparse
 
-from normalize import normalize_string
 from client import Client, USER_AGENT, get_cloudhole_clearance, get_cloudhole_key
 from elementum.provider import append_headers, get_setting, log, set_setting
 from filtering import Filtering, apply_filters
+from normalize import normalize_string
 from parser.ehp import Html
 from provider import process
 from providers.definitions import definitions, longest
