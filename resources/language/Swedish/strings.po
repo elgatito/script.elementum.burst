@@ -8,16 +8,15 @@ msgstr ""
 "Project-Id-Version: Elementum Burst\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-05 05:53-0400\n"
-"PO-Revision-Date: 2016-12-26 10:41-0500\n"
+"PO-Revision-Date: 2018-04-15 13:50-0400\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
 
 msgctxt "#32000"
 msgid "General"
@@ -70,3 +69,51 @@ msgstr " arbetar långsamt"
 msgctxt "#32070"
 msgid "Search timeout (seconds)"
 msgstr "Sök Timeout Sekunder"
+
+msgctxt "#32071"
+msgid "Timeout setting must be lower than Elementum's"
+msgstr ""
+
+msgctxt "#32075"
+msgid "No torrents found"
+msgstr "Inga enter hittades"
+
+msgctxt "#32076"
+msgid "Passkey"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Domain Alias [Optional]"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Allow results without seeds"
+msgstr ""
+
+msgctxt "#32079"
+msgid "E-mail"
+msgstr "E-post"
+
+msgctxt "#32080"
+msgid "Contains only"
+msgstr ""
+
+msgctxt "#32081"
+msgid "All"
+msgstr "Allt"
+
+msgctxt "#32082"
+msgid "Movies"
+msgstr "Filmer"
+
+msgctxt "#32083"
+msgid "Shows"
+msgstr "Tv program"
+
+msgctxt "#32084"
+msgid "Use Public DNS (Google, Quad9, Opennic)"
+msgstr "Använda offentlig DNS (Google, Quad9, Opennic)"
+
+msgctxt "#32085"
+msgid "Use Filters"
+msgstr "Använd filters"

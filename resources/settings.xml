@@ -242,20 +242,21 @@
     <setting label="240p" id="filter_240p" type="bool" default="false" />
   </category>
   <category label="32003">
-    <setting label="BRRip/BDRip/Bluray" id="filter_brrip" type="bool" default="true" />
-    <setting label="WebDL/WebRip" id="filter_webdl" type="bool" default="true" />
-    <setting label="HDRip" id="filter_hdrip" type="bool" default="true" />
-    <setting label="HDTV" id="filter_hdtv" type="bool" default="true" />
-    <setting label="DVDRip" id="filter_dvd" type="bool" default="true" />
-    <setting label="DVDScr" id="filter_dvdscr" type="bool" default="true" />
-    <setting label="Screener/SCR" id="filter_screener" type="bool" default="true" />
-    <setting label="3D" id="filter_3d" type="bool" default="false" />
-    <setting label="TeleSync/TS/TC" id="filter_telesync" type="bool" default="false" />
-    <setting label="Cam/HDCam" id="filter_cam" type="bool" default="false" />
-    <setting label="TVRip/SATRip" id="filter_tvrip" type="bool" default="false" />
-    <setting label="VHSRip" id="filter_vhsrip" type="bool" default="false" />
-    <setting label="Trailer" id="filter_trailer" type="bool" default="false" />
-    <setting label="Workprint" id="filter_workprint" type="bool" default="false" />
+    <setting label="32085" id="use_filter" type="bool" default="true" />
+    <setting label="BRRip/BDRip/Bluray" id="filter_brrip" type="bool" default="true" visible="eq(-1,true)"/>
+    <setting label="WebDL/WebRip" id="filter_webdl" type="bool" default="true" visible="eq(-2,true)"/>
+    <setting label="HDRip" id="filter_hdrip" type="bool" default="true" visible="eq(-3,true)"/>
+    <setting label="HDTV" id="filter_hdtv" type="bool" default="true" visible="eq(-4,true)"/>
+    <setting label="DVDRip" id="filter_dvd" type="bool" default="true" visible="eq(-5,true)"/>
+    <setting label="DVDScr" id="filter_dvdscr" type="bool" default="true" visible="eq(-6,true)"/>
+    <setting label="Screener/SCR" id="filter_screener" type="bool" default="true" visible="eq(-7,true)"/>
+    <setting label="3D" id="filter_3d" type="bool" default="false" visible="eq(-8,true)"/>
+    <setting label="TeleSync/TS/TC" id="filter_telesync" type="bool" default="false" visible="eq(-9,true)"/>
+    <setting label="Cam/HDCam" id="filter_cam" type="bool" default="false" visible="eq(-10,true)"/>
+    <setting label="TVRip/SATRip" id="filter_tvrip" type="bool" default="false" visible="eq(-11,true)"/>
+    <setting label="VHSRip" id="filter_vhsrip" type="bool" default="false" visible="eq(-12,true)"/>
+    <setting label="Trailer" id="filter_trailer" type="bool" default="false" visible="eq(-13,true)"/>
+    <setting label="Workprint" id="filter_workprint" type="bool" default="false" visible="eq(-14,true)"/>
   </category>
   <category label="32004">
     <setting label="32035" id="separate_sizes" type="bool" default="false" />

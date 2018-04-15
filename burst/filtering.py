@@ -96,12 +96,16 @@ class Filtering:
         if len(self.resolutions_allow) == len(self.resolutions):
             self.filter_resolutions = False
 
-        for release_type in self.release_types:
-            if get_setting(release_type, bool):
-                releases_allow.extend(self.release_types[release_type])
+        if get_setting('use_filter', bool):
+            for release_type in self.release_types:
+                if get_setting(release_type, bool):
+                    releases_allow.extend(self.release_types[release_type])
 
-            else:
-                releases_deny.extend(self.release_types[release_type])
+                else:
+                    releases_deny.extend(self.release_types[release_type])
+
+        else:
+            releases_allow = [u'*']
 
         self.releases_allow = releases_allow
         self.releases_deny = releases_deny
