@@ -105,7 +105,7 @@ class Filtering:
                     releases_deny.extend(self.release_types[release_type])
 
         else:
-            releases_allow = [u'*']
+            releases_allow = ['*']
 
         self.releases_allow = releases_allow
         self.releases_deny = releases_deny
@@ -497,7 +497,7 @@ class Filtering:
         """
 
         value = u' ' + value.lower() + u' '
-        if u'*' in keys:
+        if '*' in keys:
             res = True
 
         else:
