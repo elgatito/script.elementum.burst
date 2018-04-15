@@ -251,7 +251,7 @@ def extract_torrents(provider, client):
         peers = eval(peers_search) if peers_search else ''
         info_hash = eval(info_hash_search) if info_hash_search else ''
         log.debug(u"\n name: %s \n info_hash: %s\n torrent: %s\n size: %s\n seeds: %s\n peers: %s" % (
-            name.encode("ascii", "ignore"), info_hash, torrent, size, seeds, peers))
+            name.encode("ascii", "replace"), info_hash, torrent, size, seeds, peers))
 
         # Pass client cookies with torrent if private
         if (definition['private'] or get_setting("use_cloudhole", bool)) and not torrent.startswith('magnet'):
