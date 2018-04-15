@@ -108,17 +108,19 @@ def safe_name_torrent(string):
     return string.replace(u's h i e l d', u'SHIELD').replace(u'c s i', u'CSI')
 
 
-def safe_name(string, charset='utf-8'):
+def safe_name(string, charset='utf-8', replacing=False):
     """
     Make the name directory and filename safe
     :param charset: encoding
     :type charset: str
     :param string: string to convert
     :type string: str or unicode
+    :param replacing: Whether is ' is replaced
+    :type replacing: bool
     :return: converted string
     :rtype: unicode
     """
-    string = normalize_string(string, charset)
+    string = normalize_string(string, charset, replacing)
     string = string.lower().title()
     keys = {u'*': u' ', u'/': u' ', u':': u' ', u'<': u' ', u'>': u' ', u'?': u' ', u'|': u' ', u'_': u' ',
             u'.': u' ', u')': u' ', u'(': u' ', u'[': u' ', u']': u' ', u'-': u' '}
@@ -129,13 +131,15 @@ def safe_name(string, charset='utf-8'):
     return string
 
 
-def normalize_string(string, charset=None):
+def normalize_string(string, charset=None, replacing=False):
     """
     Decode and Convert to Unicode any string
     :param charset: encoding
     :type charset: str
     :param string: string to convert
     :type string: str or unicode
+    :param replacing: Whether is ' is replaced
+    :type replacing: bool
     :return: converted unicode
     :rtype: unicode
     """
@@ -167,6 +171,9 @@ def normalize_string(string, charset=None):
     string = unquote(string)
     string = string.replace(u'<![CDATA[', u'').replace(u']]', u'')
     string = HTMLParser().unescape(string)
+    if replacing:
+        string = string.replace(u"'", '')
+
     return string
 
 
@@ -520,39 +527,3 @@ SCRIPT_TABLE = {
     'MASCULINE': (1, 'latin'),
     'FEMININE': (1, 'latin')
 }
-
-
-def exceptions_title(title=u''):
-    """
-    Changes title to which uses in Internet
-    :param title: title
-    :type title: unicode
-    :return: new title
-    :rtype: unicode
-    """
-    value = title.lower() + ' '
-    if u'csi ' in value and u'ny' not in value and u'miami' not in value and u'cyber' not in value:
-        title = value.replace(u'csi', u'CSI Crime Scene Investigation')
-
-    if u'juego de tronos' in value:
-        title = value.replace(u'juego de tronos', u'Game of Thrones')
-
-    if u'mentes criminales' in value:
-        title = value.replace(u'mentes criminales', u'Criminal Minds')
-
-    if u'les revenants' in value:
-        title = value.replace(u'les revenants', u'The Returned')
-
-    if u'the great british baking show' in value:
-        title = value.replace(u'the great british baking show', u'The Great British Bake Off')
-
-    if u'house of cards' in value and u'[us]' in value in value:
-        title = value.replace(u'[us]', u'')
-
-    if u'house of cards' in value and u'(us)' in value in value:
-        title = value.replace(u'(us)', u'')
-
-    if u'house of cards' in value and u' us ' in value in value:
-        title = value.replace(u' us ', u'')
-
-    return title

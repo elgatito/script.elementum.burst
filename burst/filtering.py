@@ -8,7 +8,7 @@ import hashlib
 import re
 
 from elementum.provider import get_setting, log
-from normalize import normalize_string, safe_name, exceptions_title
+from normalize import normalize_string, safe_name
 from providers.definitions import definitions
 from utils import Magnet, clean_number, get_alias, get_float, get_int, size_int
 
@@ -327,7 +327,7 @@ class Filtering:
         for keyword in keywords:
             keyword = keyword.lower()
             if u'title' in keyword:
-                title = safe_name(self.info["title"])
+                title = safe_name(self.info["title"], replacing=replacing)
                 language = definitions[provider]['language']
                 use_language = None
                 if u':' in keyword:
@@ -347,7 +347,7 @@ class Filtering:
 
                         if use_language in self.info['titles'] and self.info['titles'][use_language]:
                             title = self.info['titles'][use_language]
-                            title = normalize_string(title)
+                            title = normalize_string(title, replacing=replacing)
                             log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
                                                                               repr(title)))
                             log.debug(
@@ -357,9 +357,6 @@ class Filtering:
                         import traceback
                         log.error("%s failed with: %s" % (provider, repr(ex)))
                         map(log.debug, traceback.format_exc().split("\n"))
-
-                if replacing:
-                    title = title.replace(u"'", '')
 
                 text = text.replace('{%s}' % keyword, title)
 
@@ -412,7 +409,6 @@ class Filtering:
             self.reason = u'[%s] %s' % (provider, u'*** Empty name ***')
             return False
 
-        name = exceptions_title(name)
         name = normalize_string(name)
         if self.filter_title and self.title:
             self.title = normalize_string(self.title)
