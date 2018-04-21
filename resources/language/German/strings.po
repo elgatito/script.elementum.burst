@@ -8,16 +8,15 @@ msgstr ""
 "Project-Id-Version: Elementum Burst\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-05 05:53-0400\n"
-"PO-Revision-Date: 2016-12-26 10:31-0500\n"
+"PO-Revision-Date: 2018-04-15 13:51-0400\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
 
 msgctxt "#32000"
 msgid "General"
@@ -78,3 +77,43 @@ msgstr "Such-Timeout in Sekunden"
 msgctxt "#32075"
 msgid "No torrents found"
 msgstr "Keine Torrents gefunden"
+
+msgctxt "#32076"
+msgid "Passkey"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Domain Alias [Optional]"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Allow results without seeds"
+msgstr ""
+
+msgctxt "#32079"
+msgid "E-mail"
+msgstr "Email"
+
+msgctxt "#32080"
+msgid "Contains only"
+msgstr ""
+
+msgctxt "#32081"
+msgid "All"
+msgstr "Alle"
+
+msgctxt "#32082"
+msgid "Movies"
+msgstr "Filme"
+
+msgctxt "#32083"
+msgid "Shows"
+msgstr "TV-Serien"
+
+msgctxt "#32084"
+msgid "Use Public DNS (Google, Quad9, Opennic)"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Use Filters"
+msgstr "Filter"

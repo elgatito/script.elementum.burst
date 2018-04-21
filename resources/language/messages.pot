@@ -190,3 +190,7 @@ msgstr ""
 msgctxt "#32084"
 msgid "Use Public DNS (Google, Quad9, Opennic)"
 msgstr ""
+
+msgctxt "#32085"
+msgid "Use Filters"
+msgstr ""

@@ -161,3 +161,35 @@ msgstr ""
 msgctxt "#32077"
 msgid "Domain Alias [Optional]"
 msgstr "Альтернативний домен [Опціонально]"
+
+msgctxt "#32078"
+msgid "Allow results without seeds"
+msgstr ""
+
+msgctxt "#32079"
+msgid "E-mail"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Contains only"
+msgstr ""
+
+msgctxt "#32081"
+msgid "All"
+msgstr ""
+
+msgctxt "#32082"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Shows"
+msgstr ""
+
+msgctxt "#32084"
+msgid "Use Public DNS (Google, Quad9, Opennic)"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Use Filters"
+msgstr ""

@@ -4,35 +4,40 @@
 Provider thread methods
 """
 
+import json
 import os
 import re
-import json
 import urllib
 import xbmc
 import xbmcaddon
+
 from client import Client
-from elementum.provider import log, get_setting, set_setting
+from elementum.provider import get_setting, log, set_setting
 from providers.definitions import definitions, longest
-from utils import ADDON_PATH, get_int, clean_size, get_alias
+from utils import ADDON_PATH, clean_size, get_alias, get_int
+
 
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
-    """ Payload formatter to format results the way Elementum expects them
-
-    Args:
-        provider        (str): Provider ID
-        generator  (function): Generator method, can be either ``extract_torrents`` or ``extract_from_api``
-        filtering (Filtering): Filtering class instance
-        verify_name    (bool): Whether to double-check the results' names match the query or not
-        verify_size    (bool): Whether to check the results' file sizes
-
-    Returns:
-        list: Formatted results
+    """
+        Payload formatter to format results the way Elementum expects them
+    :param provider: Provider ID
+    :type provider: str
+    :param generator: Generator method, can be either 'extract_torrents' or 'extract_from_api'
+    :type generator: collections.iterable
+    :param filtering: Filtering class instance
+    :type filtering: Filtering
+    :param verify_name: Whether to double-check the results' names match the query or not
+    :type verify_name: bool
+    :param verify_size: Whether to check the results' file sizes
+    :type verify_size: bool
+    :return: Formatted results
+    :rtype: list
     """
     filtering.information(provider)
-    results = []
+    results = list()
 
     definition = definitions[provider]
-    definition = get_alias(definition, get_setting("%s_alias" % provider))
+    definition = get_alias(definition, get_setting('%s_alias' % provider))
 
     for name, info_hash, uri, size, seeds, peers in generator:
         size = clean_size(size)
@@ -58,16 +63,25 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
     return results
 
 
-def process(provider, generator, filtering, has_special, verify_name=True, verify_size=True):
-    """ Method for processing provider results using its generator and Filtering class instance
-
-    Args:
-        provider        (str): Provider ID
-        generator  (function): Generator method, can be either ``extract_torrents`` or ``extract_from_api``
-        filtering (Filtering): Filtering class instance
-        has_special    (bool): Whether title contains special chars
-        verify_name    (bool): Whether to double-check the results' names match the query or not
-        verify_size    (bool): Whether to check the results' file sizes
+def process(provider, generator, filtering, has_special, verify_name=True, verify_size=True, replacing=False):
+    """
+        Method for processing provider results using its generator and Filtering class instance
+    :param provider: Provider ID
+    :type provider: str
+    :param generator: Generator method, can be either 'extract_torrents' or 'extract_from_api'
+    :type generator: collections.iterable
+    :param filtering: Filtering class instance
+    :type filtering: Filtering
+    :param has_special:  Whether title contains special chars
+    :type has_special: bool
+    :param verify_name: Whether to double-check the results' names match the query or not
+    :type verify_name: bool
+    :param verify_size: Whether to check the results' file sizes
+    :type verify_size: bool
+    :param replacing: Whether is ' is replaced
+    :type replacing: bool
+    :result: torrents
+    :rtype: list
     """
     log.debug("execute_process for %s with %s" % (provider, repr(generator)))
     definition = definitions[provider]
@@ -86,26 +100,28 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
         if kodi_language:
             filtering.kodi_language = kodi_language
+
         language_exceptions = get_setting('language_exceptions')
         if language_exceptions.strip().lower():
             filtering.language_exceptions = re.split(r',\s?', language_exceptions)
 
     log.debug("[%s] Queries: %s" % (provider, filtering.queries))
     log.debug("[%s] Extras:  %s" % (provider, filtering.extras))
-
     for query, extra in zip(filtering.queries, filtering.extras):
         log.debug("[%s] Before keywords - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
         if has_special:
             # Removing quotes, surrounding {title*} keywords, when title contains special chars
             query = re.sub("[\"']({title.*?})[\"']", '\\1', query)
 
-        query = filtering.process_keywords(provider, query)
+        query = filtering.process_keywords(provider, query, replacing)
         extra = filtering.process_keywords(provider, extra)
         if 'charset' in definition and 'utf' not in definition['charset'].lower():
             try:
                 query = urllib.quote(query.encode(definition['charset']))
                 extra = urllib.quote(extra.encode(definition['charset']))
-            except:
+
+            except Exception as e:
+                repr(e)
                 pass
 
         log.debug("[%s] After keywords  - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
@@ -115,8 +131,10 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         url_search = filtering.url.replace('QUERY', query)
         if extra:
             url_search = url_search.replace('EXTRA', extra)
+
         else:
             url_search = url_search.replace('EXTRA', '')
+
         url_search = url_search.replace(' ', definition['separator'])
 
         # MagnetDL fix...
@@ -127,6 +145,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         for key, value in filtering.post_data.iteritems():
             if 'QUERY' in value:
                 payload[key] = filtering.post_data[key].replace('QUERY', query)
+
             else:
                 payload[key] = filtering.post_data[key]
 
@@ -137,6 +156,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             for key, value in filtering.get_data.iteritems():
                 if 'QUERY' in value:
                     data[key] = filtering.get_data[key].replace('QUERY', query)
+
                 else:
                     data[key] = filtering.get_data[key]
 
@@ -153,27 +173,34 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         if token:
             log.info('[%s] Reusing existing token' % provider)
             url_search = url_search.replace('TOKEN', token)
+
         elif 'token' in definition:
             token_url = definition['base_url'] + definition['token']
             log.debug("Getting token for %s at %s" % (provider, repr(token_url)))
             client.open(token_url.encode('utf-8'))
             try:
                 token_data = json.loads(client.content)
-            except:
+
+            except Exception as e:
                 log.error('%s: Failed to get token for %s' % (provider, repr(url_search)))
+                log.debug(repr(e))
                 return filtering.results
+
             log.debug("Token response for %s: %s" % (provider, repr(token_data)))
             if 'token' in token_data:
                 token = token_data['token']
                 log.debug("Got token for %s: %s" % (provider, repr(token)))
                 url_search = url_search.replace('TOKEN', token)
+
             else:
                 log.warning('%s: Unable to get token for %s' % (provider, repr(url_search)))
 
         if logged_in:
             log.info("[%s] Reusing previous login" % provider)
+
         elif token_auth:
             log.info("[%s] Reusing previous token authorization" % provider)
+
         elif 'private' in definition and definition['private']:
             username = get_setting('%s_username' % provider)
             password = get_setting('%s_password' % provider)
@@ -186,9 +213,12 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                             set_setting('%s_%s' % (provider, setting), value)
                             if setting == 'username':
                                 username = value
+
                             if setting == 'password':
                                 password = value
-                        except:
+
+                        except Exception as e:
+                            repr(e)
                             pass
 
             if passkey:
@@ -198,7 +228,8 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
             elif 'login_object' in definition and definition['login_object']:
                 logged_in = False
-                login_object = definition['login_object'].replace('USERNAME', '"%s"' % username).replace('PASSWORD', '"%s"' % password)
+                login_object = definition['login_object'].replace('USERNAME', '"%s"' % username) \
+                    .replace('PASSWORD', '"%s"' % password)
 
                 # TODO generic flags in definitions for those...
                 if provider == 'hd-torrents':
@@ -207,8 +238,10 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         if csrf_token:
                             login_object = login_object.replace('CSRF_TOKEN', '"%s"' % csrf_token.group(1))
+
                         else:
                             logged_in = True
+
                 if provider == 'lostfilm':
                     client.open(definition['root_url'] + '/v_search.php?c=111&s=1&e=1')
                     if client.content is not 'log in first':
@@ -219,25 +252,33 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                     if client.open(definition['root_url'] + definition['token_auth'], post_data=eval(login_object)):
                         try:
                             token_data = json.loads(client.content)
-                        except:
+
+                        except Exception as e:
                             log.error('%s: Failed to get token from %s' % (provider, definition['token_auth']))
+                            log.error(repr(e))
                             return filtering.results
+
                         log.debug("Token response for %s: %s" % (provider, repr(token_data)))
                         if 'token' in token_data:
                             client.token = token_data['token']
                             log.debug("Auth token for %s: %s" % (provider, repr(client.token)))
+
                         else:
                             log.error('%s: Unable to get auth token for %s' % (provider, repr(url_search)))
                             return filtering.results
+
                         log.info('[%s] Token auth successful' % provider)
                         token_auth = True
+
                     else:
                         log.error("[%s] Token auth failed with response: %s" % (provider, repr(client.content)))
                         return filtering.results
+
                 elif not logged_in and client.login(definition['root_url'] + definition['login_path'],
                                                     eval(login_object), definition['login_failed']):
                     log.info('[%s] Login successful' % provider)
                     logged_in = True
+
                 elif not logged_in:
                     log.error("[%s] Login failed: %s", provider, client.status)
                     log.debug("[%s] Failed login content: %s", provider, repr(client.content))
@@ -255,15 +296,16 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         search_info = re.search(r'PlayEpisode\((.*?)\)">', client.content)
                         if search_info:
                             series_details = re.search('\'(\d+)\',\'(\d+)\',\'(\d+)\'', search_info.group(1))
-                            client.open(definition['root_url'] + '/v_search.php?c=%s&s=%s&e=%s' % (series_details.group(1), series_details.group(2), series_details.group(3)))
+                            client.open(definition['root_url'] + '/v_search.php?c=%s&s=%s&e=%s' % (
+                                series_details.group(1), series_details.group(2), series_details.group(3)))
                             redirect_url = re.search(ur'url=(.*?)">', client.content)
                             if redirect_url is not None:
                                 url_search = redirect_url.group(1)
+
                         else:
                             return filtering.results
 
         log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search))
-
         client.open(url_search.encode('utf-8'), post_data=payload, get_data=data)
         filtering.results.extend(
             generate_payload(provider,
