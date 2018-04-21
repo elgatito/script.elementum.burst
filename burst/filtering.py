@@ -144,7 +144,7 @@ class Filtering:
         self.results = list()
 
     def use_general(self, provider, payload):
-        """ 
+        """
             Setup method to define general search parameters
         :param provider: Provider ID
         :type provider: str
@@ -165,7 +165,7 @@ class Filtering:
             self.extras = [definition['general_extra']]
 
     def use_movie(self, provider, payload):
-        """ 
+        """
             Setup method to define movie search parameters
         :param provider: Provider ID
         :type provider: str
@@ -191,7 +191,7 @@ class Filtering:
             self.extras = [u'%s' % definition['movie_extra']]
 
     def use_episode(self, provider, payload):
-        """ 
+        """
             Setup method to define episode search parameters
         :param provider: Provider ID
         :type provider: str
@@ -221,7 +221,7 @@ class Filtering:
                 self.extras.append(definition['tv_extra2'] if definition['tv_extra2'] else '')
 
     def use_season(self, provider, payload):
-        """ 
+        """
             Setup method to define season search parameters
         :param provider: Provider ID
         :type provider: str
@@ -251,7 +251,7 @@ class Filtering:
                 self.extras.append(u'%s' % definition['season_extra2'] if definition['season_extra2'] else '')
 
     def use_anime(self, provider, payload):
-        """ 
+        """
             Setup method to define anime search parameters
         :param provider: Provider ID
         :type provider: str
@@ -280,7 +280,7 @@ class Filtering:
             self.extras = [u'%s' % definition['anime_extra'] if definition['anime_extra'] else '']
 
     def information(self, provider):
-        """ 
+        """
             Debugging method to print keywords and file sizes
         """
         log.debug(u'[%s] Accepted resolutions: %s' % (provider, self.resolutions_allow))
@@ -290,7 +290,7 @@ class Filtering:
         log.debug(u'[%s] Maximum size: %s' % (provider, str(self.max_size) + u' GB'))
 
     def check_sizes(self):
-        """ 
+        """
             Internal method to make sure size range settings are valid
         """
         if self.min_size > self.max_size:
