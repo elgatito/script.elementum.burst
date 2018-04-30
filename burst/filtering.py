@@ -5,12 +5,10 @@ Burst filtering class and methods
 """
 
 import re
-import string
 import hashlib
-from urllib import unquote
 from parser.HTMLParser import HTMLParser
 from elementum.provider import log, get_setting
-from normalize import normalize_string, safe_name
+from normalize import normalize_string
 from providers.definitions import definitions
 from utils import Magnet, get_int, get_float, clean_number, size_int, get_alias
 
