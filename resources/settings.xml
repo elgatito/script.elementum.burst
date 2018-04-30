@@ -250,7 +250,7 @@
     <setting label="DVDScr" id="filter_dvdscr" type="bool" default="true" />
     <setting label="Screener/SCR" id="filter_screener" type="bool" default="true" />
     <setting label="3D" id="filter_3d" type="bool" default="false" />
-    <setting label="TeleSync/TS/TC" id="filter_ts" type="bool" default="false" />
+    <setting label="TeleSync/TS/TC" id="filter_telesync" type="bool" default="false" />
     <setting label="Cam/HDCam" id="filter_cam" type="bool" default="false" />
     <setting label="TVRip/SATRip" id="filter_tvrip" type="bool" default="false" />
     <setting label="VHSRip" id="filter_vhsrip" type="bool" default="false" />
