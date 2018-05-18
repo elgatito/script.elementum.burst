@@ -1674,7 +1674,7 @@
             "row": "find_all('tr', start=2)",
             "seeds": "item(tag='td', order=3)",
             "size": "item(tag='td', order=2)",
-            "torrent": "'http://www.torrent9.red' + re.sub('/torrent/\\d+/','/get_torrent/',item(tag='a', attribute='href', order=1))+'.torrent'"
+            "torrent": "item(tag='a', attribute='href', order=1)"
         },
         "private": false,
         "season_extra": "",
@@ -1684,7 +1684,7 @@
         "season_query": "",
         "separator": "-",
         "show_query": "",
-        "subpage": false,
+        "subpage": true,
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
