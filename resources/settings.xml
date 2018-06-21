@@ -107,6 +107,10 @@
       <setting id="glotorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="glotorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
+    <setting label="TNTVillage" id="use_tntvillage" type="bool" default="false" />
+      <setting id="tntvillage_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="tntvillage_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+
     <setting label="TorrentDownloads" id="use_torrentdownloads" type="bool" default="false" />
       <setting id="torrentdownloads_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrentdownloads_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
@@ -250,7 +254,7 @@
     <setting label="DVDScr" id="filter_dvdscr" type="bool" default="true" />
     <setting label="Screener/SCR" id="filter_screener" type="bool" default="true" />
     <setting label="3D" id="filter_3d" type="bool" default="false" />
-    <setting label="TeleSync/TS/TC" id="filter_ts" type="bool" default="false" />
+    <setting label="TeleSync/TS/TC" id="filter_telesync" type="bool" default="false" />
     <setting label="Cam/HDCam" id="filter_cam" type="bool" default="false" />
     <setting label="TVRip/SATRip" id="filter_tvrip" type="bool" default="false" />
     <setting label="VHSRip" id="filter_vhsrip" type="bool" default="false" />
