@@ -42,12 +42,18 @@ def search(payload, method="general"):
     log.debug("Searching with payload (%s): %s" % (method, repr(payload)))
 
     if method == 'general':
-        payload = {
-            'title': payload,
-            'titles': {
-                'source': payload
+        if 'query' in payload:
+            payload['title'] = payload['query']
+            payload['titles'] = {
+                'source': payload['query']
             }
-        }
+        else:
+            payload = {
+                'title': payload,
+                'titles': {
+                    'source': payload
+                },
+            }
 
     payload['titles'] = dict((k.lower(), v) for k, v in payload['titles'].iteritems())
 
