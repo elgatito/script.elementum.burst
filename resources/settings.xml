@@ -287,5 +287,8 @@
     <setting label="32050" id="language_exceptions" type="text" subsetting="true" visible="eq(-1,true)" />
     <setting label="32051" id="language_help" type="text" enable="false" subsetting="true" visible="eq(-2,true)" />
     <setting label="32078" id="allow_noseeds" type="bool" default="false" />
+
+    <setting label="32085" type="lsep" />
+    <setting label="32086" id="use_debug_parser" type="bool" default="false" />
   </category>
 </settings>

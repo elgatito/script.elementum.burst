@@ -190,3 +190,11 @@ msgstr ""
 msgctxt "#32084"
 msgid "Use Public DNS (Google, Quad9, Opennic)"
 msgstr ""
+
+msgctxt "#32085"
+msgid "For Developers"
+msgstr ""
+
+msgctxt "#32086"
+msgid "Log debug messages for parsing"
+msgstr ""

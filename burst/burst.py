@@ -241,7 +241,14 @@ def extract_torrents(provider, client):
     if not dom:
         raise StopIteration
 
+    if get_setting("use_debug_parser", bool):
+        log.debug("[%s] Parser debug | Matched %d items for '%s' query '%s'" % (provider, len(eval(row_search)), 'row', row_search))
+
     for item in eval(row_search):
+        if get_setting("use_debug_parser", bool):
+            item_str = item.__str__()
+            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'row', row_search, item_str.replace('\r', '').replace('\n', '')))
+
         if not item:
             continue
         name = eval(name_search)
@@ -250,6 +257,14 @@ def extract_torrents(provider, client):
         seeds = eval(seeds_search) if seeds_search else ""
         peers = eval(peers_search) if peers_search else ""
         info_hash = eval(info_hash_search) if info_hash_search else ""
+
+        if get_setting("use_debug_parser", bool):
+            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'name', name_search, name))
+            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'torrent', torrent_search, torrent))
+            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'size', size_search, size))
+            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'seeds', seeds_search, seeds))
+            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'peers', peers_search, peers))
+            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', info_hash_search, info_hash))
 
         # Pass client cookies with torrent if private
         if (definition['private'] or get_setting("use_cloudhole", bool)) and not torrent.startswith('magnet'):
