@@ -382,7 +382,7 @@ class Filtering:
 
         self.reason = "[%s] %70s ***" % (provider, name)
 
-        if self.filter_resolutions:
+        if self.filter_resolutions and get_setting('require_resolution', bool):
             resolution = self.determine_resolution(name)
             if resolution not in self.resolutions_allow:
                 self.reason += " Resolution not allowed"
@@ -393,21 +393,21 @@ class Filtering:
                 self.reason += " Name mismatch"
                 return False
 
-        if self.require_keywords:
+        if self.require_keywords and get_setting('require_keywords', bool):
             for required in self.require_keywords:
                 if not self.included(name, keys=[required]):
                     self.reason += " Missing required keyword"
                     return False
 
-        if not self.included(name, keys=self.releases_allow):
+        if not self.included(name, keys=self.releases_allow) and get_setting('require_release_type', bool):
             self.reason += " Missing release type keyword"
             return False
 
-        if self.included(name, keys=self.releases_deny):
+        if self.included(name, keys=self.releases_deny) and get_setting('require_release_type', bool):
             self.reason += " Blocked by release type keyword"
             return False
 
-        if size and not self.in_size_range(size):
+        if size and not self.in_size_range(size) and get_setting('require_size', bool):
             self.reason += " Size out of range"
             return False
 

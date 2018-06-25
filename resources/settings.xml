@@ -243,6 +243,13 @@
       <setting id="bithumen_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
 
   </category>
+  <category label="32087">
+    <setting label="32088" type="lsep" />
+    <setting label="32089" id="require_resolution" type="bool" default="true" />
+    <setting label="32090" id="require_keywords" type="bool" default="true" />
+    <setting label="32091" id="require_release_type" type="bool" default="true" />
+    <setting label="32092" id="require_size" type="bool" default="true" />
+  </category>
   <category label="32002">
     <setting label="4K/2160p" id="filter_4k" type="bool" default="true" />
     <setting label="2K/1440p" id="filter_2k" type="bool" default="true" />
