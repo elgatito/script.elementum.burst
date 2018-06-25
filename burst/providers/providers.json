@@ -157,7 +157,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} s{season:2}",
+        "tv_keywords2": "{title:original} s{season:2}"
     },
     "gimmepeers": {
         "anime_extra": "",
@@ -443,7 +443,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
-        "base_url": "https://www.nyaa.si/?page=search&cats=1_0&term=QUERY&EXTRA&sort=2",
+        "base_url": "https://nyaa.si/?f=0&c=1_0&q=QUERYEXTRA&s=seeders&o=desc",
         "color": "FF88D201",
         "general_extra": "",
         "general_keywords": "{title:original}",
@@ -459,11 +459,11 @@
         "parser": {
             "infohash": "",
             "name": "item(tag='td', order=2)",
-            "peers": "item(tag='td', order=6)",
-            "row": "find_all('tr', ('class', 'tlistrow'))",
-            "seeds": "item(tag='td', order=5)",
+            "peers": "item(tag='td', order=-1)",
+            "row": "find_all('tr')",
+            "seeds": "item(tag='td', order=-2)",
             "size": "item(tag='td', order=4)",
-            "torrent": "'https:%s' % item(tag='a', select=('title', 'Download'), attribute='href', order=1)"
+            "torrent": "item(tag='a', attribute='href', order=4)"
         },
         "private": false,
         "season_extra": "",
