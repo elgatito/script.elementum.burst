@@ -174,6 +174,8 @@ def normalize_string(string, charset=None, replacing=False):
     if replacing:
         string = string.replace(u"'", '')
 
+    string = string.lower()
+
     return string
 
 

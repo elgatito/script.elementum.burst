@@ -51,7 +51,7 @@ class Filtering:
         resolutions['filter_240p'] = ['240p', u'240р', '_tvrip_', 'satrip', 'vhsrip']
         resolutions['filter_480p'] = ['480p', u'480р', 'xvid', 'dvd', 'dvdrip', 'hdtv']
         resolutions['filter_720p'] = ['720p', u'720р', 'hdrip', 'bluray', 'blu_ray', 'brrip', 'bdrip', 'hdtv']
-        resolutions['filter_1080p'] = ['1080p', u'1080р', 'fullhd', '_fhd_']
+        resolutions['filter_1080p'] = ['1080p', u'1080р', '1080i', 'fullhd', '_fhd_']
         resolutions['filter_2k'] = ['_2k_', '1440p', u'1440р']
         resolutions['filter_4k'] = ['_4k_', '2160p', u'2160р']
         self.resolutions = resolutions
@@ -61,7 +61,7 @@ class Filtering:
             'filter_webdl': ['webdl', 'webrip', 'web_dl', 'dlrip', '_yts_'],
             'filter_hdrip': ['hdrip'],
             'filter_hdtv': ['hdtv'],
-            'filter_dvd': ['_dvd_', 'dvdrip'],
+            'filter_dvd': ['_dvd_', 'dvdrip', 'vcdrip'],
             'filter_dvdscr': ['dvdscr'],
             'filter_screener': ['screener', '_scr_'],
             'filter_3d': ['_3d_'],
@@ -69,7 +69,7 @@ class Filtering:
             'filter_cam': ['_cam_', 'hdcam'],
             'filter_tvrip': ['_tvrip_', 'satrip'],
             'filter_vhsrip': ['vhsrip'],
-            'filter_trailer': ['trailer', u'трейлер'],
+            'filter_trailer': ['trailer', u'трейлер', u'тизер'],
             'filter_workprint': ['workprint']
         }
 
@@ -382,7 +382,7 @@ class Filtering:
 
         self.reason = "[%s] %70s ***" % (provider, name)
 
-        if self.filter_resolutions:
+        if self.filter_resolutions and get_setting('require_resolution', bool):
             resolution = self.determine_resolution(name)
             if resolution not in self.resolutions_allow:
                 self.reason += " Resolution not allowed"
@@ -393,21 +393,21 @@ class Filtering:
                 self.reason += " Name mismatch"
                 return False
 
-        if self.require_keywords:
+        if self.require_keywords and get_setting('require_keywords', bool):
             for required in self.require_keywords:
                 if not self.included(name, keys=[required]):
                     self.reason += " Missing required keyword"
                     return False
 
-        if not self.included(name, keys=self.releases_allow):
+        if not self.included(name, keys=self.releases_allow) and get_setting('require_release_type', bool):
             self.reason += " Missing release type keyword"
             return False
 
-        if self.included(name, keys=self.releases_deny):
+        if self.included(name, keys=self.releases_deny) and get_setting('require_release_type', bool):
             self.reason += " Blocked by release type keyword"
             return False
 
-        if size and not self.in_size_range(size):
+        if size and not self.in_size_range(size) and get_setting('require_size', bool):
             self.reason += " Size out of range"
             return False
 
@@ -460,6 +460,7 @@ class Filtering:
         if '*' in keys:
             res = True
         else:
+            value = value.lower()
             res1 = []
             for key in keys:
                 res2 = []
@@ -467,7 +468,7 @@ class Filtering:
                     item = item.replace('_', ' ')
                     if strict:
                         item = ' ' + item + ' '
-                    if item in value:
+                    if item.lower() in value:
                         res2.append(True)
                     else:
                         res2.append(False)
