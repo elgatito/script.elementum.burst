@@ -242,6 +242,7 @@ def extract_torrents(provider, client):
         raise StopIteration
 
     if get_setting("use_debug_parser", bool):
+        log.debug("[%s] Parser debug | Page content: %s" % (provider, client.content.replace('\r', '').replace('\n', '')))
         log.debug("[%s] Parser debug | Matched %d items for '%s' query '%s'" % (provider, len(eval(row_search)), 'row', row_search))
 
     for item in eval(row_search):

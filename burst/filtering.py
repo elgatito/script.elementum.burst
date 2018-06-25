@@ -69,7 +69,7 @@ class Filtering:
             'filter_cam': ['_cam_', 'hdcam'],
             'filter_tvrip': ['_tvrip_', 'satrip'],
             'filter_vhsrip': ['vhsrip'],
-            'filter_trailer': ['trailer', u'трейлер'],
+            'filter_trailer': ['trailer', u'трейлер', u'тизер'],
             'filter_workprint': ['workprint']
         }
 
@@ -460,6 +460,7 @@ class Filtering:
         if '*' in keys:
             res = True
         else:
+            value = value.lower()
             res1 = []
             for key in keys:
                 res2 = []
@@ -467,7 +468,7 @@ class Filtering:
                     item = item.replace('_', ' ')
                     if strict:
                         item = ' ' + item + ' '
-                    if item in value:
+                    if item.lower() in value:
                         res2.append(True)
                     else:
                         res2.append(False)
