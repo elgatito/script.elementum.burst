@@ -101,17 +101,17 @@ class Filtering:
         self.releases_deny = releases_deny
 
         if get_setting('additional_filters', bool):
-            accept = get_setting('accept').strip().lower()
+            accept = get_setting('accept', unicode).strip().lower()
             if accept:
                 accept = re.split(r',\s?', accept)
                 releases_allow.extend(accept)
 
-            block = get_setting('block').strip().lower()
+            block = get_setting('block', unicode).strip().lower()
             if block:
                 block = re.split(r',\s?', block)
                 releases_deny.extend(block)
 
-            require = get_setting('require').strip().lower()
+            require = get_setting('require', unicode).strip().lower()
             if require:
                 require = re.split(r',\s?', require)
 
