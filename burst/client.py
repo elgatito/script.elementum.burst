@@ -282,9 +282,18 @@ class Client:
         result = False
         if self.open(url.encode('utf-8'), post_data=encode_dict(data)):
             result = True
-            if fails_with in self.content:
-                self.status = 'Wrong username or password'
-                result = False
+            try:
+                if fails_with in self.content:
+                    self.status = 'Wrong username or password'
+                    result = False
+            except:
+                try:
+                    if fails_with in self.content.decode('utf-8'):
+                        self.status = 'Wrong username or password'
+                        result = False
+                except:
+                    result = False
+
         return result
 
 
