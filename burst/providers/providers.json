@@ -651,7 +651,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": ""
+        "tv_keywords2": "{title:original} s{season:2}"
     },
     "torlock": {
         "anime_extra": "",
