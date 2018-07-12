@@ -294,6 +294,7 @@
         "login_path": null,
         "movie_extra": "",
         "movie_keywords": "{title:it} {year}",
+        "movie_keywords2": "{title:original} {year}",
         "movie_query": "",
         "name": "Ilcorsaronero",
         "parser": {
@@ -309,7 +310,7 @@
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:it} S{season:2}",
-        "season_keywords2": "",
+        "season_keywords2": "{title:original} S{season:2}",
         "season_query": "",
         "separator": "+",
         "show_query": "",
@@ -317,7 +318,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:it} s{season:2}e{episode:2}",
-        "tv_keywords2": ""
+        "tv_keywords2": "{title:original} s{season:2}e{episode:2}"
     },
     "kickass": {
         "anime_extra": "",
@@ -573,19 +574,19 @@
     },
     "tntvillage": {
         "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
+        "anime_keywords": "{title:original} {episode}",
         "anime_query": "EXTRA",
         "base_url": "http://www.tntvillage.scambioetico.org/src/releaselist.php",
         "color": "FFF14E13",
         "general_extra": "",
-        "general_keywords": "{title}",
+        "general_keywords": "{title:original}",
         "general_query": "EXTRA",
-        "language": null,
+        "language": "it",
         "login_failed": "",
         "login_object": "",
         "login_path": null,
         "movie_extra": "",
-        "movie_keywords": "{title} {year}",
+        "movie_keywords": "{title:original} {year}",
         "movie_query": "EXTRA",
         "name": "TNTVillage",
         "parser": {
@@ -601,15 +602,15 @@
         "private": false,
         "season_extra": "",
         "season_extra2": "",
-        "season_keywords": "{title} Stagione {season:2}",
-        "season_keywords2": "{title} Stagione{season}",
+        "season_keywords": "{title:original} Stagione {season:2}",
+        "season_keywords2": "{title:original} Stagione{season}",
         "season_query": "EXTRA",
         "separator": "+",
         "show_query": "",
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title} s{season:2}e{episode:2}",
+        "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": ""
     },
     "thepiratebay": {

@@ -239,7 +239,8 @@ class Client:
                     if match:
                         charset = match.group(1)
 
-                if charset and charset.lower() == 'utf-8':
+                # We try to remove non-utf chars. Should we?
+                if (charset and charset.lower() == 'utf-8') or charset is None:
                     charset = 'utf-8-sig'  # Changing to utf-8-sig to remove BOM if found on decode from utf-8
 
                 if charset:
