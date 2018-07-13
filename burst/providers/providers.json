@@ -1592,7 +1592,7 @@
             "row": "find_all('div', ('class', ['box_nagy', 'box_nagy2']))",
             "seeds": "item(tag='a', order=4)",
             "size": "item(tag='div', select=('class', 'box_meret2'))",
-            "torrent": "item(tag='a', order=1, attribute='href').replace('torrents.php?action=details', 'https://ncore.cc/torrents.php?action=download')"
+            "torrent": "'/%s' % item(tag='a', order=1, attribute='href')"
         },
         "private": true,
         "season_keywords1": "{title} s{season:2}",
