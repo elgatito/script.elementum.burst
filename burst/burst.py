@@ -12,6 +12,7 @@ import xbmcgui
 from Queue import Queue
 from threading import Thread
 from urlparse import urlparse
+from urllib import unquote
 from elementum.provider import append_headers, get_setting, set_setting, log
 
 from parser.ehp import Html
@@ -335,7 +336,7 @@ def extract_from_api(provider, client):
         data = json.loads(client.content)
     except:
         data = []
-    log.debug("[%s] JSON response from API: %s" % (provider, repr(data)))
+    log.debug("[%s] JSON response from API: %s" % (unquote(provider), repr(data)))
 
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
