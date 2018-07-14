@@ -239,7 +239,8 @@ class Client:
                     if match:
                         charset = match.group(1)
 
-                if charset and charset.lower() == 'utf-8':
+                # We try to remove non-utf chars. Should we?
+                if (charset and charset.lower() == 'utf-8') or charset is None:
                     charset = 'utf-8-sig'  # Changing to utf-8-sig to remove BOM if found on decode from utf-8
 
                 if charset:
@@ -282,9 +283,18 @@ class Client:
         result = False
         if self.open(url.encode('utf-8'), post_data=encode_dict(data)):
             result = True
-            if fails_with in self.content:
-                self.status = 'Wrong username or password'
-                result = False
+            try:
+                if fails_with in self.content:
+                    self.status = 'Wrong username or password'
+                    result = False
+            except:
+                try:
+                    if fails_with in self.content.decode('utf-8'):
+                        self.status = 'Wrong username or password'
+                        result = False
+                except:
+                    result = False
+
         return result
 
 
