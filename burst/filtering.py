@@ -51,23 +51,23 @@ class Filtering:
         resolutions['filter_240p'] = ['240p', u'240р', '_tvrip_', 'satrip', 'vhsrip']
         resolutions['filter_480p'] = ['480p', u'480р', 'xvid', 'dvd', 'dvdrip', 'hdtv']
         resolutions['filter_720p'] = ['720p', u'720р', 'hdrip', 'bluray', 'blu_ray', 'brrip', 'bdrip', 'hdtv']
-        resolutions['filter_1080p'] = ['1080p', u'1080р', '1080i', 'fullhd', '_fhd_']
-        resolutions['filter_2k'] = ['_2k_', '1440p', u'1440р']
-        resolutions['filter_4k'] = ['_4k_', '2160p', u'2160р']
+        resolutions['filter_1080p'] = ['1080p', u'1080р', '1080i', 'fullhd', '_fhd_', '/hd1080p', '/hdr1080p']
+        resolutions['filter_2k'] = ['_2k_', '1440p', u'1440р', u'_2к_']
+        resolutions['filter_4k'] = ['_4k_', '2160p', u'2160р', '_uhd_', u'_4к_']
         self.resolutions = resolutions
 
         self.release_types = {
-            'filter_brrip': ['brrip', 'bdrip', 'bluray'],
-            'filter_webdl': ['webdl', 'webrip', 'web_dl', 'dlrip', '_yts_'],
-            'filter_hdrip': ['hdrip'],
+            'filter_brrip': ['brrip', 'bdrip', 'bd-rip', 'bluray', 'blu-ray', 'bdremux', 'bd-remux'],
+            'filter_webdl': ['webdl', 'webrip', 'web-rip', 'web_dl', 'dlrip', '_yts_'],
+            'filter_hdrip': ['hdrip', 'hd-rip'],
             'filter_hdtv': ['hdtv'],
-            'filter_dvd': ['_dvd_', 'dvdrip', 'vcdrip'],
-            'filter_dvdscr': ['dvdscr'],
+            'filter_dvd': ['_dvd_', 'dvdrip', 'dvd-rip', 'vcdrip'],
+            'filter_dvdscr': ['dvdscr', 'dvd-scr'],
             'filter_screener': ['screener', '_scr_'],
             'filter_3d': ['_3d_'],
             'filter_telesync': ['telesync', '_ts_', '_tc_'],
             'filter_cam': ['_cam_', 'hdcam'],
-            'filter_tvrip': ['_tvrip_', 'satrip'],
+            'filter_tvrip': ['_tvrip', 'satrip'],
             'filter_vhsrip': ['vhsrip'],
             'filter_trailer': ['trailer', u'трейлер', u'тизер'],
             'filter_workprint': ['workprint']
