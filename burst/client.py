@@ -184,7 +184,7 @@ class Client:
         """
         return self._cookies
 
-    def open(self, url, language='en', post_data=None, get_data=None):
+    def open(self, url, language='en', post_data=None, get_data=None, headers=None):
         """ Opens a connection to a webpage and saves its HTML content in ``self.content``
 
         Args:
@@ -217,6 +217,13 @@ class Client:
         req.add_header("Accept-Encoding", "gzip")
         req.add_header("Origin", url)
         req.add_header("Referer", url)
+        
+        if headers:
+            for key, value in headers.iteritems():
+                if value:
+                    req.add_header(key, value)
+                else:
+                    del req.headers[key.capitalize()]
 
         if self.token:
             req.add_header("Authorization", self.token)

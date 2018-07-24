@@ -188,6 +188,7 @@ def extract_torrents(provider, client):
 
     dom = Html().feed(client.content)
 
+    key_search = "dom." + definition['parser']['key'] if "key" in definition['parser'] and definition['parser']['key'] else ""
     row_search = "dom." + definition['parser']['row']
     name_search = definition['parser']['name']
     torrent_search = definition['parser']['torrent']
@@ -195,6 +196,7 @@ def extract_torrents(provider, client):
     size_search = definition['parser']['size']
     seeds_search = definition['parser']['seeds']
     peers_search = definition['parser']['peers']
+    referer_search = definition['parser']['referer'] if 'referer' in definition['parser']  else ""
 
     log.debug("[%s] Parser: %s" % (provider, repr(definition['parser'])))
 
@@ -203,7 +205,7 @@ def extract_torrents(provider, client):
     needs_subpage = 'subpage' in definition and definition['subpage']
 
     if needs_subpage:
-        def extract_subpage(q, name, torrent, size, seeds, peers, info_hash):
+        def extract_subpage(q, name, torrent, size, seeds, peers, info_hash, referer):
             try:
                 log.debug("[%s] Getting subpage at %s" % (provider, repr(torrent)))
             except Exception as e:
@@ -214,13 +216,21 @@ def extract_torrents(provider, client):
             # New client instance, otherwise it's race conditions all over the place
             subclient = Client()
             subclient.passkey = client.passkey
+            headers = {}
 
             if get_setting("use_cloudhole", bool):
                 subclient.clearance = get_setting('clearance')
                 subclient.user_agent = get_setting('user_agent')
+            if "subpage_mode" in definition:
+                if definition["subpage_mode"] == "xhr":
+                    headers['X-Requested-With'] = 'XMLHttpRequest'
+                    headers['Content-Language'] = ''
+
+            if referer:
+                headers['Referer'] = referer
 
             uri = torrent.split('|')  # Split cookies for private trackers
-            subclient.open(uri[0].encode('utf-8'))
+            subclient.open(uri[0].encode('utf-8'), headers=headers)
 
             if 'bittorrent' in subclient.headers.get('content-type', ''):
                 log.debug('[%s] bittorrent content-type for %s' % (provider, repr(torrent)))
@@ -246,6 +256,12 @@ def extract_torrents(provider, client):
         log.debug("[%s] Parser debug | Page content: %s" % (provider, client.content.replace('\r', '').replace('\n', '')))
         log.debug("[%s] Parser debug | Matched %d items for '%s' query '%s'" % (provider, len(eval(row_search)), 'row', row_search))
 
+    key = eval(key_search) if key_search else ""
+    if key_search and get_setting("use_debug_parser", bool):
+        key_str = key.__str__()
+        log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'key', key_search, key_str.replace('\r', '').replace('\n', '')))
+
+
     for item in eval(row_search):
         if get_setting("use_debug_parser", bool):
             item_str = item.__str__()
@@ -259,6 +275,7 @@ def extract_torrents(provider, client):
         seeds = eval(seeds_search) if seeds_search else ""
         peers = eval(peers_search) if peers_search else ""
         info_hash = eval(info_hash_search) if info_hash_search else ""
+        referer = eval(referer_search) if referer_search else ""
 
         if get_setting("use_debug_parser", bool):
             log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'name', name_search, name))
@@ -267,6 +284,8 @@ def extract_torrents(provider, client):
             log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'seeds', seeds_search, seeds))
             log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'peers', peers_search, peers))
             log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', info_hash_search, info_hash))
+            if referer_search:
+                log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', referer_search, referer))
 
         # Pass client cookies with torrent if private
         if (definition['private'] or get_setting("use_cloudhole", bool)) and not torrent.startswith('magnet'):
@@ -286,21 +305,21 @@ def extract_torrents(provider, client):
                 parsed_url = urlparse(definition['root_url'])
                 cookie_domain = '{uri.netloc}'.format(uri=parsed_url).replace('www.', '')
                 cookies = []
-                log.debug("[%s] cookie_domain: %s" % (provider, cookie_domain))
+                # log.debug("[%s] cookie_domain: %s" % (provider, cookie_domain))
                 for cookie in client._cookies:
-                    log.debug("[%s] cookie for domain: %s (%s=%s)" % (provider, cookie.domain, cookie.name, cookie.value))
+                    # log.debug("[%s] cookie for domain: %s (%s=%s)" % (provider, cookie.domain, cookie.name, cookie.value))
                     if cookie_domain in cookie.domain:
                         cookies.append(cookie)
                 if cookies:
                     headers = {'Cookie': ";".join(["%s=%s" % (c.name, c.value) for c in cookies]), 'User-Agent': user_agent}
-                    log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
+                    # log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                     torrent = append_headers(torrent, headers)
-                    log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
+                    # log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
 
         if name and torrent and needs_subpage:
             if not torrent.startswith('http'):
                 torrent = definition['root_url'] + torrent.encode('utf-8')
-            t = Thread(target=extract_subpage, args=(q, name, torrent, size, seeds, peers, info_hash))
+            t = Thread(target=extract_subpage, args=(q, name, torrent, size, seeds, peers, info_hash, referer))
             threads.append(t)
         else:
             yield (name, info_hash, torrent, size, seeds, peers)
