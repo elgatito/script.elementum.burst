@@ -159,7 +159,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         elif 'token' in definition:
             token_url = definition['base_url'] + definition['token']
             log.debug("Getting token for %s at %s" % (provider, repr(token_url)))
-            client.open(token_url.encode('utf-8'))
+            client.open(token_url.encode('utf-8'), proxy_url=filtering.info['proxyUrl'])
             try:
                 token_data = json.loads(client.content)
             except:
@@ -250,7 +250,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search))
 
-        client.open(url_search.encode('utf-8'), post_data=payload, get_data=data)
+        client.open(url_search.encode('utf-8'), post_data=payload, get_data=data, proxy_url=filtering.info['proxy_url'])
         filtering.results.extend(
             generate_payload(provider,
                              generator(provider, client),
