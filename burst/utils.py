@@ -131,6 +131,9 @@ def get_enabled_providers(method):
     elif method == "movie":
         type = "1"
     for provider in definitions:
+        if 'enabled' in definitions[provider] and not definitions[provider]['enabled']:
+            continue
+
         if get_setting('use_%s' % provider, bool):
             contains = get_setting('%s_contains' % provider, choices=('All', 'Movies', 'Shows'))
             if not contains or contains == "0":

@@ -196,7 +196,7 @@ def extract_torrents(provider, client):
     size_search = definition['parser']['size']
     seeds_search = definition['parser']['seeds']
     peers_search = definition['parser']['peers']
-    referer_search = definition['parser']['referer'] if 'referer' in definition['parser']  else ""
+    referer_search = definition['parser']['referer'] if 'referer' in definition['parser'] else ""
 
     log.debug("[%s] Parser: %s" % (provider, repr(definition['parser'])))
 
@@ -260,7 +260,6 @@ def extract_torrents(provider, client):
     if key_search and get_setting("use_debug_parser", bool):
         key_str = key.__str__()
         log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'key', key_search, key_str.replace('\r', '').replace('\n', '')))
-
 
     for item in eval(row_search):
         if get_setting("use_debug_parser", bool):
