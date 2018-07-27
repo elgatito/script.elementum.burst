@@ -222,3 +222,107 @@ msgstr "Тип релиза"
 msgctxt "#32092"
 msgid "Size"
 msgstr "Размер"
+
+msgctxt "#32093"
+msgid "List of public DNS IPs"
+msgstr "Список IP публичных DNS"
+
+msgctxt "#32094"
+msgid "List of Opennic DNS IPs"
+msgstr "Список IP Opennic DNS"
+
+msgctxt "#32095"
+msgid "Proxy"
+msgstr "Прокси"
+
+msgctxt "#32096"
+msgid "Enabled"
+msgstr "Включить"
+
+msgctxt "#32097"
+msgid "Host"
+msgstr "Хост"
+
+msgctxt "#32098"
+msgid "Port"
+msgstr "Порт"
+
+msgctxt "#32099"
+msgid "Login"
+msgstr "Логин"
+
+msgctxt "#32100"
+msgid "Password"
+msgstr "Пароль"
+
+msgctxt "#32101"
+msgid "Proxy type"
+msgstr "Тип прокси"
+
+msgctxt "#32102"
+msgid "SOCKS4"
+msgstr "Socks4"
+
+msgctxt "#32103"
+msgid "SOCKS5"
+msgstr "Socks5"
+
+msgctxt "#32104"
+msgid "HTTP"
+msgstr "HTTP"
+
+msgctxt "#32105"
+msgid "HTTPS"
+msgstr "HTTPS"
+
+msgctxt "#32106"
+msgid "Use proxy settings"
+msgstr "Вид настроек прокси"
+
+msgctxt "#32107"
+msgid "Proxy from Elementum settings"
+msgstr "Прокси из настроек Elementum"
+
+msgctxt "#32108"
+msgid "Custom settings"
+msgstr "Пользовательские настройки"
+
+msgctxt "#32109"
+msgid "Antizapret proxy"
+msgstr "Прокси Antizapret"
+
+msgctxt "#32110"
+msgid "International"
+msgstr "Международный"
+
+msgctxt "#32111"
+msgid "English"
+msgstr "Английский"
+
+msgctxt "#32112"
+msgid "Italian"
+msgstr "Итальянский"
+
+msgctxt "#32113"
+msgid "French"
+msgstr "Французский"
+
+msgctxt "#32114"
+msgid "Russian"
+msgstr "Русский"
+
+msgctxt "#32115"
+msgid "Ukrainian"
+msgstr "Украинский"
+
+msgctxt "#32116"
+msgid "Bulgarian"
+msgstr "Болгарский"
+
+msgctxt "#32117"
+msgid "Romanian"
+msgstr "Румынский"
+
+msgctxt "#32118"
+msgid "Hungarian"
+msgstr "Венгерский"

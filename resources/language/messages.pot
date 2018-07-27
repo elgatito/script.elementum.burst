@@ -222,3 +222,107 @@ msgstr ""
 msgctxt "#32092"
 msgid "Size"
 msgstr ""
+
+msgctxt "#32093"
+msgid "List of public DNS IPs"
+msgstr ""
+
+msgctxt "#32094"
+msgid "List of Opennic DNS IPs"
+msgstr ""
+
+msgctxt "#32095"
+msgid "Proxy"
+msgstr ""
+
+msgctxt "#32096"
+msgid "Enabled"
+msgstr ""
+
+msgctxt "#32097"
+msgid "Host"
+msgstr ""
+
+msgctxt "#32098"
+msgid "Port"
+msgstr ""
+
+msgctxt "#32099"
+msgid "Login"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Password"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Proxy type"
+msgstr ""
+
+msgctxt "#32102"
+msgid "SOCKS4"
+msgstr ""
+
+msgctxt "#32103"
+msgid "SOCKS5"
+msgstr ""
+
+msgctxt "#32104"
+msgid "HTTP"
+msgstr ""
+
+msgctxt "#32105"
+msgid "HTTPS"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Use proxy settings"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Proxy from Elementum settings"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Custom settings"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Antizapret proxy"
+msgstr ""
+
+msgctxt "#32110"
+msgid "International"
+msgstr ""
+
+msgctxt "#32111"
+msgid "English"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Italian"
+msgstr ""
+
+msgctxt "#32113"
+msgid "French"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Russian"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Ukrainian"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Bulgarian"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Romanian"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Hungarian"
+msgstr ""
