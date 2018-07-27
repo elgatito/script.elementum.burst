@@ -178,9 +178,9 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         elif token_auth:
             log.info("[%s] Reusing previous token authorization" % provider)
         elif 'private' in definition and definition['private']:
-            username = get_setting('%s_username' % provider)
-            password = get_setting('%s_password' % provider)
-            passkey = get_setting('%s_passkey' % provider)
+            username = get_setting('%s_username' % provider, unicode)
+            password = get_setting('%s_password' % provider, unicode)
+            passkey = get_setting('%s_passkey' % provider, unicode)
             if not username and not password and not passkey:
                 for addon_name in ('script.magnetic.%s' % provider, 'script.magnetic.%s-mc' % provider):
                     for setting in ('username', 'password'):
