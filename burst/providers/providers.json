@@ -1,5 +1,10 @@
 {
     "1337x": {
+        "enabled": true,
+        "predefined": true,
+        "private": false,
+        "name": "1337x",
+        "languages": "en",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "EXTRA",
@@ -15,7 +20,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "EXTRA",
-        "name": "1337x",
         "parser": {
             "infohash": "",
             "name": "item('a', order=2)",
@@ -25,7 +29,6 @@
             "size": "item(tag='td', order=5)",
             "torrent": "'https://www.1337x.to%s' % item(tag='a', attribute='href', order=2)"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} s{season:2}",
@@ -40,6 +43,11 @@
         "tv_keywords2": ""
     },
     "eztv": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "EZTV",
+        "languages": "",
         "anime_extra": null,
         "anime_keywords": null,
         "anime_query": null,
@@ -55,7 +63,6 @@
         "movie_extra": null,
         "movie_keywords": null,
         "movie_query": null,
-        "name": "EZTV",
         "parser": {
             "infohash": "",
             "name": "item(tag='td', order=2)",
@@ -65,7 +72,6 @@
             "size": "item(tag='td', order=4)",
             "torrent": "item(tag='a', attribute='href', order=3)"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title} S{season:2}",
@@ -80,6 +86,11 @@
         "tv_keywords2": ""
     },
     "cpasbien": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "Cpasbien",
+        "languages": "fr",
         "anime_extra": "",
         "anime_keywords": "{title:fr} {episode}",
         "anime_query": "series/QUERYEXTRA.html",
@@ -95,7 +106,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:fr} {year}",
         "movie_query": "films/QUERYEXTRA.html",
-        "name": "Cpasbien",
         "parser": {
             "infohash": "",
             "name": "item(tag='a')",
@@ -105,7 +115,6 @@
             "size": "item(tag='div', order=1)",
             "torrent": "'/telechargement/%s' % item(tag='a', attribute='href', divider=('/', 6)).replace('.html', '.torrent')"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:fr} Season_{season}",
@@ -120,6 +129,11 @@
         "tv_keywords2": ""
     },
     "filelist": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "FileList",
+        "languages": "ro",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "24&searchin=0&sort=0",
@@ -135,7 +149,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original}",
         "movie_query": "&cats[]=6&cats[]=4&cats[]=19&cats[]=1&searchin=0&sort=2",
-        "name": "FileList",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=2)",
@@ -145,7 +158,6 @@
             "size": "item(tag='span', order=7)",
             "torrent": "'/%s' % item(tag='a', attribute='href', order=3)"
         },
-        "private": true,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} Season_{season}",
@@ -160,6 +172,11 @@
         "tv_keywords2": "{title:original} s{season:2}"
     },
     "gimmepeers": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "GimmePeers",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
@@ -175,7 +192,6 @@
         "movie_extra": "",
         "movie_keywords": "{title} {year}",
         "movie_query": "",
-        "name": "GimmePeers",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=2)",
@@ -185,7 +201,6 @@
             "size": "item(tag='td', order=6)",
             "torrent": "item(tag='a', attribute='href', select=('title', 'Download'))"
         },
-        "private": true,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title} Season_{season}",
@@ -200,6 +215,11 @@
         "tv_keywords2": ""
     },
     "glotorrents": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "GloTorrents",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "28&incldead=0&inclexternal=0&lang=0&sort=seeders&order=desc",
@@ -215,7 +235,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "1&incldead=0&inclexternal=0&lang=0&sort=seeders&order=desc",
-        "name": "GloTorrents",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=3)",
@@ -225,7 +244,6 @@
             "size": "item(tag='td', order=5)",
             "torrent": "item(tag='a', order=5, attribute='href')"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} Season_{season}",
@@ -240,6 +258,11 @@
         "tv_keywords2": ""
     },
     "idope": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "idope",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "4",
@@ -255,7 +278,6 @@
         "movie_extra": "",
         "movie_keywords": "{title} {year}",
         "movie_query": "1",
-        "name": "idope",
         "parser": {
             "infohash": "item(tag='div', select=('class', 'hideinfohash'))",
             "name": "item('a')",
@@ -265,7 +287,6 @@
             "size": "item(tag='div', select=('class', 'resultdivbottonlength'))",
             "torrent": "'magnet:?xt=urn:btih:%s' % item(tag='div', select=('class', 'hideinfohash'))"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title} Season_{season}",
@@ -280,6 +301,11 @@
         "tv_keywords2": "{title:original} s{season:2}e{episode:2}"
     },
     "ilcorsaronero": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "Il Corsaro Nero",
+        "languages": "it",
         "anime_extra": "",
         "anime_keywords": "{title:it} {episode}",
         "anime_query": "",
@@ -296,7 +322,6 @@
         "movie_keywords": "{title:it} {year}",
         "movie_keywords2": "{title:original} {year}",
         "movie_query": "",
-        "name": "Ilcorsaronero",
         "parser": {
             "infohash": "item(tag='input', attribute='value')",
             "name": "item('a', order=2)",
@@ -306,7 +331,6 @@
             "size": "item(tag='td', order=2)",
             "torrent": "'magnet:?xt=urn:btih:%s' % item(tag='input', attribute='value')"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:it} S{season:2}",
@@ -321,6 +345,11 @@
         "tv_keywords2": "{title:original} s{season:2}e{episode:2}"
     },
     "kickass": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "KickAss",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "%20category:anime/?field=seeders&sorder=desc&QUERY",
@@ -336,7 +365,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "%20category:movies/?field=seeders&sorder=desc&QUERY",
-        "name": "KickAss",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=7)",
@@ -346,7 +374,6 @@
             "size": "item(tag='td', order=2)",
             "torrent": "item(tag='a', order=3, attribute='href')"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} Season_{season}",
@@ -361,6 +388,11 @@
         "tv_keywords2": ""
     },
     "magnetdl": {
+        "enabled": true,
+        "predefined": true,
+        "private": false,
+        "name": "MagnetDL",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -376,7 +408,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "MagnetDL",
         "parser": {
             "infohash": "",
             "name": "item('a', order=2)",
@@ -386,7 +417,6 @@
             "size": "item(tag='td', order=6)",
             "torrent": "item(tag='a', attribute='href')"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} s{season:2}",
@@ -401,6 +431,11 @@
         "tv_keywords2": ""
     },
     "myxzorg": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "XtremeZone",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "&genre=0&incldead=0&c3=1",
@@ -416,7 +451,6 @@
         "movie_extra": "",
         "movie_keywords": "{title} {year}",
         "movie_query": "&genre=0&incldead=0&c7=1&c17=1&c8=1&c38=1&c10=1",
-        "name": "XtremeZone",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=2)",
@@ -426,7 +460,6 @@
             "size": "item(tag='td', order=6)",
             "torrent": "'https://www.myxz.org/%s' % item(tag='a', attribute='href', order=5).replace('details.php', 'dwn.php')"
         },
-        "private": true,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title} Season_{season}",
@@ -441,6 +474,11 @@
         "tv_keywords2": ""
     },
     "nyaa": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "Nyaa",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -456,7 +494,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "Nyaa",
         "parser": {
             "infohash": "",
             "name": "item(tag='td', order=2)",
@@ -466,7 +503,6 @@
             "size": "item(tag='td', order=4)",
             "torrent": "item(tag='a', attribute='href', order=4)"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} Season_{season}",
@@ -482,6 +518,11 @@
         "root_url": "https://www.nyaa.si/"
     },
     "rarbg": {
+        "enabled": true,
+        "predefined": true,
+        "private": false,
+        "name": "RARBG",
+        "languages": "",
         "is_api": true,
         "anime_extra": null,
         "anime_keywords": "{title:original} {episode}",
@@ -498,7 +539,6 @@
         "movie_extra": null,
         "movie_keywords": "{title:original} {year}",
         "movie_query": "?mode=search&search_string=QUERY&category=14;48;17;44;45;47;50;51;52;42;46&format=json_extended&app_id=script.elementum.burst&token=TOKEN",
-        "name": "RARBG",
         "parser": {
             "infohash": null,
             "name": null,
@@ -516,7 +556,6 @@
             "peers": "leechers",
             "size": "size"
         },
-        "private": false,
         "season_extra": null,
         "season_extra2": null,
         "season_keywords": "{title:original} s{season:2}",
@@ -532,6 +571,11 @@
         "tv_keywords2": null
     },
     "rutor": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "RuTor",
+        "languages": "ru",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "0/10/300/2/QUERYEXTRA",
@@ -548,7 +592,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "0/0/300/2/QUERYEXTRA",
-        "name": "Rutor",
         "parser": {
             "infohash": "",
             "name": "item(tag='td', order=2)",
@@ -558,7 +601,6 @@
             "size": "item.find_all('td', ('align', 'right'))[-1].text()",
             "torrent": "'http://rutor.info%s' % (item(tag='a', order=1, attribute='href').split('.info', 1)[-1])"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} {season:2}x01|S{season:2}",
@@ -573,6 +615,11 @@
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}"
     },
     "tntvillage": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "TNTVillage",
+        "languages": "it",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "EXTRA",
@@ -588,7 +635,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "EXTRA",
-        "name": "TNTVillage",
         "parser": {
             "infohash": "",
             "name": "item(tag='td', order=7)",
@@ -599,7 +645,6 @@
             "torrent": "item(tag='a', attribute='href', order=2)"
         },
         "post_data": "{'cat': '0', 'page': '1', 'srcrel': 'QUERY'}",
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} Stagione {season:2}",
@@ -614,6 +659,11 @@
         "tv_keywords2": ""
     },
     "thepiratebay": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "The Pirate Bay",
+        "languages": "int",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "200",
@@ -629,7 +679,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "200",
-        "name": "The Pirate Bay",
         "parser": {
             "infohash": "",
             "name": "item('div')",
@@ -639,7 +688,6 @@
             "size": "item(tag='font', divider=(' ', 3))",
             "torrent": "item(tag='a', attribute='href', order=4)"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} Season_{season}",
@@ -654,6 +702,11 @@
         "tv_keywords2": "{title:original} s{season:2}"
     },
     "torlock": {
+        "enabled": true,
+        "predefined": true,
+        "private": false,
+        "name": "TorLock",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "anime/torrents/QUERYEXTRA.html",
@@ -670,7 +723,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "movie/torrents/QUERYEXTRA.html",
-        "name": "TorLock",
         "parser": {
             "infohash": "",
             "name": "item('a')",
@@ -680,7 +732,6 @@
             "size": "item(tag='td', order=3)",
             "torrent": "'https://www.torlock.com/tor/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} s{season:2}",
@@ -695,6 +746,11 @@
         "tv_keywords2": ""
     },
     "torrentdownloads": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "TorrentDownloads",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -710,7 +766,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "TorrentDownloads",
         "parser": {
             "infohash": "",
             "name": "item('a')",
@@ -720,7 +775,6 @@
             "size": "item(tag='span', order=4)",
             "torrent": "item(tag='a', attribute='href')"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} Season_{season}",
@@ -735,6 +789,11 @@
         "tv_keywords2": ""
     },
     "torrentfunk": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "TorrentFunk",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "anime/torrents/QUERYEXTRA.html",
@@ -750,7 +809,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "movie/torrents/QUERYEXTRA.html",
-        "name": "TorrentFunk",
         "parser": {
             "infohash": "",
             "name": "item('a')",
@@ -760,7 +818,6 @@
             "size": "item(tag='td', order=3)",
             "torrent": "'https://www.torrentfunk.com/tor/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} Season_{season}",
@@ -775,6 +832,11 @@
         "tv_keywords2": ""
     },
     "torrentleech": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "TorrentLeech",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "/categories/34",
@@ -790,7 +852,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "categories/9,11,37,43,14,13,41,47/query/QUERY",
-        "name": "TorrentLeech",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=2)",
@@ -800,7 +861,6 @@
             "size": "item(tag='td', order=5)",
             "torrent": "item(tag='a', attribute='href', order=3)"
         },
-        "private": true,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} Season_{season}",
@@ -815,6 +875,11 @@
         "tv_keywords2": ""
     },
     "torrentz": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "TorrentZ",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
@@ -831,7 +896,6 @@
         "movie_extra": "",
         "movie_keywords": "{title} {year}",
         "movie_query": "",
-        "name": "TorrentZ",
         "parser": {
             "infohash": "item(tag='a', attribute='href', divider=('/', 1))",
             "name": "item('a')",
@@ -841,7 +905,6 @@
             "size": "item(tag='span', order=3)",
             "torrent": "'magnet:?xt=urn:btih:%s' % item(tag='a', attribute='href', divider=('/', 1))"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title} Season_{season}",
@@ -856,6 +919,11 @@
         "tv_keywords2": ""
     },
     "uhdbits": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "UHDBits",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
@@ -871,7 +939,6 @@
         "movie_extra": "",
         "movie_keywords": "{title} {year}",
         "movie_query": "",
-        "name": "UHDBits",
         "parser": {
             "infohash": "",
             "name": "'%s %s' % (item(tag='a', order=4), item(tag='div', order=1, select=('class', 'torrent_info')))",
@@ -881,7 +948,6 @@
             "size": "item(tag='td', order=5)",
             "torrent": "'https://uhdbits.org/%s' % item(tag='a', attribute='href', order=2)"
         },
-        "private": true,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title} Season_{season}",
@@ -896,6 +962,11 @@
         "tv_keywords2": ""
     },
     "yourbittorrent": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "YourBitTorrent",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -911,7 +982,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "YourBitTorrent",
         "parser": {
             "infohash": "",
             "name": "item('a')",
@@ -921,7 +991,6 @@
             "size": "item(tag='td', order=2)",
             "torrent": "'https://yourbittorrent.com/down/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} Season_{season}",
@@ -936,6 +1005,11 @@
         "tv_keywords2": ""
     },
     "yts": {
+        "enabled": true,
+        "predefined": true,
+        "private": false,
+        "name": "YTS",
+        "languages": "",
         "anime_extra": null,
         "anime_keywords": null,
         "anime_query": "?query_term=QUERY&sort_by=seeds&order_by=desc",
@@ -952,7 +1026,6 @@
         "movie_extra": null,
         "movie_keywords": "{title:original}",
         "movie_query": "?query_term=QUERY&sort_by=seeds&order_by=desc",
-        "name": "YTS",
         "parser": {
             "infohash": null,
             "name": null,
@@ -973,7 +1046,6 @@
             "peers": "peers",
             "size": "size"
         },
-        "private": false,
         "season_extra": null,
         "season_extra2": null,
         "season_keywords": null,
@@ -988,6 +1060,11 @@
         "tv_keywords2": null
     },
     "zooqle": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "Zooqle",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
@@ -1003,7 +1080,6 @@
         "movie_extra": "",
         "movie_keywords": "{title} {year}",
         "movie_query": "",
-        "name": "Zooqle",
         "parser": {
             "infohash": "",
             "name": "item('a')",
@@ -1013,7 +1089,6 @@
             "size": "item(tag='div', select=('class' , 'progress-bar'))",
             "torrent": "item(tag='a', order=3, attribute='href')"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title} Season_{season}",
@@ -1028,6 +1103,11 @@
         "tv_keywords2": ""
     },
     "hd-torrents": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "HD Torrents",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "EXTRA",
@@ -1043,7 +1123,6 @@
         "movie_extra": "",
         "movie_keywords": "{title} {year}",
         "movie_query": "",
-        "name": "HD Torrents",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=2)",
@@ -1053,7 +1132,6 @@
             "size": "item(tag='td', order=8)",
             "torrent": "'https://hd-torrents.org/%s' % item(tag='a', attribute='href', order=5).replace('wishlist.php', 'download.php').replace('torrent_id=', 'id=')"
         },
-        "private": true,
         "root_url": "https://hd-torrents.org",
         "season_extra": "",
         "season_extra2": "",
@@ -1069,6 +1147,11 @@
         "tv_keywords2": ""
     },
     "toloka": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "Toloka",
+        "languages": "ua",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -1084,7 +1167,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "Toloka",
         "parser": {
             "infohash": "",
             "name": "item('a', order=2)",
@@ -1094,7 +1176,6 @@
             "size": "item(tag='td', order=7)",
             "torrent": "'https://toloka.to/%s' % item(tag='a', attribute='href', order=4)"
         },
-        "private": true,
         "root_url": "https://toloka.to",
         "season_extra": "",
         "season_extra2": "",
@@ -1110,6 +1191,11 @@
         "tv_keywords2": "{title:original} Сезон_{season}"
     },
     "0day": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "0day",
+        "languages": "ru, ua",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -1126,7 +1212,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "0day",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=2)",
@@ -1136,7 +1221,6 @@
             "size": "item(tag='td', order=4)",
             "torrent": "'https://tracker.0day.kiev.ua/%s' % item(tag='a', attribute='href', order=3)"
         },
-        "private": true,
         "root_url": "https://tracker.0day.kiev.ua",
         "season_extra": "",
         "season_extra2": "",
@@ -1152,6 +1236,11 @@
         "tv_keywords2": "{title:original} Сезон {season}"
     },
     "nnmclub": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "NNM-Club",
+        "languages": "ru",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -1168,7 +1257,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "NNM-Club",
         "parser": {
             "infohash": "",
             "name": "item('a', order=1)",
@@ -1178,7 +1266,6 @@
             "size": "item(tag='td', order=4).split(' ', 1)[1]",
             "torrent": "'https://nnmclub.to/forum/%s' % item(tag='a', attribute='href', order=2)"
         },
-        "private": true,
         "root_url": "https://nnmclub.to",
         "season_extra": "",
         "season_extra2": "",
@@ -1193,51 +1280,12 @@
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} \"Сезон {season}\""
     },
-    "kinozal": {
-        "anime_extra": "",
-        "anime_keywords": "{title:ru} {episode}",
-        "anime_query": "",
-        "base_url": "https://kinozal-tv.appspot.com/browse.php?s=QUERYEXTRA&g=0&c=0&v=0&d=0&w=0&t=1&f=0",
-        "charset": "windows-1251",
-        "color": "FFFFFFFF",
-        "general_extra": "",
-        "general_keywords": "{title:ru}",
-        "general_query": "",
-        "language": null,
-        "login_failed": "Восстановление",
-        "login_object": "{'username': USERNAME, 'password': PASSWORD, 'autologin': '1', 'login': 'Вход'}",
-        "login_path": "/takelogin.php",
-        "movie_extra": "",
-        "movie_keywords": "{title:ru} {year}",
-        "movie_query": "",
-        "name": "Kinozal",
-        "parser": {
-            "referer": "'https://s-kinozal-tv.appspot.com%s' % item(tag='a', attribute='href', order=1)",
-            "infohash": "",
-            "name": "item('a', order=1)",
-            "peers": "item(tag='td', order=5)",
-            "row": "find_once('table', ('class', 't_peer'), order=1).find_all('tr', start=2)",
-            "seeds": "item(tag='td', order=4)",
-            "size": "item(tag='td', order=3)",
-            "torrent": "'https://s-kinozal-tv.appspot.com/get_srv_details.php?id=%s&action=2' % item(tag='a', attribute='href', order=1).split('&id=', 1)[1]"
-        },
-        "private": true,
-        "root_url": "https://kinozal-tv.appspot.com",
-        "season_extra": "",
-        "season_extra2": "",
-        "season_keywords": "{title:ru} {season}+Сезон",
-        "season_keywords2": "",
-        "season_query": "",
-        "separator": "+",
-        "show_query": "",
-        "subpage": true,
-        "subpage_mode": "xhr",
-        "tv_extra": "",
-        "tv_extra2": "",
-        "tv_keywords": "{title:ru} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:ru} {season}+Сезон"
-    },
     "newstudio": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "NewStudio",
+        "languages": "ru",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -1253,7 +1301,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "NewStudio",
         "parser": {
             "infohash": "",
             "name": "item('a', order=2)",
@@ -1263,7 +1310,6 @@
             "peers": "",
             "torrent": "'http://newstudio.tv%s' % item(tag='a', attribute='href', order=4)"
         },
-        "private": false,
         "root_url": "http://newstudio.tv",
         "season_extra": "",
         "season_extra2": "",
@@ -1279,6 +1325,11 @@
         "tv_keywords2": "{title:original} \"Сезон {season}\""
     },
     "rutracker": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "RuTracker",
+        "languages": "ru",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -1296,7 +1347,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "RuTracker",
         "parser": {
             "infohash": "",
             "name": "item('a', order=2)",
@@ -1306,7 +1356,6 @@
             "peers": "item(tag='b', order=2)",
             "torrent": "'https://rutracker.cr/forum/%s' % item(tag='a', attribute='href', order=4)"
         },
-        "private": true,
         "root_url": "https://rutracker.cr",
         "season_extra": "",
         "season_extra2": "",
@@ -1322,6 +1371,11 @@
         "tv_keywords2": "{title:original} \"Сезон {season}\""
     },
     "megapeer": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "MegaPeer",
+        "languages": "ru",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -1338,7 +1392,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "MegaPeer",
         "parser": {
             "infohash": "",
             "row": "find_once('table', ('id', 'tor-tbl'), order=1).find_all('tr')",
@@ -1348,7 +1401,6 @@
             "peers": "",
             "torrent": "'http://megapeer.org/%s' % item(tag='a', select=('class', 'tr-dl'), attribute='href', order=1)"
         },
-        "private": false,
         "root_url": "http://http://megapeer.org",
         "season_extra": "",
         "season_extra2": "",
@@ -1364,6 +1416,11 @@
         "tv_keywords2": "{title:original} {season} Сезон"
     },
     "serialz": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "Serialz.tv",
+        "languages": "ru",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -1379,7 +1436,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "Serialz.tv",
         "parser": {
             "infohash": "",
             "row": "find_once('table', ('id', 'tor-tbl'), order=1).find_all('tr', start=2)",
@@ -1389,7 +1445,6 @@
             "peers": "item(tag='span', order=5)",
             "torrent": "'http://serialz.tv%s' % item(tag='a', attribute='href', order=5)"
         },
-        "private": false,
         "root_url": "http://serialz.tv",
         "season_extra": "",
         "season_extra2": "",
@@ -1405,6 +1460,11 @@
         "tv_keywords2": ""
     },
     "tfile": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "tfile.me",
+        "languages": "ru",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -1421,7 +1481,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "tfile.me",
         "parser": {
             "infohash": "",
             "row": "find_once('table', ('id', 'topics'), order=1).find_all('tr', start=2)",
@@ -1431,7 +1490,6 @@
             "size": "item(tag='td', order=4)",
             "torrent": "'http://tfile.cc/forum/viewtopic.php?t=%s' % item(attribute='id')[1:]"
         },
-        "private": true,
         "root_url": "http://tfile.cc/",
         "season_extra": "",
         "season_extra2": "",
@@ -1447,6 +1505,11 @@
         "tv_keywords2": "{title:original} Сезон {season}"
     },
     "baibako": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "BaibaKo.TV",
+        "languages": "ru",
         "anime_extra": "",
         "anime_keywords": "",
         "anime_query": "",
@@ -1462,7 +1525,6 @@
         "movie_extra": "",
         "movie_keywords": "",
         "movie_query": "",
-        "name": "BaibaKo.TV",
         "parser": {
             "infohash": "",
             "row": "find_once('tbody', ('id', 'highlighted'), order=1).find_all('tr', start=1)",
@@ -1472,7 +1534,6 @@
             "size": "item(tag='td', order=6)",
             "torrent": "'http://baibako.tv/%s' % item(tag='a', attribute='href', order=3)"
         },
-        "private": true,
         "root_url": "http://baibako.tv/",
         "season_extra": "",
         "season_extra2": "",
@@ -1488,6 +1549,11 @@
         "tv_keywords2": ""
     },
     "torrent3dru": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "torrent3d.ru",
+        "languages": "ru",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
@@ -1504,7 +1570,6 @@
         "movie_extra": "",
         "movie_keywords": "{title} {year}",
         "movie_query": "",
-        "name": "torrent3d.ru",
         "parser": {
             "infohash": "",
             "row": "find_once('div', ('id', 'releases-table'), order=1).find_all('tr', start=3)",
@@ -1514,7 +1579,6 @@
             "size": "item(tag='td', order=4)",
             "torrent": "'%s&ok' % item(tag='a', attribute='href', order=1).split('&', 1)[0]"
         },
-        "private": true,
         "root_url": "http://torrent3d.ru/",
         "season_extra": "",
         "season_extra2": "",
@@ -1530,6 +1594,11 @@
         "tv_keywords2": ""
     },
     "3dtrackerru": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "3d-tracker.ru",
+        "languages": "ru",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
@@ -1545,7 +1614,6 @@
         "movie_extra": "",
         "movie_keywords": "{title} {year}",
         "movie_query": "",
-        "name": "3d-tracker.ru",
         "parser": {
             "infohash": "",
             "row": "find_once('table', ('class', 'tablebg'), order=1).find_all('tr', select=('valign', 'middle'), start=1)",
@@ -1555,7 +1623,6 @@
             "size": "item(tag='b', order=5)",
             "torrent": "'http://3d-tracker.ru%s' % (item(tag='a', attribute='href', order=1)[1:])"
         },
-        "private": true,
         "root_url": "http://3d-tracker.ru/",
         "season_extra": "",
         "season_extra2": "",
@@ -1571,6 +1638,11 @@
         "tv_keywords2": ""
     },
     "ncore": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "nCore",
+        "languages": "hu",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
@@ -1586,7 +1658,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "&tipus=kivalasztottak_kozott&kivalasztott_tipus%5B%5D=xvid_hun&kivalasztott_tipus%5B%5D=hd_hun",
-        "name": "nCore",
         "parser": {
             "key": "find_once(tag='link', select=('rel', 'alternate')).attr['href'].split('=', 1)[-1]",
             "infohash": "",
@@ -1597,7 +1668,6 @@
             "size": "item(tag='div', select=('class', 'box_meret2'))",
             "torrent": "item(tag='a', order=1, attribute='href').replace('torrents.php?action=details', 'https://ncore.cc/torrents.php?action=download&key=' + key)"
         },
-        "private": true,
         "season_keywords1": "{title:original} s{season:2}",
         "season_keywords2": "",
         "season_keywords3": "",
@@ -1612,6 +1682,11 @@
         "tv_keywords2": ""
     },
     "bithumen": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "bitHUmen",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
@@ -1627,7 +1702,6 @@
         "movie_extra": "",
         "movie_keywords": "{title} {year}",
         "movie_query": "&c23=1&c25=1&c37=1",
-        "name": "bitHUmen",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=2)",
@@ -1637,7 +1711,6 @@
             "size": "item(tag='td', order=6)",
             "torrent": "'https://bithumen.be/%s' % item(tag='a', attribute='href', order=3)"
         },
-        "private": true,
         "season_keywords1": "{title} s{season:2}",
         "season_keywords2": "",
         "season_keywords3": "",
@@ -1651,6 +1724,11 @@
         "tv_keywords2": ""
     },
     "rustorka": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "Rustorka",
+        "languages": "ru",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -1659,11 +1737,9 @@
         "general_keywords": "{title:original}",
         "general_query": "",
         "language": null,
-        "name": "Rustorka",
         "color": "FF5CB9FF",
         "base_url": "http://rustorka.com/forum/tracker.php?nm=QUERYEXTRA&prev_allw=1&prev_a=1&prev_not_checked=0&prev_closed=0&prev_d=0&prev_not_perfect=0&prev_part_perfect=0&prev_fishily=0&prev_copy=0&prev_temp=0&prev_pogl=0&prev_gold=0&prev_silver=0&prev_dla=0&prev_dlc=0&prev_dld=0&prev_dlw=0&prev_my=0&prev_new=0&prev_sd=1&prev_snotd=0&prev_da=0&prev_dc=0&prev_df=0&prev_ds=0&f%5B%5D=-1&o=1&s=2&tm=-1&sns=-1&a=1&sd=1&pn=&allw=1&submit=%A0%A0%CF%EE%E8%F1%EA%A0%A0",
         "public_dns_alias": "rustorka.lib",
-        "private": true,
         "login_failed": "Вы ввели",
         "login_object": "{'login_username': USERNAME, 'login_password': PASSWORD, 'autologin': '1', 'login': 'Вход'}",
         "login_path": "/forum/login.php",
@@ -1694,6 +1770,11 @@
         "tv_keywords2": "{title:original} \"{season} Сезон\""
     },
     "bluebird": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "BlueBird",
+        "languages": "ru",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -1710,7 +1791,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} ({year})",
         "movie_query": "",
-        "name": "BlueBird",
         "parser": {
             "infohash": "",
             "name": "item('a', order=3)",
@@ -1720,7 +1800,6 @@
             "peers": "item(tag='td', order=8)",
             "torrent": "'https://bluebird-hd.org/%s' % item(tag='a', attribute='href', order=3).replace('details.php', 'download.php')"
         },
-        "private": true,
         "root_url": "https://bluebird-hd.org/",
         "season_extra": "",
         "season_extra2": "",
@@ -1736,6 +1815,11 @@
         "tv_keywords2": "{title:original} Сезон {season}"
     },
     "torrent9": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "Torrent9",
+        "languages": "fr",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
@@ -1751,7 +1835,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:fr} {year}",
         "movie_query": "",
-        "name": "Torrent9",
         "parser": {
             "infohash": "",
             "name": "item('a')",
@@ -1761,7 +1844,6 @@
             "size": "item(tag='td', order=2)",
             "torrent": "item(tag='a', attribute='href', order=1)"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:fr} saison {season}",
@@ -1776,6 +1858,11 @@
         "tv_keywords2": ""
     },
     "yggtorrent": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "Yggtorrent",
+        "languages": "fr",
         "anime_extra": "",
         "anime_keywords": "{title:fr} {episode}",
         "anime_query": "",
@@ -1791,7 +1878,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:fr} {year}",
         "movie_query": "",
-        "name": "Yggtorrent",
         "parser": {
             "infohash": "",
             "name": "item('a', order=2)",
@@ -1801,7 +1887,6 @@
             "size": "item(tag='td', order=6)",
             "torrent": "'https://ww2.yggtorrent.is/engine/download_torrent?id=%s' % item(tag='a', attribute='target', order=3)"
         },
-        "private": true,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:fr} saison {season}",
@@ -1815,48 +1900,12 @@
         "tv_keywords": "{title:fr} s{season:2}e{episode:2}",
         "tv_keywords2": ""
     },
-    "lostfilm": {
-        "anime_extra": "",
-        "anime_keywords": "",
-        "anime_query": "",
-        "general_extra": "",
-        "general_keywords": "",
-        "general_query": "",
-        "language": "ru",
-        "name": "LostFilm",
-        "color": "FF5CB9FF",
-        "base_url": "http://www.lostfilm.tv/series/QUERY/",
-        "private": true,
-        "login_failed": " ",
-        "login_object": "{\"rem\": \"1\", \"mail\": USERNAME, \"pass\": PASSWORD, \"type\": \"login\", \"act\": \"users\"}",
-        "login_path": "/ajaxik.php",
-        "root_url": "http://www.lostfilm.tv",
-        "movie_extra": "",
-        "movie_keywords": "",
-        "movie_query": "",
-        "parser": {
-            "infohash": "",
-            "name": "item(tag='div', select=('class', 'main'), order=1).replace('\\n', ' ')",
-            "row": "find_once('div', ('class', 'inner-box--list'), order=1).find_all('div', ('class', 'inner-box--item'), start=1)",
-            "size": "",
-            "seeds": "1",
-            "peers": "0",
-            "torrent": "'%s' % (item(tag='a', attribute='href', order=2))"
-        },
-        "season_extra": "",
-        "season_extra2": "",
-        "season_keywords": "{title}/season_{season}",
-        "season_keywords2": "",
-        "season_query": "",
-        "separator": "_",
-        "show_query": "",
-        "subpage": false,
-        "tv_extra": "",
-        "tv_extra2": "",
-        "tv_keywords": "{title}/season_{season}/episode_{episode}",
-        "tv_keywords2": ""
-    },
     "ettv": {
+        "enabled": true,
+        "predefined": false,
+        "private": false,
+        "name": "ETTV",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "200",
@@ -1872,7 +1921,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "ETTV",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=2)",
@@ -1882,7 +1930,6 @@
             "size": "item(tag='td', order=-4)",
             "torrent": "item(tag='a', attribute='href', order=2)"
         },
-        "private": false,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} \"Season {season}\"",
@@ -1897,6 +1944,11 @@
         "tv_keywords2": ""
     },
     "mvgroup": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "MVGroup",
+        "languages": "",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
@@ -1913,7 +1965,6 @@
         "movie_extra": "",
         "movie_keywords": "{title} {year}",
         "movie_query": "",
-        "name": "MVGroup",
         "parser": {
             "infohash": "",
             "name": "item(tag='td', order=1)",
@@ -1923,7 +1974,6 @@
             "size": "1",
             "torrent": "item(tag='a', attribute='href', select=('class', 'magnetlink'), order=1)"
         },
-        "private": true,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title} Season_{season}",
@@ -1938,6 +1988,11 @@
         "tv_keywords2": ""
         },
     "zelka": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "Zelka",
+        "languages": "bg",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
@@ -1955,7 +2010,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "Zelka",
         "parser": {
             "infohash": "item.take_with_root(('src', 'http://img.zamunda.se/pic/magnet-icon-12w-12h.gif'))[0].attr['href'].replace('magnet:?xt=urn:btih:', '') if item.take_with_root(('src', 'http://img.zamunda.se/pic/magnet-icon-12w-12h.gif')) else ''",
             "name": "item(tag='a', order=2) + ' | ' + unquote(re.sub('download\\.php/\\d+/','',item.take_with_root(('src', 'http://img.zamunda.se/pic/download.gif'))[0].attr['href'].replace('.torrent', '')))",
@@ -1965,7 +2019,6 @@
             "size": "item(tag='td', order=-4)",
             "torrent": "'http://zelka.org/' + item.take_with_root(('src', 'http://img.zamunda.se/pic/download.gif'))[0].attr['href']"
         },
-        "private": true,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} Season {season}",
@@ -1980,6 +2033,11 @@
         "tv_keywords2": "{title} еп.{episode}"
     },
     "zamunda": {
+        "enabled": true,
+        "predefined": false,
+        "private": true,
+        "name": "Zamunda",
+        "languages": "bg",
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "?c25=1&search=QUERY&incldead=1&field=name",
@@ -1997,7 +2055,6 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "?c42=1&c25=1&c35=1&c46=1&c20=1&c19=1&c5=1&c24=1&c31=1&c28=1&search=QUERY&incldead=1&field=name",
-        "name": "Zamunda",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=2) + ' | ' + unquote(re.sub('/download\\.php/\\d+/','',item.take_with_root(('class', 'fa fa-download'))[0].attr['href'].replace('.torrent', '')))",
@@ -2007,7 +2064,6 @@
             "size": "item(tag='td', order=-4)",
             "torrent": "'http://zamunda.net' + item.take_with_root(('class', 'fa fa-download'))[0].attr['href']"
         },
-        "private": true,
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original}+Season+{season}",
