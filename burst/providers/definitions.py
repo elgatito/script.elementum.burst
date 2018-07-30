@@ -22,6 +22,7 @@ if not ADDON_PATH:
     ADDON_PATH = ".."
 
 definitions = {}
+mandatory_fields = {'name': '', 'predefined': False, 'enabled': False, 'private': False, 'id': '', 'languages': '', 'charset': 'utf8'}
 
 
 def load_providers(path, custom=False, fix_seasons=False):
@@ -134,6 +135,11 @@ for provider_file in glob(os.path.join(custom_providers, "*.json")):
 custom_overrides = xbmc.translatePath(ADDON_PROFILE)
 if os.path.exists(os.path.join(custom_overrides, 'overrides.py')):
     load_overrides(custom_overrides, custom=True)
+
+for provider in definitions:
+    for k, v in mandatory_fields.iteritems():
+        if k not in definitions[provider]:
+            definitions[provider][k] = v
 
 longest = 10
 if len(definitions) > 0:

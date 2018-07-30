@@ -195,7 +195,7 @@ class Client:
         """
         return self._cookies
 
-    def open(self, url, language='en', post_data=None, get_data=None, headers=None, proxy_url=None):
+    def open(self, url, language='en', post_data=None, get_data=None, headers=None, proxy_url=None, charset='utf8'):
         """ Opens a connection to a webpage and saves its HTML content in ``self.content``
 
         Args:
@@ -247,7 +247,10 @@ class Client:
                 log.debug("Setting proxy with custom settings: %s" % (repr(proxy)))
                 handlers.append(SocksiPyHandler(proxytype=proxy['type'], proxyaddr=proxy['host'], proxyport=int(proxy['port']), username=proxy['login'], password=proxy['password'], rdns=True))
             elif proxy['use_type'] == 2:
-                handlers.append(antizapret.AntizapretProxyHandler())
+                try:
+                    handlers.append(antizapret.AntizapretProxyHandler())
+                except Exception as e:
+                    log.info("Could not create antizapret configuration: %s" % (e))
 
         log.debug("Setting opener handlers: %s" % (repr(handlers)))
         opener = urllib2.build_opener(*handlers)
@@ -316,7 +319,7 @@ class Client:
 
         return result
 
-    def login(self, url, data, fails_with):
+    def login(self, url, data, fails_with, charset='utf8'):
         """ Login wrapper around ``open``
 
         Args:
@@ -328,7 +331,7 @@ class Client:
             bool: Whether or not login was successful
         """
         result = False
-        if self.open(url.encode('utf-8'), post_data=encode_dict(data)):
+        if self.open(url.encode('utf-8'), post_data=encode_dict(data, charset)):
             result = True
             try:
                 if fails_with in self.content:
@@ -412,12 +415,14 @@ def parse_proxy_url(proxy_url):
         proto = socks.HTTP
 
     host_string = proxy_url.split("://")[1]
-    user_string = host_string.split("@")[0]
-    if user_string:
+    if '@' in host_string:
+        ary = host_string.split("@")
+        user_string = ary[0]
+        host_string = ary[1]
+
         ary = user_string.split(":")
         login = ary[0]
         password = ary[1]
-        host_string = host_string.split("@")[1]
     if host_string:
         ary = host_string.split(":")
         host = ary[0]

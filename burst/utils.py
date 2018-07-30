@@ -327,7 +327,7 @@ def clear_cache():
                 os.remove(os.path.join(cookies_path, f))
 
 
-def encode_dict(dict_in):
+def encode_dict(dict_in, charset='utf8'):
     """ Encodes dict values to UTF-8
 
     Args:
@@ -342,5 +342,8 @@ def encode_dict(dict_in):
             v = v.encode('utf8')
         elif isinstance(v, str):
             v.decode('utf8')
+
+        if charset != 'utf8':
+            v.decode('utf8').encode(charset)
         dict_out[k] = v
     return dict_out
