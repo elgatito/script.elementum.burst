@@ -99,7 +99,7 @@ def store_providers(path):
     <setting label="{name}" id="use_{id}" type="bool" default="{default}" />
       <setting id="{id}_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="{id}_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-      """.format(id=p['id'], name=p['name'], default=str(p['predefined']).lower())
+      """.format(id=p['id'], name=p['name'].encode('utf8'), default=str(p['predefined']).lower())
 
         if not p['predefined']:
             public_string += item
@@ -115,7 +115,7 @@ def store_providers(path):
       <setting id="{id}_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="{id}_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="{id}_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-      """.format(id=p['id'], name=p['name'], default=str(p['predefined']).lower())
+      """.format(id=p['id'], name=p['name'].encode('utf8'), default=str(p['predefined']).lower())
 
         if not p['predefined']:
             private_string += item
