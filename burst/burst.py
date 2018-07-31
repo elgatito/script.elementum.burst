@@ -188,15 +188,15 @@ def extract_torrents(provider, client):
 
     dom = Html().feed(client.content)
 
-    key_search = "dom." + definition['parser']['key'] if "key" in definition['parser'] and definition['parser']['key'] else ""
-    row_search = "dom." + definition['parser']['row']
-    name_search = definition['parser']['name']
-    torrent_search = definition['parser']['torrent']
-    info_hash_search = definition['parser']['infohash']
-    size_search = definition['parser']['size']
-    seeds_search = definition['parser']['seeds']
-    peers_search = definition['parser']['peers']
-    referer_search = definition['parser']['referer'] if 'referer' in definition['parser'] else ""
+    key_search = get_search_query(definition, "key")
+    row_search = get_search_query(definition, "row")
+    name_search = get_search_query(definition, "name")
+    torrent_search = get_search_query(definition, "torrent")
+    info_hash_search = get_search_query(definition, "infohash")
+    size_search = get_search_query(definition, "size")
+    seeds_search = get_search_query(definition, "seeds")
+    peers_search = get_search_query(definition, "peers")
+    referer_search = get_search_query(definition, "referer")
 
     log.debug("[%s] Parser: %s" % (provider, repr(definition['parser'])))
 
@@ -254,21 +254,25 @@ def extract_torrents(provider, client):
 
     if get_setting("use_debug_parser", bool):
         log.debug("[%s] Parser debug | Page content: %s" % (provider, client.content.replace('\r', '').replace('\n', '')))
-        log.debug("[%s] Parser debug | Matched %d items for '%s' query '%s'" % (provider, len(eval(row_search)), 'row', row_search))
 
     key = eval(key_search) if key_search else ""
     if key_search and get_setting("use_debug_parser", bool):
         key_str = key.__str__()
         log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'key', key_search, key_str.replace('\r', '').replace('\n', '')))
 
-    for item in eval(row_search):
+    items = eval(row_search)
+    if get_setting("use_debug_parser", bool):
+        log.debug("[%s] Parser debug | Matched %d items for '%s' query '%s'" % (provider, len(items), 'row', row_search))
+
+    for item in items:
         if get_setting("use_debug_parser", bool):
             item_str = item.__str__()
             log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'row', row_search, item_str.replace('\r', '').replace('\n', '')))
 
         if not item:
             continue
-        name = eval(name_search)
+
+        name = eval(name_search) if name_search else ""
         torrent = eval(torrent_search) if torrent_search else ""
         size = eval(size_search) if size_search else ""
         seeds = eval(seeds_search) if seeds_search else ""
@@ -276,13 +280,17 @@ def extract_torrents(provider, client):
         info_hash = eval(info_hash_search) if info_hash_search else ""
         referer = eval(referer_search) if referer_search else ""
 
+        if 'magnet:?' in torrent:
+            torrent = torrent[torrent.find('magnet:?'):]
+
         if get_setting("use_debug_parser", bool):
             log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'name', name_search, name))
             log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'torrent', torrent_search, torrent))
             log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'size', size_search, size))
             log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'seeds', seeds_search, seeds))
             log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'peers', peers_search, peers))
-            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', info_hash_search, info_hash))
+            if info_hash_search:
+                log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', info_hash_search, info_hash))
             if referer_search:
                 log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', referer_search, referer))
 
@@ -315,7 +323,7 @@ def extract_torrents(provider, client):
                     torrent = append_headers(torrent, headers)
                     # log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
 
-        if name and torrent and needs_subpage:
+        if name and torrent and needs_subpage and not torrent.startswith('magnet'):
             if not torrent.startswith('http'):
                 torrent = definition['root_url'] + torrent.encode('utf-8')
             t = Thread(target=extract_subpage, args=(q, name, torrent, size, seeds, peers, info_hash, referer))
@@ -445,30 +453,33 @@ def extract_from_page(provider, content):
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
 
-    matches = re.findall(r'magnet:\?[^\'"\s<>\[\]]+', content)
-    if matches:
-        result = matches[0]
-        log.debug('[%s] Matched magnet link: %s' % (provider, repr(result)))
-        return result
+    try:
+        matches = re.findall(r'magnet:\?[^\'"\s<>\[\]]+', content)
+        if matches:
+            result = matches[0]
+            log.debug('[%s] Matched magnet link: %s' % (provider, repr(result)))
+            return result
 
-    matches = re.findall('http(.*?).torrent["\']', content)
-    if matches:
-        result = 'http' + matches[0] + '.torrent'
-        result = result.replace('torcache.net', 'itorrents.org')
-        log.debug('[%s] Matched torrent link: %s' % (provider, repr(result)))
-        return result
+        matches = re.findall('http(.*?).torrent["\']', content)
+        if matches:
+            result = 'http' + matches[0] + '.torrent'
+            result = result.replace('torcache.net', 'itorrents.org')
+            log.debug('[%s] Matched torrent link: %s' % (provider, repr(result)))
+            return result
 
-    matches = re.findall('/download\?token=[A-Za-z0-9%]+', content)
-    if matches:
-        result = definition['root_url'] + matches[0]
-        log.debug('[%s] Matched download link with token: %s' % (provider, repr(result)))
-        return result
+        matches = re.findall('/download\?token=[A-Za-z0-9%]+', content)
+        if matches:
+            result = definition['root_url'] + matches[0]
+            log.debug('[%s] Matched download link with token: %s' % (provider, repr(result)))
+            return result
 
-    matches = re.findall('/torrents/download/\?id=[a-z0-9-_.]+', content)  # t411
-    if matches:
-        result = definition['root_url'] + matches[0]
-        log.debug('[%s] Matched download link with an ID: %s' % (provider, repr(result)))
-        return result
+        matches = re.findall('/torrents/download/\?id=[a-z0-9-_.]+', content)  # t411
+        if matches:
+            result = definition['root_url'] + matches[0]
+            log.debug('[%s] Matched download link with an ID: %s' % (provider, repr(result)))
+            return result
+    except:
+        pass
 
     return None
 
@@ -502,3 +513,11 @@ def run_provider(provider, payload, method):
         results = process(provider=provider, generator=extract_torrents, filtering=filterInstance, has_special=payload['has_special'])
 
     got_results(provider, results)
+
+def get_search_query(definition, key):
+    if 'parser' not in definition or key not in definition['parser']:
+        return ""
+
+    if key == 'key' or key == 'table' or key == 'row':
+        return "dom." + definition['parser'][key]
+    return definition['parser'][key]

@@ -22,19 +22,15 @@
       <setting id="1337x_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="1337x_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="MagnetDL   [COLOR gray][/COLOR]" id="use_magnetdl" type="bool" default="true" />
+    <setting label="MagnetDL   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_magnetdl" type="bool" default="true" />
       <setting id="magnetdl_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="magnetdl_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="RARBG   [COLOR gray][/COLOR]" id="use_rarbg" type="bool" default="true" />
+    <setting label="RARBG   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_rarbg" type="bool" default="true" />
       <setting id="rarbg_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="rarbg_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="TorLock   [COLOR gray][/COLOR]" id="use_torlock" type="bool" default="true" />
-      <setting id="torlock_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="torlock_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-      
-    <setting label="YTS   [COLOR gray][/COLOR]" id="use_yts" type="bool" default="true" />
+    <setting label="YTS   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_yts" type="bool" default="true" />
       <setting id="yts_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="yts_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
@@ -42,29 +38,37 @@
       <setting id="cpasbien_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="cpasbien_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="ETTV   [COLOR gray][/COLOR]" id="use_ettv" type="bool" default="false" />
+    <setting label="ETTV   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_ettv" type="bool" default="false" />
       <setting id="ettv_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="ettv_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="EZTV   [COLOR gray][/COLOR]" id="use_eztv" type="bool" default="false" />
+    <setting label="EZTV   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_eztv" type="bool" default="false" />
       <setting id="eztv_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="eztv_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="GloTorrents   [COLOR gray][/COLOR]" id="use_glotorrents" type="bool" default="false" />
+    <setting label="GloTorrents   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_glotorrents" type="bool" default="false" />
       <setting id="glotorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="glotorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="idope   [COLOR gray][/COLOR]" id="use_idope" type="bool" default="false" />
+    <setting label="idope   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_idope" type="bool" default="false" />
       <setting id="idope_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="idope_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      
+    <setting label="Il Corsaro Blu   [COLOR gray][$ADDON[script.elementum.burst 32112]][/COLOR]" id="use_ilcorsaroblu" type="bool" default="false" />
+      <setting id="ilcorsaroblu_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="ilcorsaroblu_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
     <setting label="Il Corsaro Nero   [COLOR gray][$ADDON[script.elementum.burst 32112]][/COLOR]" id="use_ilcorsaronero" type="bool" default="false" />
       <setting id="ilcorsaronero_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="ilcorsaronero_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="KickAss   [COLOR gray][/COLOR]" id="use_kickass" type="bool" default="false" />
+    <setting label="KickAss   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_kickass" type="bool" default="false" />
       <setting id="kickass_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="kickass_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      
+    <setting label="LimeTorrents   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_limetorrents" type="bool" default="false" />
+      <setting id="limetorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="limetorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
     <setting label="MegaPeer   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_megapeer" type="bool" default="false" />
       <setting id="megapeer_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -74,7 +78,7 @@
       <setting id="newstudio_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="newstudio_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="Nyaa   [COLOR gray][/COLOR]" id="use_nyaa" type="bool" default="false" />
+    <setting label="Nyaa   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_nyaa" type="bool" default="false" />
       <setting id="nyaa_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="nyaa_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
@@ -86,7 +90,7 @@
       <setting id="serialz_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="serialz_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="The Pirate Bay   [COLOR gray][$ADDON[script.elementum.burst 32110]][/COLOR]" id="use_thepiratebay" type="bool" default="false" />
+    <setting label="The Pirate Bay   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_thepiratebay" type="bool" default="false" />
       <setting id="thepiratebay_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="thepiratebay_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
@@ -94,27 +98,35 @@
       <setting id="tntvillage_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="tntvillage_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
+    <setting label="TorLock   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_torlock" type="bool" default="false" />
+      <setting id="torlock_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="torlock_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      
     <setting label="Torrent9   [COLOR gray][$ADDON[script.elementum.burst 32113]][/COLOR]" id="use_torrent9" type="bool" default="false" />
       <setting id="torrent9_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrent9_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="TorrentDownloads   [COLOR gray][/COLOR]" id="use_torrentdownloads" type="bool" default="false" />
+    <setting label="TorrentDownloads   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_torrentdownloads" type="bool" default="false" />
       <setting id="torrentdownloads_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrentdownloads_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="TorrentFunk   [COLOR gray][/COLOR]" id="use_torrentfunk" type="bool" default="false" />
+    <setting label="TorrentFunk   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_torrentfunk" type="bool" default="false" />
       <setting id="torrentfunk_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrentfunk_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="TorrentZ   [COLOR gray][/COLOR]" id="use_torrentz" type="bool" default="false" />
+    <setting label="TorrentZ   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_torrentz" type="bool" default="false" />
       <setting id="torrentz_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrentz_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="YourBitTorrent   [COLOR gray][/COLOR]" id="use_yourbittorrent" type="bool" default="false" />
+    <setting label="World Wide Torrents   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_worldwidetorrents" type="bool" default="false" />
+      <setting id="worldwidetorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="worldwidetorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      
+    <setting label="YourBitTorrent   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_yourbittorrent" type="bool" default="false" />
       <setting id="yourbittorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="yourbittorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
-    <setting label="Zooqle   [COLOR gray][/COLOR]" id="use_zooqle" type="bool" default="false" />
+    <setting label="Zooqle   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_zooqle" type="bool" default="false" />
       <setting id="zooqle_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="zooqle_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       <!-- Providers-Public-End -->
@@ -140,7 +152,7 @@
       <setting id="baibako_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="baibako_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
-    <setting label="bitHUmen   [COLOR gray][/COLOR]" id="use_bithumen" type="bool" default="false" />
+    <setting label="bitHUmen   [COLOR gray][$ADDON[script.elementum.burst 32118]][/COLOR]" id="use_bithumen" type="bool" default="false" />
       <setting id="bithumen_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="bithumen_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="bithumen_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
@@ -152,25 +164,25 @@
       <setting id="bluebird_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="bluebird_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
-    <setting label="FileList   [COLOR gray][$ADDON[script.elementum.burst 32117]][/COLOR]" id="use_filelist" type="bool" default="false" />
+    <setting label="FileList   [COLOR gray][$ADDON[script.elementum.burst 32111], $ADDON[script.elementum.burst 32117]][/COLOR]" id="use_filelist" type="bool" default="false" />
       <setting id="filelist_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="filelist_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="filelist_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="filelist_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
-    <setting label="GimmePeers   [COLOR gray][/COLOR]" id="use_gimmepeers" type="bool" default="false" />
+    <setting label="GimmePeers   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_gimmepeers" type="bool" default="false" />
       <setting id="gimmepeers_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="gimmepeers_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="gimmepeers_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="gimmepeers_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
-    <setting label="HD Torrents   [COLOR gray][/COLOR]" id="use_hd-torrents" type="bool" default="false" />
+    <setting label="HD Torrents   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_hd-torrents" type="bool" default="false" />
       <setting id="hd-torrents_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="hd-torrents_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="hd-torrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="hd-torrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
-    <setting label="MVGroup   [COLOR gray][/COLOR]" id="use_mvgroup" type="bool" default="false" />
+    <setting label="MVGroup   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_mvgroup" type="bool" default="false" />
       <setting id="mvgroup_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="mvgroup_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="mvgroup_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
@@ -206,31 +218,25 @@
       <setting id="tfile_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="tfile_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
-    <setting label="Toloka   [COLOR gray][$ADDON[script.elementum.burst 32115]][/COLOR]" id="use_toloka" type="bool" default="false" />
-      <setting id="toloka_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="toloka_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
-      <setting id="toloka_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
-      <setting id="toloka_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-      
     <setting label="torrent3d.ru   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_torrent3dru" type="bool" default="false" />
       <setting id="torrent3dru_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrent3dru_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="torrent3dru_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="torrent3dru_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
-    <setting label="TorrentLeech   [COLOR gray][/COLOR]" id="use_torrentleech" type="bool" default="false" />
+    <setting label="TorrentLeech   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_torrentleech" type="bool" default="false" />
       <setting id="torrentleech_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrentleech_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="torrentleech_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="torrentleech_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
-    <setting label="UHDBits   [COLOR gray][/COLOR]" id="use_uhdbits" type="bool" default="false" />
+    <setting label="UHDBits   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_uhdbits" type="bool" default="false" />
       <setting id="uhdbits_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="uhdbits_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="uhdbits_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="uhdbits_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
-    <setting label="XtremeZone   [COLOR gray][/COLOR]" id="use_myxzorg" type="bool" default="false" />
+    <setting label="XtremeZone   [COLOR gray][$ADDON[script.elementum.burst 32117]][/COLOR]" id="use_myxzorg" type="bool" default="false" />
       <setting id="myxzorg_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="myxzorg_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="myxzorg_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
@@ -253,6 +259,12 @@
       <setting id="zelka_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="zelka_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="zelka_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+      
+    <setting label="Гуртом   [COLOR gray][$ADDON[script.elementum.burst 32115]][/COLOR]" id="use_toloka" type="bool" default="false" />
+      <setting id="toloka_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="toloka_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="toloka_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="toloka_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       <!-- Providers-Private-End -->
 
   </category>
@@ -264,6 +276,7 @@
     <setting label="32090" id="require_keywords" type="bool" default="true" />
     <setting label="32091" id="require_release_type" type="bool" default="true" />
     <setting label="32092" id="require_size" type="bool" default="true" />
+    <setting label="32078" id="allow_noseeds" type="bool" default="false" />
   </category>
 
   <!-- Resolution -->
@@ -326,7 +339,6 @@
     <setting label="32018" id="kodi_language" type="bool" default="false" />
     <setting label="32050" id="language_exceptions" type="text" subsetting="true" visible="eq(-1,true)" />
     <setting label="32051" id="language_help" type="text" enable="false" subsetting="true" visible="eq(-2,true)" />
-    <setting label="32078" id="allow_noseeds" type="bool" default="false" />
 
     <setting label="32085" type="lsep" />
     <setting label="32086" id="use_debug_parser" type="bool" default="false" />

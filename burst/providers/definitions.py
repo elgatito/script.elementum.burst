@@ -90,6 +90,7 @@ def update_definitions(provider, definition, custom=False, fix_seasons=False):
 
     if custom:
         definition['custom'] = True
+        definition['enabled'] = True
 
     if provider in definitions:
         update(definitions[provider], definition)
