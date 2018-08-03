@@ -14,6 +14,7 @@ from threading import Thread
 from urlparse import urlparse
 from urllib import unquote
 from elementum.provider import append_headers, get_setting, set_setting, log
+from urllib import unquote
 
 from parser.ehp import Html
 from provider import process
