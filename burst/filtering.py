@@ -126,7 +126,7 @@ class Filtering:
         self.queries = []
         self.extras = []
 
-        self.info = dict(title="", titles=[])
+        self.info = dict(title="", proxyUrl="", titles=[])
         self.kodi_language = ''
         self.language_exceptions = []
         self.get_data = {}

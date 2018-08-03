@@ -44,6 +44,7 @@ dns_public_list = ['9.9.9.9', '8.8.8.8', '8.8.4.4']
 dns_opennic_list = ['193.183.98.66', '172.104.136.243', '89.18.27.167']
 
 proxy_types = [socks.SOCKS4, socks.SOCKS5, socks.HTTP, socks.HTTP]
+opener = None
 
 def MyResolver(host):
     if '.' not in host:
@@ -136,6 +137,7 @@ class Client:
         global dns_opennic_list
         dns_public_list = get_setting("public_dns_list", unicode).replace(" ", "").split(",")
         dns_opennic_list = get_setting("opennic_dns_list", unicode).replace(" ", "").split(",")
+        socket.setdefaulttimeout(60)
 
     def _create_cookies(self, payload):
         return urlencode(payload)
@@ -252,7 +254,6 @@ class Client:
                 except Exception as e:
                     log.info("Could not create antizapret configuration: %s" % (e))
 
-        log.debug("Setting opener handlers: %s" % (repr(handlers)))
         opener = urllib2.build_opener(*handlers)
 
         req.add_header('User-Agent', self.user_agent)
@@ -337,7 +338,8 @@ class Client:
                 if fails_with in self.content:
                     self.status = 'Wrong username or password'
                     result = False
-            except:
+            except Exception as e:
+                log.debug("Login failed with: %s" % e)
                 try:
                     if fails_with in self.content.decode('utf-8'):
                         self.status = 'Wrong username or password'
@@ -358,7 +360,7 @@ def get_cloudhole_key():
     try:
         r = urllib2.Request("https://cloudhole.herokuapp.com/key")
         r.add_header('Content-type', 'application/json')
-        with closing(urllib2.urlopen(r)) as response:
+        with closing(opener.open(r)) as response:
             content = response.read()
         log.info("CloudHole key: %s" % content)
         data = json.loads(content)
@@ -383,7 +385,7 @@ def get_cloudhole_clearance(cloudhole_key):
             r = urllib2.Request("https://cloudhole.herokuapp.com/clearances")
             r.add_header('Content-type', 'application/json')
             r.add_header('Authorization', cloudhole_key)
-            with closing(urllib2.urlopen(r)) as response:
+            with closing(opener.open(r)) as response:
                 content = response.read()
             log.debug("CloudHole returned: %s" % content)
             data = json.loads(content)
