@@ -67,6 +67,9 @@ def search(payload, method="general"):
     if payload['has_special']:
         log.debug("Query title contains special chars, so removing any quotes in the search query")
 
+    if 'proxy_url' not in payload:
+        payload['proxy_url'] = ''
+
     global request_time
     global provider_names
     global provider_results

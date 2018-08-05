@@ -159,7 +159,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         elif 'token' in definition:
             token_url = definition['base_url'] + definition['token']
             log.debug("Getting token for %s at %s" % (provider, repr(token_url)))
-            client.open(token_url.encode('utf-8'), proxy_url=filtering.info['proxyUrl'], charset=definition['charset'])
+            client.open(token_url.encode('utf-8'), proxy_url=filtering.info['proxy_url'], charset=definition['charset'])
             try:
                 token_data = json.loads(client.content)
             except:
