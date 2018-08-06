@@ -203,7 +203,6 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 login_object = None
                 logged_in = False
                 try:
-                    log.debug("Encoding %s, %s with %s" % (username, password, definition['charset']))
                     login_object = definition['login_object'].replace('USERNAME', 'u"%s"' % username).replace('PASSWORD', 'u"%s"' % password)
                 except Exception as e:
                     log.error("Could not make login object for %s: %s" % (provider, e))

@@ -341,9 +341,10 @@ def encode_dict(dict_in, charset='utf8'):
         if isinstance(v, unicode):
             v = v.encode('utf8')
         elif isinstance(v, str):
-            v.decode('utf8')
+            v = v.decode('utf8')
 
         if charset != 'utf8':
-            v.decode('utf8').encode(charset)
+            v = v.decode('utf8').encode(charset)
+
         dict_out[k] = v
     return dict_out
