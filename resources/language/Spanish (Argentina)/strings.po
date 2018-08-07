@@ -8,52 +8,123 @@ msgstr ""
 "Project-Id-Version: Elementum Burst\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-05 05:53-0400\n"
-"PO-Revision-Date: 2016-12-26 10:39-0500\n"
+"PO-Revision-Date: 2018-06-28 18:14-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: es_AR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "X-Generator: Poedit 1.8.11\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
 
 msgctxt "#32000"
 msgid "General"
 msgstr "General"
 
+msgctxt "#32001"
+msgid "Providers"
+msgstr "Proveedores"
+
+msgctxt "#32002"
+msgid "Resolutions"
+msgstr "Resoluciones"
+
+msgctxt "#32003"
+msgid "Release types"
+msgstr "Tipos de releases"
+
 msgctxt "#32004"
 msgid "Advanced"
 msgstr "Avanzado"
 
+msgctxt "#32006"
+msgid "Movies"
+msgstr "Películas"
+
+msgctxt "#32007"
+msgid "TV Shows"
+msgstr "Series"
+
+msgctxt "#32008"
+msgid "Seasons"
+msgstr "Temporadas"
+
+msgctxt "#32009"
+msgid "Episodes"
+msgstr "Episodios"
+
+msgctxt "#32012"
+msgid "Public trackers"
+msgstr "Trackers públicos"
+
+msgctxt "#32014"
+msgid "Private trackers"
+msgstr "Trackers privados"
+
 msgctxt "#32015"
 msgid "Username"
-msgstr "Nombre de Usuario"
+msgstr "Nombre de usuario"
 
 msgctxt "#32016"
 msgid "Password"
 msgstr "Contraseña"
 
+msgctxt "#32017"
+msgid "Require"
+msgstr "Requiere"
+
+msgctxt "#32018"
+msgid "Use language preference from Kodi when a translation is available"
+msgstr "Usar preferencia de idioma de Kodi cuando hay disponible traducción"
+
 msgctxt "#32033"
 msgid "Minimum size (GB)"
-msgstr "Tamaño mínimo"
+msgstr "Tamaño mínimo (GB)"
 
 msgctxt "#32034"
 msgid "Maximum size (GB)"
-msgstr "Tamaño máximo"
+msgstr "Tamaño máximo (GB)"
+
+msgctxt "#32035"
+msgid "Use separate size range for movies, seasons and episodes"
+msgstr "Usar rangos de tamaño separados para películas, temporadas y episodios"
+
+msgctxt "#32036"
+msgid "Additional keyword filters (comma-separated)"
+msgstr "Filtros de palabras adicionales (separados por coma)"
+
+msgctxt "#32037"
+msgid "Use underscores around keywords to require a space/dot, eg. _HEVC_"
+msgstr "Use _ alrededor de palabras p/especificar un espacio/punto, ej. _HEVC_"
+
+msgctxt "#32038"
+msgid "Accept"
+msgstr "Aceptar"
+
+msgctxt "#32039"
+msgid "Block"
+msgstr "Bloquear"
 
 msgctxt "#32040"
-msgid "Maximum torrents"
-msgstr "Numero máximo de torrents"
+msgid "Maximum results per provider"
+msgstr "Cantidad máxima de resultados por proveedor"
 
 msgctxt "#32041"
 msgid "Use CloudHole"
 msgstr "Utilizar CloudHole"
 
+msgctxt "#32050"
+msgid "Exceptions"
+msgstr "Excepciones"
+
+msgctxt "#32051"
+msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
+msgstr "Lista separada por coma de proveedores a excluir, ej. yts, rarbg"
+
 msgctxt "#32060"
 msgid "No providers enabled"
-msgstr "No hay proveedores instalados"
+msgstr "No se ha activado ningún proveedor"
 
 msgctxt "#32061"
 msgid "Starting..."
@@ -61,20 +132,200 @@ msgstr "Empezando..."
 
 msgctxt "#32062"
 msgid "%d providers left"
-msgstr "Faltan %d proveedores"
+msgstr "Restan %d proveedores"
 
 msgctxt "#32063"
 msgid "1 provider left"
-msgstr "Falta 1 proveedor"
+msgstr "Resta 1 proveedor"
 
 msgctxt "#32064"
 msgid " timed out"
-msgstr " Trabajando lento"
+msgstr " superó tiempo límite"
 
 msgctxt "#32070"
 msgid "Search timeout (seconds)"
-msgstr "Tiempo limite de la búsqueda en segundos"
+msgstr "Tiempo límite de búsqueda (segundos)"
+
+msgctxt "#32071"
+msgid "Timeout setting must be lower than Elementum's"
+msgstr "Los ajustes de tiempo límite deben ser menores que los de Elementum"
 
 msgctxt "#32075"
 msgid "No torrents found"
-msgstr "Ningún torrent encontrado"
+msgstr "No se encontró ningún torrent"
+
+msgctxt "#32076"
+msgid "Passkey"
+msgstr "Passkey"
+
+msgctxt "#32077"
+msgid "Domain Alias [Optional]"
+msgstr "Alias dominio [Opcional]"
+
+msgctxt "#32078"
+msgid "Allow results without seeds"
+msgstr "Permitir resultados sin seeds"
+
+msgctxt "#32079"
+msgid "E-mail"
+msgstr "E-mail"
+
+msgctxt "#32080"
+msgid "Contains only"
+msgstr "Contiene sólo"
+
+msgctxt "#32081"
+msgid "All"
+msgstr "Todo"
+
+msgctxt "#32082"
+msgid "Movies"
+msgstr "Películas"
+
+msgctxt "#32083"
+msgid "Shows"
+msgstr "Series"
+
+msgctxt "#32084"
+msgid "Use Public DNS (Google, Quad9, Opennic)"
+msgstr "Usar DNS público (Google, Quad9, Opennic)"
+
+msgctxt "#32085"
+msgid "For Developers"
+msgstr "Para desarrolladores"
+
+msgctxt "#32086"
+msgid "Log debug messages for parsing"
+msgstr "Registrar mensajes de depuración para parsing"
+
+msgctxt "#32087"
+msgid "Filtering"
+msgstr "Filtrado"
+
+msgctxt "#32088"
+msgid "Require matching of these settings"
+msgstr "Exigir coincidencia de estos ajustes"
+
+msgctxt "#32089"
+msgid "Resolution"
+msgstr "Resolución"
+
+msgctxt "#32090"
+msgid "Required keywords"
+msgstr "Palabras obligatorias"
+
+msgctxt "#32091"
+msgid "Release type"
+msgstr "Tipo de release"
+
+msgctxt "#32092"
+msgid "Size"
+msgstr "Tamaño"
+
+msgctxt "#32093"
+msgid "List of public DNS IPs"
+msgstr ""
+
+msgctxt "#32094"
+msgid "List of Opennic DNS IPs"
+msgstr ""
+
+msgctxt "#32095"
+msgid "Proxy"
+msgstr ""
+
+msgctxt "#32096"
+msgid "Enabled"
+msgstr ""
+
+msgctxt "#32097"
+msgid "Host"
+msgstr ""
+
+msgctxt "#32098"
+msgid "Port"
+msgstr ""
+
+msgctxt "#32099"
+msgid "Login"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Password"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Proxy type"
+msgstr ""
+
+msgctxt "#32102"
+msgid "SOCKS4"
+msgstr ""
+
+msgctxt "#32103"
+msgid "SOCKS5"
+msgstr ""
+
+msgctxt "#32104"
+msgid "HTTP"
+msgstr ""
+
+msgctxt "#32105"
+msgid "HTTPS"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Use proxy settings"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Proxy from Elementum settings"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Custom settings"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Antizapret proxy"
+msgstr ""
+
+msgctxt "#32110"
+msgid "International"
+msgstr ""
+
+msgctxt "#32111"
+msgid "English"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Italian"
+msgstr ""
+
+msgctxt "#32113"
+msgid "French"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Russian"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Ukrainian"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Bulgarian"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Romanian"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Hungarian"
+msgstr ""
+
+#~ msgctxt "#32040"
+#~ msgid "Maximum torrents"
+#~ msgstr "Número máximo de torrents"

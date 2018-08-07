@@ -48,3 +48,9 @@ endif
 		--tag v$(VERSION) \
 		--file $(NAME)-$(VERSION).zip \
 		--name $(NAME)-$(VERSION).zip
+
+settings:
+	scripts/generate_settings.py
+
+locales:
+	scripts/xgettext_merge.sh

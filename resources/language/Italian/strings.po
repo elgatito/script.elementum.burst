@@ -9,23 +9,58 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-05 05:53-0400\n"
 "PO-Revision-Date: 2016-12-26 10:32-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "X-Generator: Poedit 1.8.11\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
 
 msgctxt "#32000"
 msgid "General"
 msgstr "Generale"
 
+msgctxt "#32001"
+msgid "Providers"
+msgstr ""
+
+msgctxt "#32002"
+msgid "Resolutions"
+msgstr ""
+
+msgctxt "#32003"
+msgid "Release types"
+msgstr ""
+
 msgctxt "#32004"
 msgid "Advanced"
 msgstr "Avanzato"
+
+msgctxt "#32006"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32007"
+msgid "TV Shows"
+msgstr ""
+
+msgctxt "#32008"
+msgid "Seasons"
+msgstr ""
+
+msgctxt "#32009"
+msgid "Episodes"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Public trackers"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Private trackers"
+msgstr ""
 
 msgctxt "#32015"
 msgid "Username"
@@ -35,6 +70,14 @@ msgctxt "#32016"
 msgid "Password"
 msgstr "Password"
 
+msgctxt "#32017"
+msgid "Require"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Use language preference from Kodi when a translation is available"
+msgstr ""
+
 msgctxt "#32033"
 msgid "Minimum size (GB)"
 msgstr "Dimensione minima"
@@ -43,13 +86,41 @@ msgctxt "#32034"
 msgid "Maximum size (GB)"
 msgstr "Dimensione massima"
 
+msgctxt "#32035"
+msgid "Use separate size range for movies, seasons and episodes"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Additional keyword filters (comma-separated)"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Use underscores around keywords to require a space/dot, eg. _HEVC_"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Accept"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Block"
+msgstr ""
+
 msgctxt "#32040"
-msgid "Maximum torrents"
-msgstr "Torrent massimi"
+msgid "Maximum results per provider"
+msgstr ""
 
 msgctxt "#32041"
 msgid "Use CloudHole"
 msgstr "Utilizzare CloudHole"
+
+msgctxt "#32050"
+msgid "Exceptions"
+msgstr ""
+
+msgctxt "#32051"
+msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
+msgstr ""
 
 msgctxt "#32060"
 msgid "No providers enabled"
@@ -75,6 +146,186 @@ msgctxt "#32070"
 msgid "Search timeout (seconds)"
 msgstr "Tempo limite per la ricerca (in secondi)"
 
+msgctxt "#32071"
+msgid "Timeout setting must be lower than Elementum's"
+msgstr ""
+
 msgctxt "#32075"
 msgid "No torrents found"
 msgstr "Nessun torrent trovato"
+
+msgctxt "#32076"
+msgid "Passkey"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Domain Alias [Optional]"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Allow results without seeds"
+msgstr ""
+
+msgctxt "#32079"
+msgid "E-mail"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Contains only"
+msgstr ""
+
+msgctxt "#32081"
+msgid "All"
+msgstr ""
+
+msgctxt "#32082"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Shows"
+msgstr ""
+
+msgctxt "#32084"
+msgid "Use Public DNS (Google, Quad9, Opennic)"
+msgstr ""
+
+msgctxt "#32085"
+msgid "For Developers"
+msgstr ""
+
+msgctxt "#32086"
+msgid "Log debug messages for parsing"
+msgstr ""
+
+msgctxt "#32087"
+msgid "Filtering"
+msgstr ""
+
+msgctxt "#32088"
+msgid "Require matching of these settings"
+msgstr ""
+
+msgctxt "#32089"
+msgid "Resolution"
+msgstr ""
+
+msgctxt "#32090"
+msgid "Required keywords"
+msgstr ""
+
+msgctxt "#32091"
+msgid "Release type"
+msgstr ""
+
+msgctxt "#32092"
+msgid "Size"
+msgstr ""
+
+msgctxt "#32093"
+msgid "List of public DNS IPs"
+msgstr ""
+
+msgctxt "#32094"
+msgid "List of Opennic DNS IPs"
+msgstr ""
+
+msgctxt "#32095"
+msgid "Proxy"
+msgstr ""
+
+msgctxt "#32096"
+msgid "Enabled"
+msgstr ""
+
+msgctxt "#32097"
+msgid "Host"
+msgstr ""
+
+msgctxt "#32098"
+msgid "Port"
+msgstr ""
+
+msgctxt "#32099"
+msgid "Login"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Password"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Proxy type"
+msgstr ""
+
+msgctxt "#32102"
+msgid "SOCKS4"
+msgstr ""
+
+msgctxt "#32103"
+msgid "SOCKS5"
+msgstr ""
+
+msgctxt "#32104"
+msgid "HTTP"
+msgstr ""
+
+msgctxt "#32105"
+msgid "HTTPS"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Use proxy settings"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Proxy from Elementum settings"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Custom settings"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Antizapret proxy"
+msgstr ""
+
+msgctxt "#32110"
+msgid "International"
+msgstr ""
+
+msgctxt "#32111"
+msgid "English"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Italian"
+msgstr ""
+
+msgctxt "#32113"
+msgid "French"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Russian"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Ukrainian"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Bulgarian"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Romanian"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Hungarian"
+msgstr ""
+
+#~ msgctxt "#32040"
+#~ msgid "Maximum torrents"
+#~ msgstr "Torrent massimi"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elementum Burst\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-06 19:44+0200\n"
+"POT-Creation-Date: 2015-09-05 05:53-0400\n"
 "PO-Revision-Date: 2017-03-06 19:45+0200\n"
 "Last-Translator: ShlomiD\n"
 "Language-Team: ShlomiD\n"
@@ -157,6 +157,174 @@ msgstr "לא נמצאו טורנטים"
 msgctxt "#32076"
 msgid "Passkey"
 msgstr "מפתח"
+
+msgctxt "#32077"
+msgid "Domain Alias [Optional]"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Allow results without seeds"
+msgstr ""
+
+msgctxt "#32079"
+msgid "E-mail"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Contains only"
+msgstr ""
+
+msgctxt "#32081"
+msgid "All"
+msgstr ""
+
+msgctxt "#32082"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Shows"
+msgstr ""
+
+msgctxt "#32084"
+msgid "Use Public DNS (Google, Quad9, Opennic)"
+msgstr ""
+
+msgctxt "#32085"
+msgid "For Developers"
+msgstr ""
+
+msgctxt "#32086"
+msgid "Log debug messages for parsing"
+msgstr ""
+
+msgctxt "#32087"
+msgid "Filtering"
+msgstr ""
+
+msgctxt "#32088"
+msgid "Require matching of these settings"
+msgstr ""
+
+msgctxt "#32089"
+msgid "Resolution"
+msgstr ""
+
+msgctxt "#32090"
+msgid "Required keywords"
+msgstr ""
+
+msgctxt "#32091"
+msgid "Release type"
+msgstr ""
+
+msgctxt "#32092"
+msgid "Size"
+msgstr ""
+
+msgctxt "#32093"
+msgid "List of public DNS IPs"
+msgstr ""
+
+msgctxt "#32094"
+msgid "List of Opennic DNS IPs"
+msgstr ""
+
+msgctxt "#32095"
+msgid "Proxy"
+msgstr ""
+
+msgctxt "#32096"
+msgid "Enabled"
+msgstr ""
+
+msgctxt "#32097"
+msgid "Host"
+msgstr ""
+
+msgctxt "#32098"
+msgid "Port"
+msgstr ""
+
+msgctxt "#32099"
+msgid "Login"
+msgstr ""
+
+msgctxt "#32100"
+msgid "Password"
+msgstr ""
+
+msgctxt "#32101"
+msgid "Proxy type"
+msgstr ""
+
+msgctxt "#32102"
+msgid "SOCKS4"
+msgstr ""
+
+msgctxt "#32103"
+msgid "SOCKS5"
+msgstr ""
+
+msgctxt "#32104"
+msgid "HTTP"
+msgstr ""
+
+msgctxt "#32105"
+msgid "HTTPS"
+msgstr ""
+
+msgctxt "#32106"
+msgid "Use proxy settings"
+msgstr ""
+
+msgctxt "#32107"
+msgid "Proxy from Elementum settings"
+msgstr ""
+
+msgctxt "#32108"
+msgid "Custom settings"
+msgstr ""
+
+msgctxt "#32109"
+msgid "Antizapret proxy"
+msgstr ""
+
+msgctxt "#32110"
+msgid "International"
+msgstr ""
+
+msgctxt "#32111"
+msgid "English"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Italian"
+msgstr ""
+
+msgctxt "#32113"
+msgid "French"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Russian"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Ukrainian"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Bulgarian"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Romanian"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Hungarian"
+msgstr ""
 
 #~ msgctxt "#32036"
 #~ msgid "Additional keyword filters (comma separated)"

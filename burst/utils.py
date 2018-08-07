@@ -131,6 +131,9 @@ def get_enabled_providers(method):
     elif method == "movie":
         type = "1"
     for provider in definitions:
+        if 'enabled' in definitions[provider] and not definitions[provider]['enabled']:
+            continue
+
         if get_setting('use_%s' % provider, bool):
             contains = get_setting('%s_contains' % provider, choices=('All', 'Movies', 'Shows'))
             if not contains or contains == "0":
@@ -324,7 +327,7 @@ def clear_cache():
                 os.remove(os.path.join(cookies_path, f))
 
 
-def encode_dict(dict_in):
+def encode_dict(dict_in, charset='utf8'):
     """ Encodes dict values to UTF-8
 
     Args:
@@ -338,6 +341,10 @@ def encode_dict(dict_in):
         if isinstance(v, unicode):
             v = v.encode('utf8')
         elif isinstance(v, str):
-            v.decode('utf8')
+            v = v.decode('utf8')
+
+        if charset != 'utf8':
+            v = v.decode('utf8').encode(charset)
+
         dict_out[k] = v
     return dict_out

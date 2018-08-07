@@ -13,6 +13,8 @@ import urllib2
 import httplib
 import socket
 import dns.resolver
+import socks
+import antizapret
 from time import sleep
 from urlparse import urlparse
 from contextlib import closing
@@ -20,6 +22,7 @@ from elementum.provider import log, get_setting
 from cookielib import Cookie, LWPCookieJar
 from urllib import urlencode
 from utils import encode_dict
+from sockshandler import SocksiPyHandler
 
 from xbmc import translatePath
 
@@ -37,6 +40,11 @@ except:
     PATH_TEMP = translatePath("special://temp").decode('utf-8')
 
 dns_cache = {}
+dns_public_list = ['9.9.9.9', '8.8.8.8', '8.8.4.4']
+dns_opennic_list = ['193.183.98.66', '172.104.136.243', '89.18.27.167']
+
+proxy_types = [socks.SOCKS4, socks.SOCKS5, socks.HTTP, socks.HTTP]
+opener = None
 
 def MyResolver(host):
     if '.' not in host:
@@ -62,7 +70,7 @@ def ResolvePublic(host):
     try:
         log.debug("Custom DNS resolving with public DNS for: %s" % host)
         resolver = dns.resolver.Resolver()
-        resolver.nameservers = ['9.9.9.9', '8.8.8.8', '8.8.4.4']
+        resolver.nameservers = dns_public_list
         answer = resolver.query(host, 'A')
         return answer.rrset.items[0].address
     except:
@@ -72,7 +80,7 @@ def ResolveOpennic(host):
     try:
         log.debug("Custom DNS resolving with public DNS for: %s" % host)
         resolver = dns.resolver.Resolver()
-        resolver.nameservers = ['193.183.98.66', '172.104.136.243', '89.18.27.167']
+        resolver.nameservers = dns_opennic_list
         answer = resolver.query(host, 'A')
         return answer.rrset.items[0].address
     except:
@@ -125,6 +133,11 @@ class Client:
         self.token = None
         self.passkey = None
         self.headers = dict()
+        global dns_public_list
+        global dns_opennic_list
+        dns_public_list = get_setting("public_dns_list", unicode).replace(" ", "").split(",")
+        dns_opennic_list = get_setting("opennic_dns_list", unicode).replace(" ", "").split(",")
+        socket.setdefaulttimeout(60)
 
     def _create_cookies(self, payload):
         return urlencode(payload)
@@ -184,7 +197,7 @@ class Client:
         """
         return self._cookies
 
-    def open(self, url, language='en', post_data=None, get_data=None):
+    def open(self, url, language='en', post_data=None, get_data=None, headers=None, proxy_url=None, charset='utf8'):
         """ Opens a connection to a webpage and saves its HTML content in ``self.content``
 
         Args:
@@ -207,16 +220,54 @@ class Client:
         self._read_cookies(url)
         log.debug("Cookies for %s: %s" % (repr(url), repr(self._cookies)))
 
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self._cookies))
+        # Parsing proxy information
+        proxy = {
+            'enabled': get_setting("proxy_enabled", bool),
+            'use_type': get_setting("proxy_use_type", int),
+            'type': proxy_types[0],
+            'host': get_setting("proxy_host", unicode),
+            'port': get_setting("proxy_port", int),
+            'login': get_setting("proxy_login", unicode),
+            'password': get_setting("proxy_password", unicode),
+        }
+
+        try:
+            proxy['type'] = proxy_types[get_setting("proxy_type", int)]
+        except:
+            pass
+
+        handlers = [urllib2.HTTPCookieProcessor(self._cookies)]
+
         if get_setting("use_public_dns", bool):
-            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self._cookies), MyHTTPHandler)
-        urllib2.install_opener(opener)
+            handlers.append(MyHTTPHandler)
+
+        if proxy['enabled']:
+            if proxy['use_type'] == 0 and proxy_url:
+                log.debug("Setting proxy from Elementum: %s" % (proxy_url))
+                handlers.append(parse_proxy_url(proxy_url))
+            elif proxy['use_type'] == 1:
+                log.debug("Setting proxy with custom settings: %s" % (repr(proxy)))
+                handlers.append(SocksiPyHandler(proxytype=proxy['type'], proxyaddr=proxy['host'], proxyport=int(proxy['port']), username=proxy['login'], password=proxy['password'], rdns=True))
+            elif proxy['use_type'] == 2:
+                try:
+                    handlers.append(antizapret.AntizapretProxyHandler())
+                except Exception as e:
+                    log.info("Could not create antizapret configuration: %s" % (e))
+
+        opener = urllib2.build_opener(*handlers)
 
         req.add_header('User-Agent', self.user_agent)
         req.add_header('Content-Language', language)
         req.add_header("Accept-Encoding", "gzip")
         req.add_header("Origin", url)
         req.add_header("Referer", url)
+
+        if headers:
+            for key, value in headers.iteritems():
+                if value:
+                    req.add_header(key, value)
+                else:
+                    del req.headers[key.capitalize()]
 
         if self.token:
             req.add_header("Authorization", self.token)
@@ -239,7 +290,8 @@ class Client:
                     if match:
                         charset = match.group(1)
 
-                if charset and charset.lower() == 'utf-8':
+                # We try to remove non-utf chars. Should we?
+                if (charset and charset.lower() == 'utf-8') or charset is None:
                     charset = 'utf-8-sig'  # Changing to utf-8-sig to remove BOM if found on decode from utf-8
 
                 if charset:
@@ -268,7 +320,7 @@ class Client:
 
         return result
 
-    def login(self, url, data, fails_with):
+    def login(self, url, data, fails_with, charset='utf8'):
         """ Login wrapper around ``open``
 
         Args:
@@ -280,11 +332,21 @@ class Client:
             bool: Whether or not login was successful
         """
         result = False
-        if self.open(url.encode('utf-8'), post_data=encode_dict(data)):
+        if self.open(url.encode('utf-8'), post_data=encode_dict(data, charset)):
             result = True
-            if fails_with in self.content:
-                self.status = 'Wrong username or password'
-                result = False
+            try:
+                if fails_with in self.content:
+                    self.status = 'Wrong username or password'
+                    result = False
+            except Exception as e:
+                log.debug("Login failed with: %s" % e)
+                try:
+                    if fails_with in self.content.decode('utf-8'):
+                        self.status = 'Wrong username or password'
+                        result = False
+                except:
+                    result = False
+
         return result
 
 
@@ -298,7 +360,7 @@ def get_cloudhole_key():
     try:
         r = urllib2.Request("https://cloudhole.herokuapp.com/key")
         r.add_header('Content-type', 'application/json')
-        with closing(urllib2.urlopen(r)) as response:
+        with closing(opener.open(r)) as response:
             content = response.read()
         log.info("CloudHole key: %s" % content)
         data = json.loads(content)
@@ -323,7 +385,7 @@ def get_cloudhole_clearance(cloudhole_key):
             r = urllib2.Request("https://cloudhole.herokuapp.com/clearances")
             r.add_header('Content-type', 'application/json')
             r.add_header('Authorization', cloudhole_key)
-            with closing(urllib2.urlopen(r)) as response:
+            with closing(opener.open(r)) as response:
                 content = response.read()
             log.debug("CloudHole returned: %s" % content)
             data = json.loads(content)
@@ -333,3 +395,39 @@ def get_cloudhole_clearance(cloudhole_key):
         except Exception as e:
             log.error("CloudHole error: %s" % repr(e))
     return clearance, user_agent
+
+def parse_proxy_url(proxy_url):
+    proto = None
+    host = None
+    port = None
+    login = None
+    password = None
+
+    if not proxy_url:
+        return
+
+    proto_parsed = proxy_url.split("://")[0].lower()
+    if proto_parsed == "socks5":
+        proto = socks.SOCKS5
+    elif proto_parsed == "socks4":
+        proto = socks.SOCKS4
+    elif proto_parsed == "http":
+        proto = socks.HTTP
+    elif proto_parsed == "https":
+        proto = socks.HTTP
+
+    host_string = proxy_url.split("://")[1]
+    if '@' in host_string:
+        ary = host_string.split("@")
+        user_string = ary[0]
+        host_string = ary[1]
+
+        ary = user_string.split(":")
+        login = ary[0]
+        password = ary[1]
+    if host_string:
+        ary = host_string.split(":")
+        host = ary[0]
+        port = ary[1]
+
+    return SocksiPyHandler(proxytype=proto, proxyaddr=host, proxyport=int(port), username=login, password=password, rdns=True)

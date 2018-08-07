@@ -123,6 +123,9 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         url_search = url_search.replace('FIRSTLETTER', query[:1])
 
         # Creating the payload for POST method
+        if 'post_data' in definition and not filtering.post_data:
+            filtering.post_data = eval(definition['post_data'])
+
         payload = dict()
         for key, value in filtering.post_data.iteritems():
             if 'QUERY' in value:
@@ -156,7 +159,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         elif 'token' in definition:
             token_url = definition['base_url'] + definition['token']
             log.debug("Getting token for %s at %s" % (provider, repr(token_url)))
-            client.open(token_url.encode('utf-8'))
+            client.open(token_url.encode('utf-8'), proxy_url=filtering.info['proxy_url'], charset=definition['charset'])
             try:
                 token_data = json.loads(client.content)
             except:
@@ -175,9 +178,9 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         elif token_auth:
             log.info("[%s] Reusing previous token authorization" % provider)
         elif 'private' in definition and definition['private']:
-            username = get_setting('%s_username' % provider)
-            password = get_setting('%s_password' % provider)
-            passkey = get_setting('%s_passkey' % provider)
+            username = get_setting('%s_username' % provider, unicode)
+            password = get_setting('%s_password' % provider, unicode)
+            passkey = get_setting('%s_passkey' % provider, unicode)
             if not username and not password and not passkey:
                 for addon_name in ('script.magnetic.%s' % provider, 'script.magnetic.%s-mc' % provider):
                     for setting in ('username', 'password'):
@@ -197,26 +200,26 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 url_search = url_search.replace('PASSKEY', passkey)
 
             elif 'login_object' in definition and definition['login_object']:
+                login_object = None
                 logged_in = False
-                login_object = definition['login_object'].replace('USERNAME', '"%s"' % username).replace('PASSWORD', '"%s"' % password)
+                try:
+                    login_object = definition['login_object'].replace('USERNAME', 'u"%s"' % username).replace('PASSWORD', 'u"%s"' % password)
+                except Exception as e:
+                    log.error("Could not make login object for %s: %s" % (provider, e))
 
                 # TODO generic flags in definitions for those...
                 if provider == 'hd-torrents':
-                    client.open(definition['root_url'] + definition['login_path'])
+                    client.open(definition['root_url'] + definition['login_path'], charset=definition['charset'])
                     if client.content:
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         if csrf_token:
                             login_object = login_object.replace('CSRF_TOKEN', '"%s"' % csrf_token.group(1))
                         else:
                             logged_in = True
-                if provider == 'lostfilm':
-                    client.open(definition['root_url'] + '/v_search.php?c=111&s=1&e=1')
-                    if client.content is not 'log in first':
-                        logged_in = True
 
                 if 'token_auth' in definition:
                     # log.debug("[%s] logging in with: %s" % (provider, login_object))
-                    if client.open(definition['root_url'] + definition['token_auth'], post_data=eval(login_object)):
+                    if client.open(definition['root_url'] + definition['token_auth'], post_data=eval(login_object), charset=definition['charset']):
                         try:
                             token_data = json.loads(client.content)
                         except:
@@ -235,7 +238,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         log.error("[%s] Token auth failed with response: %s" % (provider, repr(client.content)))
                         return filtering.results
                 elif not logged_in and client.login(definition['root_url'] + definition['login_path'],
-                                                    eval(login_object), definition['login_failed']):
+                                                    eval(login_object), definition['login_failed'], charset=definition['charset']):
                     log.info('[%s] Login successful' % provider)
                     logged_in = True
                 elif not logged_in:
@@ -245,26 +248,13 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
                 if logged_in:
                     if provider == 'hd-torrents':
-                        client.open(definition['root_url'] + '/torrents.php')
+                        client.open(definition['root_url'] + '/torrents.php', charset=definition['charset'])
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
 
-                    if provider == 'lostfilm':
-                        log.info('[%s] Need open page before search', provider)
-                        client.open(url_search.encode('utf-8'), post_data=payload, get_data=data)
-                        search_info = re.search(r'PlayEpisode\((.*?)\)">', client.content)
-                        if search_info:
-                            series_details = re.search('\'(\d+)\',\'(\d+)\',\'(\d+)\'', search_info.group(1))
-                            client.open(definition['root_url'] + '/v_search.php?c=%s&s=%s&e=%s' % (series_details.group(1), series_details.group(2), series_details.group(3)))
-                            redirect_url = re.search(ur'url=(.*?)">', client.content)
-                            if redirect_url is not None:
-                                url_search = redirect_url.group(1)
-                        else:
-                            return filtering.results
-
         log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search))
 
-        client.open(url_search.encode('utf-8'), post_data=payload, get_data=data)
+        client.open(url_search.encode('utf-8'), post_data=payload, get_data=data, proxy_url=filtering.info['proxy_url'], charset=definition['charset'])
         filtering.results.extend(
             generate_payload(provider,
                              generator(provider, client),

@@ -5,11 +5,10 @@ Burst filtering class and methods
 """
 
 import re
-import string
 import hashlib
-from urllib import unquote
 from parser.HTMLParser import HTMLParser
 from elementum.provider import log, get_setting
+from normalize import normalize_string
 from providers.definitions import definitions
 from utils import Magnet, get_int, get_float, clean_number, size_int, get_alias
 
@@ -51,26 +50,26 @@ class Filtering:
         resolutions = OrderedDict()
         resolutions['filter_240p'] = ['240p', u'240р', '_tvrip_', 'satrip', 'vhsrip']
         resolutions['filter_480p'] = ['480p', u'480р', 'xvid', 'dvd', 'dvdrip', 'hdtv']
-        resolutions['filter_720p'] = ['720p', u'720р', 'hdrip', 'bluray', 'blu_ray', 'brrip', 'bdrip', 'hdtv']
-        resolutions['filter_1080p'] = ['1080p', u'1080р', 'fullhd', '_fhd_']
-        resolutions['filter_2k'] = ['_2k_', '1440p', u'1440р']
-        resolutions['filter_4k'] = ['_4k_', '2160p', u'2160р']
+        resolutions['filter_720p'] = ['720p', u'720р', 'hdrip', 'bluray', 'blu_ray', 'brrip', 'bdrip', 'hdtv', '/hd720p', '1280x720']
+        resolutions['filter_1080p'] = ['1080p', u'1080р', '1080i', 'fullhd', '_fhd_', '/hd1080p', '/hdr1080p', '1920x1080']
+        resolutions['filter_2k'] = ['_2k_', '1440p', u'1440р', u'_2к_']
+        resolutions['filter_4k'] = ['_4k_', '2160p', u'2160р', '_uhd_', u'_4к_']
         self.resolutions = resolutions
 
         self.release_types = {
-            'filter_brrip': ['brrip', 'bdrip', 'bluray'],
-            'filter_webdl': ['webdl', 'webrip', 'web_dl', 'dlrip', '_yts_'],
-            'filter_hdrip': ['hdrip'],
+            'filter_brrip': ['brrip', 'bdrip', 'bd-rip', 'bluray', 'blu-ray', 'bdremux', 'bd-remux'],
+            'filter_webdl': ['webdl', 'webrip', 'web-rip', 'web_dl', 'dlrip', '_yts_'],
+            'filter_hdrip': ['hdrip', 'hd-rip'],
             'filter_hdtv': ['hdtv'],
-            'filter_dvd': ['_dvd_', 'dvdrip'],
-            'filter_dvdscr': ['dvdscr'],
+            'filter_dvd': ['_dvd_', 'dvdrip', 'dvd-rip', 'vcdrip'],
+            'filter_dvdscr': ['dvdscr', 'dvd-scr'],
             'filter_screener': ['screener', '_scr_'],
             'filter_3d': ['_3d_'],
             'filter_telesync': ['telesync', '_ts_', '_tc_'],
             'filter_cam': ['_cam_', 'hdcam'],
-            'filter_tvrip': ['_tvrip_', 'satrip'],
+            'filter_tvrip': ['_tvrip', 'satrip'],
             'filter_vhsrip': ['vhsrip'],
-            'filter_trailer': ['trailer', u'трейлер'],
+            'filter_trailer': ['trailer', u'трейлер', u'тизер'],
             'filter_workprint': ['workprint']
         }
 
@@ -102,17 +101,17 @@ class Filtering:
         self.releases_deny = releases_deny
 
         if get_setting('additional_filters', bool):
-            accept = get_setting('accept').strip().lower()
+            accept = get_setting('accept', unicode).strip().lower()
             if accept:
                 accept = re.split(r',\s?', accept)
                 releases_allow.extend(accept)
 
-            block = get_setting('block').strip().lower()
+            block = get_setting('block', unicode).strip().lower()
             if block:
                 block = re.split(r',\s?', block)
                 releases_deny.extend(block)
 
-            require = get_setting('require').strip().lower()
+            require = get_setting('require', unicode).strip().lower()
             if require:
                 require = re.split(r',\s?', require)
 
@@ -127,7 +126,7 @@ class Filtering:
         self.queries = []
         self.extras = []
 
-        self.info = dict(title="", titles=[])
+        self.info = dict(title="", proxy_url="", titles=[])
         self.kodi_language = ''
         self.language_exceptions = []
         self.get_data = {}
@@ -325,7 +324,7 @@ class Filtering:
                                 title = self.info['titles']['original']
                         if use_language in self.info['titles'] and self.info['titles'][use_language]:
                             title = self.info['titles'][use_language]
-                            title = self.normalize_name(title)
+                            title = normalize_string(title)
                             log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
                                                                               repr(title)))
                             log.debug("[%s] Translated titles from Elementum: %s" % (provider, repr(self.info['titles'])))
@@ -377,14 +376,13 @@ class Filtering:
             self.reason = '[%s] %s' % (provider, '*** Empty name ***')
             return False
 
-        name = self.exception(name)
-        name = self.normalize_name(name)
+        name = normalize_string(name)
         if self.filter_title and self.title:
-            self.title = self.normalize_name(self.title)
+            self.title = normalize_string(self.title)
 
         self.reason = "[%s] %70s ***" % (provider, name)
 
-        if self.filter_resolutions:
+        if self.filter_resolutions and get_setting('require_resolution', bool):
             resolution = self.determine_resolution(name)
             if resolution not in self.resolutions_allow:
                 self.reason += " Resolution not allowed"
@@ -395,21 +393,21 @@ class Filtering:
                 self.reason += " Name mismatch"
                 return False
 
-        if self.require_keywords:
+        if self.require_keywords and get_setting('require_keywords', bool):
             for required in self.require_keywords:
                 if not self.included(name, keys=[required]):
                     self.reason += " Missing required keyword"
                     return False
 
-        if not self.included(name, keys=self.releases_allow):
+        if not self.included(name, keys=self.releases_allow) and get_setting('require_release_type', bool):
             self.reason += " Missing release type keyword"
             return False
 
-        if self.included(name, keys=self.releases_deny):
+        if self.included(name, keys=self.releases_deny) and get_setting('require_release_type', bool):
             self.reason += " Blocked by release type keyword"
             return False
 
-        if size and not self.in_size_range(size):
+        if size and not self.in_size_range(size) and get_setting('require_size', bool):
             self.reason += " Size out of range"
             return False
 
@@ -447,28 +445,6 @@ class Filtering:
                 res = resolution
         return res
 
-    def normalize_name(self, value):
-        """ Method to normalize strings
-
-        Replaces punctuation with spaces, unquotes and unescapes HTML characters.
-
-        Args:
-            value (str): File name or directory string to convert
-
-        Returns:
-            str: Converted file name or directory string
-        """
-        value = unquote(value)
-        value = self.unescape(value)
-        value = value.lower()
-
-        for p in string.punctuation:
-            value = value.replace(p, ' ')
-
-        value = ' '.join(value.split())
-
-        return value
-
     def included(self, value, keys, strict=False):
         """ Check if the keys are present in the string
 
@@ -484,6 +460,7 @@ class Filtering:
         if '*' in keys:
             res = True
         else:
+            value = value.lower()
             res1 = []
             for key in keys:
                 res2 = []
@@ -491,7 +468,7 @@ class Filtering:
                     item = item.replace('_', ' ')
                     if strict:
                         item = ' ' + item + ' '
-                    if item in value:
+                    if item.lower() in value:
                         res2.append(True)
                     else:
                         res2.append(False)
