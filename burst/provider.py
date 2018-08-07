@@ -73,7 +73,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
 
-    client = Client()
+    client = Client(proxy_url=filtering.info['proxy_url'], charset=definition['charset'])
     token = None
     logged_in = False
     token_auth = False
@@ -159,7 +159,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         elif 'token' in definition:
             token_url = definition['base_url'] + definition['token']
             log.debug("Getting token for %s at %s" % (provider, repr(token_url)))
-            client.open(token_url.encode('utf-8'), proxy_url=filtering.info['proxy_url'], charset=definition['charset'])
+            client.open(token_url.encode('utf-8'))
             try:
                 token_data = json.loads(client.content)
             except:
@@ -209,7 +209,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
                 # TODO generic flags in definitions for those...
                 if provider == 'hd-torrents':
-                    client.open(definition['root_url'] + definition['login_path'], charset=definition['charset'])
+                    client.open(definition['root_url'] + definition['login_path'])
                     if client.content:
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         if csrf_token:
@@ -219,7 +219,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
                 if 'token_auth' in definition:
                     # log.debug("[%s] logging in with: %s" % (provider, login_object))
-                    if client.open(definition['root_url'] + definition['token_auth'], post_data=eval(login_object), charset=definition['charset']):
+                    if client.open(definition['root_url'] + definition['token_auth'], post_data=eval(login_object)):
                         try:
                             token_data = json.loads(client.content)
                         except:
@@ -238,7 +238,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         log.error("[%s] Token auth failed with response: %s" % (provider, repr(client.content)))
                         return filtering.results
                 elif not logged_in and client.login(definition['root_url'] + definition['login_path'],
-                                                    eval(login_object), definition['login_failed'], charset=definition['charset']):
+                                                    eval(login_object), definition['login_failed']):
                     log.info('[%s] Login successful' % provider)
                     logged_in = True
                 elif not logged_in:
@@ -248,13 +248,13 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
                 if logged_in:
                     if provider == 'hd-torrents':
-                        client.open(definition['root_url'] + '/torrents.php', charset=definition['charset'])
+                        client.open(definition['root_url'] + '/torrents.php')
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
 
         log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search))
 
-        client.open(url_search.encode('utf-8'), post_data=payload, get_data=data, proxy_url=filtering.info['proxy_url'], charset=definition['charset'])
+        client.open(url_search.encode('utf-8'), post_data=payload, get_data=data)
         filtering.results.extend(
             generate_payload(provider,
                              generator(provider, client),

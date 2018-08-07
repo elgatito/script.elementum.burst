@@ -13,13 +13,13 @@ from Queue import Queue
 from threading import Thread
 from urlparse import urlparse
 from urllib import unquote
-from elementum.provider import append_headers, get_setting, set_setting, log
+from elementum.provider import append_headers, get_setting, log
 
 from parser.ehp import Html
 from provider import process
 from providers.definitions import definitions, longest
 from filtering import apply_filters, Filtering
-from client import USER_AGENT, Client, get_cloudhole_key, get_cloudhole_clearance
+from client import USER_AGENT, Client
 from utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias
 
 provider_names = []
@@ -89,10 +89,10 @@ def search(payload, method="general"):
 
     log.info("Burstin' with %s" % ", ".join([definitions[provider]['name'] for provider in providers]))
 
-    if get_setting("use_cloudhole", bool):
-        clearance, user_agent = get_cloudhole_clearance(get_cloudhole_key())
-        set_setting('clearance', clearance)
-        set_setting('user_agent', user_agent)
+    # if get_setting("use_cloudhole", bool):
+    #     clearance, user_agent = get_cloudhole_clearance(get_cloudhole_key())
+    #     set_setting('clearance', clearance)
+    #     set_setting('user_agent', user_agent)
 
     if get_setting('kodi_language', bool):
         kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
@@ -315,16 +315,12 @@ def extract_torrents(provider, client):
                 parsed_url = urlparse(definition['root_url'])
                 cookie_domain = '{uri.netloc}'.format(uri=parsed_url).replace('www.', '')
                 cookies = []
-                # log.debug("[%s] cookie_domain: %s" % (provider, cookie_domain))
                 for cookie in client._cookies:
-                    # log.debug("[%s] cookie for domain: %s (%s=%s)" % (provider, cookie.domain, cookie.name, cookie.value))
                     if cookie_domain in cookie.domain:
                         cookies.append(cookie)
                 if cookies:
                     headers = {'Cookie': ";".join(["%s=%s" % (c.name, c.value) for c in cookies]), 'User-Agent': user_agent}
-                    # log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                     torrent = append_headers(torrent, headers)
-                    # log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
 
         if name and torrent and needs_subpage and not torrent.startswith('magnet'):
             if not torrent.startswith('http'):
