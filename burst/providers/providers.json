@@ -1866,7 +1866,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:fr} {episode}",
         "anime_query": "",
-        "base_url": "https://ww2.yggtorrent.is/engine/search?do=search&name=QUERYEXTRA",
+        "base_url": "https://ww3.yggtorrent.is/engine/search?do=search&name=QUERYEXTRA",
         "color": "FFF7A62D",
         "general_extra": "&category=2145",
         "general_keywords": "{title:fr}",
@@ -1885,7 +1885,7 @@
             "row": "find_once('table', ('class', 'table')).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=8)",
             "size": "item(tag='td', order=6)",
-            "torrent": "'https://ww2.yggtorrent.is/engine/download_torrent?id=%s' % item(tag='a', attribute='target', order=3)"
+            "torrent": "'https://ww3.yggtorrent.is/engine/download_torrent?id=%s' % item(tag='a', attribute='target', order=3)"
         },
         "season_extra": "",
         "season_extra2": "",
