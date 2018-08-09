@@ -19,6 +19,9 @@ from cookielib import LWPCookieJar
 from urllib import urlencode
 from utils import encode_dict
 
+from requests.packages.urllib3.util.retry import Retry
+from requests.adapters import HTTPAdapter
+
 from xbmc import translatePath
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.21 Safari/537.36"
@@ -28,15 +31,20 @@ try:
 except:
     PATH_TEMP = translatePath("special://temp").decode('utf-8')
 
+# Custom DNS default data
 dns_cache = {}
 dns_public_list = ['9.9.9.9', '8.8.8.8', '8.8.4.4']
 dns_opennic_list = ['193.183.98.66', '172.104.136.243', '89.18.27.167']
-
-proxy_types = ["socks4", "socks5", "http", "https"]
+# Save original DNS resolver
 _orig_create_connection = connection.create_connection
 
+# Proxy types
+proxy_types = ["socks4", "socks5", "http", "https"]
+
+# Init antizapret object that does detection of antizapret proxies
 antizapret = antizapret.AntizapretDetector()
 
+# Disable warning from urllib
 urllib3.disable_warnings()
 
 def MyResolver(host):
@@ -79,43 +87,11 @@ def ResolveOpennic(host):
     except:
         return
 
-
-# class MyHTTPConnection(httplib.HTTPConnection):
-#     def connect(self):
-#         self.sock = socket.create_connection((MyResolver(self.host), self.port), self.timeout)
-
-# HTTPS requests are not working, because of handshakes fails, so disabling now
-# class MyHTTPSConnection(httplib.HTTPSConnection):
-#     def connect(self):
-#         self.verify_mode = ssl.CERT_NONE
-#         self.check_hostname = False
-#
-#         sock = socket.create_connection((MyResolver(self.host), self.port), self.timeout)
-#         # self.sock = ssl.wrap_socket(sock, self.key_file, self.cert_file)
-#         if self._tunnel_host:
-#             self.sock = sock
-#             self._tunnel()
-#         try:
-#             self.sock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_SSLv23)
-#         except Exception, e:
-#             log.debug("Trying SSLv3.: %s --- %s" % (e, self))
-#             # self.sock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_TLSv1, ciphers="ADH-AES256-SHA")
-#             self.sock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_TLSv1)
-
-
-# class MyHTTPHandler(urllib2.HTTPHandler):
-#     def http_open(self, req):
-#         return self.do_open(MyHTTPConnection, req)
-
-# class MyHTTPSHandler(urllib2.HTTPSHandler):
-#     def https_open(self, req):
-#         return self.do_open(MyHTTPSConnection, req)
-
 class Client:
     """
     Web client class with automatic charset detection and decoding
     """
-    def __init__(self, proxy_url=None, charset='utf-8'):
+    def __init__(self, proxy_url=None, request_charset='utf-8', response_charset=None):
         self._counter = 0
         self._cookies_filename = ''
         self._cookies = LWPCookieJar()
@@ -126,16 +102,29 @@ class Client:
         self.token = None
         self.passkey = None
         self.proxy_url = proxy_url
-        self.charset = charset
+        self.request_charset = request_charset
+        self.response_charset = response_charset
 
         self.use_antizapret = False
         self.needs_proxylock = False
-        # self.antizapret = antizapret.AntizapretDetector()
 
         self.headers = dict()
 
         self.session = requests.session()
         self.session.verify = False
+
+        # Enabling retrying on failed requests
+        retries = Retry(
+            total=2,
+            read=2,
+            connect=2,
+            redirect=3,
+            backoff_factor=0.1
+            # status_forcelist=[ 500, 502, 503, 504 ])
+        )
+
+        self.session.mount('http://', HTTPAdapter(max_retries=retries))
+        self.session.mount('https://', HTTPAdapter(max_retries=retries))
         # self.session = cfscrape.create_scraper()
         # self.scraper = cfscrape.create_scraper()
         # self.session = self.scraper.session()
@@ -247,7 +236,8 @@ class Client:
                 }
 
         log.debug("Opening URL: %s" % repr(url))
-        log.debug("Proxies: %s" % (repr(self.session.proxies)))
+        if self.session.proxies:
+            log.debug("Proxies: %s" % (repr(self.session.proxies)))
 
         self._read_cookies(url)
         self.session.cookies = self._cookies
@@ -279,6 +269,7 @@ class Client:
             req = requests.Request('POST', url, data=post_data, headers=req_headers)
         else:
             req = requests.Request('GET', url, headers=req_headers)
+
         prepped = self.session.prepare_request(req)
 
         try:
@@ -286,8 +277,12 @@ class Client:
             with self.session.send(prepped) as response:
                 self.headers = response.headers
                 self._save_cookies()
-                self.content = response.text
                 self.status = response.status_code
+
+                if self.response_charset:
+                    self.content = response.content.decode(self.response_charset, 'ignore')
+                else:
+                    self.content = response.text
 
         except Exception as e:
             import traceback
@@ -309,7 +304,7 @@ class Client:
         Returns:
             bool: Whether or not login was successful
         """
-        if self.open(url.encode('utf-8'), post_data=encode_dict(data, self.charset)):
+        if self.open(url.encode('utf-8'), post_data=encode_dict(data, self.request_charset)):
             try:
                 if fails_with in self.content:
                     self.status = 'Wrong username or password'
@@ -326,88 +321,6 @@ class Client:
             return True
 
         return False
-
-# def get_cloudhole_key():
-#     """ CloudHole API key fetcher
-
-#     Returns:
-#         str: A CloudHole API key
-#     """
-#     cloudhole_key = None
-#     try:
-#         r = urllib2.Request("https://cloudhole.herokuapp.com/key")
-#         r.add_header('Content-type', 'application/json')
-#         with closing(opener.open(r)) as response:
-#             content = response.read()
-#         log.info("CloudHole key: %s" % content)
-#         data = json.loads(content)
-#         cloudhole_key = data['key']
-#     except Exception as e:
-#         log.error("Getting CloudHole key error: %s" % repr(e))
-#     return cloudhole_key
-
-
-# def get_cloudhole_clearance(cloudhole_key):
-#     """ CloudHole clearance fetcher
-
-#     Args:
-#         cloudhole_key (str): The CloudHole API key saved in settings or from ``get_cloudhole_key`` directly
-#     Returns:
-#         tuple: A CloudHole clearance cookie and user-agent string
-#     """
-#     user_agent = USER_AGENT
-#     clearance = None
-#     if cloudhole_key:
-#         try:
-#             r = urllib2.Request("https://cloudhole.herokuapp.com/clearances")
-#             r.add_header('Content-type', 'application/json')
-#             r.add_header('Authorization', cloudhole_key)
-#             with closing(opener.open(r)) as response:
-#                 content = response.read()
-#             log.debug("CloudHole returned: %s" % content)
-#             data = json.loads(content)
-#             user_agent = data[0]['userAgent']
-#             clearance = data[0]['cookies']
-#             log.info("New UA and clearance: %s / %s" % (user_agent, clearance))
-#         except Exception as e:
-#             log.error("CloudHole error: %s" % repr(e))
-#     return clearance, user_agent
-
-# def parse_proxy_url(proxy_url):
-#     proto = None
-#     host = None
-#     port = None
-#     login = None
-#     password = None
-
-#     if not proxy_url:
-#         return
-
-#     proto_parsed = proxy_url.split("://")[0].lower()
-#     if proto_parsed == "socks5":
-#         proto = socks.SOCKS5
-#     elif proto_parsed == "socks4":
-#         proto = socks.SOCKS4
-#     elif proto_parsed == "http":
-#         proto = socks.HTTP
-#     elif proto_parsed == "https":
-#         proto = socks.HTTP
-
-#     host_string = proxy_url.split("://")[1]
-#     if '@' in host_string:
-#         ary = host_string.split("@")
-#         user_string = ary[0]
-#         host_string = ary[1]
-
-#         ary = user_string.split(":")
-#         login = ary[0]
-#         password = ary[1]
-#     if host_string:
-#         ary = host_string.split(":")
-#         host = ary[0]
-#         port = ary[1]
-
-#     return SocksiPyHandler(proxytype=proto, proxyaddr=host, proxyport=int(port), username=login, password=password, rdns=True)
 
 def patched_create_connection(address, *args, **kwargs):
     """Wrap urllib3's create_connection to resolve the name elsewhere"""

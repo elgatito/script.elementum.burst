@@ -22,7 +22,16 @@ if not ADDON_PATH:
     ADDON_PATH = ".."
 
 definitions = {}
-mandatory_fields = {'name': '', 'predefined': False, 'enabled': False, 'private': False, 'id': '', 'languages': '', 'charset': 'utf8'}
+mandatory_fields = {
+    'name': '',
+    'predefined': False,
+    'enabled': False,
+    'private': False,
+    'id': '',
+    'languages': '',
+    'charset': 'utf8',
+    'response_charset': None
+}
 
 
 def load_providers(path, custom=False, fix_seasons=False):

@@ -73,7 +73,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
 
-    client = Client(proxy_url=filtering.info['proxy_url'], charset=definition['charset'])
+    client = Client(proxy_url=filtering.info['proxy_url'], request_charset=definition['charset'], response_charset=definition['response_charset'])
     token = None
     logged_in = False
     token_auth = False
@@ -101,12 +101,16 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         query = filtering.process_keywords(provider, query)
         extra = filtering.process_keywords(provider, extra)
-        if 'charset' in definition and 'utf' not in definition['charset'].lower():
-            try:
+        try:
+            if 'charset' in definition and definition['charset'] and 'utf' not in definition['charset'].lower():
                 query = urllib.quote(query.encode(definition['charset']))
                 extra = urllib.quote(extra.encode(definition['charset']))
-            except:
-                pass
+            else:
+                query = urllib.quote(query.encode('utf-8'))
+                extra = urllib.quote(extra.encode('utf-8'))
+        except Exception as e:
+            log.debug("Could not quote the query (%s): %s" % (query, e))
+            pass
 
         log.debug("[%s] After keywords  - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
         if not query:
