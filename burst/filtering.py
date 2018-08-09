@@ -48,30 +48,59 @@ class Filtering:
     """
     def __init__(self):
         resolutions = OrderedDict()
-        resolutions['filter_240p'] = ['240p', u'240р', '_tvrip_', 'satrip', 'vhsrip']
-        resolutions['filter_480p'] = ['480p', u'480р', 'xvid', 'dvd', 'dvdrip', 'hdtv']
-        resolutions['filter_720p'] = ['720p', u'720р', 'hdrip', 'bluray', 'blu_ray', 'brrip', 'bdrip', 'hdtv', '/hd720p', '1280x720']
-        resolutions['filter_1080p'] = ['1080p', u'1080р', '1080i', 'fullhd', '_fhd_', '/hd1080p', '/hdr1080p', '1920x1080']
-        resolutions['filter_2k'] = ['_2k_', '1440p', u'1440р', u'_2к_']
-        resolutions['filter_4k'] = ['_4k_', '2160p', u'2160р', '_uhd_', u'_4к_']
+
+        # TODO: remove when finished with debugging resolutions detection
+        # resolutions['filter_240p'] = ['240p', u'240р', '_tvrip_', 'satrip', 'vhsrip']
+        # resolutions['filter_480p'] = ['480p', u'480р', 'xvid', 'dvd', 'dvdrip', 'hdtv']
+        # resolutions['filter_720p'] = ['720p', u'720р', 'hdrip', 'bluray', 'blu_ray', 'brrip', 'bdrip', 'hdtv', '/hd720p', '1280x720']
+        # resolutions['filter_1080p'] = ['1080p', u'1080р', '1080i', 'fullhd', '_fhd_', '/hd1080p', '/hdr1080p', '1920x1080']
+        # resolutions['filter_2k'] = ['_2k_', '1440p', u'1440р', u'_2к_']
+        # resolutions['filter_4k'] = ['_4k_', '2160p', u'2160р', '_uhd_', u'_4к_']
+
+        resolutions['filter_240p'] = [u'240[pр]', u'tv\-?rip|sat\-?rip|vhs\-?rip']
+        resolutions['filter_480p'] = [u'480[pр]', u'xvid|dvd|dvdrip|hdtv|web\-(dl)?rip']
+        resolutions['filter_720p'] = [u'720[pр]|1280x720', u'hd720p?|hd\-?rip|b[rd]rip']
+        resolutions['filter_1080p'] = [u'1080[piр]|1920x1080', u'hd1080p?|fullhd|fhd|blu\W*ray|bd\W*remux']
+        resolutions['filter_2k'] = [u'1440[pр]', u'2k']
+        resolutions['filter_4k'] = [u'4k|2160[pр]|uhd', u'4k|hd4k']
+
         self.resolutions = resolutions
 
         self.release_types = {
-            'filter_brrip': ['brrip', 'bdrip', 'bd-rip', 'bluray', 'blu-ray', 'bdremux', 'bd-remux'],
-            'filter_webdl': ['webdl', 'webrip', 'web-rip', 'web_dl', 'dlrip', '_yts_'],
-            'filter_hdrip': ['hdrip', 'hd-rip'],
-            'filter_hdtv': ['hdtv'],
-            'filter_dvd': ['_dvd_', 'dvdrip', 'dvd-rip', 'vcdrip'],
-            'filter_dvdscr': ['dvdscr', 'dvd-scr'],
-            'filter_screener': ['screener', '_scr_'],
-            'filter_3d': ['_3d_'],
-            'filter_telesync': ['telesync', '_ts_', '_tc_'],
-            'filter_cam': ['_cam_', 'hdcam'],
-            'filter_tvrip': ['_tvrip', 'satrip'],
-            'filter_vhsrip': ['vhsrip'],
-            'filter_trailer': ['trailer', u'трейлер', u'тизер'],
-            'filter_workprint': ['workprint']
+            'filter_brrip': [u'brrip|bd\-?rip|blu\-?ray|bd\-?remux'],
+            'filter_webdl': [u'web_?\-?dl|web\-?rip|dl\-?rip|yts'],
+            'filter_hdrip': [u'hd\-?rip'],
+            'filter_hdtv': [u'hd\-?tv'],
+            'filter_dvd': [u'dvd|dvd\-?rip|vcd\-?rip'],
+            'filter_dvdscr': [u'dvd\-?scr'],
+            'filter_screener': [u'screener|scr'],
+            'filter_3d': [u'3d'],
+            'filter_telesync': [u'telesync|ts|tc'],
+            'filter_cam': [u'cam|hd\-?cam'],
+            'filter_tvrip': [u'tv\-?rip|sat\-?rip'],
+            'filter_vhsrip': [u'vhs\-?rip'],
+            'filter_trailer': [u'trailer|трейлер|тизер'],
+            'filter_workprint': [u'workprint'],
+            'filter_music': [u'mp3|flac']
         }
+
+        # TODO: remove when finished with debugging resolutions detection
+        # self.release_types = {
+        #     'filter_brrip': ['brrip', 'bdrip', 'bd-rip', 'bluray', 'blu-ray', 'bdremux', 'bd-remux'],
+        #     'filter_webdl': ['webdl', 'webrip', 'web-rip', 'web_dl', 'dlrip', '_yts_'],
+        #     'filter_hdrip': ['hdrip', 'hd-rip'],
+        #     'filter_hdtv': ['hdtv'],
+        #     'filter_dvd': ['_dvd_', 'dvdrip', 'dvd-rip', 'vcdrip'],
+        #     'filter_dvdscr': ['dvdscr', 'dvd-scr'],
+        #     'filter_screener': ['screener', '_scr_'],
+        #     'filter_3d': ['_3d_'],
+        #     'filter_telesync': ['telesync', '_ts_', '_tc_'],
+        #     'filter_cam': ['_cam_', 'hdcam'],
+        #     'filter_tvrip': ['_tvrip', 'satrip'],
+        #     'filter_vhsrip': ['vhsrip'],
+        #     'filter_trailer': ['trailer', u'трейлер', u'тизер'],
+        #     'filter_workprint': ['workprint']
+        # }
 
         require = []
         resolutions_allow = []
@@ -385,7 +414,7 @@ class Filtering:
         if self.filter_resolutions and get_setting('require_resolution', bool):
             resolution = self.determine_resolution(name)
             if resolution not in self.resolutions_allow:
-                self.reason += " Resolution not allowed"
+                self.reason += " Resolution not allowed ({})".format(resolution)
                 return False
 
         if self.filter_title:
@@ -399,16 +428,16 @@ class Filtering:
                     self.reason += " Missing required keyword"
                     return False
 
-        if not self.included(name, keys=self.releases_allow) and get_setting('require_release_type', bool):
+        if not self.included_rx(name, keys=self.releases_allow) and get_setting('require_release_type', bool):
             self.reason += " Missing release type keyword"
             return False
 
-        if self.included(name, keys=self.releases_deny) and get_setting('require_release_type', bool):
+        if self.included_rx(name, keys=self.releases_deny) and get_setting('require_release_type', bool):
             self.reason += " Blocked by release type keyword"
             return False
 
         if size and not self.in_size_range(size) and get_setting('require_size', bool):
-            self.reason += " Size out of range"
+            self.reason += " Size out of range ({})".format(size)
             return False
 
         return True
@@ -441,7 +470,7 @@ class Filtering:
         """
         res = 'filter_480p'  # Default to 480p
         for resolution in self.resolutions:
-            if self.included(name, keys=self.resolutions[resolution], strict=True):
+            if self.included_rx(name, keys=self.resolutions[resolution]):
                 res = resolution
         return res
 
@@ -475,6 +504,23 @@ class Filtering:
                 res1.append(all(res2))
             res = any(res1)
         return res
+
+    def included_rx(self, value, keys):
+        """ Check if the keys are matched in the string
+
+        Args:
+            value   (str): Name of the torrent to check
+            keys   (list): List of regex that must be found in ``value``
+
+        Returns:
+            bool: True if any (or all if ``strict``) keys are included, False otherwise.
+        """
+        value = ' ' + value.lower() + ' '
+        for key in keys:
+            rr = r'\W+(' + key + r')\W*'
+            if re.search(rr, value):
+                return True
+        return False
 
     def unescape(self, name):
         """ Unescapes all HTML entities from a string using
@@ -563,12 +609,12 @@ def cleanup_results(results_list):
             else:
                 hash_ = hashlib.md5(result['uri']).hexdigest()
 
-        try:
-            log.debug("[%s] Hash for %s: %s" % (result['provider'][16:-8], repr(result['name']), hash_))
-        except Exception as e:
-            import traceback
-            log.warning("%s logging failed with: %s" % (result['provider'], repr(e)))
-            map(log.debug, traceback.format_exc().split("\n"))
+        # try:
+        #     log.debug("[%s] Hash for %s: %s" % (result['provider'][16:-8], repr(result['name']), hash_))
+        # except Exception as e:
+        #     import traceback
+        #     log.warning("%s logging failed with: %s" % (result['provider'], repr(e)))
+        #     map(log.debug, traceback.format_exc().split("\n"))
 
         if not any(existing == hash_ for existing in hashes):
             filtered_list.append(result)
