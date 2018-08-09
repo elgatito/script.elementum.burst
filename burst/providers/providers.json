@@ -1310,6 +1310,7 @@
             "peers": "",
             "torrent": "'http://newstudio.tv%s' % item(tag='a', attribute='href', order=4)"
         },
+        "response_charset": "utf-8",
         "root_url": "http://newstudio.tv",
         "season_extra": "",
         "season_extra2": "",
@@ -1322,7 +1323,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} \"Сезон {season}\""
+        "tv_keywords2": "{title:original} \"Сезон {season}, Серия {episode}\""
     },
     "rutracker": {
         "enabled": true,
