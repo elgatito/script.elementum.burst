@@ -156,7 +156,7 @@
             "row": "find_all('div', ('class', 'torrentrow'))",
             "seeds": "item(tag='span', order=9)",
             "size": "item(tag='span', order=7)",
-            "torrent": "'/%s' % item(tag='a', attribute='href', order=3)"
+            "torrent": "'https://filelist.ro/%s' % item(tag='a', attribute='href', order=3)"
         },
         "season_extra": "",
         "season_extra2": "",
@@ -165,7 +165,7 @@
         "season_query": "&cats[]=27&cats[]=21&cats[]=23&searchin=0&sort=0",
         "separator": "+",
         "show_query": "&cats[]=27&cats[]=21&cats[]=23&searchin=0&sort=0",
-        "subpage": true,
+        "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
