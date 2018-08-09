@@ -320,6 +320,11 @@ def extract_torrents(provider, client):
                         cookies.append(cookie)
                 if cookies:
                     headers = {'Cookie': ";".join(["%s=%s" % (c.name, c.value) for c in cookies]), 'User-Agent': user_agent}
+                    if client.request_headers:
+                        headers.update(client.request_headers)
+                    if client.url:
+                        headers['Referer'] = client.url
+                        headers['Origin'] = client.url
                     torrent = append_headers(torrent, headers)
 
         if name and torrent and needs_subpage and not torrent.startswith('magnet'):

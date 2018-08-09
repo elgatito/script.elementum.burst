@@ -1538,7 +1538,7 @@
         "root_url": "http://baibako.tv/",
         "season_extra": "",
         "season_extra2": "",
-        "season_keywords": "{title:original} %2Fs{season:2}e01-",
+        "season_keywords": "{title:original} /s{season:2}e01-",
         "season_keywords2": "{title:original} S{season:2}",
         "season_query": "",
         "separator": "+",
@@ -1546,7 +1546,7 @@
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:original} %2Fs{season:2}e{episode:2}",
+        "tv_keywords": "{title:original} /s{season:2}e{episode:2}",
         "tv_keywords2": ""
     },
     "torrent3dru": {

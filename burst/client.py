@@ -95,6 +95,7 @@ class Client:
         self._counter = 0
         self._cookies_filename = ''
         self._cookies = LWPCookieJar()
+        self.url = None
         self.user_agent = USER_AGENT
         self.clearance = None
         self.content = None
@@ -109,6 +110,7 @@ class Client:
         self.needs_proxylock = False
 
         self.headers = dict()
+        self.request_headers = None
 
         self.session = requests.session()
         self.session.verify = False
@@ -271,6 +273,7 @@ class Client:
             req = requests.Request('GET', url, headers=req_headers)
 
         prepped = self.session.prepare_request(req)
+        self.request_headers = prepped.headers
 
         try:
             self._good_spider()
@@ -278,6 +281,7 @@ class Client:
                 self.headers = response.headers
                 self._save_cookies()
                 self.status = response.status_code
+                self.url = response.url
 
                 if self.response_charset:
                     self.content = response.content.decode(self.response_charset, 'ignore')
