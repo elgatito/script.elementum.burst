@@ -158,7 +158,22 @@ def got_results(provider, results):
     definition = get_alias(definition, get_setting("%s_alias" % provider))
 
     max_results = get_setting('max_results', int)
-    sorted_results = sorted(results, key=lambda r: (r['seeds']), reverse=True)
+    sort_by = get_setting('sort_by', int)
+    # 0 "Resolution"
+    # 1 "Seeds"
+    # 2 "Size"
+    # 3 "Balanced"
+
+    if not sort_by or sort_by == 3:
+        # TODO: think of something interesting to balance sort results
+        sorted_results = sorted(results, key=lambda r: (r['sort_balance']), reverse=True)
+    elif sort_by == 0:
+        sorted_results = sorted(results, key=lambda r: (r['sort_resolution']), reverse=True)
+    elif sort_by == 1:
+        sorted_results = sorted(results, key=lambda r: (r['seeds']), reverse=True)
+    elif sort_by == 2:
+        sorted_results = sorted(results, key=lambda r: (r['size']), reverse=True)
+
     if len(sorted_results) > max_results:
         sorted_results = sorted_results[:max_results]
 
@@ -481,6 +496,12 @@ def extract_from_page(provider, content):
         if matches:
             result = definition['root_url'] + matches[0]
             log.debug('[%s] Matched download link with an ID: %s' % (provider, repr(result)))
+            return result
+
+        matches = re.findall('\: ([A-Fa-f0-9]{40})', content)
+        if matches:
+            result = "magnet:?xt=urn:btih:" + matches[0]
+            log.debug('[%s] Matched magnet info_hash search: %s' % (provider, repr(result)))
             return result
     except:
         pass

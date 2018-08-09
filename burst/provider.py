@@ -40,16 +40,23 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
         v_name = name if verify_name else filtering.title
         v_size = size if verify_size else None
         if filtering.verify(provider, v_name, v_size):
-            results.append({"name": name,
-                            "uri": uri,
-                            "info_hash": info_hash,
-                            "size": size,
-                            "seeds": get_int(seeds),
-                            "peers": get_int(peers),
-                            "language": definition["language"] if 'language' in definition else 'en',
-                            "provider": '[COLOR %s]%s[/COLOR]' % (definition['color'], definition['name']),
-                            "icon": os.path.join(ADDON_PATH, 'burst', 'providers', 'icons', '%s.png' % provider),
-                            })
+            sort_seeds = get_int(seeds)
+            sort_resolution = filtering.determine_resolution(v_name)[1]+1
+            sort_balance = sort_seeds * 3 * sort_resolution
+
+            results.append({
+                "name": name,
+                "uri": uri,
+                "info_hash": info_hash,
+                "size": size,
+                "seeds": sort_seeds,
+                "peers": get_int(peers),
+                "language": definition["language"] if 'language' in definition else 'en',
+                "provider": '[COLOR %s]%s[/COLOR]' % (definition['color'], definition['name']),
+                "icon": os.path.join(ADDON_PATH, 'burst', 'providers', 'icons', '%s.png' % provider),
+                "sort_resolution": sort_resolution,
+                "sort_balance": sort_balance
+            })
         else:
             log.debug(filtering.reason.encode('utf-8'))
 

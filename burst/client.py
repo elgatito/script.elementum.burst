@@ -260,7 +260,7 @@ class Client:
             for key, value in headers.iteritems():
                 if value:
                     req_headers[key] = value
-                else:
+                elif key.capitalize() in req_headers:
                     del req_headers[key.capitalize()]
 
         if self.token:

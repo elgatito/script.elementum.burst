@@ -326,3 +326,23 @@ msgstr "Румынский"
 msgctxt "#32118"
 msgid "Hungarian"
 msgstr "Венгерский"
+
+msgctxt "#32119"
+msgid "Sort returned results by"
+msgstr "Сортировать результаты поиска по"
+
+msgctxt "#32120"
+msgid "Resolution"
+msgstr "Разрешение"
+
+msgctxt "#32121"
+msgid "Seeds"
+msgstr "Кол-во сидов"
+
+msgctxt "#32122"
+msgid "Size"
+msgstr "Размер"
+
+msgctxt "#32123"
+msgid "Balanced"
+msgstr "Баланс"

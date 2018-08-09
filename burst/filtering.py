@@ -63,6 +63,7 @@ class Filtering:
         resolutions['filter_1080p'] = [u'1080[piр]|1920x1080', u'hd1080p?|fullhd|fhd|blu\W*ray|bd\W*remux']
         resolutions['filter_2k'] = [u'1440[pр]', u'2k']
         resolutions['filter_4k'] = [u'4k|2160[pр]|uhd', u'4k|hd4k']
+        resolutions['filter_music'] = [u'mp3|flac|alac|ost|sound\-?track']
 
         self.resolutions = resolutions
 
@@ -80,8 +81,7 @@ class Filtering:
             'filter_tvrip': [u'tv\-?rip|sat\-?rip'],
             'filter_vhsrip': [u'vhs\-?rip'],
             'filter_trailer': [u'trailer|трейлер|тизер'],
-            'filter_workprint': [u'workprint'],
-            'filter_music': [u'mp3|flac']
+            'filter_workprint': [u'workprint']
         }
 
         # TODO: remove when finished with debugging resolutions detection
@@ -412,7 +412,7 @@ class Filtering:
         self.reason = "[%s] %70s ***" % (provider, name)
 
         if self.filter_resolutions and get_setting('require_resolution', bool):
-            resolution = self.determine_resolution(name)
+            resolution = self.determine_resolution(name)[0]
             if resolution not in self.resolutions_allow:
                 self.reason += " Resolution not allowed ({})".format(resolution)
                 return False
@@ -468,11 +468,15 @@ class Filtering:
         Returns:
             str: The filter key of the determined resolution, see self.resolutions
         """
+        idx = 0
+        count = -1
         res = 'filter_480p'  # Default to 480p
         for resolution in self.resolutions:
+            count += 1
             if self.included_rx(name, keys=self.resolutions[resolution]):
+                idx = count
                 res = resolution
-        return res
+        return res, idx
 
     def included(self, value, keys, strict=False):
         """ Check if the keys are present in the string

@@ -11,6 +11,7 @@
     <setting label="32040" id="max_results" type="slider" default="10" option="int" range="1,1,25" />
     <setting label="32070" id="timeout" type="slider" default="20" option="int" range="3,1,180" />
     <setting label="32071" id="timeout_help" type="text" enable="false" subsetting="true" />
+    <setting label="32119" id="sort_by" type="enum" lvalues="32120|32121|32122|32123" default="3" />
   </category>
 
   <!-- Providers -->
@@ -265,6 +266,12 @@
       <setting id="toloka_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="toloka_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="toloka_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+      
+    <setting label="Кинозал   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_kinozal" type="bool" default="false" />
+      <setting id="kinozal_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="kinozal_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="kinozal_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="kinozal_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       <!-- Providers-Private-End -->
 
   </category>
