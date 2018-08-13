@@ -9,7 +9,7 @@
     <setting label="32033" id="min_size" type="slider" option="float" range="0,0.25,100" default="0" />
     <setting label="32034" id="max_size" type="slider" option="float" range="1,1,200" default="100" />
     <setting label="32040" id="max_results" type="slider" default="10" option="int" range="1,1,25" />
-    <setting label="32070" id="timeout" type="slider" default="20" option="int" range="3,1,180" />
+    <setting label="32070" id="timeout" type="slider" default="25" option="int" range="3,1,180" />
     <setting label="32071" id="timeout_help" type="text" enable="false" subsetting="true" />
     <setting label="32119" id="sort_by" type="enum" lvalues="32120|32121|32122|32123" default="3" />
   </category>
