@@ -8,6 +8,7 @@ import re
 import json
 import time
 import xbmc
+import xbmcaddon
 import xbmcgui
 from Queue import Queue
 from threading import Thread
@@ -26,8 +27,18 @@ provider_names = []
 provider_results = []
 available_providers = 0
 request_time = time.time()
+auto_timeout = get_setting("auto_timeout", bool)
 timeout = get_setting("timeout", int)
 special_chars = "()\"':.[]<>/\\?"
+
+if auto_timeout:
+    elementum_addon = xbmcaddon.Addon(id='plugin.video.elementum')
+    if elementum_addon:
+        if elementum_addon.getSetting('custom_provider_timeout_enabled') == "true":
+            timeout = int(elementum_addon.getSetting('custom_provider_timeout'))
+        else:
+            timeout = 28
+        log.debug("Using timeout from Elementum: %d seconds" % (timeout))
 
 
 def search(payload, method="general"):

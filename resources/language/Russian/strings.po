@@ -346,3 +346,7 @@ msgstr "Размер"
 msgctxt "#32123"
 msgid "Balanced"
 msgstr "Баланс"
+
+msgctxt "#32124"
+msgid "Automatically adjust timeout according to Elementum settings"
+msgstr "Автоматически опрелять таймаут по настройкам Elementum"

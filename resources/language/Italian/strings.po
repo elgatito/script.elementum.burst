@@ -326,6 +326,30 @@ msgctxt "#32118"
 msgid "Hungarian"
 msgstr ""
 
+msgctxt "#32119"
+msgid "Sort returned results by"
+msgstr ""
+
+msgctxt "#32120"
+msgid "Resolution"
+msgstr ""
+
+msgctxt "#32121"
+msgid "Seeds"
+msgstr ""
+
+msgctxt "#32122"
+msgid "Size"
+msgstr ""
+
+msgctxt "#32123"
+msgid "Balanced"
+msgstr ""
+
+msgctxt "#32124"
+msgid "Automatically adjust timeout according to Elementum settings"
+msgstr ""
+
 #~ msgctxt "#32040"
 #~ msgid "Maximum torrents"
 #~ msgstr "Torrent massimi"
