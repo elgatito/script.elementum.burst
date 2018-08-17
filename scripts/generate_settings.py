@@ -66,7 +66,7 @@ def load_providers(path):
                 continue
 
             providers[provider]['id'] = provider
-            providers[provider]['name'] += "   [COLOR gray]" + get_languages(providers[provider]['languages']) + "[/COLOR]"
+            providers[provider]['name'] = "[B]" + providers[provider]['name'] + "[/B]   [COLOR gray]" + get_languages(providers[provider]['languages']) + "[/COLOR]"
 
             if providers[provider]['private']:
                 private.append(providers[provider])
