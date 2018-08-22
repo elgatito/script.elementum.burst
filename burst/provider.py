@@ -128,7 +128,10 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             url_search = url_search.replace('EXTRA', extra)
         else:
             url_search = url_search.replace('EXTRA', '')
+        
         url_search = url_search.replace(' ', definition['separator'])
+        if definition['separator'] != '%20':
+            url_search = url_search.replace('%20', definition['separator'])
 
         # MagnetDL fix...
         url_search = url_search.replace('FIRSTLETTER', query[:1])
