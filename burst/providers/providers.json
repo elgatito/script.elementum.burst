@@ -1716,7 +1716,9 @@
             "size": "item(tag='div', select=('class', 'box_meret2'))",
             "torrent": "item(tag='a', order=1, attribute='href').replace('torrents.php?action=details', 'https://ncore.cc/torrents.php?action=download&key=' + key)"
         },
-        "season_keywords1": "{title:original} s{season:2}",
+        "season_extra": "",
+        "season_extra2": "",
+        "season_keywords": "{title:original} s{season:2}",
         "season_keywords2": "",
         "season_keywords3": "",
         "season_query": "&tipus=kivalasztottak_kozott&kivalasztott_tipus%5B%5D=xvidser_hun&kivalasztott_tipus%5B%5D=hdser_hun",
