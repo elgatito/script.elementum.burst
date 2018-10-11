@@ -1722,7 +1722,7 @@
         "season_query": "&tipus=kivalasztottak_kozott&kivalasztott_tipus%5B%5D=xvidser_hun&kivalasztott_tipus%5B%5D=hdser_hun",
         "separator": "+",
         "show_query": "&tipus=kivalasztottak_kozott&kivalasztott_tipus%5B%5D=xvidser_hun&kivalasztott_tipus%5B%5D=hdser_hun",
-        "subpage": true,
+        "subpage": false,
         "root_url": "https://ncore.cc",
         "tv_extra": "",
         "tv_extra2": "",
