@@ -309,7 +309,8 @@
     <setting label="[B]3D[/B]" id="filter_3d" type="bool" default="false" />
     <setting label="[B]TeleSync/TS/TC[/B]" id="filter_telesync" type="bool" default="false" />
     <setting label="[B]Cam/HDCam[/B]" id="filter_cam" type="bool" default="false" />
-    <setting label="[B]TVRip/SATRip[/B]" id="filter_tvrip" type="bool" default="false" />
+    <setting label="[B]TVRip/SATRip[/B]" id="filter_tvrip" type="bool" default="true" />
+    <setting label="[B]IPTVRip[/B]" id="filter_iptvrip" type="bool" default="true" />
     <setting label="[B]VHSRip[/B]" id="filter_vhsrip" type="bool" default="false" />
     <setting label="[B]Trailer[/B]" id="filter_trailer" type="bool" default="false" />
     <setting label="[B]Workprint[/B]" id="filter_workprint" type="bool" default="false" />
