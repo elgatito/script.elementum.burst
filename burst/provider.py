@@ -146,6 +146,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 payload[key] = filtering.post_data[key].replace('QUERY', query)
             else:
                 payload[key] = filtering.post_data[key]
+            payload[key] = urllib.unquote(payload[key])
 
         # Creating the payload for GET method
         data = None
