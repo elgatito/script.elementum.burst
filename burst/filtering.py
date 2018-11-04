@@ -57,8 +57,8 @@ class Filtering:
         # resolutions['filter_2k'] = ['_2k_', '1440p', u'1440р', u'_2к_']
         # resolutions['filter_4k'] = ['_4k_', '2160p', u'2160р', '_uhd_', u'_4к_']
 
-        resolutions['filter_240p'] = [u'240[pр]', u'tv\-?rip|sat\-?rip|vhs\-?rip']
-        resolutions['filter_480p'] = [u'480[pр]', u'xvid|dvd|dvdrip|hdtv|web\-(dl)?rip']
+        resolutions['filter_240p'] = [u'240[pр]', u'vhs\-?rip']
+        resolutions['filter_480p'] = [u'480[pр]', u'xvid|dvd|dvdrip|hdtv|web\-(dl)?rip|iptv|sat\-?rip|tv\-?rip']
         resolutions['filter_720p'] = [u'720[pр]|1280x720', u'hd720p?|hd\-?rip|b[rd]rip']
         resolutions['filter_1080p'] = [u'1080[piр]|1920x1080', u'hd1080p?|fullhd|fhd|blu\W*ray|bd\W*remux']
         resolutions['filter_2k'] = [u'1440[pр]', u'2k']
@@ -80,6 +80,7 @@ class Filtering:
             'filter_cam': [u'cam|hd\-?cam'],
             'filter_tvrip': [u'tv\-?rip|sat\-?rip'],
             'filter_vhsrip': [u'vhs\-?rip'],
+            'filter_iptvrip': [u'iptv\-?rip'],
             'filter_trailer': [u'trailer|трейлер|тизер'],
             'filter_workprint': [u'workprint']
         }
