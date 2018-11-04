@@ -16,17 +16,12 @@
   </category>
 
   <!-- Providers -->
-  <category label="32001">
-    <setting label="32012" type="lsep" />
+  <category label="32012">
     <!-- Providers-Public-Begin -->
 
     <setting label="[B]1337x[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_1337x" type="bool" default="true" />
       <setting id="1337x_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="1337x_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-      
-    <setting label="[B]MagnetDL[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_magnetdl" type="bool" default="true" />
-      <setting id="magnetdl_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="magnetdl_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
     <setting label="[B]RARBG[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_rarbg" type="bool" default="true" />
       <setting id="rarbg_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -71,6 +66,10 @@
     <setting label="[B]LimeTorrents[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_limetorrents" type="bool" default="false" />
       <setting id="limetorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="limetorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      
+    <setting label="[B]MagnetDL[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_magnetdl" type="bool" default="false" />
+      <setting id="magnetdl_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="magnetdl_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
     <setting label="[B]MegaPeer[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_megapeer" type="bool" default="false" />
       <setting id="megapeer_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -132,8 +131,8 @@
       <setting id="zooqle_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="zooqle_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       <!-- Providers-Public-End -->
-    
-    <setting label="32014" type="lsep" />
+  </category> 
+  <category label="32014">
     <!-- Providers-Private-Begin -->
 
     <setting label="[B]0day[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114], $ADDON[script.elementum.burst 32115]][/COLOR]" id="use_0day" type="bool" default="false" />

@@ -389,7 +389,7 @@
     },
     "magnetdl": {
         "enabled": true,
-        "predefined": true,
+        "predefined": false,
         "private": false,
         "name": "MagnetDL",
         "languages": "en",
