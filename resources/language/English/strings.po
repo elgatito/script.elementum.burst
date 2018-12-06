@@ -350,3 +350,7 @@ msgstr ""
 msgctxt "#32124"
 msgid "Automatically adjust timeout according to Elementum settings"
 msgstr ""
+
+msgctxt "#32125"
+msgid "Proxy http requests with Elementum"
+msgstr ""

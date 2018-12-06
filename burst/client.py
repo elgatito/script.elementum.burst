@@ -156,7 +156,13 @@ class Client:
         if get_setting("use_public_dns", bool):
             connection.create_connection = patched_create_connection
 
-        if proxy['enabled']:
+        if get_setting("use_elementum_proxy", bool):
+            proxy_url = "{}://{}:{}".format("http", "127.0.0.1", "65222")
+            self.session.proxies = {
+                'http': proxy_url,
+                'https': proxy_url,
+            }
+        elif proxy['enabled']:
             if proxy['use_type'] == 0 and proxy_url:
                 log.debug("Setting proxy from Elementum: %s" % (proxy_url))
             elif proxy['use_type'] == 1:
@@ -250,6 +256,7 @@ class Client:
         req_headers = {
             'User-Agent': self.user_agent,
             'Content-Language': language,
+            'Cache-Control': 'no-cache',
             'Accept-Encoding': 'deflate, compress, gzip',
             'Origin': url,
             'Referer': url

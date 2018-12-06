@@ -85,10 +85,6 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
     logged_in = False
     token_auth = False
 
-    if get_setting("use_cloudhole", bool):
-        client.clearance = get_setting('clearance')
-        client.user_agent = get_setting('user_agent')
-
     if get_setting('kodi_language', bool):
         kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
         if kodi_language:
@@ -108,6 +104,10 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         query = filtering.process_keywords(provider, query)
         extra = filtering.process_keywords(provider, extra)
+
+        if extra == '-' and filtering.results:
+            continue
+
         try:
             if 'charset' in definition and definition['charset'] and 'utf' not in definition['charset'].lower():
                 query = urllib.quote(query.encode(definition['charset']))

@@ -100,11 +100,6 @@ def search(payload, method="general"):
 
     log.info("Burstin' with %s" % ", ".join([definitions[provider]['name'] for provider in providers]))
 
-    # if get_setting("use_cloudhole", bool):
-    #     clearance, user_agent = get_cloudhole_clearance(get_cloudhole_key())
-    #     set_setting('clearance', clearance)
-    #     set_setting('user_agent', user_agent)
-
     if get_setting('kodi_language', bool):
         kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
         if not kodi_language:
@@ -213,6 +208,9 @@ def extract_torrents(provider, client):
     log.debug("Extracting torrents from %s using definitions: %s" % (provider, repr(definition)))
 
     if not client.content:
+        if get_setting("use_debug_parser", bool):
+            log.debug("[%s] Parser debug | Page content is empty" % provider)
+
         raise StopIteration
 
     dom = Html().feed(client.content)
@@ -247,9 +245,6 @@ def extract_torrents(provider, client):
             subclient.passkey = client.passkey
             headers = {}
 
-            if get_setting("use_cloudhole", bool):
-                subclient.clearance = get_setting('clearance')
-                subclient.user_agent = get_setting('user_agent')
             if "subpage_mode" in definition:
                 if definition["subpage_mode"] == "xhr":
                     headers['X-Requested-With'] = 'XMLHttpRequest'
@@ -279,6 +274,9 @@ def extract_torrents(provider, client):
             q.put_nowait(ret)
 
     if not dom:
+        if get_setting("use_debug_parser", bool):
+            log.debug("[%s] Parser debug | Could not parse DOM from page content" % provider)
+
         raise StopIteration
 
     if get_setting("use_debug_parser", bool):
@@ -324,10 +322,8 @@ def extract_torrents(provider, client):
                 log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', referer_search, referer))
 
         # Pass client cookies with torrent if private
-        if (definition['private'] or get_setting("use_cloudhole", bool)) and not torrent.startswith('magnet'):
+        if definition['private'] and not torrent.startswith('magnet'):
             user_agent = USER_AGENT
-            if get_setting("use_cloudhole", bool):
-                user_agent = get_setting("user_agent")
 
             if client.passkey:
                 torrent = torrent.replace('PASSKEY', client.passkey)
@@ -443,8 +439,6 @@ def extract_from_api(provider, client):
                 torrent = definition['base_url'] + definition['download_path'] + torrent
             if client.token:
                 user_agent = USER_AGENT
-                if get_setting("use_cloudhole", bool):
-                    user_agent = get_setting("user_agent")
                 headers = {'Authorization': client.token, 'User-Agent': user_agent}
                 log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                 torrent = append_headers(torrent, headers)

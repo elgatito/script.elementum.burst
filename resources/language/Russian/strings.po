@@ -350,3 +350,7 @@ msgstr "Баланс"
 msgctxt "#32124"
 msgid "Automatically adjust timeout according to Elementum settings"
 msgstr "Автоматически опрелять таймаут по настройкам Elementum"
+
+msgctxt "#32125"
+msgid "Proxy http requests with Elementum"
+msgstr "Использовать Elementum как http прокси"
