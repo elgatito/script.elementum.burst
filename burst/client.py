@@ -97,7 +97,6 @@ class Client:
         self._cookies = LWPCookieJar()
         self.url = None
         self.user_agent = USER_AGENT
-        self.clearance = None
         self.content = None
         self.status = None
         self.token = None

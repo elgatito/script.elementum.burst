@@ -26,6 +26,8 @@ languages = {
     'bg': 32116,
     'ro': 32117,
     'hu': 32118,
+    'pl': 32126,
+    'lt': 32127,
 }
 
 def cleanup_settings(path):

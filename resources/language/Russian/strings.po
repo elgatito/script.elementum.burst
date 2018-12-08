@@ -354,3 +354,11 @@ msgstr "Автоматически опрелять таймаут по наст
 msgctxt "#32125"
 msgid "Proxy http requests with Elementum"
 msgstr "Использовать Elementum как http прокси"
+
+msgctxt "#32126"
+msgid "Polish"
+msgstr "Польский"
+
+msgctxt "#32127"
+msgid "Lithuanian"
+msgstr "Литовский"

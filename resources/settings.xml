@@ -60,6 +60,10 @@
       <setting id="ilcorsaronero_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="ilcorsaronero_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
+    <setting label="[B]iTorrent[/B]   [COLOR gray][$ADDON[script.elementum.burst 32118]][/COLOR]" id="use_itorrent" type="bool" default="false" />
+      <setting id="itorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="itorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      
     <setting label="[B]KickAss[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_kickass" type="bool" default="false" />
       <setting id="kickass_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="kickass_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
@@ -183,6 +187,18 @@
       <setting id="hd-torrents_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="hd-torrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="hd-torrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+      
+    <setting label="[B]IPTorrents[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_iptorrents" type="bool" default="false" />
+      <setting id="iptorrents_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="iptorrents_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="iptorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="iptorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+      
+    <setting label="[B]Linkomanija[/B]   [COLOR gray][$ADDON[script.elementum.burst 32127]][/COLOR]" id="use_linkomanija" type="bool" default="false" />
+      <setting id="linkomanija_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="linkomanija_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="linkomanija_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="linkomanija_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
     <setting label="[B]MVGroup[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_mvgroup" type="bool" default="false" />
       <setting id="mvgroup_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
