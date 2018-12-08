@@ -350,6 +350,18 @@ msgctxt "#32124"
 msgid "Automatically adjust timeout according to Elementum settings"
 msgstr ""
 
+msgctxt "#32125"
+msgid "Proxy http requests with Elementum"
+msgstr ""
+
+msgctxt "#32126"
+msgid "Polish"
+msgstr ""
+
+msgctxt "#32127"
+msgid "Lithuanian"
+msgstr ""
+
 #~ msgctxt "#32040"
 #~ msgid "Maximum torrents"
 #~ msgstr "Torrent massimi"
