@@ -10,6 +10,7 @@ import urllib3
 import dns.resolver
 import antizapret
 import requests
+import xbmcaddon
 
 from elementum.provider import log, get_setting
 from time import sleep
@@ -156,11 +157,13 @@ class Client:
             connection.create_connection = patched_create_connection
 
         if get_setting("use_elementum_proxy", bool):
-            proxy_url = "{}://{}:{}".format("http", "127.0.0.1", "65222")
-            self.session.proxies = {
-                'http': proxy_url,
-                'https': proxy_url,
-            }
+            elementum_addon = xbmcaddon.Addon(id='plugin.video.elementum')
+            if elementum_addon and elementum_addon.getSetting('internal_proxy_enabled') == "true":
+                proxy_url = "{}://{}:{}".format("http", "127.0.0.1", "65222")
+                self.session.proxies = {
+                    'http': proxy_url,
+                    'https': proxy_url,
+                }
         elif proxy['enabled']:
             if proxy['use_type'] == 0 and proxy_url:
                 log.debug("Setting proxy from Elementum: %s" % (proxy_url))
