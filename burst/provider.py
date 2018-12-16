@@ -216,11 +216,17 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
             elif 'login_object' in definition and definition['login_object']:
                 login_object = None
+                login_headers = None
                 logged_in = False
                 try:
                     login_object = definition['login_object'].replace('USERNAME', 'u"%s"' % username).replace('PASSWORD', 'u"%s"' % password)
                 except Exception as e:
                     log.error("Could not make login object for %s: %s" % (provider, e))
+                try:
+                    if 'login_headers' in definition and definition['login_headers']:
+                        login_headers = eval(definition['login_headers'])
+                except Exception as e:
+                    log.error("Could not make login headers for %s: %s" % (provider, e))
 
                 # TODO generic flags in definitions for those...
                 if provider == 'hd-torrents':
@@ -252,8 +258,8 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                     else:
                         log.error("[%s] Token auth failed with response: %s" % (provider, repr(client.content)))
                         return filtering.results
-                elif not logged_in and client.login(definition['root_url'] + definition['login_path'],
-                                                    eval(login_object), definition['login_failed']):
+                elif not logged_in and client.login(definition['root_url'], definition['login_path'],
+                                                    eval(login_object), login_headers, definition['login_failed']):
                     log.info('[%s] Login successful' % provider)
                     logged_in = True
                 elif not logged_in:

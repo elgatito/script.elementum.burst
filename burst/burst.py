@@ -335,11 +335,13 @@ def extract_torrents(provider, client):
             else:
                 log.debug("[%s] Cookies: %s" % (provider, repr(client.cookies())))
                 parsed_url = urlparse(definition['root_url'])
-                cookie_domain = '{uri.netloc}'.format(uri=parsed_url).replace('www.', '')
+                cookie_domain = '{uri.netloc}'.format(uri=parsed_url)
+                cookie_domain = re.sub('www\d*\.', '', cookie_domain)
                 cookies = []
                 for cookie in client._cookies:
                     if cookie_domain in cookie.domain:
                         cookies.append(cookie)
+                headers = {}
                 if cookies:
                     headers = {'Cookie': ";".join(["%s=%s" % (c.name, c.value) for c in cookies]), 'User-Agent': user_agent}
                     if client.request_headers:
@@ -347,7 +349,10 @@ def extract_torrents(provider, client):
                     if client.url:
                         headers['Referer'] = client.url
                         headers['Origin'] = client.url
-                    torrent = append_headers(torrent, headers)
+                else:
+                    headers = {'User-Agent': user_agent}
+
+                torrent = append_headers(torrent, headers)
 
         if name and torrent and needs_subpage and not torrent.startswith('magnet'):
             if not torrent.startswith('http'):

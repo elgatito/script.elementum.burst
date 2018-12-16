@@ -189,14 +189,20 @@ class Client:
     def _create_cookies(self, payload):
         return urlencode(payload)
 
-    def _read_cookies(self, url=''):
+    def _locate_cookies(self, url=''):
         cookies_path = os.path.join(PATH_TEMP, 'burst')
         if not os.path.exists(cookies_path):
             try:
                 os.makedirs(cookies_path)
             except Exception as e:
                 log.debug("Error creating cookies directory: %s" % repr(e))
-        self._cookies_filename = os.path.join(cookies_path, urlparse(url).netloc + '_cookies.jar')
+
+        # return os.path.join(cookies_path, urlparse(url).netloc + '_cookies.jar')
+        # Do we really need to split cookies for each domain?
+        return os.path.join(cookies_path, 'common_cookies.jar')
+
+    def _read_cookies(self, url=''):
+        self._cookies_filename = self._locate_cookies(url)
         if os.path.exists(self._cookies_filename):
             try:
                 self._cookies.load(self._cookies_filename)
@@ -204,6 +210,8 @@ class Client:
                 log.debug("Reading cookies error: %s" % repr(e))
 
     def _save_cookies(self):
+        self._cookies_filename = self._locate_cookies(self.url)
+
         try:
             self._cookies.save(self._cookies_filename)
         except Exception as e:
@@ -288,9 +296,10 @@ class Client:
             self._good_spider()
             with self.session.send(prepped) as response:
                 self.headers = response.headers
-                self._save_cookies()
                 self.status = response.status_code
                 self.url = response.url
+
+                self._save_cookies()
 
                 if self.response_charset:
                     self.content = response.content.decode(self.response_charset, 'ignore')
@@ -306,7 +315,7 @@ class Client:
 
         return self.status == 200
 
-    def login(self, url, data, fails_with):
+    def login(self, root_url, url, data, headers, fails_with):
         """ Login wrapper around ``open``
 
         Args:
@@ -317,7 +326,10 @@ class Client:
         Returns:
             bool: Whether or not login was successful
         """
-        if self.open(url.encode('utf-8'), post_data=encode_dict(data, self.request_charset)):
+        if not url.startswith('http'):
+            url = root_url + url
+
+        if self.open(url.encode('utf-8'), post_data=encode_dict(data, self.request_charset), headers=headers):
             try:
                 if fails_with in self.content:
                     self.status = 'Wrong username or password'
