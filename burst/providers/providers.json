@@ -600,7 +600,7 @@
             "row": "find_once('table', order=3).find_all('tr', start=2)",
             "seeds": "item(tag='span', order=1, select=('class', 'green'))",
             "size": "item.find_all('td', ('align', 'right'))[-1].text()",
-            "torrent": "'http://rutor.info%s' % (item(tag='a', order=1, attribute='href').split('.info', 1)[-1])"
+            "torrent": "'http://d.rutor.info%s' % (item(tag='a', order=1, attribute='href').split('.info', 1)[-1])"
         },
         "season_extra": "",
         "season_extra2": "",
