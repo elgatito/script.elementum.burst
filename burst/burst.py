@@ -80,6 +80,10 @@ def search(payload, method="general"):
 
     if 'proxy_url' not in payload:
         payload['proxy_url'] = ''
+    if 'internal_proxy_url' not in payload:
+        payload['internal_proxy_url'] = ''
+    if 'elementum_url' not in payload:
+        payload['elementum_url'] = ''
 
     global request_time
     global provider_names

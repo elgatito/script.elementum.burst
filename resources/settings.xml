@@ -336,7 +336,7 @@
   <category label="32095">
       <setting label="32095" type="lsep" />
       <setting id="proxy_enabled" label="32096" type="bool" default="false" />
-        <setting id="proxy_use_type" label="32106" type="enum" default="0" subsetting="true" lvalues="32107|32108|32109" visible="eq(-1,true)" />
+        <setting id="proxy_use_type" label="32106" type="enum" default="0" subsetting="true" lvalues="32107|32108" visible="eq(-1,true)" />
         <setting id="proxy_type" label="32101" type="enum" default="1" subsetting="true" lvalues="32102|32103|32104|32105" visible="eq(-2,true)" enable="eq(-1,1)" />
         <setting id="proxy_host" label="32097" type="text" default="" subsetting="true" visible="eq(-3,true)" enable="eq(-2,1)" />
         <setting id="proxy_port" label="32098" type="number" default="1080" subsetting="true" visible="eq(-4,true)" enable="eq(-3,1)" />
