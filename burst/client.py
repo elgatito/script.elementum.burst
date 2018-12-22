@@ -13,7 +13,6 @@ import xbmcaddon
 
 from elementum.provider import log, get_setting
 from time import sleep
-from urlparse import urlparse
 from urllib3.util import connection
 from cookielib import LWPCookieJar
 from urllib import urlencode
