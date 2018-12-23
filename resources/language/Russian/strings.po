@@ -362,3 +362,19 @@ msgstr "Польский"
 msgctxt "#32127"
 msgid "Lithuanian"
 msgstr "Литовский"
+
+msgctxt "#32128"
+msgid "Public trackers [A .. M]"
+msgstr "Открытые трекеры [A .. M]"
+
+msgctxt "#32129"
+msgid "Public trackers [N .. ]"
+msgstr "Открытые трекеры [N .. ]"
+
+msgctxt "#32130"
+msgid "Private trackers [A .. M]"
+msgstr "Закрытые трекеры [A .. M]"
+
+msgctxt "#32131"
+msgid "Private trackers [N .. ]"
+msgstr "Закрытые трекеры [N .. ]"

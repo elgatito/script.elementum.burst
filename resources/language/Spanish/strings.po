@@ -362,6 +362,22 @@ msgctxt "#32127"
 msgid "Lithuanian"
 msgstr ""
 
+msgctxt "#32128"
+msgid "Public trackers [A .. M]"
+msgstr ""
+
+msgctxt "#32129"
+msgid "Public trackers [N .. ]"
+msgstr ""
+
+msgctxt "#32130"
+msgid "Private trackers [A .. M]"
+msgstr ""
+
+msgctxt "#32131"
+msgid "Private trackers [N .. ]"
+msgstr ""
+
 #~ msgctxt "#32040"
 #~ msgid "Maximum torrents"
 #~ msgstr "Numero máximo de torrents"

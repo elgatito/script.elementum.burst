@@ -17,20 +17,12 @@
   </category>
 
   <!-- Providers -->
-  <category label="32012">
-    <!-- Providers-Public-Begin -->
+  <category label="32128">
+    <!-- Providers-Public-1-Begin -->
 
     <setting label="[B]1337x[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_1337x" type="bool" default="true" />
       <setting id="1337x_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="1337x_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-      
-    <setting label="[B]RARBG[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_rarbg" type="bool" default="true" />
-      <setting id="rarbg_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="rarbg_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-      
-    <setting label="[B]YTS[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_yts" type="bool" default="true" />
-      <setting id="yts_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="yts_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
     <setting label="[B]Cpasbien[/B]   [COLOR gray][$ADDON[script.elementum.burst 32113]][/COLOR]" id="use_cpasbien" type="bool" default="false" />
       <setting id="cpasbien_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -79,6 +71,19 @@
     <setting label="[B]MegaPeer[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_megapeer" type="bool" default="false" />
       <setting id="megapeer_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="megapeer_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      <!-- Providers-Public-1-End -->
+  </category> 
+
+  <category label="32129">
+    <!-- Providers-Public-2-Begin -->
+
+    <setting label="[B]RARBG[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_rarbg" type="bool" default="true" />
+      <setting id="rarbg_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="rarbg_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      
+    <setting label="[B]YTS[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_yts" type="bool" default="true" />
+      <setting id="yts_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="yts_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
     <setting label="[B]NewStudio[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_newstudio" type="bool" default="false" />
       <setting id="newstudio_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -135,10 +140,11 @@
     <setting label="[B]Zooqle[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_zooqle" type="bool" default="false" />
       <setting id="zooqle_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="zooqle_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-      <!-- Providers-Public-End -->
+      <!-- Providers-Public-2-End -->
   </category> 
-  <category label="32014">
-    <!-- Providers-Private-Begin -->
+
+  <category label="32130">
+    <!-- Providers-Private-1-Begin -->
 
     <setting label="[B]0day[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114], $ADDON[script.elementum.burst 32115]][/COLOR]" id="use_0day" type="bool" default="false" />
       <setting id="0day_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -205,7 +211,12 @@
       <setting id="mvgroup_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="mvgroup_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="mvgroup_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-      
+      <!-- Providers-Private-1-End -->
+  </category>
+
+  <category label="32131">
+      <!-- Providers-Private-2-Begin -->
+
     <setting label="[B]nCore[/B]   [COLOR gray][$ADDON[script.elementum.burst 32118]][/COLOR]" id="use_ncore" type="bool" default="false" />
       <setting id="ncore_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="ncore_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
@@ -289,9 +300,9 @@
       <setting id="kinozal_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="kinozal_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="kinozal_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-      <!-- Providers-Private-End -->
-
+      <!-- Providers-Private-2-End -->
   </category>
+
 
   <!-- Filtering -->
   <category label="32087">
