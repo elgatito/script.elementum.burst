@@ -171,6 +171,12 @@
       <setting id="bithumen_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="bithumen_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
+    <setting label="[B]BitNova[/B]   [COLOR gray][$ADDON[script.elementum.burst 32126]][/COLOR]" id="use_bitnova" type="bool" default="false" />
+      <setting id="bitnova_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="bitnova_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="bitnova_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="bitnova_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+      
     <setting label="[B]BlueBird[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_bluebird" type="bool" default="false" />
       <setting id="bluebird_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="bluebird_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
