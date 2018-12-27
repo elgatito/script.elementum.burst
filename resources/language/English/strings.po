@@ -378,3 +378,7 @@ msgstr ""
 msgctxt "#32131"
 msgid "Private trackers [N .. ]"
 msgstr ""
+
+msgctxt "#32132"
+msgid "Remove quotes from search query"
+msgstr ""

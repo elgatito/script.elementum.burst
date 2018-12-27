@@ -14,6 +14,7 @@
     <setting label="32070" id="timeout" type="slider" default="25" option="int" range="3,1,180" visible="eq(-1,false)" />
     <setting label="32071" id="timeout_help" type="text" enable="false" subsetting="true" visible="eq(-2,false)" />
     <setting label="32119" id="sort_by" type="enum" lvalues="32120|32121|32122|32123" default="3" />
+    <setting label="32132" id="filter_quotes" type="bool" default="false" />
   </category>
 
   <!-- Providers -->

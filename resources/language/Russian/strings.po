@@ -378,3 +378,7 @@ msgstr "Закрытые трекеры [A .. M]"
 msgctxt "#32131"
 msgid "Private trackers [N .. ]"
 msgstr "Закрытые трекеры [N .. ]"
+
+msgctxt "#32132"
+msgid "Remove quotes from search query"
+msgstr "Удалить кавычки из поискового запроса"

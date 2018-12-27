@@ -351,6 +351,7 @@ class Filtering:
             str: Processed query keywords
         """
         keywords = self.read_keywords(text)
+        replacing = get_setting("filter_quotes", bool)
 
         for keyword in keywords:
             keyword = keyword.lower()
@@ -407,6 +408,9 @@ class Filtering:
                     episode = '%s' % self.info["episode"]
                 text = text.replace('{%s}' % keyword, episode)
 
+        if replacing:
+            text = text.replace(u"'", '')
+
         return text
 
     def verify(self, provider, name, size):
@@ -433,7 +437,7 @@ class Filtering:
         if self.filter_resolutions and get_setting('require_resolution', bool):
             resolution = self.determine_resolution(name)[0]
             if resolution not in self.resolutions_allow:
-                self.reason += " Resolution not allowed ({})".format(resolution)
+                self.reason += " Resolution not allowed ({0})".format(resolution)
                 return False
 
         if self.filter_title:
@@ -456,7 +460,7 @@ class Filtering:
             return False
 
         if size and not self.in_size_range(size) and get_setting('require_size', bool):
-            self.reason += " Size out of range ({})".format(size)
+            self.reason += " Size out of range ({0})".format(size)
             return False
 
         return True

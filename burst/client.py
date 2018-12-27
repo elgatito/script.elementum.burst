@@ -154,7 +154,7 @@ class Client:
         if get_setting("use_elementum_proxy", bool):
             elementum_addon = xbmcaddon.Addon(id='plugin.video.elementum')
             if elementum_addon and elementum_addon.getSetting('internal_proxy_enabled') == "true":
-                self.proxy_url = "{}://{}:{}".format("http", "127.0.0.1", "65222")
+                self.proxy_url = "{0}://{1}:{2}".format("http", "127.0.0.1", "65222")
                 if info and "internal_proxy_url" in info:
                     self.proxy_url = info["internal_proxy_url"]
 
@@ -169,9 +169,9 @@ class Client:
                 log.debug("Setting proxy with custom settings: %s" % (repr(proxy)))
 
                 if proxy['login'] or proxy['password']:
-                    self.proxy_url = "{}://{}:{}@{}:{}".format(proxy['type'], proxy['login'], proxy['password'], proxy['host'], proxy['port'])
+                    self.proxy_url = "{0}://{1}:{2}@{3}:{4}".format(proxy['type'], proxy['login'], proxy['password'], proxy['host'], proxy['port'])
                 else:
-                    self.proxy_url = "{}://{}:{}".format(proxy['type'], proxy['host'], proxy['port'])
+                    self.proxy_url = "{0}://{1}:{2}".format(proxy['type'], proxy['host'], proxy['port'])
 
             if self.proxy_url:
                 self.session.proxies = {
