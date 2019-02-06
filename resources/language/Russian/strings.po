@@ -349,4 +349,36 @@ msgstr "Баланс"
 
 msgctxt "#32124"
 msgid "Automatically adjust timeout according to Elementum settings"
-msgstr "Автоматически опрелять таймаут по настройкам Elementum"
+msgstr "Автоматически определять таймаут по настройкам Elementum"
+
+msgctxt "#32125"
+msgid "Proxy http requests with Elementum"
+msgstr "Использовать Elementum как http прокси"
+
+msgctxt "#32126"
+msgid "Polish"
+msgstr "Польский"
+
+msgctxt "#32127"
+msgid "Lithuanian"
+msgstr "Литовский"
+
+msgctxt "#32128"
+msgid "Public trackers [A .. M]"
+msgstr "Открытые трекеры [A .. M]"
+
+msgctxt "#32129"
+msgid "Public trackers [N .. ]"
+msgstr "Открытые трекеры [N .. ]"
+
+msgctxt "#32130"
+msgid "Private trackers [A .. M]"
+msgstr "Закрытые трекеры [A .. M]"
+
+msgctxt "#32131"
+msgid "Private trackers [N .. ]"
+msgstr "Закрытые трекеры [N .. ]"
+
+msgctxt "#32132"
+msgid "Remove quotes from search query"
+msgstr "Удалить кавычки из поискового запроса"

@@ -154,17 +154,20 @@ def normalize_string(string, charset=None, replacing=False):
             try:
                 string = unicode(eval(string), 'raw_unicode_escape')
 
-            except SyntaxError:
+            except (SyntaxError, NameError):
                 string = string.decode('latin-1')
+                pass
 
             except TypeError:
                 string = unicode(string, errors='ignore')
+                pass
 
         except LookupError:
             return u''
 
         except TypeError:
             string = unicode(string, errors='ignore')
+            pass
 
     string = remove_control_chars(string)
     string = fix_bad_unicode(string)

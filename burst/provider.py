@@ -80,14 +80,10 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
 
-    client = Client(proxy_url=filtering.info['proxy_url'], request_charset=definition['charset'], response_charset=definition['response_charset'])
+    client = Client(info=filtering.info, request_charset=definition['charset'], response_charset=definition['response_charset'])
     token = None
     logged_in = False
     token_auth = False
-
-    if get_setting("use_cloudhole", bool):
-        client.clearance = get_setting('clearance')
-        client.user_agent = get_setting('user_agent')
 
     if get_setting('kodi_language', bool):
         kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
@@ -108,6 +104,10 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         query = filtering.process_keywords(provider, query)
         extra = filtering.process_keywords(provider, extra)
+
+        if extra == '-' and filtering.results:
+            continue
+
         try:
             if 'charset' in definition and definition['charset'] and 'utf' not in definition['charset'].lower():
                 query = urllib.quote(query.encode(definition['charset']))
@@ -146,6 +146,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 payload[key] = filtering.post_data[key].replace('QUERY', query)
             else:
                 payload[key] = filtering.post_data[key]
+            payload[key] = urllib.unquote(payload[key])
 
         # Creating the payload for GET method
         data = None
@@ -215,11 +216,17 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
             elif 'login_object' in definition and definition['login_object']:
                 login_object = None
+                login_headers = None
                 logged_in = False
                 try:
                     login_object = definition['login_object'].replace('USERNAME', 'u"%s"' % username).replace('PASSWORD', 'u"%s"' % password)
                 except Exception as e:
                     log.error("Could not make login object for %s: %s" % (provider, e))
+                try:
+                    if 'login_headers' in definition and definition['login_headers']:
+                        login_headers = eval(definition['login_headers'])
+                except Exception as e:
+                    log.error("Could not make login headers for %s: %s" % (provider, e))
 
                 # TODO generic flags in definitions for those...
                 if provider == 'hd-torrents':
@@ -251,8 +258,8 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                     else:
                         log.error("[%s] Token auth failed with response: %s" % (provider, repr(client.content)))
                         return filtering.results
-                elif not logged_in and client.login(definition['root_url'] + definition['login_path'],
-                                                    eval(login_object), definition['login_failed']):
+                elif not logged_in and client.login(definition['root_url'], definition['login_path'],
+                                                    eval(login_object), login_headers, definition['login_failed']):
                     log.info('[%s] Login successful' % provider)
                     logged_in = True
                 elif not logged_in:

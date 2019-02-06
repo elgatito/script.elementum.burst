@@ -57,8 +57,8 @@ class Filtering:
         # resolutions['filter_2k'] = ['_2k_', '1440p', u'1440р', u'_2к_']
         # resolutions['filter_4k'] = ['_4k_', '2160p', u'2160р', '_uhd_', u'_4к_']
 
-        resolutions['filter_240p'] = [u'240[pр]', u'tv\-?rip|sat\-?rip|vhs\-?rip']
-        resolutions['filter_480p'] = [u'480[pр]', u'xvid|dvd|dvdrip|hdtv|web\-(dl)?rip']
+        resolutions['filter_240p'] = [u'240[pр]', u'vhs\-?rip']
+        resolutions['filter_480p'] = [u'480[pр]', u'xvid|dvd|dvdrip|hdtv|web\-(dl)?rip|iptv|sat\-?rip|tv\-?rip']
         resolutions['filter_720p'] = [u'720[pр]|1280x720', u'hd720p?|hd\-?rip|b[rd]rip']
         resolutions['filter_1080p'] = [u'1080[piр]|1920x1080', u'hd1080p?|fullhd|fhd|blu\W*ray|bd\W*remux']
         resolutions['filter_2k'] = [u'1440[pр]', u'2k']
@@ -80,6 +80,7 @@ class Filtering:
             'filter_cam': [u'cam|hd\-?cam'],
             'filter_tvrip': [u'tv\-?rip|sat\-?rip'],
             'filter_vhsrip': [u'vhs\-?rip'],
+            'filter_iptvrip': [u'iptv\-?rip'],
             'filter_trailer': [u'trailer|трейлер|тизер'],
             'filter_workprint': [u'workprint']
         }
@@ -155,7 +156,7 @@ class Filtering:
         self.queries = []
         self.extras = []
 
-        self.info = dict(title="", proxy_url="", titles=[])
+        self.info = dict(title="", proxy_url="", internal_proxy_url="", elementum_url="", titles=[])
         self.kodi_language = ''
         self.language_exceptions = []
         self.get_data = {}
@@ -184,6 +185,9 @@ class Filtering:
         if definition['general_keywords']:
             self.queries = [definition['general_keywords']]
             self.extras = [definition['general_extra']]
+        if 'general_keywords_fallback' in definition and definition['general_keywords_fallback']:
+            self.queries.append(definition['general_keywords_fallback'])
+            self.extras.append('-')
 
     def use_movie(self, provider, payload):
         """ Setup method to define movie search parameters
@@ -208,6 +212,12 @@ class Filtering:
         if definition['movie_keywords']:
             self.queries = ["%s" % definition['movie_keywords']]
             self.extras = ["%s" % definition['movie_extra']]
+        if 'movie_keywords2' in definition and definition['movie_keywords2']:
+            self.queries.append("%s" % definition['movie_keywords2'])
+            self.extras.append("%s" % definition['movie_extra2'] if definition['movie_extra2'] else '')
+        if 'movie_keywords_fallback' in definition and definition['movie_keywords_fallback']:
+            self.queries.append(definition['movie_keywords_fallback'])
+            self.extras.append('-')
 
     def use_episode(self, provider, payload):
         """ Setup method to define episode search parameters
@@ -233,9 +243,12 @@ class Filtering:
             self.queries = ["%s" % definition['tv_keywords']]
             self.extras = ["%s" % definition['tv_extra'] if definition['tv_extra'] else '']
             # TODO this sucks, tv_keywords should be a list from the start..
-            if definition['tv_keywords2']:
-                self.queries.append(definition['tv_keywords2'])
-                self.extras.append(definition['tv_extra2'] if definition['tv_extra2'] else '')
+        if 'tv_keywords2' in definition and definition['tv_keywords2']:
+            self.queries.append(definition['tv_keywords2'])
+            self.extras.append(definition['tv_extra2'] if definition['tv_extra2'] else '')
+        if 'tv_keywords_fallback' in definition and definition['tv_keywords_fallback']:
+            self.queries.append(definition['tv_keywords_fallback'])
+            self.extras.append('-')
 
     def use_season(self, provider, info):
         """ Setup method to define season search parameters
@@ -260,9 +273,12 @@ class Filtering:
         if definition['season_keywords']:
             self.queries = ["%s" % definition['season_keywords']]
             self.extras = ["%s" % definition['season_extra'] if definition['season_extra'] else '']
-            if definition['season_keywords2']:
-                self.queries.append("%s" % definition['season_keywords2'])
-                self.extras.append("%s" % definition['season_extra2'] if definition['season_extra2'] else '')
+        if definition['season_keywords2']:
+            self.queries.append("%s" % definition['season_keywords2'])
+            self.extras.append("%s" % definition['season_extra2'] if definition['season_extra2'] else '')
+        if 'season_keywords_fallback' in definition and definition['season_keywords_fallback']:
+            self.queries.append(definition['season_keywords_fallback'])
+            self.extras.append('-')
 
     def use_anime(self, provider, info):
         """ Setup method to define anime search parameters
@@ -289,6 +305,9 @@ class Filtering:
         if definition['anime_keywords']:
             self.queries = ["%s" % definition['anime_keywords']]
             self.extras = ["%s" % definition['anime_extra'] if definition['anime_extra'] else '']
+        if 'anime_keywords_fallback' in definition and definition['anime_keywords_fallback']:
+            self.queries.append(definition['anime_keywords_fallback'])
+            self.extras.append('-')
 
     def information(self, provider):
         """ Debugging method to print keywords and file sizes
@@ -332,6 +351,7 @@ class Filtering:
             str: Processed query keywords
         """
         keywords = self.read_keywords(text)
+        replacing = get_setting("filter_quotes", bool)
 
         for keyword in keywords:
             keyword = keyword.lower()
@@ -388,6 +408,9 @@ class Filtering:
                     episode = '%s' % self.info["episode"]
                 text = text.replace('{%s}' % keyword, episode)
 
+        if replacing:
+            text = text.replace(u"'", '')
+
         return text
 
     def verify(self, provider, name, size):
@@ -414,7 +437,7 @@ class Filtering:
         if self.filter_resolutions and get_setting('require_resolution', bool):
             resolution = self.determine_resolution(name)[0]
             if resolution not in self.resolutions_allow:
-                self.reason += " Resolution not allowed ({})".format(resolution)
+                self.reason += " Resolution not allowed ({0})".format(resolution)
                 return False
 
         if self.filter_title:
@@ -437,7 +460,7 @@ class Filtering:
             return False
 
         if size and not self.in_size_range(size) and get_setting('require_size', bool):
-            self.reason += " Size out of range ({})".format(size)
+            self.reason += " Size out of range ({0})".format(size)
             return False
 
         return True

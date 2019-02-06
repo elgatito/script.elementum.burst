@@ -26,7 +26,14 @@ languages = {
     'bg': 32116,
     'ro': 32117,
     'hu': 32118,
+    'pl': 32126,
+    'lt': 32127,
 }
+
+def char_range(c1, c2):
+    """Generates the characters from `c1` to `c2`, inclusive."""
+    for c in xrange(ord(c1), ord(c2)+1):
+        yield chr(c)
 
 def cleanup_settings(path):
     global settings
@@ -38,7 +45,7 @@ def cleanup_settings(path):
         with open(path) as file:
             settings = file.read()
             file.close()
-        settings = re.sub(r"(<!-- Providers-\w+-Begin -->).*?(<!-- Providers-\w+-End -->)", "\\1\n    \\2", settings, flags=re.DOTALL)
+        settings = re.sub(r"(<!-- Providers-\w+-\d-Begin -->).*?(<!-- Providers-\w+-\d-End -->)", "\\1\n    \\2", settings, flags=re.DOTALL)
 
     except Exception as e:
         print "Failed removing settings from %s: %s" % (path, repr(e))
@@ -66,6 +73,7 @@ def load_providers(path):
                 continue
 
             providers[provider]['id'] = provider
+            providers[provider]['title'] = providers[provider]['name']
             providers[provider]['name'] = "[B]" + providers[provider]['name'] + "[/B]   [COLOR gray]" + get_languages(providers[provider]['languages']) + "[/COLOR]"
 
             if providers[provider]['private']:
@@ -82,10 +90,15 @@ def store_providers(path):
     global public
     global private
 
-    public_string = ""
-    private_string = ""
-    public_predefined_string = ""
-    private_predefined_string = ""
+    public1_string = ""
+    private1_string = ""
+    public1_predefined_string = ""
+    private1_predefined_string = ""
+
+    public2_string = ""
+    private2_string = ""
+    public2_predefined_string = ""
+    private2_predefined_string = ""
 
     public_count = 0
     private_count = 0
@@ -101,10 +114,16 @@ def store_providers(path):
       <setting id="{id}_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       """.format(id=p['id'], name=p['name'].encode('utf8'), default=str(p['predefined']).lower())
 
-        if not p['predefined']:
-            public_string += item
+        if p['title'][:1].lower() in char_range('0', 'm'):
+            if not p['predefined']:
+                public1_string += item
+            else:
+                public1_predefined_string += item
         else:
-            public_predefined_string += item
+            if not p['predefined']:
+                public2_string += item
+            else:
+                public2_predefined_string += item
 
     for p in private:
         private_count += 1
@@ -117,14 +136,23 @@ def store_providers(path):
       <setting id="{id}_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       """.format(id=p['id'], name=p['name'].encode('utf8'), default=str(p['predefined']).lower())
 
-        if not p['predefined']:
-            private_string += item
+        if p['title'][:1].lower() in char_range('0', 'm'):
+            if not p['predefined']:
+                private1_string += item
+            else:
+                private1_predefined_string += item
         else:
-            private_predefined_string += item
+            if not p['predefined']:
+                private2_string += item
+            else:
+                private2_predefined_string += item
 
     try:
-        settings = re.sub(r"(<!-- Providers-Public-Begin -->).*?(<!-- Providers-Public-End -->)", "\\1\n" + public_predefined_string + public_string + "\\2", settings, flags=re.DOTALL)
-        settings = re.sub(r"(<!-- Providers-Private-Begin -->).*?(<!-- Providers-Private-End -->)", "\\1\n" + private_predefined_string + private_string + "\\2", settings, flags=re.DOTALL)
+        settings = re.sub(r"(<!-- Providers-Public-1-Begin -->).*?(<!-- Providers-Public-1-End -->)", "\\1\n" + public1_predefined_string + public1_string + "\\2", settings, flags=re.DOTALL)
+        settings = re.sub(r"(<!-- Providers-Public-2-Begin -->).*?(<!-- Providers-Public-2-End -->)", "\\1\n" + public2_predefined_string + public2_string + "\\2", settings, flags=re.DOTALL)
+
+        settings = re.sub(r"(<!-- Providers-Private-1-Begin -->).*?(<!-- Providers-Private-1-End -->)", "\\1\n" + private1_predefined_string + private1_string + "\\2", settings, flags=re.DOTALL)
+        settings = re.sub(r"(<!-- Providers-Private-2-Begin -->).*?(<!-- Providers-Private-2-End -->)", "\\1\n" + private2_predefined_string + private2_string + "\\2", settings, flags=re.DOTALL)
 
         with open(path, 'w') as file:
             file.write(settings)

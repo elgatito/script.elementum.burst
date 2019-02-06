@@ -8,12 +8,11 @@ import os
 import sys
 import urllib3
 import dns.resolver
-import antizapret
 import requests
+import xbmcaddon
 
 from elementum.provider import log, get_setting
 from time import sleep
-from urlparse import urlparse
 from urllib3.util import connection
 from cookielib import LWPCookieJar
 from urllib import urlencode
@@ -40,9 +39,6 @@ _orig_create_connection = connection.create_connection
 
 # Proxy types
 proxy_types = ["socks4", "socks5", "http", "https"]
-
-# Init antizapret object that does detection of antizapret proxies
-antizapret = antizapret.AntizapretDetector()
 
 # Disable warning from urllib
 urllib3.disable_warnings()
@@ -91,22 +87,21 @@ class Client:
     """
     Web client class with automatic charset detection and decoding
     """
-    def __init__(self, proxy_url=None, request_charset='utf-8', response_charset=None):
+    def __init__(self, info=None, request_charset='utf-8', response_charset=None):
         self._counter = 0
         self._cookies_filename = ''
         self._cookies = LWPCookieJar()
         self.url = None
         self.user_agent = USER_AGENT
-        self.clearance = None
         self.content = None
         self.status = None
         self.token = None
         self.passkey = None
-        self.proxy_url = proxy_url
+        self.info = info
+        self.proxy_url = None
         self.request_charset = request_charset
         self.response_charset = response_charset
 
-        self.use_antizapret = False
         self.needs_proxylock = False
 
         self.headers = dict()
@@ -156,39 +151,51 @@ class Client:
         if get_setting("use_public_dns", bool):
             connection.create_connection = patched_create_connection
 
-        if proxy['enabled']:
-            if proxy['use_type'] == 0 and proxy_url:
-                log.debug("Setting proxy from Elementum: %s" % (proxy_url))
+        if get_setting("use_elementum_proxy", bool):
+            elementum_addon = xbmcaddon.Addon(id='plugin.video.elementum')
+            if elementum_addon and elementum_addon.getSetting('internal_proxy_enabled') == "true":
+                self.proxy_url = "{0}://{1}:{2}".format("http", "127.0.0.1", "65222")
+                if info and "internal_proxy_url" in info:
+                    self.proxy_url = info["internal_proxy_url"]
+
+                self.session.proxies = {
+                    'http': self.proxy_url,
+                    'https': self.proxy_url,
+                }
+        elif proxy['enabled']:
+            if proxy['use_type'] == 0 and info and "proxy_url" in info:
+                log.debug("Setting proxy from Elementum: %s" % (info["proxy_url"]))
             elif proxy['use_type'] == 1:
                 log.debug("Setting proxy with custom settings: %s" % (repr(proxy)))
 
                 if proxy['login'] or proxy['password']:
-                    proxy_url = "{}://{}:{}@{}:{}".format(proxy['type'], proxy['login'], proxy['password'], proxy['host'], proxy['port'])
+                    self.proxy_url = "{0}://{1}:{2}@{3}:{4}".format(proxy['type'], proxy['login'], proxy['password'], proxy['host'], proxy['port'])
                 else:
-                    proxy_url = "{}://{}:{}".format(proxy['type'], proxy['host'], proxy['port'])
-            elif proxy['use_type'] == 2:
+                    self.proxy_url = "{0}://{1}:{2}".format(proxy['type'], proxy['host'], proxy['port'])
 
-                log.debug("Setting proxy to Antizapret resolver")
-                self.use_antizapret = True
-                proxy_url = None
-
-            if proxy_url:
+            if self.proxy_url:
                 self.session.proxies = {
-                    'http': proxy_url,
-                    'https': proxy_url,
+                    'http': self.proxy_url,
+                    'https': self.proxy_url,
                 }
 
     def _create_cookies(self, payload):
         return urlencode(payload)
 
-    def _read_cookies(self, url=''):
+    def _locate_cookies(self, url=''):
         cookies_path = os.path.join(PATH_TEMP, 'burst')
         if not os.path.exists(cookies_path):
             try:
                 os.makedirs(cookies_path)
             except Exception as e:
                 log.debug("Error creating cookies directory: %s" % repr(e))
-        self._cookies_filename = os.path.join(cookies_path, urlparse(url).netloc + '_cookies.jar')
+
+        # return os.path.join(cookies_path, urlparse(url).netloc + '_cookies.jar')
+        # Do we really need to split cookies for each domain?
+        return os.path.join(cookies_path, 'common_cookies.jar')
+
+    def _read_cookies(self, url=''):
+        self._cookies_filename = self._locate_cookies(url)
         if os.path.exists(self._cookies_filename):
             try:
                 self._cookies.load(self._cookies_filename)
@@ -196,6 +203,8 @@ class Client:
                 log.debug("Reading cookies error: %s" % repr(e))
 
     def _save_cookies(self):
+        self._cookies_filename = self._locate_cookies(self.url)
+
         try:
             self._cookies.save(self._cookies_filename)
         except Exception as e:
@@ -227,16 +236,6 @@ class Client:
         if get_data:
             url += '?' + urlencode(get_data)
 
-        if self.use_antizapret:
-            parsed = urlparse(url)
-            proxy = antizapret.detect(host=parsed.netloc, scheme=parsed.scheme)
-            if proxy:
-                log.debug("Detected antizapret proxy for %s://%s: %s" % (parsed.scheme, parsed.netloc, proxy))
-                self.session.proxies = {
-                    'http': proxy,
-                    'https': proxy,
-                }
-
         log.debug("Opening URL: %s" % repr(url))
         if self.session.proxies:
             log.debug("Proxies: %s" % (repr(self.session.proxies)))
@@ -250,6 +249,7 @@ class Client:
         req_headers = {
             'User-Agent': self.user_agent,
             'Content-Language': language,
+            'Cache-Control': 'no-cache',
             'Accept-Encoding': 'deflate, compress, gzip',
             'Origin': url,
             'Referer': url
@@ -279,9 +279,10 @@ class Client:
             self._good_spider()
             with self.session.send(prepped) as response:
                 self.headers = response.headers
-                self._save_cookies()
                 self.status = response.status_code
                 self.url = response.url
+
+                self._save_cookies()
 
                 if self.response_charset:
                     self.content = response.content.decode(self.response_charset, 'ignore')
@@ -297,7 +298,7 @@ class Client:
 
         return self.status == 200
 
-    def login(self, url, data, fails_with):
+    def login(self, root_url, url, data, headers, fails_with):
         """ Login wrapper around ``open``
 
         Args:
@@ -308,7 +309,10 @@ class Client:
         Returns:
             bool: Whether or not login was successful
         """
-        if self.open(url.encode('utf-8'), post_data=encode_dict(data, self.request_charset)):
+        if not url.startswith('http'):
+            url = root_url + url
+
+        if self.open(url.encode('utf-8'), post_data=encode_dict(data, self.request_charset), headers=headers):
             try:
                 if fails_with in self.content:
                     self.status = 'Wrong username or password'

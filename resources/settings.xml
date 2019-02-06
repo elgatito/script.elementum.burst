@@ -2,10 +2,11 @@
 <settings>
   <!-- General -->
   <category label="32000">
-    <setting label="32084" id="use_public_dns" type="bool" default="false" />
-      <setting id="public_dns_list" label="32093" type="text" default="8.8.8.8, 8.8.4.4, 9.9.9.9" visible="eq(-1,true)" />
-      <setting id="opennic_dns_list" label="32094" type="text" default="193.183.98.66, 172.104.136.243, 89.18.27.167" visible="eq(-2,true)" />
-    <setting label="32041" id="use_cloudhole" type="bool" default="false" />
+    <setting label="32125" id="use_elementum_proxy" type="bool" default="true" />
+
+    <setting label="32084" id="use_public_dns" type="bool" default="false" visible="eq(-1,false)" />
+      <setting id="public_dns_list" label="32093" type="text" default="8.8.8.8, 8.8.4.4, 9.9.9.9" visible="eq(-1,true) + eq(-2,false)" />
+      <setting id="opennic_dns_list" label="32094" type="text" default="193.183.98.66, 172.104.136.243, 89.18.27.167" visible="eq(-2,true) + eq(-3,false)" />
     <setting label="32033" id="min_size" type="slider" option="float" range="0,0.25,100" default="0" />
     <setting label="32034" id="max_size" type="slider" option="float" range="1,1,200" default="100" />
     <setting label="32040" id="max_results" type="slider" default="10" option="int" range="1,1,25" />
@@ -13,28 +14,16 @@
     <setting label="32070" id="timeout" type="slider" default="25" option="int" range="3,1,180" visible="eq(-1,false)" />
     <setting label="32071" id="timeout_help" type="text" enable="false" subsetting="true" visible="eq(-2,false)" />
     <setting label="32119" id="sort_by" type="enum" lvalues="32120|32121|32122|32123" default="3" />
+    <setting label="32132" id="filter_quotes" type="bool" default="false" />
   </category>
 
   <!-- Providers -->
-  <category label="32001">
-    <setting label="32012" type="lsep" />
-    <!-- Providers-Public-Begin -->
+  <category label="32128">
+    <!-- Providers-Public-1-Begin -->
 
     <setting label="[B]1337x[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_1337x" type="bool" default="true" />
       <setting id="1337x_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="1337x_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-      
-    <setting label="[B]MagnetDL[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_magnetdl" type="bool" default="true" />
-      <setting id="magnetdl_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="magnetdl_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-      
-    <setting label="[B]RARBG[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_rarbg" type="bool" default="true" />
-      <setting id="rarbg_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="rarbg_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-      
-    <setting label="[B]YTS[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_yts" type="bool" default="true" />
-      <setting id="yts_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="yts_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
     <setting label="[B]Cpasbien[/B]   [COLOR gray][$ADDON[script.elementum.burst 32113]][/COLOR]" id="use_cpasbien" type="bool" default="false" />
       <setting id="cpasbien_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -64,6 +53,10 @@
       <setting id="ilcorsaronero_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="ilcorsaronero_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
+    <setting label="[B]iTorrent[/B]   [COLOR gray][$ADDON[script.elementum.burst 32118]][/COLOR]" id="use_itorrent" type="bool" default="false" />
+      <setting id="itorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="itorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      
     <setting label="[B]KickAss[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_kickass" type="bool" default="false" />
       <setting id="kickass_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="kickass_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
@@ -72,9 +65,26 @@
       <setting id="limetorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="limetorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
+    <setting label="[B]MagnetDL[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_magnetdl" type="bool" default="false" />
+      <setting id="magnetdl_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="magnetdl_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      
     <setting label="[B]MegaPeer[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_megapeer" type="bool" default="false" />
       <setting id="megapeer_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="megapeer_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      <!-- Providers-Public-1-End -->
+  </category> 
+
+  <category label="32129">
+    <!-- Providers-Public-2-Begin -->
+
+    <setting label="[B]RARBG[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_rarbg" type="bool" default="true" />
+      <setting id="rarbg_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="rarbg_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      
+    <setting label="[B]YTS[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_yts" type="bool" default="true" />
+      <setting id="yts_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="yts_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
     <setting label="[B]NewStudio[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_newstudio" type="bool" default="false" />
       <setting id="newstudio_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -131,10 +141,11 @@
     <setting label="[B]Zooqle[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_zooqle" type="bool" default="false" />
       <setting id="zooqle_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="zooqle_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-      <!-- Providers-Public-End -->
-    
-    <setting label="32014" type="lsep" />
-    <!-- Providers-Private-Begin -->
+      <!-- Providers-Public-2-End -->
+  </category> 
+
+  <category label="32130">
+    <!-- Providers-Private-1-Begin -->
 
     <setting label="[B]0day[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114], $ADDON[script.elementum.burst 32115]][/COLOR]" id="use_0day" type="bool" default="false" />
       <setting id="0day_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -160,6 +171,12 @@
       <setting id="bithumen_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="bithumen_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
+    <setting label="[B]BitNova[/B]   [COLOR gray][$ADDON[script.elementum.burst 32126]][/COLOR]" id="use_bitnova" type="bool" default="false" />
+      <setting id="bitnova_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="bitnova_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="bitnova_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="bitnova_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+      
     <setting label="[B]BlueBird[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_bluebird" type="bool" default="false" />
       <setting id="bluebird_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="bluebird_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
@@ -184,12 +201,29 @@
       <setting id="hd-torrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="hd-torrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       
+    <setting label="[B]IPTorrents[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_iptorrents" type="bool" default="false" />
+      <setting id="iptorrents_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="iptorrents_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="iptorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="iptorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+      
+    <setting label="[B]Linkomanija[/B]   [COLOR gray][$ADDON[script.elementum.burst 32127]][/COLOR]" id="use_linkomanija" type="bool" default="false" />
+      <setting id="linkomanija_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="linkomanija_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="linkomanija_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="linkomanija_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+      
     <setting label="[B]MVGroup[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_mvgroup" type="bool" default="false" />
       <setting id="mvgroup_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="mvgroup_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="mvgroup_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="mvgroup_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-      
+      <!-- Providers-Private-1-End -->
+  </category>
+
+  <category label="32131">
+      <!-- Providers-Private-2-Begin -->
+
     <setting label="[B]nCore[/B]   [COLOR gray][$ADDON[script.elementum.burst 32118]][/COLOR]" id="use_ncore" type="bool" default="false" />
       <setting id="ncore_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="ncore_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
@@ -273,9 +307,9 @@
       <setting id="kinozal_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="kinozal_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="kinozal_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-      <!-- Providers-Private-End -->
-
+      <!-- Providers-Private-2-End -->
   </category>
+
 
   <!-- Filtering -->
   <category label="32087">
@@ -309,7 +343,8 @@
     <setting label="[B]3D[/B]" id="filter_3d" type="bool" default="false" />
     <setting label="[B]TeleSync/TS/TC[/B]" id="filter_telesync" type="bool" default="false" />
     <setting label="[B]Cam/HDCam[/B]" id="filter_cam" type="bool" default="false" />
-    <setting label="[B]TVRip/SATRip[/B]" id="filter_tvrip" type="bool" default="false" />
+    <setting label="[B]TVRip/SATRip[/B]" id="filter_tvrip" type="bool" default="true" />
+    <setting label="[B]IPTVRip[/B]" id="filter_iptvrip" type="bool" default="true" />
     <setting label="[B]VHSRip[/B]" id="filter_vhsrip" type="bool" default="false" />
     <setting label="[B]Trailer[/B]" id="filter_trailer" type="bool" default="false" />
     <setting label="[B]Workprint[/B]" id="filter_workprint" type="bool" default="false" />
@@ -319,7 +354,7 @@
   <category label="32095">
       <setting label="32095" type="lsep" />
       <setting id="proxy_enabled" label="32096" type="bool" default="false" />
-        <setting id="proxy_use_type" label="32106" type="enum" default="0" subsetting="true" lvalues="32107|32108|32109" visible="eq(-1,true)" />
+        <setting id="proxy_use_type" label="32106" type="enum" default="0" subsetting="true" lvalues="32107|32108" visible="eq(-1,true)" />
         <setting id="proxy_type" label="32101" type="enum" default="1" subsetting="true" lvalues="32102|32103|32104|32105" visible="eq(-2,true)" enable="eq(-1,1)" />
         <setting id="proxy_host" label="32097" type="text" default="" subsetting="true" visible="eq(-3,true)" enable="eq(-2,1)" />
         <setting id="proxy_port" label="32098" type="number" default="1080" subsetting="true" visible="eq(-4,true)" enable="eq(-3,1)" />
