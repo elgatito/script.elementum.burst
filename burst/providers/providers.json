@@ -626,7 +626,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "EXTRA",
-        "base_url": "http://www.tntvillage.scambioetico.org/src/releaselist.php",
+        "base_url": "http://tntvillage.scambioetico.org/src/releaselist.php",
         "color": "FFF14E13",
         "general_extra": "",
         "general_keywords": "{title:original}",
