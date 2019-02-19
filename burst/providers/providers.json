@@ -670,7 +670,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "200",
-        "base_url": "https://thepiratebay.org/search/QUERY/0/99/",
+        "base_url": "https://thepiratebay.org/search/QUERYEXTRA/0/99/",
         "color": "FF5A3C22",
         "general_extra": "",
         "general_keywords": "{title:original}",
