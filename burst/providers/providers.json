@@ -1384,7 +1384,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
-        "base_url": "https://rutracker.cr/forum/tracker.php?nm=QUERYEXTRA&prev_new=0&prev_oop=1&f[]=-1&o=10&s=2&oop=1&pn=",
+        "base_url": "https://rutracker.net/forum/tracker.php?nm=QUERYEXTRA&prev_new=0&prev_oop=1&f[]=-1&o=10&s=2&oop=1&pn=",
         "public_dns_alias": "rutracker.lib",
         "color": "FFFFFFFF",
         "charset": "windows-1251",
@@ -1405,9 +1405,9 @@
             "size": "item('a', order=4)",
             "seeds": "item(tag='b', order=1, select=('class', 'seedmed'))",
             "peers": "item(tag='b', order=2)",
-            "torrent": "'https://rutracker.cr/forum/%s' % item(tag='a', attribute='href', order=4)"
+            "torrent": "'https://rutracker.net/forum/%s' % item(tag='a', attribute='href', order=4)"
         },
-        "root_url": "https://rutracker.cr",
+        "root_url": "https://rutracker.net",
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "\"{title:original}\" \"Сезон {season}\"",
