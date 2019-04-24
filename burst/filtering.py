@@ -82,7 +82,8 @@ class Filtering:
             'filter_vhsrip': [u'vhs\-?rip'],
             'filter_iptvrip': [u'iptv\-?rip'],
             'filter_trailer': [u'trailer|трейлер|тизер'],
-            'filter_workprint': [u'workprint']
+            'filter_workprint': [u'workprint'],
+            'filter_line': [u'line']
         }
 
         # TODO: remove when finished with debugging resolutions detection

@@ -382,3 +382,11 @@ msgstr "Закрытые трекеры [N .. ]"
 msgctxt "#32132"
 msgid "Remove quotes from search query"
 msgstr "Удалить кавычки из поискового запроса"
+
+msgctxt "#32133"
+msgid "Resolution"
+msgstr "Разрешение"
+
+msgctxt "#32134"
+msgid "Video quality"
+msgstr "Качество видео"

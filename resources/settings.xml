@@ -324,7 +324,7 @@
   </category>
 
   <!-- Resolution -->
-  <category label="32002">
+  <category label="32133">
     <setting label="[B]4K/2160p[/B]" id="filter_4k" type="bool" default="true" />
     <setting label="[B]2K/1440p[/B]" id="filter_2k" type="bool" default="true" />
     <setting label="[B]1080p[/B]" id="filter_1080p" type="bool" default="true" />
@@ -334,7 +334,7 @@
   </category>
 
   <!-- Release type -->
-  <category label="32003">
+  <category label="32134">
     <setting label="[B]BRRip/BDRip/Bluray[/B]" id="filter_brrip" type="bool" default="true" />
     <setting label="[B]WebDL/WebRip[/B]" id="filter_webdl" type="bool" default="true" />
     <setting label="[B]HDRip[/B]" id="filter_hdrip" type="bool" default="true" />
@@ -350,6 +350,7 @@
     <setting label="[B]VHSRip[/B]" id="filter_vhsrip" type="bool" default="false" />
     <setting label="[B]Trailer[/B]" id="filter_trailer" type="bool" default="false" />
     <setting label="[B]Workprint[/B]" id="filter_workprint" type="bool" default="false" />
+    <setting label="[B]Line[/B]" id="filter_line" type="bool" default="false" />
   </category>
 
   <!-- Proxy -->
