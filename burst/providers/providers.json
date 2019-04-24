@@ -52,7 +52,7 @@
         "anime_extra": null,
         "anime_keywords": null,
         "anime_query": null,
-        "base_url": "https://eztv.ag/search/QUERYEXTRA",
+        "base_url": "https://eztv.io/search/QUERYEXTRA",
         "color": "FF0F559D",
         "general_extra": "",
         "general_keywords": "{title}",
@@ -75,7 +75,7 @@
         },
         "season_extra": "",
         "season_extra2": "",
-        "season_keywords": "{title} S{season:2}",
+        "season_keywords": "'{title:original}' S{season:2}",
         "season_keywords2": "",
         "season_query": "",
         "separator": "-",
@@ -83,9 +83,9 @@
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords": "'{title:original}' s{season:2}e{episode:2}",
+        "tv_keywords2": null,
+        "tv_keywords_fallback": "'{title:original}' s{season}"
     },
     "cpasbien": {
         "enabled": true,
