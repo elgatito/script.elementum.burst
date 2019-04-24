@@ -85,7 +85,7 @@
         "tv_extra2": "",
         "tv_keywords": "'{title:original}' s{season:2}e{episode:2}",
         "tv_keywords2": null,
-        "tv_keywords_fallback": "'{title:original}' s{season}"
+        "tv_keywords_fallback": null
     },
     "cpasbien": {
         "enabled": true,
