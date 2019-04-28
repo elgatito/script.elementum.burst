@@ -1,9 +1,9 @@
 {
     "showrss": {
         "enabled": true,
-        "predefined": true,
+        "predefined": false,
         "private": false,
-        "name": "1337x",
+        "name": "showrss",
         "languages": "en",
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
@@ -27,7 +27,7 @@
             "row": "find_once(tag='tbody').find_all('tr')",
             "seeds": "item(tag='td', order=2)",
             "size": "item(tag='td', order=5)",
-            "torrent": "'https://www.1337x.to%s' % item(tag='a', attribute='href', order=2)"
+            "torrent": "'https://http://showrss.info' % item(tag='a', attribute='href', order=2)"
         },
         "season_extra": "",
         "season_extra2": "",
