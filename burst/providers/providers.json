@@ -27,7 +27,7 @@
             "row": "find_once(tag='tbody').find_all('tr')",
             "seeds": "item(tag='td', order=2)",
             "size": "item(tag='td', order=5)",
-            "torrent": "'https://http://showrss.info' % item(tag='a', attribute='href', order=2)"
+            "torrent": "'https://showrss.info' % item(tag='a', attribute='href', order=2)"
         },
         "season_extra": "",
         "season_extra2": "",
