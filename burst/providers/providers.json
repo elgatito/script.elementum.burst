@@ -1,5 +1,5 @@
 {
-    "1337x": {
+    "showrss": {
         "enabled": true,
         "predefined": true,
         "private": false,
@@ -8,7 +8,7 @@
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
-        "base_url": "https://www.1337x.to/search/QUERYEXTRA/1/",
+        "base_url": "http://showrss.info/user/210950.rss?magnets=true&namespaces=true&name=null&quality=null&re=null\",
         "color": "FFF14E13",
         "general_extra": "",
         "general_keywords": "{title}",
