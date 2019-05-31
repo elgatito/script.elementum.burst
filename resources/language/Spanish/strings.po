@@ -76,7 +76,7 @@ msgstr "Requerir"
 
 msgctxt "#32018"
 msgid "Use language preference from Kodi when a translation is available"
-msgstr "Usar idioma preferente de Kodi cuando haya una traducción esté disponible"
+msgstr "Usar preferencia de idioma de Kodi cuando haya una traducción disponible""
 
 msgctxt "#32033"
 msgid "Minimum size (GB)"
