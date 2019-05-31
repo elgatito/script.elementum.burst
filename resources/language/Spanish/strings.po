@@ -196,7 +196,7 @@ msgstr "Para desarrolladores"
 
 msgctxt "#32086"
 msgid "Log debug messages for parsing"
-msgstr "Registar mensajes de depuración para análisis"
+msgstr "Registrar mensajes de depuración para análisis"
 
 msgctxt "#32087"
 msgid "Filtering"
@@ -392,4 +392,4 @@ msgstr "Calidad de vídeo"
 
 #~ msgctxt "#32040"
 #~ msgid "Maximum torrents"
-#~ msgstr "Numero máximo de torrents"
+#~ msgstr "Número máximo de torrents"
