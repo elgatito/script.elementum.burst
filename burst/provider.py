@@ -65,7 +65,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
     return results
 
 
-def process(provider, generator, filtering, has_special, verify_name=True, verify_size=True):
+def process(provider, generator, filtering, has_special, verify_name=True, verify_size=True, skip_auth=False):
     """ Method for processing provider results using its generator and Filtering class instance
 
     Args:
@@ -217,7 +217,8 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             elif 'login_object' in definition and definition['login_object']:
                 login_object = None
                 login_headers = None
-                logged_in = False
+                logged_in = skip_auth
+
                 try:
                     login_object = definition['login_object'].replace('USERNAME', 'u"%s"' % username).replace('PASSWORD', 'u"%s"' % password)
                 except Exception as e:

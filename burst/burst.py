@@ -84,6 +84,10 @@ def search(payload, method="general"):
         payload['internal_proxy_url'] = ''
     if 'elementum_url' not in payload:
         payload['elementum_url'] = ''
+    if 'silent' not in payload:
+        payload['silent'] = False
+    if 'skip_auth' not in payload:
+        payload['skip_auth'] = False
 
     global request_time
     global provider_names
@@ -98,7 +102,8 @@ def search(payload, method="general"):
     providers = get_enabled_providers(method)
 
     if len(providers) == 0:
-        notify(translation(32060), image=get_icon_path())
+        if not payload['silent']:
+            notify(translation(32060), image=get_icon_path())
         log.error("No providers enabled")
         return []
 
@@ -114,7 +119,9 @@ def search(payload, method="general"):
             log.info("No '%s' translation available..." % kodi_language)
 
     p_dialog = xbmcgui.DialogProgressBG()
-    p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', translation(32061))
+    if not payload['silent']:
+        p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', translation(32061))
+
     for provider in providers:
         available_providers += 1
         provider_names.append(definitions[provider]['name'])
@@ -131,17 +138,20 @@ def search(payload, method="general"):
         if timer > timeout:
             break
         message = translation(32062) % available_providers if available_providers > 1 else translation(32063)
-        p_dialog.update(int((total - available_providers) / total * 100), message=message)
+        if not payload['silent']:
+            p_dialog.update(int((total - available_providers) / total * 100), message=message)
         time.sleep(0.25)
 
-    p_dialog.close()
+    if not payload['silent']:
+        p_dialog.close()
     del p_dialog
 
     if available_providers > 0:
         message = u', '.join(provider_names)
         message = message + translation(32064)
         log.warning(message.encode('utf-8'))
-        notify(message, ADDON_ICON)
+        if not payload['silent']:
+            notify(message, ADDON_ICON)
 
     log.debug("all provider_results: %s" % repr(provider_results))
 
@@ -553,9 +563,9 @@ def run_provider(provider, payload, method):
         filterInstance.use_general(provider, payload)
 
     if 'is_api' in definitions[provider]:
-        results = process(provider=provider, generator=extract_from_api, filtering=filterInstance, has_special=payload['has_special'])
+        results = process(provider=provider, generator=extract_from_api, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'])
     else:
-        results = process(provider=provider, generator=extract_torrents, filtering=filterInstance, has_special=payload['has_special'])
+        results = process(provider=provider, generator=extract_torrents, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'])
 
     got_results(provider, results)
 
