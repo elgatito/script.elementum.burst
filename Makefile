@@ -24,6 +24,9 @@ clean:
 	rm -f $(ZIP_FILE)
 	rm -rf $(NAME)
 
+check:
+	python -m flake8
+
 # extract:
 # 	./scripts/extract.py --exclude-icons
 #
