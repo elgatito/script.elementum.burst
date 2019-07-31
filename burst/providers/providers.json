@@ -1950,6 +1950,7 @@
         "base_url": "https://www2.yggtorrent.ch/engine/search?do=search&name=QUERYEXTRA",
         "root_url": "https://www2.yggtorrent.ch",
         "color": "FFF7A62D",
+        "headers": "{'upgrade-insecure-requests': '1'}",
         "general_extra": "",
         "general_keywords": "{title:fr}",
         "general_query": "",

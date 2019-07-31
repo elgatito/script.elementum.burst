@@ -149,6 +149,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             payload[key] = urllib.unquote(payload[key])
 
         # Creating the payload for GET method
+        headers = None
         data = None
         if filtering.get_data:
             data = dict()
@@ -276,7 +277,11 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search))
 
-        client.open(url_search.encode('utf-8'), post_data=payload, get_data=data)
+        if 'headers' in definition and definition['headers']:
+            headers = eval(definition['headers'])
+            log.info(">  %s headers: %s" % (definition['name'].rjust(longest), headers))
+
+        client.open(url_search.encode('utf-8'), post_data=payload, get_data=data, headers=headers)
         filtering.results.extend(
             generate_payload(provider,
                              generator(provider, client),

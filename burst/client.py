@@ -16,6 +16,7 @@ from time import sleep
 from urllib3.util import connection
 from cookielib import LWPCookieJar
 from urllib import urlencode
+from urlparse import urlparse
 from utils import encode_dict
 
 from requests.packages.urllib3.util.retry import Retry
@@ -258,6 +259,9 @@ class Client:
         # If headers passed to open() call - we overwrite headers.
         if headers:
             for key, value in headers.iteritems():
+                if key == ':path':
+                    u = urlparse(url)
+                    value = u.path
                 if value:
                     req_headers[key] = value
                 elif key.capitalize() in req_headers:
