@@ -1738,7 +1738,7 @@
         "parser": {
             "key": "find_once(tag='link', select=('rel', 'alternate')).attr['href'].split('=', 1)[-1]",
             "infohash": "",
-            "name": "item(tag='a', order=1)",
+            "name": "item(tag='a', attribute='title', order=1)",
             "peers": "item(tag='div', select=('class', 'box_l2'))",
             "row": "find_all('div', ('class', ['box_nagy', 'box_nagy2']))",
             "seeds": "item(tag='div', select=('class', 'box_s2'))",
