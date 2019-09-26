@@ -215,7 +215,7 @@ class Filtering:
             self.extras = ["%s" % definition['movie_extra']]
         if 'movie_keywords2' in definition and definition['movie_keywords2']:
             self.queries.append("%s" % definition['movie_keywords2'])
-            self.extras.append("%s" % definition['movie_extra2'] if definition['movie_extra2'] else '')
+            self.extras.append("%s" % definition['movie_extra2'] if 'movie_extra2' in definition and definition['movie_extra2'] else '')
         if 'movie_keywords_fallback' in definition and definition['movie_keywords_fallback']:
             self.queries.append(definition['movie_keywords_fallback'])
             self.extras.append('-')
@@ -242,11 +242,11 @@ class Filtering:
         self.url = u"%s%s" % (definition['base_url'], show_query)
         if definition['tv_keywords']:
             self.queries = ["%s" % definition['tv_keywords']]
-            self.extras = ["%s" % definition['tv_extra'] if definition['tv_extra'] else '']
+            self.extras = ["%s" % definition['tv_extra'] if 'tv_extra' in definition and definition['tv_extra'] else '']
             # TODO this sucks, tv_keywords should be a list from the start..
         if 'tv_keywords2' in definition and definition['tv_keywords2']:
             self.queries.append(definition['tv_keywords2'])
-            self.extras.append(definition['tv_extra2'] if definition['tv_extra2'] else '')
+            self.extras.append(definition['tv_extra2'] if 'tv_extra2' in definition and definition['tv_extra2'] else '')
         if 'tv_keywords_fallback' in definition and definition['tv_keywords_fallback']:
             self.queries.append(definition['tv_keywords_fallback'])
             self.extras.append('-')
