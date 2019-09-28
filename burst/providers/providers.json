@@ -2363,7 +2363,7 @@
             "seeds" : "item(tag='td', order=7)",
             "peers" : "item(tag='td', order=8)",
             "size" : "item(tag='td', order=5)",
-            "torrent" : "re.sub('\/$', '.torrent', 'https://itorrent.ws/torrentfiles%s' % item(tag='a', attribute='href', order=1).replace('/torrent',''))"
+            "torrent" : "('https://itorrent.ws/%s' % item(tag='a', attribute='href', order=1))"
         },
         "season_extra" : "",
         "season_extra2" : "",
@@ -2372,7 +2372,7 @@
         "season_query" : "",
         "separator" : "+",
         "show_query" : "",
-        "subpage" : false,
+        "subpage" : true,
         "tv_extra" : "",
         "tv_extra2" : "",
         "tv_keywords" : "{title:original} s{season:2}e{episode:2}",
