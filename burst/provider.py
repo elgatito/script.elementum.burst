@@ -169,6 +169,12 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             filtering.filter_title = True
             filtering.title = query
 
+        if 'initial_url' in definition and definition['initial_url']:
+            url = definition['initial_url']
+            if not url.startswith('http'):
+                url = definition['root_url'] + url
+            client.open(url)
+
         if token:
             log.info('[%s] Reusing existing token' % provider)
             url_search = url_search.replace('TOKEN', token)

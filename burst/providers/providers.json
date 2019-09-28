@@ -1947,6 +1947,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:fr} {episode}",
         "anime_query": "",
+        "initial_url": "/",
         "base_url": "https://www2.yggtorrent.pe/engine/search?do=search&name=QUERYEXTRA",
         "root_url": "https://www2.yggtorrent.pe",
         "color": "FFF7A62D",
