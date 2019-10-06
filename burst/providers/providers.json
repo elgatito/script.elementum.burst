@@ -1986,7 +1986,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:fr} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:fr} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:fr} s{season}"
+        "tv_keywords_fallback": "{title:fr} s{season:2}"
     },
     "ettv": {
         "enabled": true,

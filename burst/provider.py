@@ -124,7 +124,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             return filtering.results
 
         url_search = filtering.url.replace('QUERY', query)
-        if extra:
+        if extra and extra != '-':
             url_search = url_search.replace('EXTRA', extra)
         else:
             url_search = url_search.replace('EXTRA', '')
