@@ -1309,7 +1309,7 @@
         "tv_keywords2": "{title:original} \"Сезон {season}\""
     },
     "kinozal": {
-        "enabled": true,
+        "enabled": false,
         "predefined": false,
         "private": true,
         "name": "Кинозал",
@@ -2218,7 +2218,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
-        "base_url": "https://www.limetorrents.io/search/all/QUERY/seeds/1/",
+        "base_url": "https://www.limetorrents.info/search/all/QUERY/seeds/1/",
         "color": "FFFFFFFF",
         "general_extra": "",
         "general_keywords": "{title:original}",
