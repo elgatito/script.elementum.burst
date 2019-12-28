@@ -347,8 +347,7 @@ def extract_torrents(provider, client):
                 torrent = append_headers(torrent, headers)
                 log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
             else:
-                log.debug("[%s] Cookies: %s" % (provider, repr(client.cookies())))
-                parsed_url = urlparse(definition['root_url'])
+                parsed_url = urlparse(torrent.split('|')[0])
                 cookie_domain = '{uri.netloc}'.format(uri=parsed_url)
                 cookie_domain = re.sub('www\d*\.', '', cookie_domain)
                 cookies = []
@@ -357,12 +356,15 @@ def extract_torrents(provider, client):
                         cookies.append(cookie)
                 headers = {}
                 if cookies:
-                    headers = {'Cookie': ";".join(["%s=%s" % (c.name, c.value) for c in cookies]), 'User-Agent': user_agent}
+                    headers = {'User-Agent': user_agent}
+                    log.debug("[%s] Cookies res: %s / %s" % (provider, repr(headers), repr(client.request_headers)))
                     if client.request_headers:
                         headers.update(client.request_headers)
                     if client.url:
                         headers['Referer'] = client.url
                         headers['Origin'] = client.url
+                    # Need to set Cookie afterwards to avoid rewriting it with session Cookies
+                    headers['Cookie'] = ";".join(["%s=%s" % (c.name, c.value) for c in cookies])
                 else:
                     headers = {'User-Agent': user_agent}
 
