@@ -2219,6 +2219,7 @@
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
         "base_url": "https://www.limetorrents.info/search/all/QUERY/seeds/1/",
+        "initial_url": "https://itorrents.org/",
         "color": "FFFFFFFF",
         "general_extra": "",
         "general_keywords": "{title:original}",
