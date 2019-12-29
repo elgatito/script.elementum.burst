@@ -632,7 +632,7 @@
         "tv_keywords_fallback": "\"{title:original} {season}\""
     },
     "tntvillage": {
-        "enabled": true,
+        "enabled": false,
         "predefined": false,
         "private": false,
         "name": "TNTVillage",
