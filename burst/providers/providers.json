@@ -41,7 +41,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "eztv": {
         "enabled": true,
@@ -130,7 +130,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:fr} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:fr} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:fr} s{season}"
+        "tv_keywords_fallback": "{title:fr} s{season:2}"
     },
     "filelist": {
         "enabled": true,
@@ -174,7 +174,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "gimmepeers": {
         "enabled": true,
@@ -218,7 +218,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "glotorrents": {
         "enabled": true,
@@ -262,7 +262,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "idope": {
         "enabled": true,
@@ -306,7 +306,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:originak} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "ilcorsaronero": {
         "enabled": true,
@@ -396,7 +396,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "magnetdl": {
         "enabled": true,
@@ -440,7 +440,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "myxzorg": {
         "enabled": true,
@@ -484,7 +484,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "nyaa": {
         "enabled": true,
@@ -528,7 +528,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}",
+        "tv_keywords_fallback": "{title} s{season:2}",
         "root_url": "https://www.nyaa.si/"
     },
     "rarbg": {
@@ -674,7 +674,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "thepiratebay": {
         "enabled": true,
@@ -718,7 +718,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "torlock": {
         "enabled": true,
@@ -763,7 +763,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "torrentdownloads": {
         "enabled": true,
@@ -807,7 +807,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "torrentfunk": {
         "enabled": true,
@@ -851,7 +851,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "torrentleech": {
         "enabled": true,
@@ -895,7 +895,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season}"
+        "tv_keywords_fallback": "{title:original} s{season:3}"
     },
     "torrentz": {
         "enabled": true,
@@ -940,7 +940,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "uhdbits": {
         "enabled": true,
@@ -984,7 +984,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "yourbittorrent": {
         "enabled": true,
@@ -1028,7 +1028,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "yts": {
         "enabled": true,
@@ -1127,7 +1127,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "hd-torrents": {
         "enabled": true,
@@ -1172,7 +1172,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "toloka": {
         "enabled": true,
@@ -1801,7 +1801,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "rustorka": {
         "enabled": true,
@@ -1936,7 +1936,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "yggtorrent": {
         "enabled": true,
@@ -2030,7 +2030,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "mvgroup": {
         "enabled": true,
@@ -2075,7 +2075,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season}"
+        "tv_keywords_fallback": "{title} s{season:2}"
         },
     "zelka": {
         "enabled": true,
@@ -2379,7 +2379,7 @@
         "tv_extra2" : "",
         "tv_keywords" : "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:originak} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "linkomanija": {
         "enabled": true,
@@ -2467,7 +2467,7 @@
         "tv_extra2" : "",
         "tv_keywords" : "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "torrentlt" : {
         "enabled": true,
@@ -2511,6 +2511,6 @@
         "tv_extra2" : "",
         "tv_keywords" : "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     }
 }
