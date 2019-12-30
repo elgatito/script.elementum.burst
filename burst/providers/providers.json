@@ -1049,7 +1049,7 @@
         "parser": {
             "name": "item(tag='a', order=2)",
             "peers": "item(tag='td', order=9)",
-            "row": "find_once('table', ('border', '1')).find_all('tr', start=2)",
+            "row": "find_once('table', ('cellpadding', '5')).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=8)",
             "size": "item(tag='td', order=6)",
             "torrent": "'https://www.linkomanija.net/%s' % item(tag='a', attribute='href', select=('class', 'index'), order=1)"
