@@ -385,8 +385,6 @@ def extract_torrents(provider, client):
         for t in threads:
             t.join()
 
-        log.debug("[%s] Threads returned: %s" % (provider, repr(threads)))
-
         for i in range(q.qsize()):
             ret = q.get_nowait()
             log.debug("[%s] Queue %d got: %s" % (provider, i, repr(ret)))

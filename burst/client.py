@@ -4,6 +4,7 @@
 Burst web client
 """
 
+import re
 import os
 import sys
 import urllib3
@@ -293,6 +294,16 @@ class Client:
                 else:
                     self.content = response.text
 
+        except requests.exceptions.InvalidSchema as e:
+            # If link points to a magnet: then it can be used as a content
+            matches = re.findall('No connection adapters were found for \'(.*?)\'', str(e))
+            if matches:
+                self.content = matches[0]
+                return True
+
+            import traceback
+            log.error("%s failed with %s:" % (repr(url), repr(e)))
+            map(log.debug, traceback.format_exc().split("\n"))
         except Exception as e:
             import traceback
             log.error("%s failed with %s:" % (repr(url), repr(e)))
