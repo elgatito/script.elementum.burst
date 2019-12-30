@@ -666,7 +666,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
-        "base_url": "https://www.ilcorsaroblu.org/index.php?page=torrents&search=QUERYEXTRA&x=0&y=0",
+        "base_url": "https://www.ilcorsaroblu.org/index.php?page=torrents&search=QUERYEXTRA&order=5&by=2&x=0&y=0",
         "color": "FFFFFFFF",
         "enabled": true,
         "general_extra": "",
@@ -686,8 +686,8 @@
             "peers": "item(tag='td', order=5)",
             "row": "find_once(tag='table', select=('class', 'lista'), order=4).find_all('tr')",
             "seeds": "item(tag='td', order=6)",
-            "size": "item(tag='td', order=8)",
-            "torrent": "'https://www.ilcorsaroblu.org/%s' % item(tag='a', attribute='href', order=3)"
+            "size": "item(tag='td', order=9)",
+            "torrent": "'https://itorrents.org/torrent/%s.torrent' % re.search(r'id=(.*?)&', item(tag='a', attribute='href', order=3)).group(1).upper()"
         },
         "predefined": false,
         "private": false,
