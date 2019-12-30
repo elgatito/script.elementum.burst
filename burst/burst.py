@@ -313,70 +313,73 @@ def extract_torrents(provider, client):
         if not item:
             continue
 
-        name = eval(name_search) if name_search else ""
-        torrent = eval(torrent_search) if torrent_search else ""
-        size = eval(size_search) if size_search else ""
-        seeds = eval(seeds_search) if seeds_search else ""
-        peers = eval(peers_search) if peers_search else ""
-        info_hash = eval(info_hash_search) if info_hash_search else ""
-        referer = eval(referer_search) if referer_search else ""
+        try:
+            name = eval(name_search) if name_search else ""
+            torrent = eval(torrent_search) if torrent_search else ""
+            size = eval(size_search) if size_search else ""
+            seeds = eval(seeds_search) if seeds_search else ""
+            peers = eval(peers_search) if peers_search else ""
+            info_hash = eval(info_hash_search) if info_hash_search else ""
+            referer = eval(referer_search) if referer_search else ""
 
-        if 'magnet:?' in torrent:
-            torrent = torrent[torrent.find('magnet:?'):]
+            if 'magnet:?' in torrent:
+                torrent = torrent[torrent.find('magnet:?'):]
 
-        if get_setting("use_debug_parser", bool):
-            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'name', name_search, name))
-            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'torrent', torrent_search, torrent))
-            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'size', size_search, size))
-            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'seeds', seeds_search, seeds))
-            log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'peers', peers_search, peers))
-            if info_hash_search:
-                log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', info_hash_search, info_hash))
-            if referer_search:
-                log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', referer_search, referer))
+            if get_setting("use_debug_parser", bool):
+                log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'name', name_search, name))
+                log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'torrent', torrent_search, torrent))
+                log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'size', size_search, size))
+                log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'seeds', seeds_search, seeds))
+                log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'peers', peers_search, peers))
+                if info_hash_search:
+                    log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', info_hash_search, info_hash))
+                if referer_search:
+                    log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', referer_search, referer))
 
-        # Pass client cookies with torrent if private
-        if not torrent.startswith('magnet'):
-            user_agent = USER_AGENT
+            # Pass client cookies with torrent if private
+            if not torrent.startswith('magnet'):
+                user_agent = USER_AGENT
 
-            if client.passkey:
-                torrent = torrent.replace('PASSKEY', client.passkey)
-            elif client.token:
-                headers = {'Authorization': client.token, 'User-Agent': user_agent}
-                log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
-                torrent = append_headers(torrent, headers)
-                log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
-            else:
-                parsed_url = urlparse(torrent.split('|')[0])
-                cookie_domain = '{uri.netloc}'.format(uri=parsed_url)
-                cookie_domain = re.sub('www\d*\.', '', cookie_domain)
-                cookies = []
-                for cookie in client._cookies:
-                    if cookie_domain in cookie.domain:
-                        cookies.append(cookie)
-                headers = {}
-                if cookies:
-                    headers = {'User-Agent': user_agent}
-                    log.debug("[%s] Cookies res: %s / %s" % (provider, repr(headers), repr(client.request_headers)))
-                    if client.request_headers:
-                        headers.update(client.request_headers)
-                    if client.url:
-                        headers['Referer'] = client.url
-                        headers['Origin'] = client.url
-                    # Need to set Cookie afterwards to avoid rewriting it with session Cookies
-                    headers['Cookie'] = ";".join(["%s=%s" % (c.name, c.value) for c in cookies])
+                if client.passkey:
+                    torrent = torrent.replace('PASSKEY', client.passkey)
+                elif client.token:
+                    headers = {'Authorization': client.token, 'User-Agent': user_agent}
+                    log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
+                    torrent = append_headers(torrent, headers)
+                    log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
                 else:
-                    headers = {'User-Agent': user_agent}
+                    parsed_url = urlparse(torrent.split('|')[0])
+                    cookie_domain = '{uri.netloc}'.format(uri=parsed_url)
+                    cookie_domain = re.sub('www\d*\.', '', cookie_domain)
+                    cookies = []
+                    for cookie in client._cookies:
+                        if cookie_domain in cookie.domain:
+                            cookies.append(cookie)
+                    headers = {}
+                    if cookies:
+                        headers = {'User-Agent': user_agent}
+                        log.debug("[%s] Cookies res: %s / %s" % (provider, repr(headers), repr(client.request_headers)))
+                        if client.request_headers:
+                            headers.update(client.request_headers)
+                        if client.url:
+                            headers['Referer'] = client.url
+                            headers['Origin'] = client.url
+                        # Need to set Cookie afterwards to avoid rewriting it with session Cookies
+                        headers['Cookie'] = ";".join(["%s=%s" % (c.name, c.value) for c in cookies])
+                    else:
+                        headers = {'User-Agent': user_agent}
 
-                torrent = append_headers(torrent, headers)
+                    torrent = append_headers(torrent, headers)
 
-        if name and torrent and needs_subpage and not torrent.startswith('magnet'):
-            if not torrent.startswith('http'):
-                torrent = definition['root_url'] + torrent.encode('utf-8')
-            t = Thread(target=extract_subpage, args=(q, name, torrent, size, seeds, peers, info_hash, referer))
-            threads.append(t)
-        else:
-            yield (name, info_hash, torrent, size, seeds, peers)
+            if name and torrent and needs_subpage and not torrent.startswith('magnet'):
+                if not torrent.startswith('http'):
+                    torrent = definition['root_url'] + torrent.encode('utf-8')
+                t = Thread(target=extract_subpage, args=(q, name, torrent, size, seeds, peers, info_hash, referer))
+                threads.append(t)
+            else:
+                yield (name, info_hash, torrent, size, seeds, peers)
+        except Exception as e:
+            log.error("[%s] Got an exception while parsing results: %s" % (provider, repr(e)))
 
     if needs_subpage:
         log.debug("[%s] Starting subpage threads..." % provider)
