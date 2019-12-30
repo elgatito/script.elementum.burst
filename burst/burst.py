@@ -454,6 +454,10 @@ def extract_from_api(provider, client):
         peers = ''
         if 'name' in api_format:
             name = result[api_format['name']]
+        if 'description' in api_format:
+            if name:
+                name += ' '
+            name += result[api_format['description']]
         if 'torrent' in api_format:
             torrent = result[api_format['torrent']]
             if 'download_path' in definition:
