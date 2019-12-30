@@ -2404,7 +2404,7 @@
         "movie_keywords": "{title:original} {year}",
         "movie_query": "/browse.php?c29=1&c52=1&c53=1&c61=1&c51=1&c64=1&incldead=0&h=10&d=DESC&search=%2BQUERYEXTRA",
         "parser": {
-            "row": "find_once('table', ('border', '1')).find_all('tr', start=2)",
+            "row": "find_once('table', ('cellpadding', '5')).find_all('tr', start=2)",
             "name": "item(tag='a', order=2)",
             "seeds": "item(tag='td', order=8)",
             "peers": "item(tag='td', order=9)",
