@@ -197,8 +197,8 @@ def got_results(provider, results):
     if len(sorted_results) > max_results:
         sorted_results = sorted_results[:max_results]
 
-    log.info(">> %s returned %2d results in %.1f seconds%s" % (
-        definition['name'].rjust(longest), len(results), round(time.time() - request_time, 2),
+    log.info("[%s] >> %s returned %2d results in %.1f seconds%s" % (
+        provider, definition['name'].rjust(longest), len(results), round(time.time() - request_time, 2),
         (", sending %d best ones" % max_results) if len(results) > max_results else ""))
 
     provider_results.extend(sorted_results)
@@ -219,7 +219,7 @@ def extract_torrents(provider, client):
     """
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
-    log.debug("Extracting torrents from %s using definitions: %s" % (provider, repr(definition)))
+    log.debug("[%s] Extracting torrents from %s using definitions: %s" % (provider, provider, repr(definition)))
 
     if not client.content:
         if get_setting("use_debug_parser", bool):
@@ -418,15 +418,15 @@ def extract_from_api(provider, client):
 
     results = []
     result_keys = api_format['results'].split('.')
-    log.debug("%s result_keys: %s" % (provider, repr(result_keys)))
+    log.debug("[%s] result_keys: %s" % (provider, repr(result_keys)))
     for key in result_keys:
         if key in data:
             data = data[key]
         else:
             data = []
-        # log.debug("%s nested results: %s" % (provider, repr(data)))
+        # log.debug("[%s] nested results: %s" % (provider, repr(data)))
     results = data
-    log.debug("%s results: %s" % (provider, repr(results)))
+    log.debug("[%s] results: %s" % (provider, repr(results)))
 
     if 'subresults' in api_format:
         from copy import deepcopy
@@ -442,7 +442,7 @@ def extract_from_api(provider, client):
                         sub.update(subresult)
                         subresults.append(sub)
         results = subresults
-        log.debug("%s with subresults: %s" % (provider, repr(results)))
+        log.debug("[%s] with subresults: %s" % (provider, repr(results)))
 
     for result in results:
         if not result or not isinstance(result, dict):
@@ -554,7 +554,7 @@ def run_provider(provider, payload, method):
         payload (dict): Search payload from Elementum
         method   (str): Type of search, can be ``general``, ``movie``, ``show``, ``season`` or ``anime``
     """
-    log.debug("Processing %s with %s method" % (provider, method))
+    log.debug("[%s] Processing %s with %s method" % (provider, provider, method))
 
     filterInstance = Filtering()
 

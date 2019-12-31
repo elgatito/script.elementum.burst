@@ -180,7 +180,7 @@ class Filtering:
             definition = get_alias(definition, definition["public_dns_alias"])
 
         general_query = definition['general_query'] if definition['general_query'] else ''
-        log.debug("General URL: %s%s" % (definition['base_url'], general_query))
+        log.debug("[%s] General URL: %s%s" % (provider, definition['base_url'], general_query))
         self.info = payload
         self.url = u"%s%s" % (definition['base_url'], general_query)
         if definition['general_keywords']:
@@ -203,7 +203,7 @@ class Filtering:
             definition = get_alias(definition, definition["public_dns_alias"])
 
         movie_query = definition['movie_query'] if definition['movie_query'] else ''
-        log.debug("Movies URL: %s%s" % (definition['base_url'], movie_query))
+        log.debug("[%s] Movies URL: %s%s" % (provider, definition['base_url'], movie_query))
         if get_setting('separate_sizes', bool):
             self.min_size = get_float(get_setting('min_size_movies'))
             self.max_size = get_float(get_setting('max_size_movies'))
@@ -233,7 +233,7 @@ class Filtering:
             definition = get_alias(definition, definition["public_dns_alias"])
 
         show_query = definition['show_query'] if definition['show_query'] else ''
-        log.debug("Episode URL: %s%s" % (definition['base_url'], show_query))
+        log.debug("[%s] Episode URL: %s%s" % (provider, definition['base_url'], show_query))
         if get_setting('separate_sizes', bool):
             self.min_size = get_float(get_setting('min_size_episodes'))
             self.max_size = get_float(get_setting('max_size_episodes'))
@@ -264,7 +264,7 @@ class Filtering:
             definition = get_alias(definition, definition["public_dns_alias"])
 
         season_query = definition['season_query'] if definition['season_query'] else ''
-        log.debug("Season URL: %s%s" % (definition['base_url'], season_query))
+        log.debug("[%s] Season URL: %s%s" % (provider, definition['base_url'], season_query))
         if get_setting('separate_sizes', bool):
             self.min_size = get_float(get_setting('min_size_seasons'))
             self.max_size = get_float(get_setting('max_size_seasons'))
@@ -294,7 +294,7 @@ class Filtering:
             definition = get_alias(definition, definition["public_dns_alias"])
 
         anime_query = definition['anime_query'] if definition['anime_query'] else ''
-        log.debug("Anime URL: %s%s" % (definition['base_url'], anime_query))
+        log.debug("[%s] Anime URL: %s%s" % (provider, definition['base_url'], anime_query))
         if get_setting('separate_sizes', bool):
             self.min_size = get_float(get_setting('min_size_episodes'))
             self.max_size = get_float(get_setting('max_size_episodes'))

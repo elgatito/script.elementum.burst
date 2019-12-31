@@ -60,7 +60,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
         else:
             log.debug(filtering.reason.encode('utf-8'))
 
-    log.debug('>>>>>> %s would send %d torrents to Elementum <<<<<<<' % (provider, len(results)))
+    log.debug('[%s] >>>>>> %s would send %d torrents to Elementum <<<<<<<' % (provider, provider, len(results)))
 
     return results
 
@@ -76,7 +76,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         verify_name    (bool): Whether to double-check the results' names match the query or not
         verify_size    (bool): Whether to check the results' file sizes
     """
-    log.debug("execute_process for %s with %s" % (provider, repr(generator)))
+    log.debug("[%s] execute_process for %s with %s" % (provider, provider, repr(generator)))
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
 
@@ -116,7 +116,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 query = urllib.quote(query.encode('utf-8'))
                 extra = urllib.quote(extra.encode('utf-8'))
         except Exception as e:
-            log.debug("Could not quote the query (%s): %s" % (query, e))
+            log.debug("[%s] Could not quote the query (%s): %s" % (provider, query, e))
             pass
 
         log.debug("[%s] After keywords  - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
@@ -180,17 +180,17 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             url_search = url_search.replace('TOKEN', token)
         elif 'token' in definition:
             token_url = definition['base_url'] + definition['token']
-            log.debug("Getting token for %s at %s" % (provider, repr(token_url)))
+            log.debug("[%s] Getting token for %s at %s" % (provider, provider, repr(token_url)))
             client.open(token_url.encode('utf-8'))
             try:
                 token_data = json.loads(client.content)
             except:
                 log.error('%s: Failed to get token for %s' % (provider, repr(url_search)))
                 return filtering.results
-            log.debug("Token response for %s: %s" % (provider, repr(token_data)))
+            log.debug("[%s] Token response for %s: %s" % (provider, provider, repr(token_data)))
             if 'token' in token_data:
                 token = token_data['token']
-                log.debug("Got token for %s: %s" % (provider, repr(token)))
+                log.debug("[%s] Got token for %s: %s" % (provider, provider, repr(token)))
                 url_search = url_search.replace('TOKEN', token)
             else:
                 log.warning('%s: Unable to get token for %s' % (provider, repr(url_search)))
@@ -254,12 +254,12 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         except:
                             log.error('%s: Failed to get token from %s' % (provider, definition['token_auth']))
                             return filtering.results
-                        log.debug("Token response for %s: %s" % (provider, repr(token_data)))
+                        log.debug("[%s] Token response for %s: %s" % (provider, provider, repr(token_data)))
                         if 'token' in token_data:
                             client.token = token_data['token']
-                            log.debug("Auth token for %s: %s" % (provider, repr(client.token)))
+                            log.debug("[%s] Auth token for %s: %s" % (provider, provider, repr(client.token)))
                         else:
-                            log.error('%s: Unable to get auth token for %s' % (provider, repr(url_search)))
+                            log.error('[%s] Unable to get auth token for %s' % (provider, repr(url_search)))
                             return filtering.results
                         log.info('[%s] Token auth successful' % provider)
                         token_auth = True
@@ -281,11 +281,11 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
 
-        log.info(">  %s search URL: %s" % (definition['name'].rjust(longest), url_search))
+        log.info("[%s] >  %s search URL: %s" % (provider, definition['name'].rjust(longest), url_search))
 
         if 'headers' in definition and definition['headers']:
             headers = eval(definition['headers'])
-            log.info(">  %s headers: %s" % (definition['name'].rjust(longest), headers))
+            log.info("[%s] >  %s headers: %s" % (provider, definition['name'].rjust(longest), headers))
 
         client.open(url_search.encode('utf-8'), post_data=payload, get_data=data, headers=headers)
         filtering.results.extend(

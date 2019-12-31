@@ -245,7 +245,7 @@ class Client:
         self._read_cookies(url)
         self.session.cookies = self._cookies
 
-        log.debug("Cookies for %s: %s" % (repr(url), repr(self._cookies)))
+        # log.debug("Cookies for %s: %s" % (repr(url), repr(self._cookies)))
 
         # Default headers for any request. Pretend like we are the usual browser.
         req_headers = {
