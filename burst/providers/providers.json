@@ -764,7 +764,7 @@
             "torrent": "magnet"
         },
         "base_url": "https://corsaro.red/api/search",
-        "color": "FF000000",
+        "color": "FFFF0000",
         "enabled": true,
         "general_extra": "",
         "general_keywords": "{title:original}",
