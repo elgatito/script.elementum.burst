@@ -82,6 +82,10 @@
       <setting id="rarbg_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="rarbg_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
       
+    <setting label="[B]Sky torrents[/B]   [COLOR gray][/COLOR]" id="use_skytorrents" type="bool" default="true" />
+      <setting id="skytorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="skytorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+      
     <setting label="[B]YTS[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_yts" type="bool" default="true" />
       <setting id="yts_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="yts_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
@@ -307,6 +311,12 @@
       <setting id="toloka_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="toloka_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="toloka_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+      
+    <setting label="[B]Кинозал[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_kinozal" type="bool" default="false" />
+      <setting id="kinozal_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="kinozal_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="kinozal_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="kinozal_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
       <!-- Providers-Private-2-End -->
   </category>
 
