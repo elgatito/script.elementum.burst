@@ -249,12 +249,13 @@ class Client:
 
         # Default headers for any request. Pretend like we are the usual browser.
         req_headers = {
-            'User-Agent': self.user_agent,
-            'Content-Language': language,
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'Accept-Language': 'en-EN,en;q=0.9,en-US;q=0.8,en;q=0.7,uk;q=0.6,pl;q=0.5',
             'Cache-Control': 'no-cache',
-            'Accept-Encoding': 'deflate, compress, gzip',
+            'Content-Language': language,
             'Origin': url,
-            'Referer': url
+            'Referer': url,
+            'User-Agent': self.user_agent
         }
 
         # If headers passed to open() call - we overwrite headers.
