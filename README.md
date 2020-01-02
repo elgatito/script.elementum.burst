@@ -2,6 +2,12 @@
 
 A burst of providers.
 
+Support
+----------
+### Development of *script.elementum.burst* is stopped! 
+- Do not expect any support, help and other things like that.
+- Source is open, so you can fork everything.
+
 
 ### Features
 - Fast, very fast
