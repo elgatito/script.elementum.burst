@@ -78,7 +78,7 @@ class Filtering:
             'filter_3d': [u'3d'],
             'filter_telesync': [u'telesync|ts|tc'],
             'filter_cam': [u'cam|hd\-?cam'],
-            'filter_tvrip': [u'tv\-?rip|sat\-?rip'],
+            'filter_tvrip': [u'tv\-?rip|sat\-?rip|dvb'],
             'filter_vhsrip': [u'vhs\-?rip'],
             'filter_iptvrip': [u'iptv\-?rip'],
             'filter_trailer': [u'trailer|трейлер|тизер'],
