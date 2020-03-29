@@ -284,6 +284,7 @@ def extract_torrents(provider, client):
                     log.error("[%s] Subpage extraction for %s failed with: %s" % (provider, repr(uri[0]), repr(e)))
                     map(log.debug, traceback.format_exc().split("\n"))
 
+            log.debug("[%s] Subpage torrent for %s: %s" % (provider, repr(uri[0]), torrent))
             ret = (name, info_hash, torrent, size, seeds, peers)
             q.put_nowait(ret)
 
@@ -539,6 +540,18 @@ def extract_from_page(provider, content):
         if matches:
             result = "magnet:?xt=urn:btih:" + matches[0]
             log.debug('[%s] Matched magnet info_hash search: %s' % (provider, repr(result)))
+            return result
+
+        matches = re.findall('/download.php\?id=([A-Za-z0-9]{40})\W', content)
+        if matches:
+            result = "magnet:?xt=urn:btih:" + matches[0]
+            log.debug('[%s] Matched download link: %s' % (provider, repr(result)))
+            return result
+
+        matches = re.findall('(/download.php\?id=[A-Za-z0-9]+[^\s\'"]*)', content)
+        if matches:
+            result = definition['root_url'] + matches[0]
+            log.debug('[%s] Matched download link: %s' % (provider, repr(result)))
             return result
     except:
         pass
