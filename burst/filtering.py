@@ -12,6 +12,8 @@ from normalize import normalize_string
 from providers.definitions import definitions
 from utils import Magnet, get_int, get_float, clean_number, size_int, get_alias
 
+from kodi_six.utils import py2_encode
+
 try:
     from collections import OrderedDict
 except:
@@ -632,11 +634,13 @@ def cleanup_results(results_list):
         hash_ = result['info_hash'].upper()
 
         if not hash_:
-            if result['uri'] and result['uri'].startswith('magnet'):
-                hash_ = Magnet(result['uri']).info_hash.upper()
-            else:
-                hash_ = hashlib.md5(result['uri']).hexdigest()
-
+            try:
+                if result['uri'] and result['uri'].startswith('magnet'):
+                    hash_ = Magnet(result['uri']).info_hash.upper()
+                else:
+                    hash_ = hashlib.md5(py2_encode(result['uri'])).hexdigest()
+            except:
+                pass
         # try:
         #     log.debug("[%s] Hash for %s: %s" % (result['provider'][16:-8], repr(result['name']), hash_))
         # except Exception as e:
