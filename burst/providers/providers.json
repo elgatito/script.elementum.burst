@@ -48,7 +48,7 @@
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
-        "base_url": "https://www.1337x.to/search/QUERYEXTRA/1/",
+        "base_url": "https://www.1337x.to/search/anime/",
         "color": "FFF14E13",
         "enabled": true,
         "general_extra": "",
