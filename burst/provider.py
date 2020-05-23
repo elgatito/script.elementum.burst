@@ -216,6 +216,10 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         except:
                             pass
 
+            if username:
+                client.username = username
+                url_search = url_search.replace('USERNAME', username)
+
             if passkey:
                 logged_in = True
                 client.passkey = passkey

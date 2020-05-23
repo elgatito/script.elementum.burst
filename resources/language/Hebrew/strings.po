@@ -378,6 +378,18 @@ msgctxt "#32131"
 msgid "Private trackers [N .. ]"
 msgstr ""
 
+msgctxt "#32132"
+msgid "Remove quotes from search query"
+msgstr ""
+
+msgctxt "#32133"
+msgid "Resolution"
+msgstr ""
+
+msgctxt "#32134"
+msgid "Video quality"
+msgstr ""
+
 #~ msgctxt "#32036"
 #~ msgid "Additional keyword filters (comma separated)"
 #~ msgstr "מילים נוספות לסינון (מופרדות בפסיק)"
