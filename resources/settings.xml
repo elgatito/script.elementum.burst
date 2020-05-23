@@ -394,13 +394,13 @@
     <setting label="32035" id="separate_sizes" type="bool" default="false" />
     <setting label="32006" type="lsep" subsetting="true" enable="eq(-1,true)" />
     <setting label="32033" id="min_size_movies" type="slider" option="float" range="0,0.25,100" default="0" subsetting="true" enable="eq(-2,true)" />
-    <setting label="32034" id="max_size_movies" type="slider" option="float" range="1,1,200" default="100" subsetting="true" enable="eq(-3,true)" />
+    <setting label="32034" id="max_size_movies" type="slider" option="float" range="1,0.25,200" default="100" subsetting="true" enable="eq(-3,true)" />
     <setting label="32008" type="lsep" subsetting="true" enable="eq(-4,true)" />
     <setting label="32033" id="min_size_seasons" type="slider" option="float" range="0,0.25,100" default="0" subsetting="true" enable="eq(-5,true)" />
-    <setting label="32034" id="max_size_seasons" type="slider" option="float" range="1,1,200" default="100" subsetting="true" enable="eq(-6,true)" />
+    <setting label="32034" id="max_size_seasons" type="slider" option="float" range="1,0.25,200" default="100" subsetting="true" enable="eq(-6,true)" />
     <setting label="32009" type="lsep" subsetting="true" enable="eq(-7,true)" />
     <setting label="32033" id="min_size_episodes" type="slider" option="float" range="0,0.25,100" default="0" subsetting="true" enable="eq(-8,true)" />
-    <setting label="32034" id="max_size_episodes" type="slider" option="float" range="1,1,200" default="100" subsetting="true" enable="eq(-9,true)" />
+    <setting label="32034" id="max_size_episodes" type="slider" option="float" range="1,0.25,200" default="100" subsetting="true" enable="eq(-9,true)" />
     <setting label="32036" id="additional_filters" type="bool" default="false" />
     <setting label="32037" id="filtering_help" type="text" enable="false" subsetting="true" />
     <setting label="32038" id="accept" type="text" default="" subsetting="true" enable="eq(-2,true)" />
