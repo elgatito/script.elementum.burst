@@ -131,10 +131,10 @@ def store_providers(path):
         auth = ""
         if 'login_passkey' not in p or not p['login_passkey']:
             auth = """<setting id="{id}_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="{id}_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />""".format(id=p['id'], name=p['name'].encode('utf8'))
+      <setting id="{id}_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />""".format(id=p['id'])
         else:
             auth = """<setting id="{id}_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="{id}_passkey" label="32076" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />""".format(id=p['id'], name=p['name'].encode('utf8'))
+      <setting id="{id}_passkey" label="32076" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />""".format(id=p['id'])
 
         item = """
     <setting label="{name}" id="use_{id}" type="bool" default="{default}" />
@@ -174,12 +174,12 @@ def get_languages(langs):
         return ""
 
     res = ""
-    for l in langs.replace(" ", "").split(","):
-        if l in languages:
+    for lang in langs.replace(" ", "").split(","):
+        if lang in languages:
             if res:
                 res += ", "
 
-            res += "$ADDON[script.elementum.burst " + str(languages[l]) + "]"
+            res += "$ADDON[script.elementum.burst " + str(languages[lang]) + "]"
 
     if res:
         res = "[" + res + "]"
