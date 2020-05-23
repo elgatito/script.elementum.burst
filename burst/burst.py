@@ -418,15 +418,19 @@ def extract_from_api(provider, client):
     api_format = definition['api_format']
 
     results = []
-    result_keys = api_format['results'].split('.')
-    log.debug("[%s] result_keys: %s" % (provider, repr(result_keys)))
-    for key in result_keys:
-        if key in data:
-            data = data[key]
-        else:
-            data = []
-        # log.debug("[%s] nested results: %s" % (provider, repr(data)))
-    results = data
+    # If 'results' is empty - then we can try to take all the data as an array of results.
+    # Usable when api returns results without any other data.
+    if not api_format['results']:
+        results = data
+    else:
+        result_keys = api_format['results'].split('.')
+        log.debug("[%s] result_keys: %s" % (provider, repr(result_keys)))
+        for key in result_keys:
+            if key in data:
+                data = data[key]
+            else:
+                data = []
+        results = data
     log.debug("[%s] results: %s" % (provider, repr(results)))
 
     if 'subresults' in api_format:

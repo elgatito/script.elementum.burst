@@ -216,6 +216,10 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         except:
                             pass
 
+            if username:
+                client.username = username
+                url_search = url_search.replace('USERNAME', username)
+
             if passkey:
                 logged_in = True
                 client.passkey = passkey
@@ -237,10 +241,10 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                     log.error("Could not make login headers for %s: %s" % (provider, e))
 
                 # TODO generic flags in definitions for those...
-                if provider == 'hd-torrents':
+                if 'csrf_token' in definition and definition['csrf_token']:
                     client.open(definition['root_url'] + definition['login_path'])
                     if client.content:
-                        csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
+                        csrf_token = re.search(r'name=\"_?csrf_token\" value=\"(.*?)\"', client.content)
                         if csrf_token:
                             login_object = login_object.replace('CSRF_TOKEN', '"%s"' % csrf_token.group(1))
                         else:

@@ -97,6 +97,7 @@ class Client:
         self.user_agent = USER_AGENT
         self.content = None
         self.status = None
+        self.username = None
         self.token = None
         self.passkey = None
         self.info = info
