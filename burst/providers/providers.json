@@ -961,7 +961,7 @@
             "row": "find_once('table', ('class', ['torrents_table'])).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=5)",
             "size": "item(tag='td', order=2)",
-            "torrent": "item(tag='a', order=6, attribute='href')"
+            "torrent": "item(tag='a', order=-1, attribute='href')"
         },
         "predefined": false,
         "private": false,
