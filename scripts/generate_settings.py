@@ -40,7 +40,7 @@ def cleanup_settings(path):
     global public
     global private
 
-    print "Cleaning settings at %s" % (path)
+    print("Cleaning settings at %s" % (path))
     try:
         with open(path) as file:
             settings = file.read()
@@ -48,7 +48,7 @@ def cleanup_settings(path):
         settings = re.sub(r"(<!-- Providers-\w+-\d-Begin -->).*?(<!-- Providers-\w+-\d-End -->)", "\\1\n    \\2", settings, flags=re.DOTALL)
 
     except Exception as e:
-        print "Failed removing settings from %s: %s" % (path, repr(e))
+        print("Failed removing settings from %s: %s" % (path, repr(e)))
 
 
 def load_providers(path):
@@ -56,7 +56,7 @@ def load_providers(path):
     global public
     global private
 
-    print "Loading providers from %s" % (path)
+    print("Loading providers from %s" % (path))
     try:
         with open(path) as file:
             providers = json.load(file)
@@ -82,7 +82,7 @@ def load_providers(path):
                 public.append(providers[provider])
 
     except Exception as e:
-        print "Failed importing providers from %s: %s" % (path, repr(e))
+        print("Failed importing providers from %s: %s" % (path, repr(e)))
 
 
 def store_providers(path):
@@ -103,7 +103,7 @@ def store_providers(path):
     public_count = 0
     private_count = 0
 
-    print "Saving providers to %s" % (path)
+    print("Saving providers to %s" % (path))
 
     for p in public:
         public_count += 1
@@ -128,13 +128,20 @@ def store_providers(path):
     for p in private:
         private_count += 1
 
+        auth = ""
+        if 'login_passkey' not in p or not p['login_passkey']:
+            auth = """<setting id="{id}_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="{id}_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />""".format(id=p['id'], name=p['name'].encode('utf8'))
+        else:    
+            auth = """<setting id="{id}_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="{id}_passkey" label="32076" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />""".format(id=p['id'], name=p['name'].encode('utf8'))
+
         item = """
     <setting label="{name}" id="use_{id}" type="bool" default="{default}" />
-      <setting id="{id}_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="{id}_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      {auth}
       <setting id="{id}_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="{id}_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-      """.format(id=p['id'], name=p['name'].encode('utf8'), default=str(p['predefined']).lower())
+      """.format(id=p['id'], name=p['name'].encode('utf8'), default=str(p['predefined']).lower(), auth=auth)
 
         if p['title'][:1].lower() in char_range('0', 'm'):
             if not p['predefined']:
@@ -157,10 +164,10 @@ def store_providers(path):
         with open(path, 'w') as file:
             file.write(settings)
             file.close()
-            print "Saved %d public, %d private providers to %s" % (public_count, private_count, path)
+            print("Saved %d public, %d private providers to %s" % (public_count, private_count, path))
 
     except Exception as e:
-        print "Failed removing settings from %s: %s" % (path, repr(e))
+        print("Failed removing settings from %s: %s" % (path, repr(e)))
 
 def get_languages(langs):
     if not langs:
