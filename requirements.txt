@@ -1,4 +1,4 @@
-flake8
-sphinx
-sphinx-autobuild
+flake8==3.8.3
+sphinx==3.1.1
+sphinx-autobuild==0.7.1
 https://github.com/romanvm/Kodistubs/tarball/master
