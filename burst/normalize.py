@@ -6,11 +6,21 @@
 """
     Normalization strings to Unicode
 """
+
+from __future__ import unicode_literals
+from future.builtins import range, chr
+from future.utils import PY3
+
 import json
 import re
 import unicodedata
-from HTMLParser import HTMLParser
-from urllib import unquote
+if PY3:
+    from urllib.parse import unquote
+    from html.parser import HTMLParser
+    unicode = str
+else:
+    from urllib import unquote
+    from .parser.HTMLParser import HTMLParser
 
 
 def clean_title(string=None):
@@ -68,10 +78,10 @@ def remove_control_chars(string):
     :return: modified string
     :rtype: unicode
     """
-    control_chars = ''.join(map(unichr, range(0, 32) + range(127, 160)))
+    control_chars = ''.join(map(chr, list(range(0, 32)) + list(range(127, 160))))
     control_char_re = re.compile(u'[%s]' % re.escape(control_chars))
     tem_string = control_char_re.sub('', string)
-    control_char_re = re.compile(u'[%s]' % re.escape(unichr(160)))
+    control_char_re = re.compile(u'[%s]' % re.escape(chr(160)))
     return control_char_re.sub(' ', tem_string)
 
 
@@ -346,7 +356,7 @@ def text_badness(text):
     very_weird_things = 0
     weird_things = 0
     prev_letter_script = None
-    for pos in xrange(len(text)):
+    for pos in range(len(text)):
         char = text[pos]
         index = ord(char)
         if index < 256:
@@ -445,7 +455,7 @@ WINDOWS_1252_GREMLINS = [
 ]
 
 # a list of Unicode characters that might appear in Windows-1252 text
-WINDOWS_1252_CODEPOINTS = range(256) + WINDOWS_1252_GREMLINS
+WINDOWS_1252_CODEPOINTS = list(range(256)) + WINDOWS_1252_GREMLINS
 
 # Rank the characters typically represented by a single byte -- that is, in
 # Latin-1 or Windows-1252 -- by how weird it would be to see them in running
@@ -489,8 +499,8 @@ SINGLE_BYTE_WEIRDNESS = (
 # Pre-cache the Unicode data saying which of these first 256 characters are
 # letters. We'll need it often.
 SINGLE_BYTE_LETTERS = [
-    unicodedata.category(unichr(i)).startswith('L')
-    for i in xrange(256)
+    unicodedata.category(chr(i)).startswith('L')
+    for i in range(256)
 ]
 
 # A table telling us how to interpret the first word of a letter's Unicode

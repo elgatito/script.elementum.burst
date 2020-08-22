@@ -11,7 +11,14 @@ documents as well as look for patterns.
 https://github.com/iogf/ehp
 """
 
-from HTMLParser import HTMLParser
+from __future__ import unicode_literals
+from future.utils import PY3
+
+if PY3:
+    from future.builtins import range as xrange
+    from html.parser import HTMLParser
+else:
+    from .HTMLParser import HTMLParser
 from collections import deque
 
 version = '1.3b'

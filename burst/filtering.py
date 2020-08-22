@@ -4,19 +4,26 @@
 Burst filtering class and methods
 """
 
+from __future__ import unicode_literals
+from future.utils import PY3
+
 import re
 import hashlib
-from parser.HTMLParser import HTMLParser
 from elementum.provider import log, get_setting
-from normalize import normalize_string
-from providers.definitions import definitions
-from utils import Magnet, get_int, get_float, clean_number, size_int, get_alias
+from .normalize import normalize_string
+from .providers.definitions import definitions
+from .utils import Magnet, get_int, get_float, clean_number, size_int, get_alias
+if PY3:
+    from html.parser import HTMLParser
+    unicode = str
+else:
+    from .parser.HTMLParser import HTMLParser
 
 from kodi_six.utils import py2_encode
 
 try:
     from collections import OrderedDict
-except:
+except ImportError:
     from ordereddict import OrderedDict
 
 
@@ -52,40 +59,40 @@ class Filtering:
         resolutions = OrderedDict()
 
         # TODO: remove when finished with debugging resolutions detection
-        # resolutions['filter_240p'] = ['240p', u'240р', '_tvrip_', 'satrip', 'vhsrip']
-        # resolutions['filter_480p'] = ['480p', u'480р', 'xvid', 'dvd', 'dvdrip', 'hdtv']
-        # resolutions['filter_720p'] = ['720p', u'720р', 'hdrip', 'bluray', 'blu_ray', 'brrip', 'bdrip', 'hdtv', '/hd720p', '1280x720']
-        # resolutions['filter_1080p'] = ['1080p', u'1080р', '1080i', 'fullhd', '_fhd_', '/hd1080p', '/hdr1080p', '1920x1080']
-        # resolutions['filter_2k'] = ['_2k_', '1440p', u'1440р', u'_2к_']
-        # resolutions['filter_4k'] = ['_4k_', '2160p', u'2160р', '_uhd_', u'_4к_']
+        # resolutions['filter_240p'] = ['240p', '240р', '_tvrip_', 'satrip', 'vhsrip']
+        # resolutions['filter_480p'] = ['480p', '480р', 'xvid', 'dvd', 'dvdrip', 'hdtv']
+        # resolutions['filter_720p'] = ['720p', '720р', 'hdrip', 'bluray', 'blu_ray', 'brrip', 'bdrip', 'hdtv', '/hd720p', '1280x720']
+        # resolutions['filter_1080p'] = ['1080p', '1080р', '1080i', 'fullhd', '_fhd_', '/hd1080p', '/hdr1080p', '1920x1080']
+        # resolutions['filter_2k'] = ['_2k_', '1440p', '1440р', '_2к_']
+        # resolutions['filter_4k'] = ['_4k_', '2160p', '2160р', '_uhd_', '_4к_']
 
-        resolutions['filter_240p'] = [u'240[pр]', u'vhs\-?rip']
-        resolutions['filter_480p'] = [u'480[pр]', u'xvid|dvd|dvdrip|hdtv|web\-(dl)?rip|iptv|sat\-?rip|tv\-?rip']
-        resolutions['filter_720p'] = [u'720[pр]|1280x720', u'hd720p?|hd\-?rip|b[rd]rip']
-        resolutions['filter_1080p'] = [u'1080[piр]|1920x1080', u'hd1080p?|fullhd|fhd|blu\W*ray|bd\W*remux']
-        resolutions['filter_2k'] = [u'1440[pр]', u'2k']
-        resolutions['filter_4k'] = [u'4k|2160[pр]|uhd', u'4k|hd4k']
-        resolutions['filter_music'] = [u'mp3|flac|alac|ost|sound\-?track']
+        resolutions['filter_240p'] = ['240[pр]', 'vhs\-?rip']
+        resolutions['filter_480p'] = ['480[pр]', 'xvid|dvd|dvdrip|hdtv|web\-(dl)?rip|iptv|sat\-?rip|tv\-?rip']
+        resolutions['filter_720p'] = ['720[pр]|1280x720', 'hd720p?|hd\-?rip|b[rd]rip']
+        resolutions['filter_1080p'] = ['1080[piр]|1920x1080', 'hd1080p?|fullhd|fhd|blu\W*ray|bd\W*remux']
+        resolutions['filter_2k'] = ['1440[pр]', '2k']
+        resolutions['filter_4k'] = ['4k|2160[pр]|uhd', '4k|hd4k']
+        resolutions['filter_music'] = ['mp3|flac|alac|ost|sound\-?track']
 
         self.resolutions = resolutions
 
         self.release_types = {
-            'filter_brrip': [u'brrip|bd\-?rip|blu\-?ray|bd\-?remux'],
-            'filter_webdl': [u'web_?\-?dl|web\-?rip|dl\-?rip|yts'],
-            'filter_hdrip': [u'hd\-?rip'],
-            'filter_hdtv': [u'hd\-?tv'],
-            'filter_dvd': [u'dvd|dvd\-?rip|vcd\-?rip'],
-            'filter_dvdscr': [u'dvd\-?scr'],
-            'filter_screener': [u'screener|scr'],
-            'filter_3d': [u'3d'],
-            'filter_telesync': [u'telesync|ts|tc'],
-            'filter_cam': [u'cam|hd\-?cam'],
-            'filter_tvrip': [u'tv\-?rip|sat\-?rip|dvb'],
-            'filter_vhsrip': [u'vhs\-?rip'],
-            'filter_iptvrip': [u'iptv\-?rip'],
-            'filter_trailer': [u'trailer|трейлер|тизер'],
-            'filter_workprint': [u'workprint'],
-            'filter_line': [u'line']
+            'filter_brrip': ['brrip|bd\-?rip|blu\-?ray|bd\-?remux'],
+            'filter_webdl': ['web_?\-?dl|web\-?rip|dl\-?rip|yts'],
+            'filter_hdrip': ['hd\-?rip'],
+            'filter_hdtv': ['hd\-?tv'],
+            'filter_dvd': ['dvd|dvd\-?rip|vcd\-?rip'],
+            'filter_dvdscr': ['dvd\-?scr'],
+            'filter_screener': ['screener|scr'],
+            'filter_3d': ['3d'],
+            'filter_telesync': ['telesync|ts|tc'],
+            'filter_cam': ['cam|hd\-?cam'],
+            'filter_tvrip': ['tv\-?rip|sat\-?rip|dvb'],
+            'filter_vhsrip': ['vhs\-?rip'],
+            'filter_iptvrip': ['iptv\-?rip'],
+            'filter_trailer': ['trailer|трейлер|тизер'],
+            'filter_workprint': ['workprint'],
+            'filter_line': ['line']
         }
 
         # TODO: remove when finished with debugging resolutions detection
@@ -102,7 +109,7 @@ class Filtering:
         #     'filter_cam': ['_cam_', 'hdcam'],
         #     'filter_tvrip': ['_tvrip', 'satrip'],
         #     'filter_vhsrip': ['vhsrip'],
-        #     'filter_trailer': ['trailer', u'трейлер', u'тизер'],
+        #     'filter_trailer': ['trailer', 'трейлер', 'тизер'],
         #     'filter_workprint': ['workprint']
         # }
 
