@@ -11,7 +11,13 @@ documents as well as look for patterns.
 https://github.com/iogf/ehp
 """
 
-from HTMLParser import HTMLParser
+from future.utils import PY3
+
+if PY3:
+    from future.builtins import range as xrange
+    from html.parser import HTMLParser
+else:
+    from .HTMLParser import HTMLParser
 from collections import deque
 
 version = '1.3b'
@@ -166,9 +172,6 @@ class Root(list):
             else:
                 return ''
         return value_attrib
-
-    def __getitem__(self, item):
-        return self.attr[item]
 
     def sail(self):
         """
@@ -765,43 +768,6 @@ class Root(list):
 
         ind = self.index(y)
         self.insert(ind, k)
-
-    def parent(self, dom):
-        """
-        Find the parent tag
-        """
-        str_item = str(self)
-        for i, j in dom.sail_with_root():
-            if str(j) == str_item:
-                return i
-
-    def list(self, text=""):
-        result = []
-        for i in self[:]:
-            text1 = text + ' ' + str(i.name)
-            class_name = i["class"].replace(" ", ".")
-            if len(class_name) > 0:
-                text1 += "." + class_name
-            id_name = i["id"].replace(" ", "#")
-            if len(id_name) > 0:
-                text1 += "#" + id_name
-            if i.name != 1:
-                result.append((text1.strip(), i))
-            result.extend(i.list(text1))
-        return result
-
-    def select(self, text=""):
-        result = []
-        for i, j in self.list():
-            if i.endswith(text):
-                result.append(j)
-        return result
-
-    def get_attributes(self, text):
-        text = text.replace(' ', '').replace(';', '')
-        for i, j in self.list():
-            if text == str(j).replace(' ', ''):
-                return i
 
 
 class Tag(Root):

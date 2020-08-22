@@ -4,17 +4,23 @@
 Provider thread methods
 """
 
+from future.utils import PY3, iteritems
+
 import os
 import re
 import json
 import urllib
-import xbmc
-import xbmcaddon
-from client import Client
+from .client import Client
 from elementum.provider import log, get_setting, set_setting
-from providers.definitions import definitions, longest
-from utils import ADDON_PATH, get_int, clean_size, get_alias
-
+from .providers.definitions import definitions, longest
+from .utils import ADDON_PATH, get_int, clean_size, get_alias
+from kodi_six import xbmc, xbmcaddon, py2_encode
+if PY3:
+    from urllib.parse import quote
+    unicode = str
+else:
+    from urllib import quote
+    
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
     """ Payload formatter to format results the way Elementum expects them
 
@@ -58,7 +64,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
                 "sort_balance": sort_balance
             })
         else:
-            log.debug(filtering.reason.encode('utf-8'))
+            log.debug(filtering.reason)
 
     log.debug('[%s] >>>>>> %s would send %d torrents to Elementum <<<<<<<' % (provider, provider, len(results)))
 
@@ -110,11 +116,11 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         try:
             if 'charset' in definition and definition['charset'] and 'utf' not in definition['charset'].lower():
-                query = urllib.quote(query.encode(definition['charset']))
-                extra = urllib.quote(extra.encode(definition['charset']))
+                query = quote(query.encode(definition['charset']))
+                extra = quote(extra.encode(definition['charset']))
             else:
-                query = urllib.quote(query.encode('utf-8'))
-                extra = urllib.quote(extra.encode('utf-8'))
+                query = quote(py2_encode(query))
+                extra = quote(py2_encode(extra))
         except Exception as e:
             log.debug("[%s] Could not quote the query (%s): %s" % (provider, query, e))
             pass
@@ -141,7 +147,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             filtering.post_data = eval(definition['post_data'])
 
         payload = dict()
-        for key, value in filtering.post_data.iteritems():
+        for key, value in iteritems(filtering.post_data):
             if 'QUERY' in value:
                 payload[key] = filtering.post_data[key].replace('QUERY', query)
             else:
@@ -153,7 +159,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         data = None
         if filtering.get_data:
             data = dict()
-            for key, value in filtering.get_data.iteritems():
+            for key, value in iteritems(filtering.get_data):
                 if 'QUERY' in value:
                     data[key] = filtering.get_data[key].replace('QUERY', query)
                 else:
@@ -181,7 +187,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         elif 'token' in definition:
             token_url = definition['base_url'] + definition['token']
             log.debug("[%s] Getting token for %s at %s" % (provider, provider, repr(token_url)))
-            client.open(token_url.encode('utf-8'))
+            client.open(py2_encode(token_url))
             try:
                 token_data = json.loads(client.content)
             except:
@@ -291,7 +297,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             headers = eval(definition['headers'])
             log.info("[%s] >  %s headers: %s" % (provider, definition['name'].rjust(longest), headers))
 
-        client.open(url_search.encode('utf-8'), post_data=payload, get_data=data, headers=headers)
+        client.open(py2_encode(url_search), post_data=payload, get_data=data, headers=headers)
         filtering.results.extend(
             generate_payload(provider,
                              generator(provider, client),

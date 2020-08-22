@@ -6,12 +6,22 @@
 """
     Normalization strings to Unicode
 """
+
+from __future__ import unicode_literals
+from future.builtins import range, chr
+from future.utils import PY3
+
 import json
 import re
 import unicodedata
-from HTMLParser import HTMLParser
-from urllib import unquote
-
+if PY3:
+    from urllib.parse import unquote
+    from html.parser import HTMLParser
+    unicode = str
+else:
+    from urllib import unquote
+    from .parser.HTMLParser import HTMLParser
+from kodi_six import py2_encode, py2_decode
 
 def clean_title(string=None):
     """
@@ -56,7 +66,7 @@ def remove_accents(string):
         string = normalize_string(string)
 
     nfkd_form = unicodedata.normalize('NFKD', string)
-    only_ascii = nfkd_form.encode('ASCII', 'ignore').strip()
+    only_ascii = py2_encode(nfkd_form, 'ASCII', 'ignore').strip()
     return string if only_ascii == u'' else only_ascii
 
 
@@ -68,10 +78,10 @@ def remove_control_chars(string):
     :return: modified string
     :rtype: unicode
     """
-    control_chars = ''.join(map(unichr, range(0, 32) + range(127, 160)))
+    control_chars = ''.join(map(chr, list(range(0, 32)) + list(range(127, 160))))
     control_char_re = re.compile(u'[%s]' % re.escape(control_chars))
     tem_string = control_char_re.sub('', string)
-    control_char_re = re.compile(u'[%s]' % re.escape(unichr(160)))
+    control_char_re = re.compile(u'[%s]' % re.escape(chr(160)))
     return control_char_re.sub(' ', tem_string)
 
 
@@ -146,7 +156,7 @@ def normalize_string(string, charset=None, replacing=False):
     if not isinstance(string, unicode):
         try:
             if re.search(u'=[0-9a-fA-F]{2}', string):
-                string = string.decode('Quoted-printable')
+                string = py2_decode(string, 'Quoted-printable')
 
             string = json.loads(u'%s' % string, encoding=charset)
 
@@ -155,7 +165,7 @@ def normalize_string(string, charset=None, replacing=False):
                 string = unicode(eval(string), 'raw_unicode_escape')
 
             except (SyntaxError, NameError):
-                string = string.decode('latin-1')
+                string = py2_decode(string, 'latin-1')
                 pass
 
             except TypeError:
@@ -287,8 +297,8 @@ def fix_bad_unicode(string):
 
 
 def reinterpret_latin1_as_utf8(wrong_text):
-    new_bytes = wrong_text.encode('latin-1', 'replace')
-    return new_bytes.decode('utf-8', 'replace')
+    new_bytes = py2_encode(wrong_text, 'latin-1', 'replace')
+    return py2_decode(new_bytes, 'utf-8', 'replace')
 
 
 def reinterpret_windows1252_as_utf8(wrong_text):
@@ -303,12 +313,12 @@ def reinterpret_windows1252_as_utf8(wrong_text):
     altered_bytes = []
     for char in wrong_text:
         if ord(char) in WINDOWS_1252_GREMLINS:
-            altered_bytes.append(char.encode('WINDOWS_1252'))
+            altered_bytes.append(py2_encode(char, 'WINDOWS_1252'))
 
         else:
-            altered_bytes.append(char.encode('latin-1', 'replace'))
+            altered_bytes.append(py2_encode(char, 'latin-1', 'replace'))
 
-    return ''.join(altered_bytes).decode('utf-8', 'replace')
+    return py2_decode(''.join(altered_bytes), 'utf-8', 'replace')
 
 
 def reinterpret_latin1_as_windows1252(wrong_text):
@@ -320,7 +330,7 @@ def reinterpret_latin1_as_windows1252(wrong_text):
     :return: corrected text
     :rtype: str or unicode
     """
-    return wrong_text.encode('latin-1').decode('WINDOWS_1252', 'replace')
+    return py2_decode(py2_encode(wrong_text, 'latin-1'), 'WINDOWS_1252', 'replace')
 
 
 def text_badness(text):
@@ -346,7 +356,7 @@ def text_badness(text):
     very_weird_things = 0
     weird_things = 0
     prev_letter_script = None
-    for pos in xrange(len(text)):
+    for pos in range(len(text)):
         char = text[pos]
         index = ord(char)
         if index < 256:
@@ -445,7 +455,7 @@ WINDOWS_1252_GREMLINS = [
 ]
 
 # a list of Unicode characters that might appear in Windows-1252 text
-WINDOWS_1252_CODEPOINTS = range(256) + WINDOWS_1252_GREMLINS
+WINDOWS_1252_CODEPOINTS = list(range(256)) + WINDOWS_1252_GREMLINS
 
 # Rank the characters typically represented by a single byte -- that is, in
 # Latin-1 or Windows-1252 -- by how weird it would be to see them in running
@@ -489,8 +499,8 @@ SINGLE_BYTE_WEIRDNESS = (
 # Pre-cache the Unicode data saying which of these first 256 characters are
 # letters. We'll need it often.
 SINGLE_BYTE_LETTERS = [
-    unicodedata.category(unichr(i)).startswith('L')
-    for i in xrange(256)
+    unicodedata.category(chr(i)).startswith('L')
+    for i in range(256)
 ]
 
 # A table telling us how to interpret the first word of a letter's Unicode
