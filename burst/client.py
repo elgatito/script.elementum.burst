@@ -8,7 +8,6 @@ from future.utils import PY3, iteritems
 
 import re
 import os
-import sys
 import urllib3
 import dns.resolver
 import requests

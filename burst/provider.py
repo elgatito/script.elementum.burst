@@ -20,7 +20,7 @@ if PY3:
     unicode = str
 else:
     from urllib import quote
-    
+
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
     """ Payload formatter to format results the way Elementum expects them
 

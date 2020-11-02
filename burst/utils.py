@@ -12,6 +12,7 @@ from elementum.provider import get_setting
 from .providers.definitions import definitions
 if PY3:
     from urllib.parse import urlparse
+    basestring = str
     unicode = str
 else:
     from urlparse import urlparse

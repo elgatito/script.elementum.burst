@@ -488,7 +488,7 @@ def extract_from_api(provider, client):
             name = "%s - %s" % (name, result[api_format['quality']])
         if 'size' in api_format:
             size = result[api_format['size']]
-            if isinstance(size,(long, int)):
+            if isinstance(size, (long, int)):
                 size = sizeof(size)
             elif isinstance(size, basestring) and size.isdigit():
                 size = sizeof(int(size))
