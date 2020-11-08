@@ -4,20 +4,25 @@
 Burst utilities
 """
 
+from future.utils import PY2, PY3, iteritems
+
 import os
 import re
-import xbmc
-import xbmcgui
-import xbmcaddon
 from elementum.provider import get_setting
-from providers.definitions import definitions
-from urlparse import urlparse
+from .providers.definitions import definitions
+if PY3:
+    from urllib.parse import urlparse
+    basestring = str
+    unicode = str
+else:
+    from urlparse import urlparse
+from kodi_six import xbmc, xbmcgui, xbmcaddon
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo("id")
 ADDON_NAME = ADDON.getAddonInfo("name")
-ADDON_PATH = ADDON.getAddonInfo("path").decode('utf-8')
-ADDON_ICON = ADDON.getAddonInfo("icon").decode('utf-8')
+ADDON_PATH = ADDON.getAddonInfo("path")
+ADDON_ICON = ADDON.getAddonInfo("icon")
 ADDON_PROFILE = ADDON.getAddonInfo("profile")
 ADDON_VERSION = ADDON.getAddonInfo("version")
 PATH_ADDONS = xbmc.translatePath("special://home/addons/")
@@ -338,11 +343,15 @@ def encode_dict(dict_in, charset='utf8'):
     """
     try:
         dict_out = {}
-        for k, v in dict_in.iteritems():
-            if isinstance(v, unicode):
+        for k, v in iteritems(dict_in):
+            if PY2 and isinstance(v, unicode):
                 v = v.encode('utf8')
-            elif isinstance(v, str):
+            elif PY2 and isinstance(v, str):
                 v = v.decode('utf8')
+            elif PY3 and isinstance(v, str):
+                v = v
+            elif PY3 and isinstance(v, bytes):
+                v = v.decode()
 
             if charset != 'utf8':
                 v = v.decode('utf8').encode(charset)

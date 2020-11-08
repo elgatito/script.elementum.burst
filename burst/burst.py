@@ -4,24 +4,32 @@
 Burst processing thread
 """
 
+from __future__ import unicode_literals
+from future.utils import PY3, iteritems
+
 import re
 import json
 import time
-import xbmc
-import xbmcaddon
-import xbmcgui
-from Queue import Queue
 from threading import Thread
-from urlparse import urlparse
-from urllib import unquote
 from elementum.provider import append_headers, get_setting, log
+if PY3:
+    from queue import Queue
+    from urllib.parse import urlparse
+    from urllib.parse import unquote
+    basestring = str
+    long = int
+else:
+    from Queue import Queue
+    from urlparse import urlparse
+    from urllib import unquote
+from .parser.ehp import Html
+from kodi_six import xbmc, xbmcgui, xbmcaddon, py2_encode
 
-from parser.ehp import Html
-from provider import process
-from providers.definitions import definitions, longest
-from filtering import apply_filters, Filtering
-from client import USER_AGENT, Client
-from utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias
+from .provider import process
+from .providers.definitions import definitions, longest
+from .filtering import apply_filters, Filtering
+from .client import USER_AGENT, Client
+from .utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias
 
 provider_names = []
 provider_results = []
@@ -67,7 +75,7 @@ def search(payload, method="general"):
                 },
             }
 
-    payload['titles'] = dict((k.lower(), v) for k, v in payload['titles'].iteritems())
+    payload['titles'] = dict((k.lower(), v) for k, v in iteritems(payload['titles']))
 
     # If titles[] exists in payload and there are special chars in titles[source]
     #   then we set a flag to possibly modify the search query
@@ -147,9 +155,9 @@ def search(payload, method="general"):
     del p_dialog
 
     if available_providers > 0:
-        message = u', '.join(provider_names)
+        message = ', '.join(provider_names)
         message = message + translation(32064)
-        log.warning(message.encode('utf-8'))
+        log.warning(message)
         if not payload['silent']:
             notify(message, ADDON_ICON)
 
@@ -268,7 +276,7 @@ def extract_torrents(provider, client):
                 headers['Referer'] = referer
 
             uri = torrent.split('|')  # Split cookies for private trackers
-            subclient.open(uri[0].encode('utf-8'), headers=headers)
+            subclient.open(py2_encode(uri[0]), headers=headers)
 
             if 'bittorrent' in subclient.headers.get('content-type', ''):
                 log.debug('[%s] bittorrent content-type for %s' % (provider, repr(torrent)))
@@ -374,7 +382,7 @@ def extract_torrents(provider, client):
 
             if name and torrent and needs_subpage and not torrent.startswith('magnet'):
                 if not torrent.startswith('http'):
-                    torrent = definition['root_url'] + torrent.encode('utf-8')
+                    torrent = definition['root_url'] + py2_encode(torrent)
                 t = Thread(target=extract_subpage, args=(q, name, torrent, size, seeds, peers, info_hash, referer))
                 threads.append(t)
             else:
@@ -480,17 +488,17 @@ def extract_from_api(provider, client):
             name = "%s - %s" % (name, result[api_format['quality']])
         if 'size' in api_format:
             size = result[api_format['size']]
-            if type(size) in (long, int):
+            if isinstance(size, (long, int)):
                 size = sizeof(size)
-            elif type(size) in (str, unicode) and size.isdigit():
+            elif isinstance(size, basestring) and size.isdigit():
                 size = sizeof(int(size))
         if 'seeds' in api_format:
             seeds = result[api_format['seeds']]
-            if type(seeds) in (str, unicode) and seeds.isdigit():
+            if isinstance(seeds, basestring) and seeds.isdigit():
                 seeds = int(seeds)
         if 'peers' in api_format:
             peers = result[api_format['peers']]
-            if type(peers) in (str, unicode) and peers.isdigit():
+            if isinstance(peers, basestring) and peers.isdigit():
                 peers = int(peers)
         yield (name, info_hash, torrent, size, seeds, peers)
 

@@ -132,7 +132,7 @@ def parse(main=None, addon=None, settings=None, provider=None, path=None, from_c
         }
     }}
     if from_cli:
-        print json.dumps(export, indent=4, sort_keys=True, separators=(',', ': ')).replace('null', 'None')
+        print(json.dumps(export, indent=4, sort_keys=True, separators=(',', ': ')).replace('null', 'None'))
     else:
         return export
 

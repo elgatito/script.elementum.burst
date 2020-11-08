@@ -6,10 +6,14 @@
     List is checked through providers.json and inserting only providers with enabled:true,
     while default providers should have predefined:true.
 """
+from future.utils import PY3
 
 import os
 import re
 import json
+
+if PY3:
+    from future.builtins import range as xrange
 
 mandatory_fields = {'name': '', 'predefined': False, 'enabled': False, 'private': False, 'id': '', 'languages': ''}
 public = []
