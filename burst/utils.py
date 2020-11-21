@@ -9,7 +9,7 @@ from future.utils import PY2, PY3, iteritems
 import os
 import re
 from elementum.provider import get_setting
-from .providers.definitions import definitions
+from .providers.definitions import definitions, translatePath
 if PY3:
     from urllib.parse import urlparse
     basestring = str
@@ -25,8 +25,8 @@ ADDON_PATH = ADDON.getAddonInfo("path")
 ADDON_ICON = ADDON.getAddonInfo("icon")
 ADDON_PROFILE = ADDON.getAddonInfo("profile")
 ADDON_VERSION = ADDON.getAddonInfo("version")
-PATH_ADDONS = xbmc.translatePath("special://home/addons/")
-PATH_TEMP = xbmc.translatePath("special://temp")
+PATH_ADDONS = translatePath("special://home/addons/")
+PATH_TEMP = translatePath("special://temp")
 if not ADDON_PATH:
     ADDON_PATH = '..'
 
@@ -325,7 +325,7 @@ def notify(message, image=None):
 def clear_cache():
     """ Clears cookies from Burst's cache
     """
-    cookies_path = os.path.join(xbmc.translatePath("special://temp"), "burst")
+    cookies_path = os.path.join(translatePath("special://temp"), "burst")
     if os.path.isdir(cookies_path):
         for f in os.listdir(cookies_path):
             if re.search('.jar', f):
