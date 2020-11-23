@@ -1803,7 +1803,7 @@
         "anime_query": "",
         "base_url": "http://www.sumotorrent.sx/en/search/QUERYEXTRA",
         "color": "FFFFFFFF",
-        "enabled": true,
+        "enabled": false,
         "general_extra": "",
         "general_keywords": "{title:original}",
         "general_query": "",
