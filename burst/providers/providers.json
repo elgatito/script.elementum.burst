@@ -2658,7 +2658,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "?c25=1&search=QUERY&incldead=1&field=name",
-        "base_url": "http://zamunda.net/bananas",
+        "base_url": "https://zamunda.net/bananas",
         "charset": "windows-1251",
         "color": "FF2BA6D4",
         "enabled": true,
@@ -2681,11 +2681,11 @@
             "row": "find_once('table', ('id', 'zbtable')).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=-2)",
             "size": "item(tag='td', order=-4)",
-            "torrent": "'http://zamunda.net' + item.take_with_root(('class', 'fa fa-download'))[0].attr['href']"
+            "torrent": "'https://zamunda.net' + item.take_with_root(('class', 'fa fa-download'))[0].attr['href']"
         },
         "predefined": false,
         "private": true,
-        "root_url": "http://zamunda.net",
+        "root_url": "https://zamunda.net",
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original}+Season+{season}",
