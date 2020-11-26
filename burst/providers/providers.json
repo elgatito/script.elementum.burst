@@ -2779,7 +2779,7 @@
         "season_keywords": "{title} season {season:2}",
         "season_keywords2": "{title} s{season:2}",
         "season_query": "",
-        "separator": "%20",
+        "separator": "+",
         "show_query": "",
         "subpage": false,
         "tv_extra": "",
