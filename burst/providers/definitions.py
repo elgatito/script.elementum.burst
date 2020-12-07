@@ -130,6 +130,7 @@ def translatePath(*args, **kwargs):
     else:
         return xbmc.translatePath(*args, **kwargs)
 
+
 # Load providers
 load_providers(os.path.join(ADDON_PATH, 'burst', 'providers', 'providers.json'))
 

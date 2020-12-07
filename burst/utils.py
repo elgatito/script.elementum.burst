@@ -16,7 +16,7 @@ if PY3:
     unicode = str
 else:
     from urlparse import urlparse
-from kodi_six import xbmc, xbmcgui, xbmcaddon
+from kodi_six import xbmcgui, xbmcaddon
 
 ADDON = xbmcaddon.Addon()
 ADDON_ID = ADDON.getAddonInfo("id")
