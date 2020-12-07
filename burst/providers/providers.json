@@ -2113,7 +2113,7 @@
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
-        "base_url": "http://www.torrent9.blue/search_torrent/QUERYEXTRA.html",
+        "base_url": "https://torrent9.to/search_torrent/QUERYEXTRA.html",
         "color": "FF277A9C",
         "enabled": true,
         "general_extra": "",
