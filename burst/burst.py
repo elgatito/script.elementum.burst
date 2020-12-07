@@ -38,16 +38,22 @@ request_time = time.time()
 auto_timeout = get_setting("auto_timeout", bool)
 timeout = get_setting("timeout", int)
 special_chars = "()\"':.[]<>/\\?"
+elementum_timeout = 0
 
+elementum_addon = xbmcaddon.Addon(id='plugin.video.elementum')
+if elementum_addon:
+    if elementum_addon.getSetting('custom_provider_timeout_enabled') == "true":
+        elementum_timeout = int(elementum_addon.getSetting('custom_provider_timeout'))
+    else:
+        elementum_timeout = 30
+    log.info("Using timeout from Elementum: %d seconds" % (elementum_timeout))
+
+# Make sure timeout is always less than the one from Elementum.
 if auto_timeout:
-    elementum_addon = xbmcaddon.Addon(id='plugin.video.elementum')
-    if elementum_addon:
-        if elementum_addon.getSetting('custom_provider_timeout_enabled') == "true":
-            timeout = int(elementum_addon.getSetting('custom_provider_timeout')) - 2
-        else:
-            timeout = 28
-        log.debug("Using timeout from Elementum: %d seconds" % (timeout))
-
+    timeout = elementum_timeout - 3
+elif elementum_timeout > 0 and timeout > elementum_timeout - 3:
+    log.info("Redefining timeout to be less than Elementum's: %d to %d seconds" % (timeout, elementum_timeout - 3))
+    timeout = elementum_timeout - 3
 
 def search(payload, method="general"):
     """ Main search entrypoint
