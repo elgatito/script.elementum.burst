@@ -962,7 +962,7 @@
             "row": "find_once('table', ('class', ['frontPageWidget'])).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=5)",
             "size": "item(tag='td', order=2)",
-            "torrent": "'https://katcr.to%s' % item(tag='a', order=1, attribute='href')"
+            "torrent": "'https://katcr.to%s' % item(tag='a', order=2, attribute='href')"
         },
         "predefined": false,
         "private": false,
@@ -973,7 +973,7 @@
         "season_query": "QUERY",
         "separator": "%20",
         "show_query": "QUERY",
-        "subpage": null,
+        "subpage": true,
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
