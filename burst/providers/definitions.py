@@ -18,7 +18,8 @@ else:
     from io import open
 
 from elementum.provider import log
-from kodi_six import xbmc, xbmcaddon
+from kodi_six import xbmc, xbmcaddon, xbmcvfs
+
 start_time = time.time()
 ADDON = xbmcaddon.Addon()
 ADDON_PATH = ADDON.getAddonInfo("path")
@@ -122,6 +123,12 @@ def update(d, u):
             d[k] = u[k]
     return d
 
+def translatePath(*args, **kwargs):
+    kodi_version = xbmc.getInfoLabel('System.BuildVersion').split('.')[0]
+    if kodi_version >= '19':
+        return xbmcvfs.translatePath(*args, **kwargs)
+    else:
+        return xbmc.translatePath(*args, **kwargs)
 
 # Load providers
 load_providers(os.path.join(ADDON_PATH, 'burst', 'providers', 'providers.json'))
@@ -130,7 +137,7 @@ load_providers(os.path.join(ADDON_PATH, 'burst', 'providers', 'providers.json'))
 load_overrides(os.path.join(ADDON_PATH, 'burst', 'providers'))
 
 # Load user's custom providers
-custom_providers = os.path.join(xbmc.translatePath(ADDON_PROFILE), "providers")
+custom_providers = os.path.join(translatePath(ADDON_PROFILE), "providers")
 if not os.path.exists(custom_providers):
     try:
         os.makedirs(custom_providers)
@@ -142,12 +149,12 @@ for provider_file in glob(os.path.join(custom_providers, "*.json")):
     load_providers(provider_file, custom=True)
 
 # Load user's custom overrides
-custom_overrides = xbmc.translatePath(ADDON_PROFILE)
+custom_overrides = translatePath(ADDON_PROFILE)
 if os.path.exists(os.path.join(custom_overrides, 'overrides.py')):
     load_overrides(custom_overrides, custom=True)
 
 # Load json overrides
-load_providers(os.path.join(xbmc.translatePath(ADDON_PROFILE), 'overrides.json'))
+load_providers(os.path.join(translatePath(ADDON_PROFILE), 'overrides.json'))
 
 # Setting mandatory fields to their default values for each provider.
 for provider in definitions:

@@ -15,7 +15,7 @@ import requests
 from elementum.provider import log, get_setting
 from time import sleep
 from urllib3.util import connection
-from .utils import encode_dict
+from .utils import encode_dict, translatePath
 if PY3:
     from http.cookiejar import LWPCookieJar
     from urllib.parse import urlparse, urlencode
@@ -28,8 +28,6 @@ from kodi_six import xbmcaddon
 
 from requests.packages.urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
-
-from kodi_six.xbmc import translatePath
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.21 Safari/537.36"
 PATH_TEMP = translatePath("special://temp")
