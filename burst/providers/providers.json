@@ -2333,7 +2333,7 @@
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
-        "base_url": "https://torrentz2.eu/search?f=QUERYEXTRA",
+        "base_url": "https://torrentz2.is/search?f=QUERYEXTRA",
         "color": "FFFFB090",
         "enabled": true,
         "filter_title": true,
