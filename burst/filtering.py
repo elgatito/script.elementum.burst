@@ -645,7 +645,16 @@ def cleanup_results(results_list):
                 if result['uri'] and result['uri'].startswith('magnet'):
                     hash_ = Magnet(result['uri']).info_hash.upper()
                 else:
-                    hash_ = hashlib.md5(py2_encode(result['uri'])).hexdigest()
+                    hash_ = result['uri']
+                    try:
+                        hash_ = hash_.encode()
+                    except:
+                        pass
+                    try:
+                        hash_ = py2_encode(hash_)
+                    except:
+                        pass
+                    hash_ = hashlib.md5(hash_).hexdigest()
             except:
                 pass
         # try:
