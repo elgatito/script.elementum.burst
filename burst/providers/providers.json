@@ -2241,7 +2241,7 @@
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
-    "torrenthalaxy": {
+    "torrentgalaxy": {
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
