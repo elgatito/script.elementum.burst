@@ -2275,7 +2275,7 @@
         "season_keywords": "{title:original} season {season:2}",
         "season_keywords2": "{title:original} s{season:2}",
         "season_query": "",
-        "separator": "%20",
+        "separator": "+",
         "show_query": "",
         "subpage": null,
         "tv_extra": "",
