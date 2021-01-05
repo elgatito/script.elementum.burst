@@ -1884,7 +1884,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:en} {episode}",
         "anime_query": "200",
-        "base_url": "https://thepiratebay10.org/search/QUERYEXTRA/1/99/0",
+        "base_url": "https://thepiratebay10.org/search/QUERYEXTRA/1/99/",
         "color": "FF5A3C22",
         "enabled": true,
         "general_extra": "",
