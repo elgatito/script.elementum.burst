@@ -96,7 +96,10 @@ and make sure it follows the format below (hopefully with `"subpage": false`):
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
-        "tv_keywords2": ""
+        "tv_keywords2": "",
+        "tv_keywords3": "",
+        "tv_keywords_fallback": "",
+        "tv_keywords_fallback2": ""
     }
 }
 ```
