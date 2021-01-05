@@ -42,7 +42,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} Сезон {season}"
+        "tv_keywords_fallback": "{title:original} Сезон {season}"
     },
     "1337x": {
         "anime_extra": "",
@@ -173,8 +173,7 @@
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:original} /s{season:2}e{episode:2}",
-        "tv_keywords2": ""
+        "tv_keywords": "{title:original} /s{season:2}e{episode:2}"
     },
     "bithumen": {
         "anime_extra": "",
@@ -306,7 +305,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} Сезон {season}"
+        "tv_keywords_fallback": "{title:original} Сезон {season}"
     },
     "cpasbien": {
         "anime_extra": "",
@@ -437,9 +436,7 @@
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "'{title:original}' s{season:2}e{episode:2}",
-        "tv_keywords2": null,
-        "tv_keywords_fallback": null
+        "tv_keywords": "'{title:original}' s{season:2}e{episode:2}"
     },
     "filelist": {
         "anime_extra": "",
@@ -745,7 +742,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "ilcorsaronero": {
         "anime_extra": "",
@@ -890,7 +887,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "itorrent": {
         "anime_extra": null,
@@ -1025,7 +1022,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:ru} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:ru} {season}+Сезон"
+        "tv_keywords_fallback": "{title:ru} {season}+Сезон"
     },
     "limetorrents": {
         "anime_extra": "",
@@ -1068,7 +1065,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "linkomanija": {
         "anime_extra": "",
@@ -1111,7 +1108,6 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "+{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "",
         "tv_keywords_fallback": "+{title:original} s{season:2}"
     },
     "magnetdl": {
@@ -1201,7 +1197,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} {season} Сезон"
+        "tv_keywords_fallback": "{title:original} {season} Сезон"
     },
     "mvgroup": {
         "anime_extra": "",
@@ -1337,7 +1333,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "newstudio": {
         "anime_extra": "",
@@ -1471,7 +1467,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} \"Сезон {season}\""
+        "tv_keywords_fallback": "{title:original} \"Сезон {season}\""
     },
     "nyaa": {
         "anime_extra": "",
@@ -1616,7 +1612,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} \"{season} Сезон\""
+        "tv_keywords_fallback": "{title:original} \"{season} Сезон\""
     },
     "rutor": {
         "anime_extra": "",
@@ -1708,8 +1704,8 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} \"Сезон {season}\"",
-        "tv_keywords_fallback": "\"{title:original} {season}\""
+        "tv_keywords_fallback": "\"{title:original} {season}\"",
+        "tv_keywords_fallback2": "{title:original} \"Сезон {season}\""
     },
     "serialz": {
         "anime_extra": "",
@@ -1752,8 +1748,7 @@
         "subpage": true,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:original} Сезон {season} Серия {episode}",
-        "tv_keywords2": ""
+        "tv_keywords": "{title:original} Сезон {season} Серия {episode}"
     },
     "skytorrents": {
         "anime_extra": "",
@@ -1794,8 +1789,7 @@
         "subpage": null,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": ""
+        "tv_keywords": "{title:original} s{season:2}e{episode:2}"
     },
     "sumotorrent": {
         "anime_extra": "",
@@ -1884,7 +1878,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} Сезон {season}"
+        "tv_keywords_fallback": "{title:original} Сезон {season}"
     },
     "thepiratebay": {
         "anime_extra": "",
@@ -2017,7 +2011,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} Сезон_{season}"
+        "tv_keywords_fallback": "{title:original} Сезон_{season}"
     },
     "torlock": {
         "anime_extra": "",
@@ -2281,7 +2275,7 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "torrentleech": {
         "anime_extra": "",
