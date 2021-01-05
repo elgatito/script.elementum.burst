@@ -945,7 +945,7 @@
         "enabled": true,
         "general_extra": "",
         "general_keywords": "{title:original}",
-        "general_query": "QUERY/?field=seeders&sorder=desc",
+        "general_query": "QUERY/?sortby=seeders&sort=desc",
         "language": null,
         "languages": "en",
         "login_failed": "",
