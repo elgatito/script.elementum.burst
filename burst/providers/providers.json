@@ -2157,7 +2157,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "",
-        "base_url": "https://www.torrentdownloads.me/search/?search=QUERYEXTRA",
+        "base_url": "https://www.torrentdownloads.info/search/?search=QUERYEXTRA",
         "color": "FFB74F1A",
         "enabled": true,
         "general_extra": "",
