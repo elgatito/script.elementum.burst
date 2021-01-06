@@ -295,8 +295,8 @@ class Filtering:
             key = item_type + '_keywords' + item
             extra = item_type + '_extra' + item
             if key in definition and definition[key]:
-                self.queries = ["%s" % definition[key]]
-                self.extras = ["%s" % definition[extra] if extra in definition and definition[extra] else '']
+                self.queries.append("%s" % definition[key])
+                self.extras.append("%s" % definition[extra] if extra in definition and definition[extra] else '')
 
         # Collecting fallback keywords, they will come in play if having no results at all
         for item in ['', '2', '3', '4']:
