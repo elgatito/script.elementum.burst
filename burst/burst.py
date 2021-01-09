@@ -198,7 +198,7 @@ def got_results(provider, results):
     # 2 "Size"
     # 3 "Balanced"
 
-    if not sort_by or sort_by == 3:
+    if sort_by == 3:
         # TODO: think of something interesting to balance sort results
         sorted_results = sorted(results, key=lambda r: (r['sort_balance']), reverse=True)
     elif sort_by == 0:
