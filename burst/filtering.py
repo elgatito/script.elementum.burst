@@ -137,8 +137,6 @@ class Filtering:
                 releases_allow.extend(self.release_types[release_type])
             else:
                 releases_deny.extend(self.release_types[release_type])
-        self.releases_allow = releases_allow
-        self.releases_deny = releases_deny
 
         if get_setting('additional_filters', bool):
             accept = get_setting('accept', unicode).strip().lower()
@@ -155,6 +153,8 @@ class Filtering:
             if require:
                 require = re.split(r',\s?', require)
 
+        self.releases_allow = releases_allow
+        self.releases_deny = releases_deny
         self.require_keywords = require
 
         self.min_size = get_float(get_setting('min_size'))
