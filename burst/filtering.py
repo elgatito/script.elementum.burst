@@ -591,7 +591,6 @@ def apply_filters(results_list):
         list: Filtered and sorted results
     """
     results_list = cleanup_results(results_list)
-    log.debug("Filtered results: %s" % repr(results_list))
 
     return results_list
 
@@ -613,17 +612,11 @@ def cleanup_results(results_list):
     allow_noseeds = get_setting('allow_noseeds', bool)
     for result in results_list:
         if not result['seeds'] and not allow_noseeds:
+            log.debug('[%s] Skipping due to no seeds: %s' % (result['provider'][16:-8], repr(result['name'])))
             continue
 
         if not result['uri']:
-            if not result['name']:
-                continue
-            try:
-                log.warning('[%s] No URI for %s' % (result['provider'][16:-8], repr(result['name'])))
-            except Exception as e:
-                import traceback
-                log.warning("%s logging failed with: %s" % (result['provider'], repr(e)))
-                map(log.debug, traceback.format_exc().split("\n"))
+            log.debug('[%s] Skipping due to empty uri: %s' % (result['provider'][16:-8], repr(result)))
             continue
 
         hash_ = result['info_hash'].upper()
@@ -641,6 +634,10 @@ def cleanup_results(results_list):
                     hash_ = hashlib.md5(hash_).hexdigest()
             except:
                 pass
+
+        # Make sure all are upper-case
+        hash_ = hash_.upper()
+
         # try:
         #     log.debug("[%s] Hash for %s: %s" % (result['provider'][16:-8], repr(result['name']), hash_))
         # except Exception as e:
@@ -651,5 +648,7 @@ def cleanup_results(results_list):
         if not any(existing == hash_ for existing in hashes):
             filtered_list.append(result)
             hashes.append(hash_)
+        else:
+            log.debug('[%s] Skipping due to repeating hash: %s' % (result['provider'][16:-8], repr(result)))
 
     return sorted(filtered_list, key=lambda r: (get_int(r['seeds'])), reverse=True)

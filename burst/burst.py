@@ -167,11 +167,11 @@ def search(payload, method="general"):
         if not payload['silent']:
             notify(message, ADDON_ICON)
 
-    log.debug("all provider_results: %s" % repr(provider_results))
+    log.debug("all provider_results of %d: %s" % (len(provider_results), repr(provider_results)))
 
     filtered_results = apply_filters(provider_results)
 
-    log.debug("all filtered_results: %s" % repr(filtered_results))
+    log.debug("all filtered_results of %d: %s" % (len(filtered_results), repr(filtered_results)))
 
     log.info("Providers returned %d results in %s seconds" % (len(filtered_results), round(time.time() - request_time, 2)))
 
