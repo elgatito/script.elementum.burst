@@ -198,15 +198,15 @@ def got_results(provider, results):
     # 2 "Size"
     # 3 "Balanced"
 
-    if not sort_by or sort_by == 3:
+    if not sort_by or sort_by == 3 or sort_by > 3:
         # TODO: think of something interesting to balance sort results
-        sorted_results = sorted(results, key=lambda r: (r['sort_balance']), reverse=True)
+        sorted_results = sorted(results, key=lambda r: (nonesorter(r['sort_balance'])), reverse=True)
     elif sort_by == 0:
-        sorted_results = sorted(results, key=lambda r: (r['sort_resolution']), reverse=True)
+        sorted_results = sorted(results, key=lambda r: (nonesorter(r['sort_resolution'])), reverse=True)
     elif sort_by == 1:
-        sorted_results = sorted(results, key=lambda r: (r['seeds']), reverse=True)
+        sorted_results = sorted(results, key=lambda r: (nonesorter(r['seeds'])), reverse=True)
     elif sort_by == 2:
-        sorted_results = sorted(results, key=lambda r: (r['size']), reverse=True)
+        sorted_results = sorted(results, key=lambda r: (nonesorter(r['size'])), reverse=True)
 
     if len(sorted_results) > max_results:
         sorted_results = sorted_results[:max_results]
@@ -614,3 +614,8 @@ def get_search_query(definition, key):
     if key == 'key' or key == 'table' or key == 'row':
         return "dom." + definition['parser'][key]
     return definition['parser'][key]
+
+def nonesorter(a):
+    if not a:
+        return ""
+    return a
