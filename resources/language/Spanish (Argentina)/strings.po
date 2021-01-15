@@ -224,171 +224,171 @@ msgstr "Tamaño"
 
 msgctxt "#32093"
 msgid "List of public DNS IPs"
-msgstr ""
+msgstr "Lista de direcciones IP de DNS públicos"
 
 msgctxt "#32094"
 msgid "List of Opennic DNS IPs"
-msgstr ""
+msgstr "Lista de direcciones IP de DNS Opennic"
 
 msgctxt "#32095"
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 msgctxt "#32096"
 msgid "Enabled"
-msgstr ""
+msgstr "Activo"
 
 msgctxt "#32097"
 msgid "Host"
-msgstr ""
+msgstr "Host"
 
 msgctxt "#32098"
 msgid "Port"
-msgstr ""
+msgstr "Puerto"
 
 msgctxt "#32099"
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 msgctxt "#32100"
 msgid "Password"
-msgstr ""
+msgstr "COntraseña"
 
 msgctxt "#32101"
 msgid "Proxy type"
-msgstr ""
+msgstr "Tipo de proxy"
 
 msgctxt "#32102"
 msgid "SOCKS4"
-msgstr ""
+msgstr "SOCKS4"
 
 msgctxt "#32103"
 msgid "SOCKS5"
-msgstr ""
+msgstr "SOCKS5"
 
 msgctxt "#32104"
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 msgctxt "#32105"
 msgid "HTTPS"
-msgstr ""
+msgstr "HTTPS"
 
 msgctxt "#32106"
 msgid "Use proxy settings"
-msgstr ""
+msgstr "Usar configuración de proxy"
 
 msgctxt "#32107"
 msgid "Proxy from Elementum settings"
-msgstr ""
+msgstr "Usar proxy de ajuste Elementum"
 
 msgctxt "#32108"
 msgid "Custom settings"
-msgstr ""
+msgstr "Ajustes personalizados"
 
 msgctxt "#32109"
 msgid "Antizapret proxy"
-msgstr ""
+msgstr "Proxy Antizapret"
 
 msgctxt "#32110"
 msgid "International"
-msgstr ""
+msgstr "Internacional"
 
 msgctxt "#32111"
 msgid "English"
-msgstr ""
+msgstr "Inglés"
 
 msgctxt "#32112"
 msgid "Italian"
-msgstr ""
+msgstr "Italiano"
 
 msgctxt "#32113"
 msgid "French"
-msgstr ""
+msgstr "Francés"
 
 msgctxt "#32114"
 msgid "Russian"
-msgstr ""
+msgstr "Ruso"
 
 msgctxt "#32115"
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ucraniano"
 
 msgctxt "#32116"
 msgid "Bulgarian"
-msgstr ""
+msgstr "Búlgaro"
 
 msgctxt "#32117"
 msgid "Romanian"
-msgstr ""
+msgstr "RUmano"
 
 msgctxt "#32118"
 msgid "Hungarian"
-msgstr ""
+msgstr "Húngaro"
 
 msgctxt "#32119"
 msgid "Sort returned results by"
-msgstr ""
+msgstr "Ordenar resultados por"
 
 msgctxt "#32120"
 msgid "Resolution"
-msgstr ""
+msgstr "Resolución"
 
 msgctxt "#32121"
 msgid "Seeds"
-msgstr ""
+msgstr "Seeds"
 
 msgctxt "#32122"
 msgid "Size"
-msgstr ""
+msgstr "Tamaño"
 
 msgctxt "#32123"
 msgid "Balanced"
-msgstr ""
+msgstr "Balanceado"
 
 msgctxt "#32124"
 msgid "Automatically adjust timeout according to Elementum settings"
-msgstr ""
+msgstr "Usar tiempo de espera en base a ajustes de Elementus"
 
 msgctxt "#32125"
 msgid "Proxy http requests with Elementum"
-msgstr ""
+msgstr "Enviar tráfico HTTP vía Elementum"
 
 msgctxt "#32126"
 msgid "Polish"
-msgstr ""
+msgstr "Polaco"
 
 msgctxt "#32127"
 msgid "Lithuanian"
-msgstr ""
+msgstr "Lituano"
 
 msgctxt "#32128"
 msgid "Public trackers [A .. M]"
-msgstr ""
+msgstr "Trackers públicos [A .. M]"
 
 msgctxt "#32129"
 msgid "Public trackers [N .. ]"
-msgstr ""
+msgstr "Trackers públicos [N .. ]"
 
 msgctxt "#32130"
 msgid "Private trackers [A .. M]"
-msgstr ""
+msgstr "Trackers privados [A .. M]"
 
 msgctxt "#32131"
 msgid "Private trackers [N .. ]"
-msgstr ""
+msgstr "Trackers privados [N .. ]"
 
 msgctxt "#32132"
 msgid "Remove quotes from search query"
-msgstr ""
+msgstr "Ignorar comillas en términos de búsqueda"
 
 msgctxt "#32133"
 msgid "Resolution"
-msgstr ""
+msgstr "Resolución"
 
 msgctxt "#32134"
 msgid "Video quality"
-msgstr ""
+msgstr "Calidad de video"
 
 #~ msgctxt "#32040"
 #~ msgid "Maximum torrents"
