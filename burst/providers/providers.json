@@ -1754,7 +1754,7 @@
         "anime_extra": "",
         "anime_keywords": "{title:original} {episode}",
         "anime_query": "200",
-        "base_url": "https://skytorrents.lol/?query=QUERYEXTRA&sort=seeders",
+        "base_url": "https://www.skytorrents.lol/?query=QUERYEXTRA&sort=seeders",
         "color": "FFFFFFFF",
         "enabled": true,
         "general_extra": "",
