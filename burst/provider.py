@@ -48,7 +48,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
         if filtering.verify(provider, v_name, v_size):
             sort_seeds = get_int(seeds)
             sort_resolution = filtering.determine_resolution(v_name)[1]+1
-            sort_balance = sort_seeds * 3 * sort_resolution
+            sort_balance = (sort_seeds + 1) * 3 * sort_resolution
 
             results.append({
                 "name": name,
