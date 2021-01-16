@@ -15,8 +15,8 @@ import json
 import re
 import unicodedata
 if PY3:
+    import html
     from urllib.parse import unquote
-    from html.parser import HTMLParser
     unicode = str
 else:
     from urllib import unquote
@@ -185,7 +185,12 @@ def normalize_string(string, charset=None, replacing=False):
     string = fix_bad_unicode(string)
     string = unquote(string)
     string = string.replace(u'<![CDATA[', u'').replace(u']]', u'')
-    string = HTMLParser().unescape(string)
+
+    if PY3:
+        string = html.unescape(string)
+    else:
+        string = HTMLParser().unescape(string)
+
     if replacing:
         string = string.replace(u"'", '')
 
