@@ -14,7 +14,7 @@ from .normalize import normalize_string
 from .providers.definitions import definitions
 from .utils import Magnet, get_int, get_float, clean_number, size_int, get_alias
 if PY3:
-    from html.parser import HTMLParser
+    import html
     unicode = str
 else:
     from .parser.HTMLParser import HTMLParser
@@ -558,7 +558,11 @@ class Filtering:
             str: Converted string
         """
         name = name.replace('<![CDATA[', '').replace(']]', '')
-        name = HTMLParser().unescape(name.lower())
+
+        if PY3:
+            name = html.unescape(name.lower())
+        else:
+            name = HTMLParser().unescape(name.lower())
 
         return name
 
