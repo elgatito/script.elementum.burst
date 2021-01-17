@@ -2253,7 +2253,7 @@
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
-        "name": "TorrentGalaxy",
+        "name": "[COLOR teal]Torrent[/COLOR][COLOR yellow]Galaxy[/COLOR]",
         "parser": {
             "name": "item(tag='a', order=2)",
             "peers": "item(tag='font', select=('color', '#ff0000'), order=1)",
