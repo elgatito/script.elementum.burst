@@ -639,8 +639,8 @@ def cleanup_results(results_list):
             except:
                 pass
 
-        # Make sure all are upper-case
-        hash_ = hash_.upper()
+        # Make sure all are upper-case and provider-scoped
+        hash_ = result['provider'] + hash_.upper()
 
         # try:
         #     log.debug("[%s] Hash for %s: %s" % (result['provider'][16:-8], repr(result['name']), hash_))
