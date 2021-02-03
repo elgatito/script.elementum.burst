@@ -1293,7 +1293,7 @@
         "anime_extra": "",
         "anime_keywords": "{title} {episode}",
         "anime_query": "",
-        "base_url": "https://ncore.cc/torrents.php?mire=QUERY",
+        "base_url": "https://ncore.pro/torrents.php?mire=QUERY",
         "color": "FF6AC045",
         "enabled": true,
         "general_extra": "",
@@ -1316,11 +1316,11 @@
             "row": "find_all('div', ('class', ['box_nagy', 'box_nagy2']))",
             "seeds": "item(tag='div', select=('class', 'box_s2'))",
             "size": "item(tag='div', select=('class', 'box_meret2'))",
-            "torrent": "item(tag='a', order=1, attribute='href').replace('torrents.php?action=details', 'https://ncore.cc/torrents.php?action=download&key=' + key)"
+            "torrent": "item(tag='a', order=1, attribute='href').replace('torrents.php?action=details', 'https://ncore.pro/torrents.php?action=download&key=' + key)"
         },
         "predefined": false,
         "private": true,
-        "root_url": "https://ncore.cc",
+        "root_url": "https://ncore.pro",
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} s{season:2}",
