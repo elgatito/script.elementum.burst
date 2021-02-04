@@ -67,6 +67,9 @@ def search(payload, method="general"):
     """
     log.debug("Searching with payload (%s): %s" % (method, repr(payload)))
 
+    if 'anime' in payload and payload['anime']:
+        method = 'anime'
+
     if method == 'general':
         if 'query' in payload:
             payload['title'] = payload['query']
