@@ -302,11 +302,11 @@ class Filtering:
         for keyword in keywords:
             keyword = keyword.lower()
             if 'title' in keyword and ':' in keyword:
-                modified = True
                 langs = keyword.lower().split(':')[1:]
                 if len(langs) < 2:
                     continue
                 
+                modified = True
                 for lang in langs:
                     result.append(text.replace("{%s}" % keyword, "{title:%s}" % lang))
 
@@ -406,6 +406,7 @@ class Filtering:
                                                                               repr(title)))
                             log.debug("[%s] Translated titles from Elementum: %s" % (provider, repr(self.info['titles'])))
                         else:
+                            log.debug("[%s] Skipping for: %s - %s" % (use_language, repr(self.info['titles'])))
                             # If title for specific language cannot be read - cancel this query
                             return ""
                     except Exception as e:
