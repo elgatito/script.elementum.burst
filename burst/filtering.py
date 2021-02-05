@@ -290,22 +290,52 @@ class Filtering:
 
         self.collect_queries('anime', definition)
 
+    def split_title_per_languages(self, text):
+        """Splitting {title:lang:lang:...} into separate queries with same 
+
+        """
+        result = []
+        modified = False
+
+        keywords = self.read_keywords(text)
+
+        for keyword in keywords:
+            keyword = keyword.lower()
+            if 'title' in keyword and ':' in keyword:
+                modified = True
+                langs = keyword.lower().split(':')[1:]
+                if len(langs) < 2:
+                    continue
+                
+                for lang in langs:
+                    result.append(text.replace("{%s}" % keyword, "{title:%s}" % lang))
+
+        if not modified:
+            return [text]
+        else:
+            return result
+
     def collect_queries(self, item_type, definition):
         # Collecting keywords
         for item in ['', '2', '3', '4']:
             key = item_type + '_keywords' + item
             extra = item_type + '_extra' + item
             if key in definition and definition[key]:
-                self.queries.append("%s" % definition[key])
-                self.extras.append("%s" % definition[extra] if extra in definition and definition[extra] else '')
+                qlist = self.split_title_per_languages(definition[key])
+                self.queries = self.queries + qlist
+                eitem = definition[extra] if extra in definition and definition[extra] else ''
+                for r in qlist:
+                    self.extras.append(eitem)
 
         # Collecting fallback keywords, they will come in play if having no results at all
         for item in ['', '2', '3', '4']:
             key = item_type + '_keywords_fallback' + item
 
             if key in definition and definition[key]:
-                self.queries.append(definition[key])
-                self.extras.append('-')
+                qlist = self.split_title_per_languages(definition[key])
+                self.queries = self.queries + qlist
+                for r in qlist:
+                    self.extras.append('-')
 
     def information(self, provider):
         """ Debugging method to print keywords and file sizes
@@ -375,6 +405,9 @@ class Filtering:
                             log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
                                                                               repr(title)))
                             log.debug("[%s] Translated titles from Elementum: %s" % (provider, repr(self.info['titles'])))
+                        else:
+                            # If title for specific language cannot be read - cancel this query
+                            return ""
                     except Exception as e:
                         import traceback
                         log.error("%s failed with: %s" % (provider, repr(e)))

@@ -111,7 +111,9 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         query = filtering.process_keywords(provider, query)
         extra = filtering.process_keywords(provider, extra)
 
-        if extra == '-' and filtering.results:
+        if not query:
+            continue
+        elif extra == '-' and filtering.results:
             continue
 
         try:
