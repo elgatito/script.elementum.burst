@@ -630,7 +630,7 @@ def cleanup_results(results_list):
                 if result['uri'] and result['uri'].startswith('magnet'):
                     hash_ = Magnet(result['uri']).info_hash.upper()
                 else:
-                    hash_ = py2_encode(result['uri'])
+                    hash_ = py2_encode(result['uri'].split("|")[0])
                     try:
                         hash_ = hash_.encode()
                     except:
