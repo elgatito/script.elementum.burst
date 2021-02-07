@@ -291,8 +291,7 @@ class Filtering:
         self.collect_queries('anime', definition)
 
     def split_title_per_languages(self, text):
-        """Splitting {title:lang:lang:...} into separate queries with same 
-
+        """Splitting {title:lang:lang:...} into separate queries with same
         """
         result = []
         modified = False
@@ -305,7 +304,7 @@ class Filtering:
                 langs = keyword.lower().split(':')[1:]
                 if len(langs) < 2:
                     continue
-                
+
                 modified = True
                 for lang in langs:
                     result.append(text.replace("{%s}" % keyword, "{title:%s}" % lang))
@@ -406,7 +405,6 @@ class Filtering:
                                                                               repr(title)))
                             log.debug("[%s] Translated titles from Elementum: %s" % (provider, repr(self.info['titles'])))
                         else:
-                            log.debug("[%s] Skipping for: %s - %s" % (use_language, repr(self.info['titles'])))
                             # If title for specific language cannot be read - cancel this query
                             return ""
                     except Exception as e:
