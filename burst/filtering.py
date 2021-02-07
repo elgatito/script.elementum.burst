@@ -231,7 +231,7 @@ class Filtering:
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
 
-        show_query = definition['show_query'] if definition['show_query'] else ''
+        show_query = definition['show_query'] if 'show_query' in definition and definition['show_query'] else ''
         log.debug("[%s] Episode URL: %s%s" % (provider, definition['base_url'], show_query))
         if get_setting('separate_sizes', bool):
             self.min_size = get_float(get_setting('min_size_episodes'))
@@ -254,7 +254,7 @@ class Filtering:
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
 
-        season_query = definition['season_query'] if definition['season_query'] else ''
+        season_query = definition['season_query'] if 'season_query' in definition and definition['season_query'] else ''
         log.debug("[%s] Season URL: %s%s" % (provider, definition['base_url'], season_query))
         if get_setting('separate_sizes', bool):
             self.min_size = get_float(get_setting('min_size_seasons'))
@@ -277,7 +277,7 @@ class Filtering:
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
 
-        anime_query = definition['anime_query'] if definition['anime_query'] else ''
+        anime_query = definition['anime_query'] if 'anime_query' in definition and definition['anime_query'] else ''
         log.debug("[%s] Anime URL: %s%s" % (provider, definition['base_url'], anime_query))
         if get_setting('separate_sizes', bool):
             self.min_size = get_float(get_setting('min_size_episodes'))
