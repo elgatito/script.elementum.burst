@@ -1,7 +1,8 @@
 {
     "0day": {
         "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original} Сезон {season}",
         "anime_query": "",
         "base_url": "https://tracker.0day.kiev.ua/browse.php?c10=1&c11=1&c29=1&c34=1&c20=1&c12=1&c13=1&c21=1&c15=1&c16=1&c27=1&c28=1&c41=1&c19=1&c30=1&c23=1&search=QUERYEXTRA&incldead=0&where=0&sort=7&type=desc",
         "charset": "windows-1251",
@@ -46,7 +47,9 @@
     },
     "1337x": {
         "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
+        "anime_keywords": "{title} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "",
         "base_url": "https://www.1337x.to/search/QUERYEXTRA/1/",
         "color": "FFF14E13",
@@ -90,7 +93,7 @@
     },
     "3dtrackerru": {
         "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
+        "anime_keywords": "",
         "anime_query": "",
         "base_url": "http://3d-tracker.ru/search.php?tracker_search=tracker&keywords=QUERYEXTRA&terms=all&author=&sc=1&sf=titleonly&sk=ts&sd=d&sr=topics&st=0&ch=300&t=0&submit=%D0%9F%D0%BE%D0%B8%D1%81%D0%BA",
         "color": "FFFFFFFF",
@@ -134,8 +137,7 @@
     },
     "baibako": {
         "anime_extra": "",
-        "anime_keywords": "",
-        "anime_query": "",
+        "anime_keywords": "{title:original} /s{season:2}e{episode:2}",
         "base_url": "http://baibako.tv/browse.php?search=QUERYEXTRA&incldead=0&cat=0&videoformat=0&sort=7&type=desc",
         "color": "FFFFFFFF",
         "enabled": true,
@@ -177,8 +179,9 @@
     },
     "bithumen": {
         "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
-        "anime_query": "",
+        "anime_keywords": "{title} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "base_url": "https://bithumen.be/browse.php?search=QUERY",
         "color": "FF6AC045",
         "enabled": true,
@@ -220,8 +223,9 @@
     },
     "bitnova": {
         "anime_extra": null,
-        "anime_keywords": null,
-        "anime_query": null,
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "base_url": "https://bitnova.info/search?q=QUERY&cid=0",
         "color": "FFFFFFFF",
         "enabled": true,
@@ -263,9 +267,8 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "bluebird": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
-        "anime_query": "",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original} Сезон {season}",
         "base_url": "https://bluebird-hd.org/browse.php?webdl=0&3d=0&search=QUERYEXTRA&incldead=0&dsearch=&stype=and&sort=7&type=desc",
         "charset": "windows-1251",
         "color": "FFFFFFFF",
@@ -309,7 +312,9 @@
     },
     "cpasbien": {
         "anime_extra": "",
-        "anime_keywords": "{title:fr} {episode}",
+        "anime_keywords": "{title:fr} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:fr} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:fr} s{season:2}",
         "anime_query": "series/QUERYEXTRA.html",
         "base_url": "https://www.cpasbien.blue/recherche/",
         "color": "FFD1181E",
@@ -354,7 +359,9 @@
     },
     "ettv": {
         "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "200",
         "base_url": "https://www.ettvcentral.com/torrents-search.php?search=QUERYEXTRA&cat=0&incldead=0&lang=0",
         "color": "FFA30000",
@@ -398,8 +405,7 @@
     },
     "eztv": {
         "anime_extra": null,
-        "anime_keywords": null,
-        "anime_query": null,
+        "anime_keywords": "'{title:original}' s{season:2}e{episode:2}",
         "base_url": "https://eztv.re/search/QUERYEXTRA",
         "color": "FF0F559D",
         "enabled": true,
@@ -440,7 +446,9 @@
     },
     "filelist": {
         "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "?username=USERNAME&passkey=PASSKEY&action=search-torrents&type=name&query=QUERY",
         "api_format": {
             "name": "name",
@@ -481,9 +489,9 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "filetracker": {
-        "anime_extra": null,
-        "anime_keywords": null,
-        "anime_query": null,
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "base_url": "https://filetracker.pl/szukaj.php?active=0&search=QUERY&order=seeds&by=DESC",
         "color": "FFFFFFFF",
         "enabled": true,
@@ -525,9 +533,9 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "gimmepeers": {
-        "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
-        "anime_query": "",
+        "anime_keywords": "{title} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "base_url": "https://www.gimmepeers.com/browse.php?search=QUERYEXTRA&cat=0&blah=0",
         "color": "FFEF7F00",
         "enabled": true,
@@ -569,8 +577,9 @@
         "tv_keywords_fallback": "{title} s{season:2}"
     },
     "glotorrents": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "28&incldead=0&inclexternal=0&lang=0&sort=seeders&order=desc",
         "base_url": "https://www.gtdb.to/search_results.php?search=QUERY&EXTRA&cat=",
         "color": "FF88681E",
@@ -613,8 +622,9 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "hd-torrents": {
-        "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
+        "anime_keywords": "{title} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "EXTRA",
         "base_url": "https://hd-torrents.org/torrents.php?csrfToken=CSRF_TOKEN&search=QUERYEXTRA&active=1&order=seeds&by=DESC",
         "color": "FFCFCFCF",
@@ -659,8 +669,9 @@
         "tv_keywords_fallback": "{title} s{season:2}"
     },
     "idope": {
-        "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:originak} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "4",
         "base_url": "https://idope.se/torrent-list/QUERYEXTRA/?&c=",
         "color": "FF017BD4",
@@ -703,9 +714,8 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "ilcorsaroblu": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
-        "anime_query": "",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "base_url": "https://www.ilcorsaroblu.org/index.php?page=torrents&search=QUERYEXTRA&order=5&by=2&x=0&y=0",
         "color": "FFFFFFFF",
         "enabled": true,
@@ -745,8 +755,9 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "ilcorsaronero": {
-        "anime_extra": "",
-        "anime_keywords": "{title:it} {episode}",
+        "anime_keywords": "{title:it} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:it} s{season:2}",
         "anime_query": "/advsearch.php?category=5&search=QUERYEXTRA&order=data&by=DESC&page=0",
         "base_url": "https://ilcorsaronero.link",
         "color": "FF919232",
@@ -791,8 +802,9 @@
         "tv_keywords_fallback": "{title:it} s{season:2}"
     },
     "ilcorsarored": {
-        "anime_extra": "",
-        "anime_keywords": "{title:it} {episode}",
+        "anime_keywords": "{title:it} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:it} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:it} s{season:2}",
         "anime_query": "EXTRA",
         "api_format": {
             "description": "description",
@@ -848,7 +860,8 @@
     },
     "iptorrents": {
         "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "",
         "base_url": "https://www.iptorrents.com/t?q=QUERYEXTRA&qf=ti#torrents",
         "color": "FFFFFFFF",
@@ -890,8 +903,9 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "itorrent": {
-        "anime_extra": null,
-        "anime_keywords": null,
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:originak} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": null,
         "base_url": "https://itorrent.ws/torrentek/title/QUERY/",
         "color": "FFF14E13",
@@ -934,8 +948,9 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "kickass": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "%20category:anime/?field=seeders&sorder=desc&QUERY",
         "base_url": "https://katcr.to/usearch/",
         "color": "FFFEDF64",
@@ -978,11 +993,9 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "kinozal": {
-        "anime_extra": "",
-        "anime_keywords": "{title:en:ru} {episode}",
-        "anime_keywords2": "{title:en:ru} {season}+сезон",
-        "anime_keywords_fallback": "{title:original} {episode}",
-        "anime_keywords_fallback2": "{title:original} {season}+сезон",
+        "anime_keywords": "{title:ru:en} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:ru:en} {season}+Сезон",
+        "anime_keywords_fallback": "{title:original} {season}+Сезон",
         "anime_query": "",
         "base_url": "https://kinozal.guru/browse.php?s=QUERYEXTRA&g=0&c=0&v=0&d=0&w=0&t=1&f=0",
         "charset": "windows-1251",
@@ -1028,8 +1041,8 @@
         "tv_keywords_fallback": "{title:original} {season}+Сезон"
     },
     "limetorrents": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "",
         "base_url": "https://www.limetorrents.info/search/all/QUERY/seeds/1/",
         "color": "FFFFFFFF",
@@ -1071,8 +1084,8 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "linkomanija": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "+{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "+{title:original} s{season:2}",
         "anime_query": "/browse.php?c38=1&incldead=0&h=10&d=DESC&search=%2BQUERYEXTRA",
         "base_url": "https://www.linkomanija.net",
         "color": "FF008000",
@@ -1114,8 +1127,9 @@
         "tv_keywords_fallback": "+{title:original} s{season:2}"
     },
     "magnetdl": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|s{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "",
         "base_url": "https://www.magnetdl.com/FIRSTLETTER/QUERYEXTRA/",
         "color": "FF017BD4",
@@ -1158,8 +1172,8 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "megapeer": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original} {season} Сезон",
         "anime_query": "",
         "base_url": "http://megapeer.ru/browse.php?search=QUERYEXTRA&age=&cat=0&stype=0&sort=0&ascdesc=0",
         "charset": "windows-1251",
@@ -1203,8 +1217,9 @@
         "tv_keywords_fallback": "{title:original} {season} Сезон"
     },
     "mvgroup": {
-        "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
+        "anime_keywords": "{title} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "",
         "base_url": "http://forums.mvgroup.org/maintracker.php?filter=QUERYEXTRA&withsubs=",
         "color": "FF4976B0",
@@ -1248,8 +1263,9 @@
         "tv_keywords_fallback": "{title} s{season:2}"
     },
     "myxzorg": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "&genre=0&incldead=0&c3=1&sort=torrent.seeders&direction=desc&page=1",
         "base_url": "https://www.myxz.eu/browse?search=QUERY",
         "color": "FFD1181E",
@@ -1293,8 +1309,8 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "ncore": {
-        "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "",
         "base_url": "https://ncore.pro/torrents.php?mire=QUERY",
         "color": "FF6AC045",
@@ -1339,8 +1355,8 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "newstudio": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} \"Сезон {season}, Серия {episode}\"",
         "anime_query": "",
         "base_url": "http://newstudio.tv/tracker.php?nm=QUERYEXTRA&prev_sd=1&prev_a=1&prev_my=0&prev_n=0&prev_shc=1&prev_shf=0&prev_sha=0&prev_shs=1&prev_shr=0&prev_sht=0&o=10&s=2&tm=-1&a=1&sd=1&ds=1&ta=-1&sns=-1&sds=-1&pn&submit=1",
         "color": "FFFFFFFF",
@@ -1384,8 +1400,9 @@
         "tv_keywords2": "{title:original} \"Сезон {season}, Серия {episode}\""
     },
     "nitro": {
-        "anime_extra": null,
-        "anime_keywords": null,
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": null,
         "base_url": "http://nitro.to/tags.php?where=1&search=QUERY&per=20&by=desc&order=seeds",
         "color": "FFFFFFFF",
@@ -1428,10 +1445,10 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "nnmclub": {
-        "anime_extra": "",
-        "anime_keywords": "{title:en:ru} {episode}",
-        "anime_keywords_fallback": "{title:original} {episode}",
-        "anime_keywords_fallback2": "{title:en:ru} {season:2}x01|S{season:2}",
+        "anime_keywords": "{title:ru:en} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:ru:en} \"Сезон {season}\"",
+        "anime_keywords_fallback": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback2": "{title:original} \"Сезон {season}\"",
         "anime_query": "",
         "base_url": "https://nnmclub.to/forum/tracker.php?nm=QUERYEXTRA&prev_sd=1&prev_a=1&prev_my=0&prev_n=0&prev_shc=1&prev_shf=0&prev_sha=0&prev_shs=1&prev_shr=0&prev_sht=0&o=10&s=2&tm=-1&a=1&sd=1&ta=-1&sns=-1&sds=-1&pn&submit=1",
         "color": "FFFFFFFF",
@@ -1480,8 +1497,9 @@
         "tv_keywords_fallback2": "{title:original} \"Сезон {season}\""
     },
     "nyaa": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "",
         "base_url": "https://nyaa.si/?f=0&c=1_0&q=QUERYEXTRA&s=seeders&o=desc",
         "color": "FF88D201",
@@ -1525,8 +1543,9 @@
         "tv_keywords_fallback": "{title} s{season:2}"
     },
     "rarbg": {
-        "anime_extra": null,
-        "anime_keywords": "{title:en:original} {episode}",
+        "anime_keywords": "{title:en:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:en:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:en:original} s{season:2}",
         "anime_query": "?mode=search&search_string=QUERY&format=json_extended&app_id=script.elementum.burst&token=TOKEN",
         "api_format": {
             "name": "title",
@@ -1579,8 +1598,8 @@
         "tv_keywords_fallback": "{title:en:original} s{season:2}"
     },
     "rustorka": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original} \"{season} Сезон\"",
         "anime_query": "",
         "base_url": "http://rustorka.com/forum/tracker.php?nm=QUERYEXTRA&prev_allw=1&prev_not_checked=0&prev_closed=0&prev_d=0&prev_not_perfect=0&prev_part_perfect=0&prev_fishily=0&prev_copy=0&prev_temp=0&prev_pogl=0&prev_gold=0&prev_silver=0&prev_dla=0&prev_dlc=0&prev_dld=0&prev_dlw=0&prev_my=0&prev_new=0&prev_sd=1&prev_snotd=0&prev_da=0&prev_dc=0&prev_df=0&prev_ds=0&f%5B%5D=-1&o=10&s=2&tm=-1&sns=-1&pn=&allw=1&submit=%A0%A0%CF%EE%E8%F1%EA%A0%A0",
         "charset": "windows-1251",
@@ -1625,10 +1644,9 @@
         "tv_keywords_fallback": "{title:original} \"{season} Сезон\""
     },
     "rutor": {
-        "anime_extra": "",
-        "anime_keywords": "{title:en:ru} {episode}",
-        "anime_keywords_fallback": "{title:original} {episode}",
-        "anime_keywords_fallback2": "{title:en:ru} {season:2}x01|S{season:2}",
+        "anime_keywords": "{title:en:ru} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:en:ru} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "\"{title:original} {season}\"",
         "anime_query": "0/10/300/2/QUERYEXTRA",
         "base_url": "http://rutor.info/search/",
         "color": "FFFFDE00",
@@ -1674,11 +1692,9 @@
         "tv_keywords_fallback": "\"{title:original} {season}\""
     },
     "rutracker": {
-        "anime_extra": "",
-        "anime_keywords": "{title:en:ru} {episode}",
-        "anime_keywords_fallback": "{title:original} {episode}",
-        "anime_keywords_fallback2": "{title:en:ru} Сезон {season}",
-        "anime_query": "",
+        "anime_keywords": "{title:en:ru} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "\"{title:en:ru:original} {season}\"",
+        "anime_keywords_fallback2": "{title:en:ru:original} \"Сезон {season}\"",
         "base_url": "https://rutracker.nl/forum/tracker.php?nm=QUERYEXTRA&prev_new=0&prev_oop=1&f[]=-1&o=10&s=2&oop=1&pn=",
         "charset": "windows-1251",
         "color": "FFFFFFFF",
@@ -1725,7 +1741,7 @@
     },
     "serialz": {
         "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} Сезон {season} Серия {episode}",
         "anime_query": "",
         "base_url": "http://serialz.tv/tracker.php?prev_allw=1&prev_a=0&prev_dla=0&prev_dlc=0&prev_dld=0&prev_dlw=0&prev_my=0&prev_new=0&prev_sd=0&prev_da=1&prev_dc=0&prev_df=1&prev_ds=0&prev_tor_type=0&df=1&da=1&f[]=-1&o=10&s=2&tm=-1&sns=-1&srg=0&pn=&nm=QUERYEXTRA&allw=1",
         "color": "FFFFFFFF",
@@ -1768,7 +1784,7 @@
     },
     "skytorrents": {
         "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:en:original} s{season:2}e{episode:2}",
         "anime_query": "200",
         "base_url": "https://www.skytorrents.lol/?query=QUERYEXTRA&sort=seeders",
         "color": "FFFFFFFF",
@@ -1809,7 +1825,9 @@
     },
     "sumotorrent": {
         "anime_extra": "",
-        "anime_keywords": "{title:en} {episode}",
+        "anime_keywords": "{title:en} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:en} {season:2}x{episode:2}",
+        "anime_keywords_fallback": "{title:en} s{season:2}",
         "anime_query": "",
         "base_url": "http://www.sumotorrent.sx/en/search/QUERYEXTRA",
         "color": "FFFFFFFF",
@@ -1852,8 +1870,8 @@
         "tv_keywords_fallback": "{title:en} s{season:2}"
     },
     "tfile": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original} Сезон {season}",
         "anime_query": "",
         "base_url": "http://search.tfile-home.org/?q=QUERYEXTRA&c=0&g=&act=&y=&ql=&a=&d=&o=&size_min=0&size_max=0",
         "charset": "windows-1251",
@@ -1897,8 +1915,9 @@
         "tv_keywords_fallback": "{title:original} Сезон {season}"
     },
     "thepiratebay": {
-        "anime_extra": "",
-        "anime_keywords": "{title:en} {episode}",
+        "anime_keywords": "{title:en} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:en} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:en} s{season:2}",
         "anime_query": "200",
         "base_url": "https://thepiratebay10.org/search/QUERYEXTRA/1/99/",
         "color": "FF5A3C22",
@@ -1941,8 +1960,9 @@
         "tv_keywords_fallback": "{title:en} s{season:2}"
     },
     "tntvillage": {
-        "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
+        "anime_keywords": "{title} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "EXTRA",
         "base_url": "http://tntvillage.scambioetico.org/src/releaselist.php",
         "color": "FFF14E13",
@@ -1986,11 +2006,10 @@
         "tv_keywords_fallback": "{title} s{season:2}"
     },
     "toloka": {
-        "anime_extra": "",
-        "anime_keywords": "{title:en:ru} {episode}",
-        "anime_keywords_fallback": "{title:original} {episode}",
-        "anime_keywords_fallback2": "{title:en:ru} {season:2}x01|S{season:2}",
-        "anime_query": "",
+        "anime_keywords": "{title:ua:en} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:ua:en} Сезон_{season}",
+        "anime_keywords_fallback": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback2": "{title:original} Сезон_{season}",
         "base_url": "https://toloka.to/tracker.php?nm=QUERYEXTRA&o=10",
         "color": "FFFFFFFF",
         "enabled": true,
@@ -2037,8 +2056,9 @@
         "tv_keywords_fallback2": "{title:original} Сезон_{season}"
     },
     "torlock": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "anime/torrents/QUERYEXTRA.html?sort=seeds&order=desc",
         "base_url": "https://www.torlock2.com/",
         "color": "FFE8C233",
@@ -2127,8 +2147,9 @@
         "tv_keywords2": ""
     },
     "torrent9": {
-        "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
+        "anime_keywords": "{title} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "",
         "base_url": "https://torrent9.to/search_torrent/QUERYEXTRA.html",
         "color": "FF277A9C",
@@ -2171,8 +2192,9 @@
         "tv_keywords_fallback": "{title} s{season:2}"
     },
     "torrentdownloads": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "",
         "base_url": "https://www.torrentdownloads.info/search/?search=QUERYEXTRA",
         "color": "FFB74F1A",
@@ -2215,8 +2237,9 @@
         "tv_keywords_fallback": "{title} s{season:2}"
     },
     "torrentfunk": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "anime/torrents/QUERYEXTRA.html",
         "base_url": "https://www.torrentfunk.com/",
         "color": "FF8FC400",
@@ -2259,8 +2282,8 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "torrentgalaxy": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "",
         "base_url": "https://torrentgalaxy.to/torrents.php?c3=1&c46=1&c45=1&c42=1&c4=1&c1=1&c41=1&c5=1&c6=1&c7=1&search=QUERY&lang=0&nox=2&sort=seeders&order=desc",
         "color": "FFFFFFFF",
@@ -2301,8 +2324,9 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "torrentleech": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:3}",
         "anime_query": "/categories/34",
         "base_url": "https://classic.torrentleech.org/torrents/browse/index/",
         "color": "FF076700",
@@ -2345,8 +2369,9 @@
         "tv_keywords_fallback": "{title:original} s{season:3}"
     },
     "torrentlt": {
-        "anime_extra": null,
-        "anime_keywords": null,
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": null,
         "base_url": "https://torrent.ai/lt/torrents?search=QUERY&cats[]=27&cats[]=76&cats[]=35&cats[]=31&cats[]=33&cats[]=43&cats[]=34&cats[]=32&cats[]=52&cats[]=53&cats[]=54&cats[]=55&cats[]=56&cats[]=74&cats[]=72&cats[]=37&cats[]=42&cats[]=59&cats[]=58&cats[]=45&cats[]=40&cats[]=62&cats[]=63&cats[]=65&cats[]=66&cats[]=69&cats[]=70&cats[]=39&cats[]=28&cats[]=78&cats[]=79&cats[]=80&sort=6&type=desc",
         "color": "FF008000",
@@ -2389,8 +2414,9 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "torrentz": {
-        "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
+        "anime_keywords": "{title} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "",
         "base_url": "https://torrentz2.is/search?f=QUERYEXTRA",
         "color": "FFFFB090",
@@ -2434,8 +2460,9 @@
         "tv_keywords_fallback": "{title} s{season:2}"
     },
     "torrentz2k": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:en} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:en} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:en} s{season:2}",
         "anime_query": "EXTRA",
         "base_url": "https://torrentz2k.xyz/search/",
         "color": "FFF14E13",
@@ -2479,8 +2506,9 @@
         "tv_keywords_fallback": "{title:en} s{season:2}"
     },
     "uhdbits": {
-        "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
+        "anime_keywords": "{title} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "",
         "base_url": "https://uhdbits.org/torrents.php?order_way=desc&order_by=seeders&rating=0&rating1=10&searchstr=QUERYEXTRA&taglist=&tags_type=1&action=basic&searchsubmit=1",
         "color": "FF2E86CA",
@@ -2523,8 +2551,8 @@
         "tv_keywords_fallback": "{title} s{season:2}"
     },
     "worldwidetorrents": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} s{season:2}",
         "anime_query": "",
         "base_url": "https://worldwidetorrents.me/torrents-search.php?search=QUERY",
         "color": "FFFFFFFF",
@@ -2565,8 +2593,9 @@
         "tv_keywords2": "{title:original} s{season:2}"
     },
     "yggtorrent": {
-        "anime_extra": "",
-        "anime_keywords": "{title:fr} {episode}",
+        "anime_keywords": "{title:fr} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:fr} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:fr} s{season:2}",
         "anime_query": "",
         "base_url": "https://www2.yggtorrent.se/engine/search?do=search&name=QUERYEXTRA",
         "color": "FFF7A62D",
@@ -2615,8 +2644,9 @@
         "tv_keywords_fallback": "{title:fr} s{season:2}"
     },
     "yourbittorrent": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "",
         "base_url": "https://yourbittorrent.com/?q=QUERYEXTRA",
         "color": "FF4A86B8",
@@ -2673,7 +2703,7 @@
             "subresults": "torrents",
             "torrent": "url"
         },
-        "base_url": "https://yts.ag/api/v2/list_movies.json",
+        "base_url": "https://yts.mx/api/v2/list_movies.json",
         "color": "FF6AC045",
         "enabled": true,
         "general_extra": null,
@@ -2686,7 +2716,7 @@
         "login_object": "",
         "login_path": null,
         "movie_extra": null,
-        "movie_keywords": "{title:original}",
+        "movie_keywords": "{title:en:original}",
         "movie_query": "?query_term=QUERY&sort_by=seeds&order_by=desc",
         "name": "YTS",
         "parser": {
@@ -2714,8 +2744,8 @@
         "tv_keywords2": null
     },
     "zamunda": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original}+s{season:2}e{episode:2}",
+        "anime_keywords2": "{title}+еп.{episode}",
         "anime_query": "?c25=1&search=QUERY&incldead=1&field=name",
         "base_url": "https://zamunda.net/bananas",
         "charset": "windows-1251",
@@ -2759,8 +2789,8 @@
         "tv_keywords2": "{title}+еп.{episode}"
     },
     "zelka": {
-        "anime_extra": "",
-        "anime_keywords": "{title:original} {episode}",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} еп.{episode}",
         "anime_query": "",
         "base_url": "http://zelka.org/browse.php?search=QUERY&cat=0&incldead=0",
         "charset": "windows-1251",
@@ -2804,8 +2834,9 @@
         "tv_keywords2": "{title} еп.{episode}"
     },
     "zooqle": {
-        "anime_extra": "",
-        "anime_keywords": "{title} {episode}",
+        "anime_keywords": "{title} s{season:2}e{episode:2}",
+        "anime_keywords2": "{title} {season:2}x01|S{season:2}",
+        "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "",
         "base_url": "https://zooqle.com/search?q=QUERY&EXTRA",
         "color": "FFB3B24F",
