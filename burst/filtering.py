@@ -189,7 +189,7 @@ class Filtering:
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
 
-        general_query = definition['general_query'] if definition['general_query'] else ''
+        general_query = definition['general_query'] if 'general_query' in definition and definition['general_query'] else ''
         log.debug("[%s] General URL: %s%s" % (provider, definition['base_url'], general_query))
         self.info = payload
         self.url = u"%s%s" % (definition['base_url'], general_query)
@@ -208,7 +208,7 @@ class Filtering:
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
 
-        movie_query = definition['movie_query'] if definition['movie_query'] else ''
+        movie_query = definition['movie_query'] if 'movie_query' in definition and definition['movie_query'] else ''
         log.debug("[%s] Movies URL: %s%s" % (provider, definition['base_url'], movie_query))
         if get_setting('separate_sizes', bool):
             self.min_size = get_float(get_setting('min_size_movies'))
