@@ -45,6 +45,19 @@ proxy_types = ["socks4", "socks5", "http", "https"]
 # Disable warning from urllib
 urllib3.disable_warnings()
 
+# Kodi settings
+public_dns_list = get_setting("public_dns_list", unicode)
+opennic_dns_list = get_setting("opennic_dns_list", unicode)
+proxy_enabled = get_setting("proxy_enabled", bool)
+proxy_use_type = get_setting("proxy_use_type", int)
+proxy_host = get_setting("proxy_host", unicode)
+proxy_port = get_setting("proxy_port", int)
+proxy_login = get_setting("proxy_login", unicode)
+proxy_password = get_setting("proxy_password", unicode)
+proxy_type = get_setting("proxy_type", int)
+use_public_dns = get_setting("use_public_dns", bool)
+use_elementum_proxy = get_setting("use_elementum_proxy", bool)
+
 def MyResolver(host):
     if '.' not in host:
         return host
@@ -131,30 +144,30 @@ class Client:
 
         global dns_public_list
         global dns_opennic_list
-        dns_public_list = get_setting("public_dns_list", unicode).replace(" ", "").split(",")
-        dns_opennic_list = get_setting("opennic_dns_list", unicode).replace(" ", "").split(",")
+        dns_public_list = public_dns_list.replace(" ", "").split(",")
+        dns_opennic_list = opennic_dns_list.replace(" ", "").split(",")
         # socket.setdefaulttimeout(60)
 
         # Parsing proxy information
         proxy = {
-            'enabled': get_setting("proxy_enabled", bool),
-            'use_type': get_setting("proxy_use_type", int),
+            'enabled': proxy_enabled,
+            'use_type': proxy_use_type,
             'type': proxy_types[0],
-            'host': get_setting("proxy_host", unicode),
-            'port': get_setting("proxy_port", int),
-            'login': get_setting("proxy_login", unicode),
-            'password': get_setting("proxy_password", unicode),
+            'host': proxy_host,
+            'port': proxy_port,
+            'login': proxy_login,
+            'password': proxy_password,
         }
 
         try:
-            proxy['type'] = proxy_types[get_setting("proxy_type", int)]
+            proxy['type'] = proxy_types[proxy_type]
         except:
             pass
 
-        if get_setting("use_public_dns", bool):
+        if use_public_dns:
             connection.create_connection = patched_create_connection
 
-        if get_setting("use_elementum_proxy", bool):
+        if use_elementum_proxy:
             elementum_addon = xbmcaddon.Addon(id='plugin.video.elementum')
             if elementum_addon and elementum_addon.getSetting('internal_proxy_enabled') == "true":
                 self.proxy_url = "{0}://{1}:{2}".format("http", "127.0.0.1", "65222")
@@ -193,8 +206,6 @@ class Client:
             except Exception as e:
                 log.debug("Error creating cookies directory: %s" % repr(e))
 
-        # return os.path.join(cookies_path, urlparse(url).netloc + '_cookies.jar')
-        # Do we really need to split cookies for each domain?
         return os.path.join(cookies_path, 'common_cookies.jar')
 
     def _read_cookies(self, url=''):
@@ -205,7 +216,7 @@ class Client:
             except Exception as e:
                 log.debug("Reading cookies error: %s" % repr(e))
 
-    def _save_cookies(self):
+    def save_cookies(self):
         self._cookies_filename = self._locate_cookies(self.url)
 
         try:
@@ -288,8 +299,6 @@ class Client:
                 self.headers = response.headers
                 self.status = response.status_code
                 self.url = response.url
-
-                self._save_cookies()
 
                 if self.response_charset:
                     self.content = response.content.decode(self.response_charset, 'ignore')

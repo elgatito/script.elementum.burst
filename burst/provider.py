@@ -9,6 +9,7 @@ from future.utils import PY3, iteritems
 import os
 import re
 import json
+import time
 import urllib
 from .client import Client
 from elementum.provider import log, get_setting, set_setting
@@ -71,7 +72,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
     return results
 
 
-def process(provider, generator, filtering, has_special, verify_name=True, verify_size=True, skip_auth=False):
+def process(provider, generator, filtering, has_special, verify_name=True, verify_size=True, skip_auth=False, start_time=None, timeout=None):
     """ Method for processing provider results using its generator and Filtering class instance
 
     Args:
@@ -114,6 +115,9 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         if not query:
             continue
         elif extra == '-' and filtering.results:
+            continue
+        elif start_time and timeout and time.time() - start_time + 3 >= timeout:
+            # Stop doing requests if there is 3 seconds left for the overall task
             continue
 
         try:
@@ -292,6 +296,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         client.open(definition['root_url'] + '/torrents.php')
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
+                    client.save_cookies()
 
         log.info("[%s] >  %s search URL: %s" % (provider, definition['name'].rjust(longest), url_search))
 

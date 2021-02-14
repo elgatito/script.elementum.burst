@@ -10,7 +10,7 @@ from future.utils import PY3
 import re
 import hashlib
 from elementum.provider import log, get_setting
-from .normalize import normalize_string
+from .normalize import normalize_string, remove_accents
 from .providers.definitions import definitions
 from .utils import Magnet, get_int, get_float, clean_number, size_int, get_alias
 if PY3:
@@ -26,6 +26,18 @@ try:
 except ImportError:
     from ordereddict import OrderedDict
 
+use_require_resolution = get_setting('require_resolution', bool)
+use_additional_filters = get_setting('additional_filters', bool)
+use_require_keywords = get_setting('require_keywords', bool)
+use_require_release_type = get_setting('require_release_type', bool)
+use_require_size = get_setting('require_size', bool)
+use_accept = get_setting('accept', unicode).strip().lower()
+use_block = get_setting('block', unicode).strip().lower()
+use_require = get_setting('require', unicode).strip().lower()
+use_min_size = get_setting('min_size')
+use_max_size = get_setting('max_size')
+use_filter_quotes = get_setting("filter_quotes", bool)
+use_allow_noseeds = get_setting('allow_noseeds', bool)
 
 class Filtering:
     """
@@ -138,18 +150,18 @@ class Filtering:
             else:
                 releases_deny.extend(self.release_types[release_type])
 
-        if get_setting('additional_filters', bool):
-            accept = get_setting('accept', unicode).strip().lower()
+        if use_additional_filters:
+            accept = use_accept
             if accept:
                 accept = re.split(r',\s?', accept)
                 releases_allow.extend(accept)
 
-            block = get_setting('block', unicode).strip().lower()
+            block = use_block
             if block:
                 block = re.split(r',\s?', block)
                 releases_deny.extend(block)
 
-            require = get_setting('require', unicode).strip().lower()
+            require = use_require
             if require:
                 require = re.split(r',\s?', require)
 
@@ -158,8 +170,8 @@ class Filtering:
 
         self.require_keywords = require
 
-        self.min_size = get_float(get_setting('min_size'))
-        self.max_size = get_float(get_setting('max_size'))
+        self.min_size = get_float(use_min_size)
+        self.max_size = get_float(use_max_size)
         self.check_sizes()
 
         self.filter_title = False
@@ -378,7 +390,7 @@ class Filtering:
             str: Processed query keywords
         """
         keywords = self.read_keywords(text)
-        replacing = get_setting("filter_quotes", bool)
+        replacing = use_filter_quotes
 
         for keyword in keywords:
             keyword = keyword.lower()
@@ -401,6 +413,10 @@ class Filtering:
                         if use_language in self.info['titles'] and self.info['titles'][use_language]:
                             title = self.info['titles'][use_language]
                             title = normalize_string(title)
+                            # For all non-original titles, try to remove accents from the title.
+                            if use_language != 'original':
+                                title = remove_accents(title)
+
                             log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
                                                                               repr(title)))
                             log.debug("[%s] Translated titles from Elementum: %s" % (provider, repr(self.info['titles'])))
@@ -464,7 +480,7 @@ class Filtering:
 
         self.reason = "[%s] %70s ***" % (provider, name)
 
-        if self.filter_resolutions and get_setting('require_resolution', bool):
+        if self.filter_resolutions and use_require_resolution:
             resolution = self.determine_resolution(name)[0]
             if resolution not in self.resolutions_allow:
                 self.reason += " Resolution not allowed ({0})".format(resolution)
@@ -475,21 +491,21 @@ class Filtering:
                 self.reason += " Name mismatch"
                 return False
 
-        if self.require_keywords and get_setting('require_keywords', bool):
+        if self.require_keywords and use_require_keywords:
             for required in self.require_keywords:
                 if not self.included(name, keys=[required]):
                     self.reason += " Missing required keyword"
                     return False
 
-        if not self.included_rx(name, keys=self.releases_allow) and get_setting('require_release_type', bool):
+        if not self.included_rx(name, keys=self.releases_allow) and use_require_release_type:
             self.reason += " Missing release type keyword"
             return False
 
-        if self.included_rx(name, keys=self.releases_deny) and get_setting('require_release_type', bool):
+        if self.included_rx(name, keys=self.releases_deny) and use_require_release_type:
             self.reason += " Blocked by release type keyword"
             return False
 
-        if size and not self.in_size_range(size) and get_setting('require_size', bool):
+        if size and not self.in_size_range(size) and use_require_size:
             self.reason += " Size out of range ({0})".format(size)
             return False
 
@@ -645,9 +661,8 @@ def cleanup_results(results_list):
 
     hashes = []
     filtered_list = []
-    allow_noseeds = get_setting('allow_noseeds', bool)
     for result in results_list:
-        if not result['seeds'] and not allow_noseeds:
+        if not result['seeds'] and not use_allow_noseeds:
             log.debug('[%s] Skipping due to no seeds: %s' % (result['provider'][16:-8], repr(result['name'])))
             continue
 

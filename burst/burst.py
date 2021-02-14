@@ -27,16 +27,23 @@ from kodi_six import xbmc, xbmcgui, xbmcaddon, py2_encode
 
 from .provider import process
 from .providers.definitions import definitions, longest
-from .filtering import apply_filters, Filtering
+from .filtering import apply_filters, Filtering, cleanup_results
 from .client import USER_AGENT, Client
 from .utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias
 
 provider_names = []
 provider_results = []
+provider_cache = {}
 available_providers = 0
 request_time = time.time()
+
+use_kodi_language = get_setting('kodi_language', bool)
 auto_timeout = get_setting("auto_timeout", bool)
 timeout = get_setting("timeout", int)
+debug_parser = get_setting("use_debug_parser", bool)
+max_results = get_setting('max_results', int)
+sort_by = get_setting('sort_by', int)
+
 special_chars = "()\"':.[]<>/\\?"
 elementum_timeout = 0
 
@@ -107,10 +114,12 @@ def search(payload, method="general"):
         payload['skip_auth'] = False
 
     global request_time
+    global provider_cache
     global provider_names
     global provider_results
     global available_providers
 
+    provider_cache = {}
     provider_names = []
     provider_results = []
     available_providers = 0
@@ -126,7 +135,7 @@ def search(payload, method="general"):
 
     log.info("Burstin' with %s" % ", ".join([definitions[provider]['name'] for provider in providers]))
 
-    if get_setting('kodi_language', bool):
+    if use_kodi_language:
         kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
         if not kodi_language:
             log.warning("Kodi returned empty language code...")
@@ -139,13 +148,14 @@ def search(payload, method="general"):
     if not payload['silent']:
         p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', translation(32061))
 
+    providers_time = time.time()
+
     for provider in providers:
         available_providers += 1
         provider_names.append(definitions[provider]['name'])
-        task = Thread(target=run_provider, args=(provider, payload, method))
+        task = Thread(target=run_provider, args=(provider, payload, method, providers_time, timeout))
         task.start()
 
-    providers_time = time.time()
     total = float(available_providers)
 
     # Exit if all providers have returned results or timeout reached, check every 100ms
@@ -194,8 +204,6 @@ def got_results(provider, results):
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
 
-    max_results = get_setting('max_results', int)
-    sort_by = get_setting('sort_by', int)
     # 0 "Resolution"
     # 1 "Seeds"
     # 2 "Size"
@@ -239,7 +247,7 @@ def extract_torrents(provider, client):
     log.debug("[%s] Extracting torrents from %s using definitions: %s" % (provider, provider, repr(definition)))
 
     if not client.content:
-        if get_setting("use_debug_parser", bool):
+        if debug_parser:
             log.debug("[%s] Parser debug | Page content is empty" % provider)
 
         raise StopIteration
@@ -303,28 +311,31 @@ def extract_torrents(provider, client):
 
             log.debug("[%s] Subpage torrent for %s: %s" % (provider, repr(uri[0]), torrent))
             ret = (name, info_hash, torrent, size, seeds, peers)
+
+            # Cache this subpage result if another query would need to request same url.
+            provider_cache[uri[0]] = torrent
             q.put_nowait(ret)
 
     if not dom:
-        if get_setting("use_debug_parser", bool):
+        if debug_parser:
             log.debug("[%s] Parser debug | Could not parse DOM from page content" % provider)
 
         raise StopIteration
 
-    if get_setting("use_debug_parser", bool):
+    if debug_parser:
         log.debug("[%s] Parser debug | Page content: %s" % (provider, client.content.replace('\r', '').replace('\n', '')))
 
     key = eval(key_search) if key_search else ""
-    if key_search and get_setting("use_debug_parser", bool):
+    if key_search and debug_parser:
         key_str = key.__str__()
         log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'key', key_search, key_str.replace('\r', '').replace('\n', '')))
 
     items = eval(row_search)
-    if get_setting("use_debug_parser", bool):
+    if debug_parser:
         log.debug("[%s] Parser debug | Matched %d items for '%s' query '%s'" % (provider, len(items), 'row', row_search))
 
     for item in items:
-        if get_setting("use_debug_parser", bool):
+        if debug_parser:
             item_str = item.__str__()
             log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'row', row_search, item_str.replace('\r', '').replace('\n', '')))
 
@@ -343,7 +354,7 @@ def extract_torrents(provider, client):
             if 'magnet:?' in torrent:
                 torrent = torrent[torrent.find('magnet:?'):]
 
-            if get_setting("use_debug_parser", bool):
+            if debug_parser:
                 log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'name', name_search, name))
                 log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'torrent', torrent_search, torrent))
                 log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'size', size_search, size))
@@ -376,7 +387,6 @@ def extract_torrents(provider, client):
                     headers = {}
                     if cookies:
                         headers = {'User-Agent': user_agent}
-                        log.debug("[%s] Cookies res: %s / %s" % (provider, repr(headers), repr(client.request_headers)))
                         if client.request_headers:
                             headers.update(client.request_headers)
                         if client.url:
@@ -392,6 +402,12 @@ def extract_torrents(provider, client):
             if name and torrent and needs_subpage and not torrent.startswith('magnet'):
                 if not torrent.startswith('http'):
                     torrent = definition['root_url'] + py2_encode(torrent)
+                # Check if this url was previously requested, to avoid doing same job again.
+                uri = torrent.split('|')
+                if uri and uri[0] and uri[0] in provider_cache and provider_cache[uri[0]]:
+                    yield (name, info_hash, provider_cache[uri[0]], size, seeds, peers)
+                    continue
+
                 t = Thread(target=extract_subpage, args=(q, name, torrent, size, seeds, peers, info_hash, referer))
                 threads.append(t)
             else:
@@ -411,6 +427,8 @@ def extract_torrents(provider, client):
             log.debug("[%s] Queue %d got: %s" % (provider, i, repr(ret)))
             yield ret
 
+    # Save cookies in cookie jar
+    client.save_cookies()
 
 def extract_from_api(provider, client):
     """ Main API parsing generator for API-based providers
@@ -580,13 +598,15 @@ def extract_from_page(provider, content):
     return None
 
 
-def run_provider(provider, payload, method):
+def run_provider(provider, payload, method, start_time, timeout):
     """ Provider thread entrypoint
 
     Args:
-        provider (str): Provider ID
-        payload (dict): Search payload from Elementum
-        method   (str): Type of search, can be ``general``, ``movie``, ``show``, ``season`` or ``anime``
+        provider   (str): Provider ID
+        payload   (dict): Search payload from Elementum
+        method     (str): Type of search, can be ``general``, ``movie``, ``show``, ``season`` or ``anime``
+        start_time (int): Time when search has been started
+        timeout    (int): Time limit for searching
     """
     log.debug("[%s] Processing %s with %s method" % (provider, provider, method))
 
@@ -604,10 +624,12 @@ def run_provider(provider, payload, method):
         filterInstance.use_general(provider, payload)
 
     if 'is_api' in definitions[provider]:
-        results = process(provider=provider, generator=extract_from_api, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'])
+        results = process(provider=provider, generator=extract_from_api, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'], start_time=start_time, timeout=timeout)
     else:
-        results = process(provider=provider, generator=extract_torrents, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'])
+        results = process(provider=provider, generator=extract_torrents, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'], start_time=start_time, timeout=timeout)
 
+    # Cleanup results from duplcates before limiting each provider's results.
+    results = cleanup_results(results)
     got_results(provider, results)
 
 def get_search_query(definition, key):
