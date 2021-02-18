@@ -404,12 +404,13 @@ class Filtering:
                    (use_language or self.kodi_language) and \
                    'titles' in self.info and self.info['titles']:
                     try:
-                        if self.kodi_language and self.kodi_language in self.info['titles']:
+                        if use_language not in self.info['titles'] and self.kodi_language and self.kodi_language in self.info['titles']:
                             use_language = self.kodi_language
-                        if use_language not in self.info['titles']:
+                        if use_language not in self.info['titles'] and language and language in self.info['titles']:
                             use_language = language
-                            if 'original' in self.info['titles']:
-                                title = self.info['titles']['original']
+                        if use_language not in self.info['titles'] and 'original' in self.info['titles']:
+                            use_language = 'original'
+
                         if use_language in self.info['titles'] and self.info['titles'][use_language]:
                             title = self.info['titles'][use_language]
                             title = normalize_string(title)
@@ -421,6 +422,7 @@ class Filtering:
                                                                               repr(title)))
                             log.debug("[%s] Translated titles from Elementum: %s" % (provider, repr(self.info['titles'])))
                         else:
+                            log.debug("[%s] Skipping the query '%s' due to missing '%s' language title" % (provider, text, use_language))
                             # If title for specific language cannot be read - cancel this query
                             return ""
                     except Exception as e:

@@ -81,13 +81,15 @@ def search(payload, method="general"):
         if 'query' in payload:
             payload['title'] = payload['query']
             payload['titles'] = {
-                'source': payload['query']
+                'source': payload['query'],
+                'original': payload['query']
             }
         else:
             payload = {
                 'title': payload,
                 'titles': {
-                    'source': payload
+                    'source': payload,
+                    'original': payload
                 },
             }
 
