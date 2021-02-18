@@ -155,7 +155,7 @@ class Root(list):
             else:
                 value_tag = self
             if value_tag is not None:
-                if attribute is 'text':
+                if attribute == 'text':
                     value_attrib = value_tag.text()
                 else:
                     value_attrib = value_tag.attr[attribute]
