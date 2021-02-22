@@ -302,7 +302,7 @@ class Filtering:
 
         self.collect_queries('anime', definition)
 
-    def split_title_per_languages(self, text):
+    def split_title_per_languages(self, text, item_type):
         """Splitting {title:lang:lang:...} into separate queries with same
         """
         result = []
@@ -316,6 +316,11 @@ class Filtering:
                 langs = keyword.lower().split(':')[1:]
                 if len(langs) < 2:
                     continue
+
+                # For general queries we should not process language settings.
+                if item_type == 'general':
+                    result.append(text.replace("{%s}" % keyword, "{title}"))
+                    return result
 
                 modified = True
                 for lang in langs:
@@ -332,7 +337,7 @@ class Filtering:
             key = item_type + '_keywords' + item
             extra = item_type + '_extra' + item
             if key in definition and definition[key]:
-                qlist = self.split_title_per_languages(definition[key])
+                qlist = self.split_title_per_languages(definition[key], item_type)
                 self.queries = self.queries + qlist
                 eitem = definition[extra] if extra in definition and definition[extra] else ''
                 for r in qlist:
@@ -343,7 +348,7 @@ class Filtering:
             key = item_type + '_keywords_fallback' + item
 
             if key in definition and definition[key]:
-                qlist = self.split_title_per_languages(definition[key])
+                qlist = self.split_title_per_languages(definition[key], item_type)
                 self.queries = self.queries + qlist
                 for r in qlist:
                     self.extras.append('-')
@@ -404,12 +409,10 @@ class Filtering:
                    (use_language or self.kodi_language) and \
                    'titles' in self.info and self.info['titles']:
                     try:
-                        if use_language not in self.info['titles'] and self.kodi_language and self.kodi_language in self.info['titles']:
+                        if not use_language and self.kodi_language and self.kodi_language in self.info['titles']:
                             use_language = self.kodi_language
-                        if use_language not in self.info['titles'] and language and language in self.info['titles']:
+                        if not use_language and language and language in self.info['titles']:
                             use_language = language
-                        if use_language not in self.info['titles'] and 'original' in self.info['titles']:
-                            use_language = 'original'
 
                         if use_language in self.info['titles'] and self.info['titles'][use_language]:
                             title = self.info['titles'][use_language]
