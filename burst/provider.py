@@ -87,7 +87,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
 
-    client = Client(info=filtering.info, request_charset=definition['charset'], response_charset=definition['response_charset'])
+    client = Client(info=filtering.info, request_charset=definition['charset'], response_charset=definition['response_charset'], is_api='is_api' in definition and definition['is_api'])
     token = None
     logged_in = False
     token_auth = False

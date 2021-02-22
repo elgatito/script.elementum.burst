@@ -102,7 +102,7 @@ class Client:
     """
     Web client class with automatic charset detection and decoding
     """
-    def __init__(self, info=None, request_charset='utf-8', response_charset=None):
+    def __init__(self, info=None, request_charset='utf-8', response_charset=None, is_api=False):
         self._counter = 0
         self._cookies_filename = ''
         self._cookies = LWPCookieJar()
@@ -117,6 +117,7 @@ class Client:
         self.proxy_url = None
         self.request_charset = request_charset
         self.response_charset = response_charset
+        self.is_api = is_api
 
         self.needs_proxylock = False
 
@@ -269,6 +270,10 @@ class Client:
             'Referer': url,
             'User-Agent': self.user_agent
         }
+
+        # Remove referer for API providers
+        if self.is_api:
+            del req_headers['Referer']
 
         # If headers passed to open() call - we overwrite headers.
         if headers:
