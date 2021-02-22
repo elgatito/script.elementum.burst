@@ -266,7 +266,6 @@ class Client:
             'Cache-Control': 'max-age=0',
             'Content-Language': language,
             'Origin': url,
-            'Referer': url,
             'User-Agent': self.user_agent
         }
 
