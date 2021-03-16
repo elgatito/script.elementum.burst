@@ -22,18 +22,6 @@ msgctxt "#32000"
 msgid "General"
 msgstr "Generale"
 
-msgctxt "#32001"
-msgid "Providers"
-msgstr "Providers"
-
-msgctxt "#32002"
-msgid "Resolutions"
-msgstr "Risoluzioni"
-
-msgctxt "#32003"
-msgid "Release types"
-msgstr "Tipo release"
-
 msgctxt "#32004"
 msgid "Advanced"
 msgstr "Avanzato"
@@ -42,10 +30,6 @@ msgctxt "#32006"
 msgid "Movies"
 msgstr "Film"
 
-msgctxt "#32007"
-msgid "TV Shows"
-msgstr "Programmi TV"
-
 msgctxt "#32008"
 msgid "Seasons"
 msgstr "Stagioni"
@@ -53,14 +37,6 @@ msgstr "Stagioni"
 msgctxt "#32009"
 msgid "Episodes"
 msgstr "Episodi"
-
-msgctxt "#32012"
-msgid "Public trackers"
-msgstr "Tracker pubblici"
-
-msgctxt "#32014"
-msgid "Private trackers"
-msgstr "Tracker privati"
 
 msgctxt "#32015"
 msgid "Username"
@@ -110,10 +86,6 @@ msgctxt "#32040"
 msgid "Maximum results per provider"
 msgstr "Risultati massimi per provider"
 
-msgctxt "#32041"
-msgid "Use CloudHole"
-msgstr "Usa CloudHole"
-
 msgctxt "#32050"
 msgid "Exceptions"
 msgstr "Eccezioni"
@@ -150,10 +122,6 @@ msgctxt "#32071"
 msgid "Timeout setting must be lower than Elementum's"
 msgstr "L'impostazione del timeout deve essere inferiore a quella di Elementum"
 
-msgctxt "#32075"
-msgid "No torrents found"
-msgstr "Nessun torrent trovato"
-
 msgctxt "#32076"
 msgid "Passkey"
 msgstr "Passkey"
@@ -165,10 +133,6 @@ msgstr "Alias Dominio [Opzionale]"
 msgctxt "#32078"
 msgid "Allow results without seeds"
 msgstr "Consenti risultati senza seeds"
-
-msgctxt "#32079"
-msgid "E-mail"
-msgstr "E-mail"
 
 msgctxt "#32080"
 msgid "Contains only"
@@ -285,10 +249,6 @@ msgstr "Proxy dalle impostazioni Elementum"
 msgctxt "#32108"
 msgid "Custom settings"
 msgstr "Impostazioni personalizzate"
-
-msgctxt "#32109"
-msgid "Antizapret proxy"
-msgstr "Proxy Antizapret"
 
 msgctxt "#32110"
 msgid "International"
