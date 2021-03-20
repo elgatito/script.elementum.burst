@@ -22,18 +22,6 @@ msgctxt "#32000"
 msgid "General"
 msgstr "Загальні"
 
-msgctxt "#32001"
-msgid "Providers"
-msgstr "Провайдери"
-
-msgctxt "#32002"
-msgid "Resolutions"
-msgstr "Якість"
-
-msgctxt "#32003"
-msgid "Release types"
-msgstr "Види релізу"
-
 msgctxt "#32004"
 msgid "Advanced"
 msgstr "Додатково"
@@ -42,10 +30,6 @@ msgctxt "#32006"
 msgid "Movies"
 msgstr "Фільми"
 
-msgctxt "#32007"
-msgid "TV Shows"
-msgstr "Серіали"
-
 msgctxt "#32008"
 msgid "Seasons"
 msgstr "Сезони"
@@ -53,14 +37,6 @@ msgstr "Сезони"
 msgctxt "#32009"
 msgid "Episodes"
 msgstr "Епізоди"
-
-msgctxt "#32012"
-msgid "Public trackers"
-msgstr "Відкриті трекери"
-
-msgctxt "#32014"
-msgid "Private trackers"
-msgstr "Закриті трекери"
 
 msgctxt "#32015"
 msgid "Username"
@@ -110,10 +86,6 @@ msgctxt "#32040"
 msgid "Maximum results per provider"
 msgstr "Максимальна кіл-ть результатів для провайдера"
 
-msgctxt "#32041"
-msgid "Use CloudHole"
-msgstr "Використовувати CloudHole"
-
 msgctxt "#32050"
 msgid "Exceptions"
 msgstr "Виключення"
@@ -150,10 +122,6 @@ msgctxt "#32071"
 msgid "Timeout setting must be lower than Elementum's"
 msgstr "Значення тайм-ауту повино бути меншим ніж у Elementum"
 
-msgctxt "#32075"
-msgid "No torrents found"
-msgstr "Не знайдено жодного торренту"
-
 msgctxt "#32076"
 msgid "Passkey"
 msgstr ""
@@ -164,10 +132,6 @@ msgstr "Альтернативний домен [Опціонально]"
 
 msgctxt "#32078"
 msgid "Allow results without seeds"
-msgstr ""
-
-msgctxt "#32079"
-msgid "E-mail"
 msgstr ""
 
 msgctxt "#32080"
@@ -284,10 +248,6 @@ msgstr ""
 
 msgctxt "#32108"
 msgid "Custom settings"
-msgstr ""
-
-msgctxt "#32109"
-msgid "Antizapret proxy"
 msgstr ""
 
 msgctxt "#32110"

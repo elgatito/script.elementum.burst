@@ -22,18 +22,6 @@ msgctxt "#32000"
 msgid "General"
 msgstr "כללי"
 
-msgctxt "#32001"
-msgid "Providers"
-msgstr "ספקים"
-
-msgctxt "#32002"
-msgid "Resolutions"
-msgstr "רזולוציות"
-
-msgctxt "#32003"
-msgid "Release types"
-msgstr "סוגי הפצות"
-
 msgctxt "#32004"
 msgid "Advanced"
 msgstr "מתקדם"
@@ -42,10 +30,6 @@ msgctxt "#32006"
 msgid "Movies"
 msgstr "סרטים"
 
-msgctxt "#32007"
-msgid "TV Shows"
-msgstr "סדרות"
-
 msgctxt "#32008"
 msgid "Seasons"
 msgstr "עונות"
@@ -53,14 +37,6 @@ msgstr "עונות"
 msgctxt "#32009"
 msgid "Episodes"
 msgstr "פרקים"
-
-msgctxt "#32012"
-msgid "Public trackers"
-msgstr "טראקרים ציבוריים"
-
-msgctxt "#32014"
-msgid "Private trackers"
-msgstr "טראקרים פרטיים"
 
 msgctxt "#32015"
 msgid "Username"
@@ -110,10 +86,6 @@ msgctxt "#32040"
 msgid "Maximum results per provider"
 msgstr "מקסימום תוצאות לספק"
 
-msgctxt "#32041"
-msgid "Use CloudHole"
-msgstr "שימוש ב CloudHole"
-
 msgctxt "#32050"
 msgid "Exceptions"
 msgstr "חריגות"
@@ -150,10 +122,6 @@ msgctxt "#32071"
 msgid "Timeout setting must be lower than Elementum's"
 msgstr "הגדרת מקסימום זמן לחיפוש חייבת להיות נמוכה יותר מאשר ההגדרה של Elementum"
 
-msgctxt "#32075"
-msgid "No torrents found"
-msgstr "לא נמצאו טורנטים"
-
 msgctxt "#32076"
 msgid "Passkey"
 msgstr "מפתח"
@@ -164,10 +132,6 @@ msgstr ""
 
 msgctxt "#32078"
 msgid "Allow results without seeds"
-msgstr ""
-
-msgctxt "#32079"
-msgid "E-mail"
 msgstr ""
 
 msgctxt "#32080"
@@ -284,10 +248,6 @@ msgstr ""
 
 msgctxt "#32108"
 msgid "Custom settings"
-msgstr ""
-
-msgctxt "#32109"
-msgid "Antizapret proxy"
 msgstr ""
 
 msgctxt "#32110"
