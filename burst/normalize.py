@@ -68,7 +68,7 @@ def remove_accents(string):
         string = normalize_string(string)
 
     nfkd_form = unicodedata.normalize('NFKD', string)
-    only_ascii = py2_encode(nfkd_form, 'ASCII', 'ignore').strip()
+    only_ascii = nfkd_form.encode('ASCII', 'ignore').decode('ASCII', 'ignore').strip()
     return string if only_ascii == u'' else only_ascii
 
 
