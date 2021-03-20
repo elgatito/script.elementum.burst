@@ -69,7 +69,9 @@ def remove_accents(string):
 
     nfkd_form = unicodedata.normalize('NFKD', string)
     only_ascii = nfkd_form.encode('ASCII', 'ignore').decode('ASCII', 'ignore').strip()
-    return string if only_ascii == u'' else only_ascii
+    # for non-ASCII language we can end up with string like ": , ." so we should not use it
+    only_ascii_is_empty = u''.join([char for char in only_ascii if char.isalpha()]) == u''
+    return string if only_ascii_is_empty else only_ascii
 
 
 def remove_control_chars(string):
