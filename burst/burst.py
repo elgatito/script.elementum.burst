@@ -150,6 +150,9 @@ def search(payload, method="general"):
     if not payload['silent']:
         p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', translation(32061))
 
+    if 'titles' in payload:
+        log.debug("Translated titles from Elementum: %s" % (repr(payload['titles'])))
+
     providers_time = time.time()
 
     for provider in providers:

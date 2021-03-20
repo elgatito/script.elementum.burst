@@ -423,7 +423,6 @@ class Filtering:
 
                             log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
                                                                               repr(title)))
-                            log.debug("[%s] Translated titles from Elementum: %s" % (provider, repr(self.info['titles'])))
                         else:
                             log.debug("[%s] Skipping the query '%s' due to missing '%s' language title" % (provider, text, use_language))
                             # If title for specific language cannot be read - cancel this query

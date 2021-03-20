@@ -91,6 +91,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
     token = None
     logged_in = False
     token_auth = False
+    used_queries = []
 
     if get_setting('kodi_language', bool):
         kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
@@ -114,11 +115,16 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         if not query:
             continue
+        elif query in used_queries:
+            # Make sure we don't run same query for this provider
+            continue
         elif extra == '-' and filtering.results:
             continue
         elif start_time and timeout and time.time() - start_time + 3 >= timeout:
             # Stop doing requests if there is 3 seconds left for the overall task
             continue
+
+        used_queries.append(query)
 
         try:
             if 'charset' in definition and definition['charset'] and 'utf' not in definition['charset'].lower():
