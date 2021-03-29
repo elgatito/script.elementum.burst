@@ -57,6 +57,7 @@ class Filtering:
             engine when no results are found (ie. TorLock and TorrentZ)
         queries (list): List of queries to be filtered
         extras (list): List of extras to be filtered
+        queries_priorities (list): Priorities of the queries
         info (dict): Payload from Elementum
         kodi_language (str): Language code from Kodi if kodi_language setting is enabled
         language_exceptions (list): List of providers for which not to apply ``kodi_language`` setting
@@ -178,6 +179,7 @@ class Filtering:
 
         self.queries = []
         self.extras = []
+        self.queries_priorities = []
 
         self.info = dict(title="", proxy_url="", internal_proxy_url="", elementum_url="", titles=[])
         self.kodi_language = ''
@@ -333,25 +335,30 @@ class Filtering:
 
     def collect_queries(self, item_type, definition):
         # Collecting keywords
+        priority = 1
         for item in ['', '2', '3', '4']:
             key = item_type + '_keywords' + item
             extra = item_type + '_extra' + item
             if key in definition and definition[key]:
                 qlist = self.split_title_per_languages(definition[key], item_type)
-                self.queries = self.queries + qlist
+                self.queries.extend(qlist)
                 eitem = definition[extra] if extra in definition and definition[extra] else ''
-                for r in qlist:
+                for _ in qlist:
                     self.extras.append(eitem)
+                    self.queries_priorities.append(priority)
 
         # Collecting fallback keywords, they will come in play if having no results at all
         for item in ['', '2', '3', '4']:
             key = item_type + '_keywords_fallback' + item
-
+            extra = item_type + '_fallback_extra' + item
             if key in definition and definition[key]:
                 qlist = self.split_title_per_languages(definition[key], item_type)
-                self.queries = self.queries + qlist
-                for r in qlist:
-                    self.extras.append('-')
+                self.queries.extend(qlist)
+                eitem = definition[extra] if extra in definition and definition[extra] else ''
+                for _ in qlist:
+                    priority += 1
+                    self.extras.append(eitem)
+                    self.queries_priorities.append(priority)
 
     def information(self, provider):
         """ Debugging method to print keywords and file sizes
