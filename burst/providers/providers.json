@@ -362,7 +362,7 @@
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
         "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
         "anime_keywords_fallback": "{title:original} s{season:2}",
-        "anime_query": "200",
+        "anime_query": "",
         "base_url": "https://www.ettvcentral.com/torrents-search.php?search=QUERYEXTRA&cat=0&incldead=0&lang=0",
         "color": "FFA30000",
         "enabled": true,
@@ -1785,7 +1785,7 @@
     "skytorrents": {
         "anime_extra": "",
         "anime_keywords": "{title:en:original} s{season:2}e{episode:2}",
-        "anime_query": "200",
+        "anime_query": "",
         "base_url": "https://www.skytorrents.lol/?query=QUERYEXTRA&sort=seeders",
         "color": "FFFFFFFF",
         "enabled": true,
