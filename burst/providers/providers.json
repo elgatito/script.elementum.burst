@@ -2914,13 +2914,13 @@
         "season_keywords2": "{title:en:ru} {season:2}x01",
         "season_extra2": "3",
         "season_keywords_fallback": "{title:en:ru} S{season:2}",
-        "season_fallback_extra": "5",
+        "season_extra_fallback": "5",
         "season_keywords_fallback2": "{title:en:ru} {season:2}x01",
-        "season_fallback_extra2": "5",
+        "season_extra_fallback2": "5",
         "season_keywords_fallback3": "{title:original} S{season:2}",
-        "season_fallback_extra3": "3",
+        "season_extra_fallback3": "3",
         "season_keywords_fallback4": "{title:original} {season:2}x01",
-        "season_fallback_extra4": "3",
+        "season_extra_fallback4": "3",
         "season_query": "&cat=EXTRA",
         "separator": "%20",
         "subpage": null,
@@ -2930,10 +2930,10 @@
         "tv_keywords2": "{title:en:ru} {season:2}x01",
         "tv_extra2": "3",
         "tv_keywords_fallback": "{title:en:ru} S{season:2}",
-        "tv_fallback_extra": "5",
+        "tv_extra_fallback": "5",
         "tv_keywords_fallback2": "{title:en:ru} {season:2}x01",
-        "tv_fallback_extra2": "5",
+        "tv_extra_fallback2": "5",
         "tv_keywords_fallback3": "\"{title:original} {season}\"",
-        "tv_fallback_extra3": "3"
+        "tv_extra_fallback3": "3"
     }
 }
