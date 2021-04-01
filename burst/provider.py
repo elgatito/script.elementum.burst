@@ -121,6 +121,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             continue
         elif priority > last_priority and filtering.results:
             # Skip fallbacks if there are results
+            log.debug("[%s] Skip fallback as there are already results" % provider)
             continue
         elif start_time and timeout and time.time() - start_time + 3 >= timeout:
             # Stop doing requests if there is 3 seconds left for the overall task

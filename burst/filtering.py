@@ -350,7 +350,7 @@ class Filtering:
         # Collecting fallback keywords, they will come in play if having no results at all
         for item in ['', '2', '3', '4']:
             key = item_type + '_keywords_fallback' + item
-            extra = item_type + '_fallback_extra' + item
+            extra = item_type + '_extra_fallback' + item
             if key in definition and definition[key]:
                 qlist = self.split_title_per_languages(definition[key], item_type)
                 self.queries.extend(qlist)
