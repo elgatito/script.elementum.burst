@@ -297,7 +297,7 @@ class Filtering:
             self.check_sizes()
         self.info = info
         self.url = u"%s%s" % (definition['base_url'], anime_query)
-        if self.info['absolute_number']:
+        if 'absolute_number' in self.info and self.info['absolute_number']:
             self.info['episode'] = self.info['absolute_number']
 
         self.collect_queries('anime', definition)
@@ -435,6 +435,30 @@ class Filtering:
 
             if 'year' in keyword:
                 text = text.replace('{%s}' % keyword, str(self.info["year"]))
+
+            if 'show_tmdb_id' in keyword:
+                if 'show_tmdb_id' not in self.info:
+                    self.info['show_tmdb_id'] = ''
+
+                text = text.replace('{%s}' % keyword, str(self.info["show_tmdb_id"]))
+
+            if 'tmdb_id' in keyword:
+                if 'tmdb_id' not in self.info:
+                    self.info['tmdb_id'] = ''
+
+                text = text.replace('{%s}' % keyword, str(self.info["tmdb_id"]))
+
+            if 'tvdb_id' in keyword:
+                if 'tvdb_id' not in self.info:
+                    self.info['tvdb_id'] = ''
+
+                text = text.replace('{%s}' % keyword, str(self.info["tvdb_id"]))
+
+            if 'imdb_id' in keyword:
+                if 'imdb_id' not in self.info:
+                    self.info['imdb_id'] = ''
+
+                text = text.replace('{%s}' % keyword, str(self.info["imdb_id"]))
 
             if 'season' in keyword:
                 if '+' in keyword:
