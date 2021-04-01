@@ -11,9 +11,13 @@ from future.utils import PY3
 import os
 import re
 import json
+import traceback
 
 if PY3:
     from future.builtins import range as xrange
+
+from future.utils import iteritems
+from io import open
 
 mandatory_fields = {'name': '', 'predefined': False, 'enabled': False, 'private': False, 'id': '', 'languages': ''}
 public = []
@@ -32,6 +36,7 @@ languages = {
     'hu': 32118,
     'pl': 32126,
     'lt': 32127,
+    'by': 32135,
 }
 
 def char_range(c1, c2):
@@ -46,13 +51,14 @@ def cleanup_settings(path):
 
     print("Cleaning settings at %s" % (path))
     try:
-        with open(path) as file:
+        with open(path, encoding='utf-8') as file:
             settings = file.read()
             file.close()
         settings = re.sub(r"(<!-- Providers-\w+-\d-Begin -->).*?(<!-- Providers-\w+-\d-End -->)", "\\1\n    \\2", settings, flags=re.DOTALL)
 
     except Exception as e:
         print("Failed removing settings from %s: %s" % (path, repr(e)))
+        print(traceback.format_exc())
 
 
 def load_providers(path):
@@ -62,13 +68,13 @@ def load_providers(path):
 
     print("Loading providers from %s" % (path))
     try:
-        with open(path) as file:
+        with open(path, encoding='utf-8') as file:
             providers = json.load(file)
 
         # Setting default values for each provider
         # to avoid missing dict items
         for provider in providers:
-            for k, v in mandatory_fields.iteritems():
+            for k, v in iteritems(mandatory_fields):
                 if k not in providers[provider]:
                     providers[provider][k] = v
 
@@ -87,6 +93,7 @@ def load_providers(path):
 
     except Exception as e:
         print("Failed importing providers from %s: %s" % (path, repr(e)))
+        print(traceback.format_exc())
 
 
 def store_providers(path):
@@ -112,11 +119,11 @@ def store_providers(path):
     for p in public:
         public_count += 1
 
-        item = """
+        item = u"""
     <setting label="{name}" id="use_{id}" type="bool" default="{default}" />
       <setting id="{id}_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="{id}_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-      """.format(id=p['id'], name=p['name'].encode('utf8'), default=str(p['predefined']).lower())
+""".format(id=p['id'], name=p['name'], default=str(p['predefined']).lower())
 
         if p['title'][:1].lower() in char_range('0', 'm'):
             if not p['predefined']:
@@ -140,12 +147,12 @@ def store_providers(path):
             auth = """<setting id="{id}_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="{id}_passkey" label="32076" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />""".format(id=p['id'])
 
-        item = """
+        item = u"""
     <setting label="{name}" id="use_{id}" type="bool" default="{default}" />
       {auth}
       <setting id="{id}_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="{id}_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-      """.format(id=p['id'], name=p['name'].encode('utf8'), default=str(p['predefined']).lower(), auth=auth)
+""".format(id=p['id'], name=p['name'], default=str(p['predefined']).lower(), auth=auth)
 
         if p['title'][:1].lower() in char_range('0', 'm'):
             if not p['predefined']:
@@ -159,19 +166,20 @@ def store_providers(path):
                 private2_predefined_string += item
 
     try:
-        settings = re.sub(r"(<!-- Providers-Public-1-Begin -->).*?(<!-- Providers-Public-1-End -->)", "\\1\n" + public1_predefined_string + public1_string + "\\2", settings, flags=re.DOTALL)
-        settings = re.sub(r"(<!-- Providers-Public-2-Begin -->).*?(<!-- Providers-Public-2-End -->)", "\\1\n" + public2_predefined_string + public2_string + "\\2", settings, flags=re.DOTALL)
+        settings = re.sub(r"(<!-- Providers-Public-1-Begin -->).*?(<!-- Providers-Public-1-End -->)", "\\1\n" + public1_predefined_string + public1_string + "    \\2", settings, flags=re.DOTALL)
+        settings = re.sub(r"(<!-- Providers-Public-2-Begin -->).*?(<!-- Providers-Public-2-End -->)", "\\1\n" + public2_predefined_string + public2_string + "    \\2", settings, flags=re.DOTALL)
 
-        settings = re.sub(r"(<!-- Providers-Private-1-Begin -->).*?(<!-- Providers-Private-1-End -->)", "\\1\n" + private1_predefined_string + private1_string + "\\2", settings, flags=re.DOTALL)
-        settings = re.sub(r"(<!-- Providers-Private-2-Begin -->).*?(<!-- Providers-Private-2-End -->)", "\\1\n" + private2_predefined_string + private2_string + "\\2", settings, flags=re.DOTALL)
+        settings = re.sub(r"(<!-- Providers-Private-1-Begin -->).*?(<!-- Providers-Private-1-End -->)", "\\1\n" + private1_predefined_string + private1_string + "    \\2", settings, flags=re.DOTALL)
+        settings = re.sub(r"(<!-- Providers-Private-2-Begin -->).*?(<!-- Providers-Private-2-End -->)", "\\1\n" + private2_predefined_string + private2_string + "    \\2", settings, flags=re.DOTALL)
 
-        with open(path, 'w') as file:
+        with open(path, 'w', encoding='utf-8') as file:
             file.write(settings)
             file.close()
             print("Saved %d public, %d private providers to %s" % (public_count, private_count, path))
 
     except Exception as e:
         print("Failed removing settings from %s: %s" % (path, repr(e)))
+        print(traceback.format_exc())
 
 def get_languages(langs):
     if not langs:

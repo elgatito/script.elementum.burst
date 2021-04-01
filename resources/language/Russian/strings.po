@@ -350,3 +350,7 @@ msgstr "Разрешение"
 msgctxt "#32134"
 msgid "Video quality"
 msgstr "Качество видео"
+
+msgctxt "#32135"
+msgid "Belarusian"
+msgstr "Белорусский"

@@ -91,7 +91,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
     token = None
     logged_in = False
     token_auth = False
-    used_queries = []
+    used_queries = set()
 
     if get_setting('kodi_language', bool):
         kodi_language = xbmc.getLanguage(xbmc.ISO_639_1)
@@ -104,7 +104,8 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
     log.debug("[%s] Queries: %s" % (provider, filtering.queries))
     log.debug("[%s] Extras:  %s" % (provider, filtering.extras))
 
-    for query, extra in zip(filtering.queries, filtering.extras):
+    last_priority = 1
+    for query, extra, priority in zip(filtering.queries, filtering.extras, filtering.queries_priorities):
         log.debug("[%s] Before keywords - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
         if has_special:
             # Removing quotes, surrounding {title*} keywords, when title contains special chars
@@ -115,16 +116,19 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         if not query:
             continue
-        elif query in used_queries:
+        elif query+extra in used_queries:
             # Make sure we don't run same query for this provider
             continue
-        elif extra == '-' and filtering.results:
+        elif priority > last_priority and filtering.results:
+            # Skip fallbacks if there are results
+            log.debug("[%s] Skip fallback as there are already results" % provider)
             continue
         elif start_time and timeout and time.time() - start_time + 3 >= timeout:
             # Stop doing requests if there is 3 seconds left for the overall task
             continue
 
-        used_queries.append(query)
+        used_queries.add(query+extra)
+        last_priority = priority
 
         try:
             if 'charset' in definition and definition['charset'] and 'utf' not in definition['charset'].lower():
@@ -142,7 +146,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             return filtering.results
 
         url_search = filtering.url.replace('QUERY', query)
-        if extra and extra != '-':
+        if extra:
             url_search = url_search.replace('EXTRA', extra)
         else:
             url_search = url_search.replace('EXTRA', '')
