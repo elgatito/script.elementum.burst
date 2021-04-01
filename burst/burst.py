@@ -74,7 +74,7 @@ def search(payload, method="general"):
     """
     log.debug("Searching with payload (%s): %s" % (method, repr(payload)))
 
-    if 'anime' in payload and payload['anime']:
+    if method == 'episode' and 'anime' in payload and payload['anime']:
         method = 'anime'
 
     if method == 'general':
@@ -103,6 +103,8 @@ def search(payload, method="general"):
                              any(c in payload['titles']['source'] for c in special_chars)
     if payload['has_special']:
         log.debug("Query title contains special chars, so removing any quotes in the search query")
+    if 'episode' not in payload:
+        payload['episode'] = 0
 
     if 'proxy_url' not in payload:
         payload['proxy_url'] = ''
