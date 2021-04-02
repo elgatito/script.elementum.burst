@@ -391,7 +391,7 @@ class Filtering:
                 results.append(value)
         return results
 
-    def process_keywords(self, provider, text):
+    def process_keywords(self, provider, text, definition):
         """ Processes the query payload from a provider's keyword definitions
 
         Args:
@@ -427,6 +427,11 @@ class Filtering:
                             # For all non-original titles, try to remove accents from the title.
                             if use_language != 'original':
                                 title = remove_accents(title)
+                            # Remove characters, filled in 'remove_special_characters' field definition.
+                            if 'remove_special_characters' in definition and definition['remove_special_characters']:
+                                for char in definition['remove_special_characters']:
+                                    title = title.replace(char, "")
+                                title = " ".join(title.split())
 
                             log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
                                                                               repr(title)))
