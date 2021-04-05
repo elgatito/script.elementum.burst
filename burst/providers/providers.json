@@ -426,6 +426,7 @@
         },
         "predefined": false,
         "private": false,
+        "remove_special_characters" : "'",
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "'{title:original}' S{season:2}",
