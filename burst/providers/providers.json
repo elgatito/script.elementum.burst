@@ -1551,7 +1551,7 @@
     },
     "rarbg": {
         "anime_keywords": "{title:en:original} s{season:2}e{episode:2}",
-        "anime_keywords2": "{title:en:original} {season:2}x01|S{season:2}",
+        "anime_keywords2": null,
         "anime_keywords_fallback": "{title:en:original} s{season:2}",
         "anime_query": "?mode=search&search_string=QUERY&format=json_extended&app_id=script.elementum.burst&token=TOKEN",
         "api_format": {
@@ -1601,7 +1601,7 @@
         "tv_extra": null,
         "tv_extra2": null,
         "tv_keywords": "{title:en:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:en:original} {season:2}x01|S{season:2}",
+        "tv_keywords2": null,
         "tv_keywords_fallback": "{title:en:original} s{season:2}"
     },
     "rustorka": {
