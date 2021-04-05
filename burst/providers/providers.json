@@ -48,7 +48,6 @@
     "1337x": {
         "anime_extra": "",
         "anime_keywords": "{title} s{season:2}e{episode:2}",
-        "anime_keywords2": null,
         "anime_keywords_fallback": "{title} s{season:2}",
         "anime_keywords_fallback2": "{title} season {season}",
         "anime_keywords_fallback3": "{title} {season:2}x01",
@@ -1133,7 +1132,6 @@
     },
     "magnetdl": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
-        "anime_keywords2": null,
         "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_keywords_fallback2": "{title:original} season {season}",
         "anime_query": "",
@@ -1551,7 +1549,6 @@
     },
     "rarbg": {
         "anime_keywords": "{title:en:original} s{season:2}e{episode:2}",
-        "anime_keywords2": null,
         "anime_keywords_fallback": "{title:en:original} s{season:2}",
         "anime_query": "?mode=search&search_string=QUERY&format=json_extended&app_id=script.elementum.burst&token=TOKEN",
         "api_format": {
@@ -1934,7 +1931,6 @@
     },
     "thepiratebay": {
         "anime_keywords": "{title:en} s{season:2}e{episode:2}",
-        "anime_keywords2": null,
         "anime_keywords_fallback": "{title:en} s{season:2}",
         "anime_keywords_fallback2": "{title:en} season {season}",
         "anime_keywords_fallback3": "{title:en} {season:2}x01",
