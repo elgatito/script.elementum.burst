@@ -1957,6 +1957,7 @@
         },
         "predefined": false,
         "private": false,
+        "remove_special_characters" : "'",
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:en} season {season:2}",
