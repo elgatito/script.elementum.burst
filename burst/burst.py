@@ -74,7 +74,7 @@ def search(payload, method="general"):
     """
     log.debug("Searching with payload (%s): %s" % (method, repr(payload)))
 
-    if 'anime' in payload and payload['anime']:
+    if method == 'episode' and 'anime' in payload and payload['anime']:
         method = 'anime'
 
     if method == 'general':
@@ -103,6 +103,8 @@ def search(payload, method="general"):
                              any(c in payload['titles']['source'] for c in special_chars)
     if payload['has_special']:
         log.debug("Query title contains special chars, so removing any quotes in the search query")
+    if 'episode' not in payload:
+        payload['episode'] = 0
 
     if 'proxy_url' not in payload:
         payload['proxy_url'] = ''
@@ -259,6 +261,7 @@ def extract_torrents(provider, client):
 
     dom = Html().feed(client.content)
 
+    id_search = get_search_query(definition, "id")
     key_search = get_search_query(definition, "key")
     row_search = get_search_query(definition, "row")
     name_search = get_search_query(definition, "name")
@@ -276,7 +279,7 @@ def extract_torrents(provider, client):
     needs_subpage = 'subpage' in definition and definition['subpage']
 
     if needs_subpage:
-        def extract_subpage(q, name, torrent, size, seeds, peers, info_hash, referer):
+        def extract_subpage(q, id, name, torrent, size, seeds, peers, info_hash, referer):
             try:
                 log.debug("[%s] Getting subpage at %s" % (provider, repr(torrent)))
             except Exception as e:
@@ -315,7 +318,7 @@ def extract_torrents(provider, client):
                     map(log.debug, traceback.format_exc().split("\n"))
 
             log.debug("[%s] Subpage torrent for %s: %s" % (provider, repr(uri[0]), torrent))
-            ret = (name, info_hash, torrent, size, seeds, peers)
+            ret = (id, name, info_hash, torrent, size, seeds, peers)
 
             # Cache this subpage result if another query would need to request same url.
             provider_cache[uri[0]] = torrent
@@ -348,6 +351,7 @@ def extract_torrents(provider, client):
             continue
 
         try:
+            id = eval(id_search) if id_search else ""
             name = eval(name_search) if name_search else ""
             torrent = eval(torrent_search) if torrent_search else ""
             size = eval(size_search) if size_search else ""
@@ -360,6 +364,7 @@ def extract_torrents(provider, client):
                 torrent = torrent[torrent.find('magnet:?'):]
 
             if debug_parser:
+                log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'id', id_search, id))
                 log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'name', name_search, name))
                 log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'torrent', torrent_search, torrent))
                 log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'size', size_search, size))
@@ -410,13 +415,13 @@ def extract_torrents(provider, client):
                 # Check if this url was previously requested, to avoid doing same job again.
                 uri = torrent.split('|')
                 if uri and uri[0] and uri[0] in provider_cache and provider_cache[uri[0]]:
-                    yield (name, info_hash, provider_cache[uri[0]], size, seeds, peers)
+                    yield (id, name, info_hash, provider_cache[uri[0]], size, seeds, peers)
                     continue
 
-                t = Thread(target=extract_subpage, args=(q, name, torrent, size, seeds, peers, info_hash, referer))
+                t = Thread(target=extract_subpage, args=(q, id, name, torrent, size, seeds, peers, info_hash, referer))
                 threads.append(t)
             else:
-                yield (name, info_hash, torrent, size, seeds, peers)
+                yield (id, name, info_hash, torrent, size, seeds, peers)
         except Exception as e:
             log.error("[%s] Got an exception while parsing results: %s" % (provider, repr(e)))
 
@@ -492,12 +497,15 @@ def extract_from_api(provider, client):
     for result in results:
         if not result or not isinstance(result, dict):
             continue
+        id = ''
         name = ''
         info_hash = ''
         torrent = ''
         size = ''
         seeds = ''
         peers = ''
+        if 'id' in api_format:
+            id = result[api_format['id']]
         if 'name' in api_format:
             name = result[api_format['name']]
         if 'description' in api_format:
@@ -532,7 +540,7 @@ def extract_from_api(provider, client):
             peers = result[api_format['peers']]
             if isinstance(peers, basestring) and peers.isdigit():
                 peers = int(peers)
-        yield (name, info_hash, torrent, size, seeds, peers)
+        yield (id, name, info_hash, torrent, size, seeds, peers)
 
 
 def extract_from_page(provider, content):

@@ -299,7 +299,7 @@ class Filtering:
             self.check_sizes()
         self.info = info
         self.url = u"%s%s" % (definition['base_url'], anime_query)
-        if self.info['absolute_number']:
+        if 'absolute_number' in self.info and self.info['absolute_number']:
             self.info['episode'] = self.info['absolute_number']
 
         self.collect_queries('anime', definition)
@@ -391,7 +391,7 @@ class Filtering:
                 results.append(value)
         return results
 
-    def process_keywords(self, provider, text):
+    def process_keywords(self, provider, text, definition):
         """ Processes the query payload from a provider's keyword definitions
 
         Args:
@@ -427,6 +427,11 @@ class Filtering:
                             # For all non-original titles, try to remove accents from the title.
                             if use_language != 'original':
                                 title = remove_accents(title)
+                            # Remove characters, filled in 'remove_special_characters' field definition.
+                            if 'remove_special_characters' in definition and definition['remove_special_characters']:
+                                for char in definition['remove_special_characters']:
+                                    title = title.replace(char, "")
+                                title = " ".join(title.split())
 
                             log.info("[%s] Using translated '%s' title %s" % (provider, use_language,
                                                                               repr(title)))
@@ -442,6 +447,30 @@ class Filtering:
 
             if 'year' in keyword:
                 text = text.replace('{%s}' % keyword, str(self.info["year"]))
+
+            if 'show_tmdb_id' in keyword:
+                if 'show_tmdb_id' not in self.info:
+                    self.info['show_tmdb_id'] = ''
+
+                text = text.replace('{%s}' % keyword, str(self.info["show_tmdb_id"]))
+
+            if 'tmdb_id' in keyword:
+                if 'tmdb_id' not in self.info:
+                    self.info['tmdb_id'] = ''
+
+                text = text.replace('{%s}' % keyword, str(self.info["tmdb_id"]))
+
+            if 'tvdb_id' in keyword:
+                if 'tvdb_id' not in self.info:
+                    self.info['tvdb_id'] = ''
+
+                text = text.replace('{%s}' % keyword, str(self.info["tvdb_id"]))
+
+            if 'imdb_id' in keyword:
+                if 'imdb_id' not in self.info:
+                    self.info['imdb_id'] = ''
+
+                text = text.replace('{%s}' % keyword, str(self.info["imdb_id"]))
 
             if 'season' in keyword:
                 if '+' in keyword:
