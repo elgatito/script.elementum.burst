@@ -1934,8 +1934,10 @@
     },
     "thepiratebay": {
         "anime_keywords": "{title:en} s{season:2}e{episode:2}",
-        "anime_keywords2": "{title:en} {season:2}x01|S{season:2}",
+        "anime_keywords2": null,
         "anime_keywords_fallback": "{title:en} s{season:2}",
+        "anime_keywords_fallback2": "{title:en} season {season}",
+        "anime_keywords_fallback3": "{title:en} {season:2}x01",
         "anime_query": "200",
         "base_url": "https://thepiratebay10.org/search/QUERYEXTRA/1/99/",
         "color": "FF5A3C22",
@@ -1965,8 +1967,9 @@
         "private": false,
         "season_extra": "",
         "season_extra2": "",
-        "season_keywords": "{title:en} season {season:2}",
-        "season_keywords2": "{title:en} s{season:2}",
+        "season_keywords": "{title:en} s{season:2}",
+        "season_keywords2": "{title:en} season {season}",
+        "season_keywords_fallback": "{title:en} {season:2}x01",
         "season_query": "200",
         "separator": "%20",
         "show_query": "200",
@@ -1974,8 +1977,10 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:en} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:en} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:en} s{season:2}"
+        "tv_keywords2": null,
+        "tv_keywords_fallback": "{title:en} s{season:2}",
+        "tv_keywords_fallback2": "{title:en} season {season}",
+        "tv_keywords_fallback3": "{title:en} {season:2}x01"
     },
     "tntvillage": {
         "anime_keywords": "{title} s{season:2}e{episode:2}",
