@@ -1677,6 +1677,7 @@
         "predefined": false,
         "private": false,
         "public_dns_alias": "rutor.lib",
+        "remove_special_characters" : "'",
         "season_query": "0/EXTRA/300/2/QUERY",
         "season_keywords": "{title:en:ru} {season:2}x01|(01-{season:2}x01)|S{season:2}|(S01-{season:2})",
         "season_extra": "4",
