@@ -1133,8 +1133,9 @@
     },
     "magnetdl": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
-        "anime_keywords2": "{title:original} {season:2}x01|s{season:2}",
+        "anime_keywords2": null,
         "anime_keywords_fallback": "{title:original} s{season:2}",
+        "anime_keywords_fallback2": "{title:original} season {season}",
         "anime_query": "",
         "base_url": "https://www.magnetdl.com/FIRSTLETTER/QUERYEXTRA/",
         "color": "FF017BD4",
@@ -1165,7 +1166,7 @@
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:original} s{season:2}",
-        "season_keywords2": "",
+        "season_keywords2": "{title:original} season {season}",
         "season_query": "",
         "separator": "-",
         "show_query": "",
@@ -1173,8 +1174,9 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} {season:2}x01|s{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords2": null,
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "tv_keywords_fallback2": "{title:original} season {season}"
     },
     "megapeer": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
