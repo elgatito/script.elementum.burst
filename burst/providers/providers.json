@@ -2987,7 +2987,7 @@
         },
         "enabled": true,
         "predefined": false,
-        "private": true,
+        "private": false,
         "subpage": false,
         "separator": "+",
         "root_url": "http://www.filebase.ws",
