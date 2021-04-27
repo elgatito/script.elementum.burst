@@ -315,14 +315,14 @@ class Filtering:
         for keyword in keywords:
             keyword = keyword.lower()
             if 'title' in keyword and ':' in keyword:
-                langs = keyword.lower().split(':')[1:]
-                if len(langs) < 2:
-                    continue
-
                 # For general queries we should not process language settings.
                 if item_type == 'general':
                     result.append(text.replace("{%s}" % keyword, "{title}"))
                     return result
+
+                langs = keyword.lower().split(':')[1:]
+                if len(langs) < 2:
+                    continue
 
                 modified = True
                 for lang in langs:
