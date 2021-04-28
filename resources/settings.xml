@@ -41,6 +41,10 @@
       <setting id="eztv_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="eztv_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
+    <setting label="[B]Filebase[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_filebase" type="bool" default="false" />
+      <setting id="filebase_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="filebase_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+
     <setting label="[B]GloTorrents[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_glotorrents" type="bool" default="false" />
       <setting id="glotorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="glotorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
