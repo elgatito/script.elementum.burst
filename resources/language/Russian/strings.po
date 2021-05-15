@@ -369,3 +369,11 @@ msgstr "Из настроек Elementum (разрешать имена на пр
 msgctxt "#32139"
 msgid "First enable built-in HTTP proxy in Elementum"
 msgstr "Сперва включите встроенный HTTP прокси в Elementum"
+
+msgctxt "#32140"
+msgid "Use Tor domain alias"
+msgstr "Использовать домены в Tor"
+
+msgctxt "#32141"
+msgid "First set SOCKS both in Burst&Elementum or proxy http via Elementum"
+msgstr "Сперва вкл. SOCKS5h в Burst&Elementum или вкл. прокси через Elementum"
