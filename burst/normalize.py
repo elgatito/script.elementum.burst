@@ -39,36 +39,48 @@ def clean_title(string=None):
     return string
 
 
-def are_equals(string_1='', string_2=''):
+def are_equals(string_1, string_2, language):
     """
         Checks if the two string are equals even without accents
     :param string_1: first string
     :type: string_1: unicode
     :param string_2: second string
     :type: string_2: unicode
+    :param language: language of the strings
+    :type language: str or unicode
     :return: True if it is equal, False otherwise
     :rtype: bool
     """
     string_1 = safe_name(string_1)
     string_2 = safe_name(string_2)
-    string_a = remove_accents(string_1)
-    string_b = remove_accents(string_2)
+    string_a = remove_accents(string_1, language)
+    string_b = remove_accents(string_2, language)
     return any([string_1 == string_2, string_a == string_b])
 
 
-def remove_accents(string):
+def remove_accents(string, language):
     """
         Remove any accent in the string
     :param string: string to remove accents
     :type string: str or unicode
+    :param language: language of the string
+    :type language: str or unicode
     :return: string without accents
     :rtype: unicode
     """
     if not isinstance(string, unicode):
         string = normalize_string(string)
 
+    encoding = 'ASCII'
+    if language in ('by', 'ua', 'ru'):
+        #encoding = 'cp1251' # whis would help to handle mixed languages string (e.g en+ua or fr+ru)
+        # but we don't want to remove accents for these langs, since their "accents" are not really accents
+        # see https://github.com/elgatito/script.elementum.burst/issues/259 for more details
+        return string
+    # for other languages contributors can add appropriate encoding to be able properly handle mixed languages string
+
     nfkd_form = unicodedata.normalize('NFKD', string)
-    only_ascii = nfkd_form.encode('ASCII', 'ignore').decode('ASCII', 'ignore').strip()
+    only_ascii = nfkd_form.encode(encoding, 'ignore').decode(encoding, 'ignore').strip()
     # for non-ASCII language we can end up with string like ": , ." so we should not use it
     only_ascii_is_empty = u''.join([char for char in only_ascii if char.isalpha()]) == u''
     return string if only_ascii_is_empty else only_ascii

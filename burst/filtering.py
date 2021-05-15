@@ -426,7 +426,7 @@ class Filtering:
                             title = normalize_string(title)
                             # For all non-original titles, try to remove accents from the title.
                             if use_language != 'original':
-                                title = remove_accents(title)
+                                title = remove_accents(title, use_language)
                             # Remove characters, filled in 'remove_special_characters' field definition.
                             if 'remove_special_characters' in definition and definition['remove_special_characters']:
                                 for char in definition['remove_special_characters']:
