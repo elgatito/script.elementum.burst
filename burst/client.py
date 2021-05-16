@@ -40,7 +40,14 @@ dns_opennic_list = ['193.183.98.66', '172.104.136.243', '89.18.27.167']
 _orig_create_connection = connection.create_connection
 
 # Proxy types
-proxy_types = ["socks4", "socks5", "http", "https"]
+proxy_types = ["socks4", # socks4 (hostname resolve on client)
+    "socks5", # socks5 (hostname resolve on client)
+    "http",
+    "https",
+    "socks4a", # socks4 latest version with hostname resolve by proxy
+    "socks5h"] # socks5 latest version with hostname resolve by proxy
+elementum_proxy_types_overrides = {'socks4': 'socks4a',
+    'socks5': 'socks5h'}
 
 # Disable warning from urllib
 urllib3.disable_warnings()
@@ -182,6 +189,8 @@ class Client:
         elif proxy['enabled']:
             if proxy['use_type'] == 0 and info and "proxy_url" in info:
                 log.debug("Setting proxy from Elementum: %s" % (info["proxy_url"]))
+
+                self.proxy_url = info["proxy_url"]
             elif proxy['use_type'] == 1:
                 log.debug("Setting proxy with custom settings: %s" % (repr(proxy)))
 
@@ -189,6 +198,14 @@ class Client:
                     self.proxy_url = "{0}://{1}:{2}@{3}:{4}".format(proxy['type'], proxy['login'], proxy['password'], proxy['host'], proxy['port'])
                 else:
                     self.proxy_url = "{0}://{1}:{2}".format(proxy['type'], proxy['host'], proxy['port'])
+            if proxy['use_type'] == 2 and info and "proxy_url" in info:
+                log.debug("Setting proxy with hosts resolve from Elementum: %s" % (info["proxy_url"]))
+
+                proxy_url_scheme_separator = '://'
+                elementum_proxy_url_parts = info["proxy_url"].split(proxy_url_scheme_separator)
+                elementum_proxy_url_prefix = elementum_proxy_url_parts[0].lower()
+                if elementum_proxy_url_prefix in elementum_proxy_types_overrides:
+                    self.proxy_url = proxy_url_scheme_separator.join([elementum_proxy_types_overrides[elementum_proxy_url_prefix]] + elementum_proxy_url_parts[1:])
 
             if self.proxy_url:
                 self.session.proxies = {

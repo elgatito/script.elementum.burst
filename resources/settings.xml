@@ -3,6 +3,7 @@
   <!-- General -->
   <category label="32000">
     <setting label="32125" id="use_elementum_proxy" type="bool" default="true" />
+    <setting id="elementum_proxy_help" label="32139" type="text" enable="false" subsetting="true" />
 
     <setting label="32084" id="use_public_dns" type="bool" default="false" enable="eq(-1,false)" />
       <setting id="public_dns_list" label="32093" type="text" default="8.8.8.8, 8.8.4.4, 9.9.9.9" enable="eq(-1,true) + eq(-2,false)" />
@@ -389,8 +390,8 @@
   <category label="32095">
       <setting label="32095" type="lsep" />
       <setting id="proxy_enabled" label="32096" type="bool" default="false" />
-        <setting id="proxy_use_type" label="32106" type="enum" default="0" subsetting="true" lvalues="32107|32108" enable="eq(-1,true)" />
-        <setting id="proxy_type" label="32101" type="enum" default="1" subsetting="true" lvalues="32102|32103|32104|32105" enable="eq(-1,1)" />
+        <setting id="proxy_use_type" label="32106" type="enum" default="2" subsetting="true" lvalues="32107|32108|32138" enable="eq(-1,true)" />
+        <setting id="proxy_type" label="32101" type="enum" default="5" subsetting="true" lvalues="32102|32103|32104|32105|32136|32137" enable="eq(-1,1)" />
         <setting id="proxy_host" label="32097" type="text" default="" subsetting="true" enable="eq(-2,1)" />
         <setting id="proxy_port" label="32098" type="number" default="1080" subsetting="true" enable="eq(-3,1)" />
         <setting id="proxy_login" label="32099" type="text" default="" subsetting="true" enable="eq(-4,1)" />

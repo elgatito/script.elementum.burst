@@ -243,7 +243,7 @@ msgid "Use proxy settings"
 msgstr "Usar configuración"
 
 msgctxt "#32107"
-msgid "Proxy from Elementum settings"
+msgid "From Elementum settings"
 msgstr "Elementum"
 
 msgctxt "#32108"
