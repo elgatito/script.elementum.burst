@@ -184,6 +184,7 @@ class Filtering:
         self.info = dict(title="", proxy_url="", internal_proxy_url="", elementum_url="", titles=[])
         self.kodi_language = ''
         self.language_exceptions = []
+        self.provider_languages = []
         self.get_data = {}
         self.post_data = {}
         self.url = ''
@@ -425,7 +426,7 @@ class Filtering:
                             title = self.info['titles'][use_language]
                             title = normalize_string(title)
                             # For all non-original titles, try to remove accents from the title.
-                            if use_language != 'original':
+                            if use_language != 'original' and self.convert_language(use_language) not in self.provider_languages:
                                 title = remove_accents(title)
                             # Remove characters, filled in 'remove_special_characters' field definition.
                             if 'remove_special_characters' in definition and definition['remove_special_characters']:
@@ -672,6 +673,23 @@ class Filtering:
 
         return title
 
+    def add_provider_language(self, language):
+        if language not in self.provider_languages:
+            self.provider_languages.append(language)
+    
+    def convert_language(self, language):
+        if language == 'ru' or language == 'ua' or language == 'by':
+            return 'cr'
+        else:
+            return language
+
+    def define_languages(self, provider):
+        definition = definitions[provider]
+        if 'language' in definition and definition['language']:
+            self.add_provider_language(self.convert_language(definition['language']))
+        if 'languages' in definition and definition['languages']:
+            for lang in definition['languages'].split(","):
+                self.add_provider_language(self.convert_language(lang))
 
 def apply_filters(results_list):
     """ Applies final result de-duplicating, hashing and sorting

@@ -625,6 +625,9 @@ def run_provider(provider, payload, method, start_time, timeout):
 
     filterInstance = Filtering()
 
+    # collect languages, defined for this provider
+    filterInstance.define_languages(provider)
+
     if method == 'movie':
         filterInstance.use_movie(provider, payload)
     elif method == 'season':
