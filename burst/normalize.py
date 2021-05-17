@@ -64,14 +64,15 @@ def remove_accents(string):
     :return: string without accents
     :rtype: unicode
     """
-    if not isinstance(string, unicode):
-        string = normalize_string(string)
+
+    try:
+        string = unicode(string, 'utf-8')
+    # unicode is a default on python 3
+    except (TypeError, NameError):
+        pass
 
     nfkd_form = unicodedata.normalize('NFKD', string)
-    only_ascii = nfkd_form.encode('ASCII', 'ignore').decode('ASCII', 'ignore').strip()
-    # for non-ASCII language we can end up with string like ": , ." so we should not use it
-    only_ascii_is_empty = u''.join([char for char in only_ascii if char.isalpha()]) == u''
-    return string if only_ascii_is_empty else only_ascii
+    return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
 
 
 def remove_control_chars(string):
