@@ -676,7 +676,7 @@ class Filtering:
     def add_provider_language(self, language):
         if language not in self.provider_languages:
             self.provider_languages.append(language)
-    
+
     def convert_language(self, language):
         if language == 'ru' or language == 'ua' or language == 'by':
             return 'cr'
