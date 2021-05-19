@@ -426,7 +426,7 @@ class Filtering:
                             title = self.info['titles'][use_language]
                             title = normalize_string(title)
                             # For all non-original titles, that are not base languages of a tracker OR english language, try to remove accents from the title.
-                            if use_language != 'original' and (self.convert_language(use_language) not in self.provider_languages or self.convert_language(use_language) is 'en'):
+                            if use_language != 'original' and (self.convert_language(use_language) not in self.provider_languages or self.convert_language(use_language) == 'en'):
                                 title = remove_accents(title)
                             # Remove characters, filled in 'remove_special_characters' field definition.
                             if 'remove_special_characters' in definition and definition['remove_special_characters']:
