@@ -348,3 +348,7 @@ msgstr ""
 msgctxt "#32134"
 msgid "Video quality"
 msgstr ""
+
+msgctxt "#32135"
+msgid "Belarusian"
+msgstr ""

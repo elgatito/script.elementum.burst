@@ -349,3 +349,7 @@ msgstr "Upplösning"
 msgctxt "#32134"
 msgid "Video quality"
 msgstr "Videokvalitét"
+
+msgctxt "#32135"
+msgid "Belarusian"
+msgstr ""
