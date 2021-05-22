@@ -353,7 +353,3 @@ msgstr "Calidad de video"
 msgctxt "#32135"
 msgid "Belarusian"
 msgstr ""
-
-#~ msgctxt "#32040"
-#~ msgid "Maximum torrents"
-#~ msgstr "Número máximo de torrents"

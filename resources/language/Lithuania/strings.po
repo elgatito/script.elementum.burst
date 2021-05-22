@@ -353,11 +353,3 @@ msgstr ""
 msgctxt "#32135"
 msgid "Belarusian"
 msgstr ""
-
-#~ msgctxt "#32071"
-#~ msgid "Timeout setting must be lower than Quasar's"
-#~ msgstr "Laiko nustatymas turi būti mažesnis nei Quasar"
-
-#~ msgctxt "#32040"
-#~ msgid "Maximum torrents"
-#~ msgstr "Maksimumas torrentų"
