@@ -186,7 +186,6 @@ msgctxt "#32092"
 msgid "Size"
 msgstr ""
 
-
 msgctxt "#32093"
 msgid "List of public DNS IPs"
 msgstr ""
