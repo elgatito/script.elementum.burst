@@ -162,7 +162,6 @@ msgctxt "#32086"
 msgid "Log debug messages for parsing"
 msgstr "Писать в лог сообщения парсера"
 
-
 msgctxt "#32087"
 msgid "Filtering"
 msgstr "Фильтрация"
