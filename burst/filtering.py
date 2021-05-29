@@ -300,8 +300,6 @@ class Filtering:
             self.check_sizes()
         self.info = info
         self.url = u"%s%s" % (definition['base_url'], anime_query)
-        if 'absolute_number' in self.info and self.info['absolute_number']:
-            self.info['episode'] = self.info['absolute_number']
 
         self.collect_queries('anime', definition)
 
@@ -484,7 +482,7 @@ class Filtering:
                     season = '%s' % self.info["season"]
                 text = text.replace('{%s}' % keyword, season)
 
-            if 'episode' in keyword:
+            if 'episode' in keyword and 'absolute' not in keyword:
                 if '+' in keyword:
                     keys = keyword.split('+')
                     episode = str(self.info["episode"] + get_int(keys[1]))
@@ -493,6 +491,20 @@ class Filtering:
                     episode = ('%%.%sd' % keys[1]) % self.info["episode"]
                 else:
                     episode = '%s' % self.info["episode"]
+                text = text.replace('{%s}' % keyword, episode)
+
+            if 'absolute_episode' in keyword:
+                if 'absolute_number' not in self.info or not self.info['absolute_number']:
+                    log.debug("Skipping query '%s' due to missing absolute_number" % text)
+                    return ""
+                if '+' in keyword:
+                    keys = keyword.split('+')
+                    episode = str(self.info["absolute_number"] + get_int(keys[1]))
+                elif ':' in keyword:
+                    keys = keyword.split(':')
+                    episode = ('%%.%sd' % keys[1]) % self.info["absolute_number"]
+                else:
+                    episode = '%s' % self.info["absolute_number"]
                 text = text.replace('{%s}' % keyword, episode)
 
         if replacing:
