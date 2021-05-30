@@ -2415,11 +2415,11 @@
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=2) + ' [' + item(tag='a', attribute='title', order=1) + ']'",
-            "peers": "item(tag='span', select=('class', 'torrent_leechers'))",
-            "row": "find_once('table', ('class', 'torrents_table')).find_all('tr', start=2)",
-            "seeds": "item(tag='span', select=('class', 'torrent_seeders'))",
-            "size": "item(tag='a', select=('class', 'torrent_size'))",
-            "torrent": "'https://torrent.ai/lt/%s' % item(tag='a', attribute='href', select=('class', 'torrent_size'))"
+            "peers": "item(tag='div', select=('class', 'leechers'))",
+            "row": "find_once('table', ('class', 'torrents-table')).find_all('tbody')",
+            "seeds": "item(tag='div', order=-4)",
+            "size": "item(tag='td', select=('class', 'size_cell'))",
+            "torrent": "'https://torrent.ai/lt/%s' % item(tag='a', attribute='href', select=('class', 'download-button'))"
         },
         "predefined": false,
         "private": true,
