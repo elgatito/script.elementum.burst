@@ -354,6 +354,14 @@ msgctxt "#32135"
 msgid "Belarusian"
 msgstr "Белорусский"
 
+msgctxt "#32136"
+msgid "SOCKS4a"
+msgstr ""
+
+msgctxt "#32137"
+msgid "SOCKS5h"
+msgstr ""
+
 msgctxt "#32138"
 msgid "From Elementum settings (resolve hosts by proxy)"
 msgstr "Из настроек Elementum (разрешать имена на прокси)"
