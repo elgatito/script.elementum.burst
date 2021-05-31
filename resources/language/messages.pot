@@ -244,7 +244,7 @@ msgid "Use proxy settings"
 msgstr ""
 
 msgctxt "#32107"
-msgid "Proxy from Elementum settings"
+msgid "From Elementum settings"
 msgstr ""
 
 msgctxt "#32108"
@@ -353,4 +353,20 @@ msgstr ""
 
 msgctxt "#32135"
 msgid "Belarusian"
+msgstr ""
+
+msgctxt "#32136"
+msgid "SOCKS4a"
+msgstr ""
+
+msgctxt "#32137"
+msgid "SOCKS5h"
+msgstr ""
+
+msgctxt "#32138"
+msgid "From Elementum settings (resolve hosts by proxy)"
+msgstr ""
+
+msgctxt "#32139"
+msgid "First enable built-in HTTP proxy in Elementum"
 msgstr ""
