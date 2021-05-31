@@ -40,12 +40,12 @@ dns_opennic_list = ['193.183.98.66', '172.104.136.243', '89.18.27.167']
 _orig_create_connection = connection.create_connection
 
 # Proxy types
-proxy_types = ["socks4", # socks4 (hostname resolve on client)
-    "socks5", # socks5 (hostname resolve on client)
+proxy_types = ["socks4",  # socks4 (hostname resolve on client)
+    "socks5",  # socks5 (hostname resolve on client)
     "http",
     "https",
-    "socks4a", # socks4 latest version with hostname resolve by proxy
-    "socks5h"] # socks5 latest version with hostname resolve by proxy
+    "socks4a",  # socks4 latest version with hostname resolve by proxy
+    "socks5h"]  # socks5 latest version with hostname resolve by proxy
 elementum_proxy_types_overrides = {'socks4': 'socks4a',
     'socks5': 'socks5h'}
 
