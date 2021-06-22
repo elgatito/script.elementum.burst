@@ -1579,6 +1579,8 @@
         "movie_keywords": "{title:en:original} {year}",
         "movie_extra_fallback": "search_imdb",
         "movie_keywords_fallback": "{imdb_id}",
+        "movie_extra_fallback2": "search_themoviedb",
+        "movie_keywords_fallback2": "{tmdb_id}",
         "movie_query": "?mode=search&EXTRA=QUERY&category=14;48;17;44;45;47;50;51;52;42;46;54&format=json_extended&app_id=script.elementum.burst&token=TOKEN",
         "name": "RARBG",
         "parser": {
