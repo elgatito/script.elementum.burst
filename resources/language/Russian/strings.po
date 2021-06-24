@@ -112,7 +112,7 @@ msgstr "Провайдер остался: 1"
 
 msgctxt "#32064"
 msgid " timed out"
-msgstr " работает медленно"
+msgstr " работают медленно"
 
 msgctxt "#32070"
 msgid "Search timeout (seconds)"
