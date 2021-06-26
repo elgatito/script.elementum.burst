@@ -4,6 +4,7 @@
         <import addon="xbmc.addon" version="16.0.0" />
         <import addon="plugin.video.elementum" optional="true"/>
         <import addon="script.module.kodi-six" />
+        <import addon="script.module.requests" />
         <import addon="script.module.future" version="0.16.0.4"/>
     </requires>
     <extension point="xbmc.python.script" library="burst.py">
