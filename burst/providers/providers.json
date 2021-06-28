@@ -1603,7 +1603,7 @@
         "subpage": null,
         "token": "?get_token=get_token&app_id=script.elementum.burst",
         "tv_extra": null,
-        "tv_keywords": "{title:en:original} s{season:2}e{episode:2}",
+        "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords_fallback": "{title} s{season:2}"
     },
     "rustorka": {
