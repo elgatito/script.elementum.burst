@@ -1576,7 +1576,7 @@
         "login_object": "",
         "login_path": null,
         "movie_extra": "search_string",
-        "movie_keywords": "{title:en:original} {year}",
+        "movie_keywords": "{title} {year}",
         "movie_extra_fallback": "search_imdb",
         "movie_keywords_fallback": "{imdb_id}",
         "movie_extra_fallback2": "search_themoviedb",
@@ -1596,7 +1596,7 @@
         "private": false,
         "remove_special_characters" : "'",
         "season_extra": null,
-        "season_keywords": "{title:en:original} s{season:2}",
+        "season_keywords": "{title} s{season:2}",
         "season_query": "?mode=search&search_string=QUERY&category=18;41;49&format=json_extended&app_id=script.elementum.burst&token=TOKEN",
         "separator": "+",
         "show_query": "?mode=search&search_string=QUERY&category=18;41;49&format=json_extended&app_id=script.elementum.burst&token=TOKEN",
@@ -1604,7 +1604,7 @@
         "token": "?get_token=get_token&app_id=script.elementum.burst",
         "tv_extra": null,
         "tv_keywords": "{title:en:original} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:en:original} s{season:2}"
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "rustorka": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
