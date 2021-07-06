@@ -5,9 +5,11 @@
     <setting label="32125" id="use_elementum_proxy" type="bool" default="true" />
     <setting id="elementum_proxy_help" label="32139" type="text" enable="false" subsetting="true" />
 
-    <setting label="32084" id="use_public_dns" type="bool" default="false" enable="eq(-2,false)" />
-      <setting id="public_dns_list" label="32093" type="text" default="8.8.8.8, 8.8.4.4, 9.9.9.9" enable="eq(-2,true) + eq(-3,false)" />
-      <setting id="opennic_dns_list" label="32094" type="text" default="193.183.98.66, 172.104.136.243, 89.18.27.167" enable="eq(-3,true) + eq(-4,false)" />
+    <setting label="32084" id="use_public_dns" type="bool" default="false" enable="eq(-2,false) + eq(3,false)" />
+      <setting id="public_dns_list" label="32093" type="text" default="8.8.8.8, 8.8.4.4, 9.9.9.9" enable="eq(-1,true) + eq(-3,false)" />
+      <setting id="opennic_dns_list" label="32094" type="text" default="193.183.98.66, 172.104.136.243, 89.18.27.167" enable="eq(-2,true) + eq(-4,false)" />
+    <setting label="32140" id="use_tor_dns" type="bool" default="false" enable="eq(-3,false)" />
+    <setting id="tor_dns_help" label="32141" type="text" enable="false" subsetting="true" />
     <setting label="32033" id="min_size" type="slider" option="float" range="0,0.25,100" default="0" />
     <setting label="32034" id="max_size" type="slider" option="float" range="1,0.25,500" default="100" />
     <setting label="32040" id="max_results" type="slider" default="10" option="int" range="1,1,25" />

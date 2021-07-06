@@ -63,6 +63,7 @@ proxy_login = get_setting("proxy_login", unicode)
 proxy_password = get_setting("proxy_password", unicode)
 proxy_type = get_setting("proxy_type", int)
 use_public_dns = get_setting("use_public_dns", bool)
+use_tor_dns = get_setting("use_tor_dns", bool)
 use_elementum_proxy = get_setting("use_elementum_proxy", bool)
 
 def MyResolver(host):

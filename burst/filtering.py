@@ -203,6 +203,8 @@ class Filtering:
         definition = get_alias(definition, get_setting("%s_alias" % provider))
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
+        if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
+            definition = get_alias(definition, definition["tor_dns_alias"])
 
         general_query = definition['general_query'] if 'general_query' in definition and definition['general_query'] else ''
         log.debug("[%s] General URL: %s%s" % (provider, definition['base_url'], general_query))
@@ -222,6 +224,8 @@ class Filtering:
         definition = get_alias(definition, get_setting("%s_alias" % provider))
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
+        if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
+            definition = get_alias(definition, definition["tor_dns_alias"])
 
         movie_query = definition['movie_query'] if 'movie_query' in definition and definition['movie_query'] else ''
         log.debug("[%s] Movies URL: %s%s" % (provider, definition['base_url'], movie_query))
@@ -245,6 +249,8 @@ class Filtering:
         definition = get_alias(definition, get_setting("%s_alias" % provider))
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
+        if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
+            definition = get_alias(definition, definition["tor_dns_alias"])
 
         show_query = definition['show_query'] if 'show_query' in definition and definition['show_query'] else ''
         log.debug("[%s] Episode URL: %s%s" % (provider, definition['base_url'], show_query))
@@ -268,6 +274,8 @@ class Filtering:
         definition = get_alias(definition, get_setting("%s_alias" % provider))
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
+        if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
+            definition = get_alias(definition, definition["tor_dns_alias"])
 
         season_query = definition['season_query'] if 'season_query' in definition and definition['season_query'] else ''
         log.debug("[%s] Season URL: %s%s" % (provider, definition['base_url'], season_query))
@@ -291,6 +299,8 @@ class Filtering:
         definition = get_alias(definition, get_setting("%s_alias" % provider))
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
+        if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
+            definition = get_alias(definition, definition["tor_dns_alias"])
 
         anime_query = definition['anime_query'] if 'anime_query' in definition and definition['anime_query'] else ''
         log.debug("[%s] Anime URL: %s%s" % (provider, definition['base_url'], anime_query))
