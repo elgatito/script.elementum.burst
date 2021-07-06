@@ -56,11 +56,11 @@ msgstr "Використовувати мову Kodi коли є перекла�
 
 msgctxt "#32033"
 msgid "Minimum size (GB)"
-msgstr "Мінімальний размір (ГБ)"
+msgstr "Мінімальний розмір (ГБ)"
 
 msgctxt "#32034"
 msgid "Maximum size (GB)"
-msgstr "Максимальний размір (ГБ)"
+msgstr "Максимальний розмір (ГБ)"
 
 msgctxt "#32035"
 msgid "Use separate size range for movies, seasons and episodes"
@@ -112,7 +112,7 @@ msgstr "Провайдер залишився: 1"
 
 msgctxt "#32064"
 msgid " timed out"
-msgstr " працює повільно"
+msgstr " працюють повільно"
 
 msgctxt "#32070"
 msgid "Search timeout (seconds)"
@@ -120,7 +120,7 @@ msgstr "Тайм-аут для пошуку (секунд)"
 
 msgctxt "#32071"
 msgid "Timeout setting must be lower than Elementum's"
-msgstr "Значення тайм-ауту повино бути меншим ніж у Elementum"
+msgstr "Значення тайм-ауту повинно бути меншим, ніж у Elementum"
 
 msgctxt "#32076"
 msgid "Passkey"
@@ -132,23 +132,23 @@ msgstr "Альтернативний домен [Опціонально]"
 
 msgctxt "#32078"
 msgid "Allow results without seeds"
-msgstr ""
+msgstr "Дозволяти результати пошуку без сідів"
 
 msgctxt "#32080"
 msgid "Contains only"
-msgstr ""
+msgstr "Включаючи тільки"
 
 msgctxt "#32081"
 msgid "All"
-msgstr ""
+msgstr "Всі"
 
 msgctxt "#32082"
 msgid "Movies"
-msgstr ""
+msgstr "Фільми"
 
 msgctxt "#32083"
 msgid "Shows"
-msgstr ""
+msgstr "Серіали"
 
 msgctxt "#32084"
 msgid "Use Public DNS (Google, Quad9, Opennic)"
@@ -156,35 +156,35 @@ msgstr ""
 
 msgctxt "#32085"
 msgid "For Developers"
-msgstr ""
+msgstr "Для розробників"
 
 msgctxt "#32086"
 msgid "Log debug messages for parsing"
-msgstr ""
+msgstr "Логірувати роботу парсерів"
 
 msgctxt "#32087"
 msgid "Filtering"
-msgstr ""
+msgstr "Фільтрувати"
 
 msgctxt "#32088"
 msgid "Require matching of these settings"
-msgstr ""
+msgstr "Потрібно відповідність до налаштуваннь"
 
 msgctxt "#32089"
 msgid "Resolution"
-msgstr ""
+msgstr "Розширення"
 
 msgctxt "#32090"
 msgid "Required keywords"
-msgstr ""
+msgstr "Потрібні ключові слова"
 
 msgctxt "#32091"
 msgid "Release type"
-msgstr ""
+msgstr "Тип релізу"
 
 msgctxt "#32092"
 msgid "Size"
-msgstr ""
+msgstr "Розмір"
 
 msgctxt "#32093"
 msgid "List of public DNS IPs"
@@ -200,23 +200,23 @@ msgstr ""
 
 msgctxt "#32096"
 msgid "Enabled"
-msgstr ""
+msgstr "Увімкнено"
 
 msgctxt "#32097"
 msgid "Host"
-msgstr ""
+msgstr "хост"
 
 msgctxt "#32098"
 msgid "Port"
-msgstr ""
+msgstr "порт"
 
 msgctxt "#32099"
 msgid "Login"
-msgstr ""
+msgstr "Ім'я користувача"
 
 msgctxt "#32100"
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 msgctxt "#32101"
 msgid "Proxy type"
@@ -244,47 +244,47 @@ msgstr ""
 
 msgctxt "#32107"
 msgid "From Elementum settings"
-msgstr ""
+msgstr "Згідно з налаштуваннями Elementum"
 
 msgctxt "#32108"
 msgid "Custom settings"
-msgstr ""
+msgstr "Налаштування користувача"
 
 msgctxt "#32110"
 msgid "International"
-msgstr ""
+msgstr "Міжнародні"
 
 msgctxt "#32111"
 msgid "English"
-msgstr ""
+msgstr "Англійська"
 
 msgctxt "#32112"
 msgid "Italian"
-msgstr ""
+msgstr "Італійська"
 
 msgctxt "#32113"
 msgid "French"
-msgstr ""
+msgstr "Французська"
 
 msgctxt "#32114"
 msgid "Russian"
-msgstr ""
+msgstr "Російська"
 
 msgctxt "#32115"
 msgid "Ukrainian"
-msgstr ""
+msgstr "Українська"
 
 msgctxt "#32116"
 msgid "Bulgarian"
-msgstr ""
+msgstr "Болгарська"
 
 msgctxt "#32117"
 msgid "Romanian"
-msgstr ""
+msgstr "Румунська"
 
 msgctxt "#32118"
 msgid "Hungarian"
-msgstr ""
+msgstr "Угорська"
 
 msgctxt "#32119"
 msgid "Sort returned results by"
@@ -292,19 +292,19 @@ msgstr ""
 
 msgctxt "#32120"
 msgid "Resolution"
-msgstr ""
+msgstr "Розширення"
 
 msgctxt "#32121"
 msgid "Seeds"
-msgstr ""
+msgstr "Сіди"
 
 msgctxt "#32122"
 msgid "Size"
-msgstr ""
+msgstr "Розмір"
 
 msgctxt "#32123"
 msgid "Balanced"
-msgstr ""
+msgstr "Збалансовано"
 
 msgctxt "#32124"
 msgid "Automatically adjust timeout according to Elementum settings"
@@ -316,43 +316,43 @@ msgstr ""
 
 msgctxt "#32126"
 msgid "Polish"
-msgstr ""
+msgstr "Польска"
 
 msgctxt "#32127"
 msgid "Lithuanian"
-msgstr ""
+msgstr "Літовська"
 
 msgctxt "#32128"
 msgid "Public trackers [A .. M]"
-msgstr ""
+msgstr "Відкриті трекери [A .. M]"
 
 msgctxt "#32129"
 msgid "Public trackers [N .. ]"
-msgstr ""
+msgstr "Відкриті трекери [N .. ]"
 
 msgctxt "#32130"
 msgid "Private trackers [A .. M]"
-msgstr ""
+msgstr "Закриті трекери [A .. M]"
 
 msgctxt "#32131"
 msgid "Private trackers [N .. ]"
-msgstr ""
+msgstr "Закриті трекери [N .. ]"
 
 msgctxt "#32132"
 msgid "Remove quotes from search query"
-msgstr ""
+msgstr "Знищити значки цитування з пошуку"
 
 msgctxt "#32133"
 msgid "Resolution"
-msgstr ""
+msgstr "Розширення"
 
 msgctxt "#32134"
 msgid "Video quality"
-msgstr ""
+msgstr "Якість відео"
 
 msgctxt "#32135"
 msgid "Belarusian"
-msgstr ""
+msgstr "Біларуська"
 
 msgctxt "#32136"
 msgid "SOCKS4a"
