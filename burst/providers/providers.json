@@ -2317,7 +2317,7 @@
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
         "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "",
-        "base_url": "https://torrentgalaxy.to/torrents.php?c3=1&c46=1&c45=1&c42=1&c4=1&c1=1&c41=1&c5=1&c6=1&c7=1&search=QUERY&lang=0&nox=2&sort=seeders&order=desc",
+        "base_url": "https://torrentgalaxy.mx/torrents.php?c3=1&c46=1&c45=1&c42=1&c4=1&c1=1&c41=1&c5=1&c6=1&c7=1&search=QUERY&lang=0&nox=2&sort=seeders&order=desc",
         "color": "FFFFFFFF",
         "enabled": true,
         "general_extra": "",
