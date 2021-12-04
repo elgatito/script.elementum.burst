@@ -586,7 +586,7 @@
         "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
         "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "28&incldead=0&inclexternal=0&lang=0&sort=seeders&order=desc",
-        "base_url": "https://www.gtdb.to/search_results.php?search=QUERY&EXTRA&cat=",
+        "base_url": "https://glodls.to/search_results.php?search=QUERY&EXTRA&cat=",
         "color": "FF88681E",
         "enabled": true,
         "general_extra": "",
