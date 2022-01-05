@@ -35,7 +35,7 @@ PATH_TEMP = translatePath("special://temp")
 # Custom DNS default data
 dns_cache = {}
 dns_public_list = ['9.9.9.9', '8.8.8.8', '8.8.4.4']
-dns_opennic_list = ['193.183.98.66', '172.104.136.243', '89.18.27.167']
+dns_opennic_list = ['163.172.168.171', '152.70.189.130', '167.86.112.174']
 # Save original DNS resolver
 _orig_create_connection = connection.create_connection
 
