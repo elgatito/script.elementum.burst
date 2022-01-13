@@ -13,6 +13,7 @@ import time
 import urllib
 from .client import Client
 from elementum.provider import log, get_setting, set_setting
+from .filtering import cleanup_results
 from .providers.definitions import definitions, longest
 from .utils import ADDON_PATH, get_int, clean_size, get_alias
 from kodi_six import xbmc, xbmcaddon, py2_encode
@@ -69,6 +70,8 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
             log.debug(filtering.reason)
 
     log.debug('[%s] >>>>>> %s would send %d torrents to Elementum <<<<<<<' % (provider, provider, len(results)))
+    results = cleanup_results(results)
+    log.debug('[%s] >>>>>> %s would send %d torrents to Elementum after cleanup <<<<<<<' % (provider, provider, len(results)))
 
     return results
 
