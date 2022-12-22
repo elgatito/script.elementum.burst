@@ -1703,6 +1703,7 @@
         "separator": "%20",
         "subpage": null,
         "show_query": "0/EXTRA/300/2/QUERY",
+        "tor_dns_alias": "rutor7773fwscdatlqyc5sw3egsmwjkmklafljti5p7o236mveks3rid.onion",
         "tv_keywords": "{title:en:ru} {season:2}x01|(01-{season:2}x01)|S{season:2}|(S01-{season:2})",
         "tv_extra": "4",
         "tv_keywords_fallback": "{title:en:ru} {season:2}x01|(01-{season:2}x01)|S{season:2}|(S01-{season:2})",
