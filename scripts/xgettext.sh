@@ -5,7 +5,7 @@ PASS='\033[0;32m'
 rc=0
 result=0
 
-if ! xgettext >/dev/null 2>&1
+if ! xgettext -h >/dev/null 2>&1
 then
     echo "xgettext could not be found!"
     exit 1
