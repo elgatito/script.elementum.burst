@@ -312,6 +312,9 @@ def fix_bad_unicode(string):
             import traceback
             log.warning("Could not fix unicode string: %s" % repr(e))
             map(log.debug, traceback.format_exc().split("\n"))
+            pass
+
+    return string
 
 def reinterpret_latin1_as_utf8(wrong_text):
     new_bytes = py2_encode(wrong_text, 'latin-1', 'replace')
