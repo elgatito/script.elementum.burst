@@ -2305,7 +2305,7 @@
         "season_keywords": "{title:fr} saison {season}",
         "season_keywords2": "",
         "season_query": "",
-        "separator": "-",
+        "separator": "%20",
         "show_query": "",
         "subpage": true,
         "tv_extra": "",
