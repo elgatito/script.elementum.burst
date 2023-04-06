@@ -2228,7 +2228,7 @@
         "anime_keywords2": "{title} {season:2}x01|S{season:2}",
         "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "",
-        "base_url": "https://www.torrentdownloads.info/search/?search=QUERYEXTRA",
+        "base_url": "https://www.torrentdownloads.pro/search/?search=QUERYEXTRA",
         "color": "FFB74F1A",
         "enabled": true,
         "general_extra": "",
