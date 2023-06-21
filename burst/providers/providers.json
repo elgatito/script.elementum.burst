@@ -1756,7 +1756,7 @@
         "enabled": true,
         "general_extra": "",
         "general_keywords": "{title}",
-        "general_query": "QUERYEXTRA",
+        "general_query": "0/0/100/0/QUERYEXTRA",
         "language": "ru",
         "languages": "ru",
         "login_failed": "",
