@@ -1657,7 +1657,7 @@
         },
         "base_url": "https://torrentapi.org/pubapi_v2.php",
         "color": "FF3860BB",
-        "enabled": true,
+        "enabled": false,
         "general_extra": null,
         "general_keywords": "{title}",
         "general_query": "?mode=search&search_string=QUERY&format=json_extended&app_id=script.elementum.burst&token=TOKEN",
