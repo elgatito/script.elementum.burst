@@ -1446,12 +1446,12 @@
         "season_keywords3": "",
         "season_query": "",
         "separator": "+",
-        "show_query": : "",
+        "show_query": "",
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title} s{season:2}e{episode:2}"
-        "tv_keywords_fallback": "{title} s{season:2}",
+        "tv_keywords": "{title} s{season:2}e{episode:2}",
+        "tv_keywords_fallback": "{title} s{season:2}"
     },
     "newstudio": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
