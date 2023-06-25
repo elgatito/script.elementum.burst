@@ -174,6 +174,12 @@
       <setting id="3dtrackerru_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="3dtrackerru_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
 
+    <setting label="[B]ArabP2P[/B]   [COLOR gray][$ADDON[script.elementum.burst 32142]][/COLOR]" id="use_ArabP2P" type="bool" default="false" />
+      <setting id="ArabP2P_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="ArabP2P_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="ArabP2P_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="ArabP2P_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+
     <setting label="[B]BaibaKo.TV[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_baibako" type="bool" default="false" />
       <setting id="baibako_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="baibako_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
