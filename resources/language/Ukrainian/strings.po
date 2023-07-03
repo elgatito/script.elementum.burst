@@ -1,379 +1,379 @@
 # Kodi Media Center language file
-# Add-on Name: Elementum Burst
-# Add-on id: script.elementum.burst
-# Add-on provider: elgatito
-#
-msgid ""
-msgstr ""
-"Project-Id-Version: Elementum Burst\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-05 05:53-0400\n"
-"PO-Revision-Date: 2017-02-13 10:38-0500\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: ua\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgctxt "#32000"
-msgid "General"
-msgstr "Загальні"
-
-msgctxt "#32004"
-msgid "Advanced"
-msgstr "Додатково"
-
-msgctxt "#32006"
-msgid "Movies"
-msgstr "Фільми"
-
-msgctxt "#32008"
-msgid "Seasons"
-msgstr "Сезони"
-
-msgctxt "#32009"
-msgid "Episodes"
-msgstr "Епізоди"
-
-msgctxt "#32015"
-msgid "Username"
-msgstr "Користувач"
-
-msgctxt "#32016"
-msgid "Password"
-msgstr "Пароль"
-
-msgctxt "#32017"
-msgid "Require"
-msgstr "Обов'язково"
-
-msgctxt "#32018"
-msgid "Use language preference from Kodi when a translation is available"
-msgstr "Використовувати мову Kodi коли є переклад"
-
-msgctxt "#32033"
-msgid "Minimum size (GB)"
-msgstr "Мінімальний розмір (ГБ)"
-
-msgctxt "#32034"
-msgid "Maximum size (GB)"
-msgstr "Максимальний розмір (ГБ)"
-
-msgctxt "#32035"
-msgid "Use separate size range for movies, seasons and episodes"
-msgstr "Використовувати різні розміри для фільмів, сезонів, епизодів"
-
-msgctxt "#32036"
-msgid "Additional keyword filters (comma-separated)"
-msgstr "Додаткові слова-фільтри (через кому)"
-
-msgctxt "#32037"
-msgid "Use underscores around keywords to require a space/dot, eg. _HEVC_"
-msgstr "Використовувати підкреслення для вимоги пробілу/точки біля слова"
-
-msgctxt "#32038"
-msgid "Accept"
-msgstr "Прийняти"
-
-msgctxt "#32039"
-msgid "Block"
-msgstr "Заблокувати"
-
-msgctxt "#32040"
-msgid "Maximum results per provider"
-msgstr "Максимальна кіл-ть результатів для провайдера"
-
-msgctxt "#32050"
-msgid "Exceptions"
-msgstr "Виключення"
-
-msgctxt "#32051"
-msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
-msgstr "Список провайдерів для виключення, через кому, напр. yts, rarbg"
-
-msgctxt "#32060"
-msgid "No providers enabled"
-msgstr "Не увімкнені провайдери"
-
-msgctxt "#32061"
-msgid "Starting..."
-msgstr "Запуск…"
-
-msgctxt "#32062"
-msgid "%d providers left"
-msgstr "Провайдерів залишилось: %d"
-
-msgctxt "#32063"
-msgid "1 provider left"
-msgstr "Провайдер залишився: 1"
-
-msgctxt "#32064"
-msgid " timed out"
-msgstr " працюють повільно"
-
-msgctxt "#32070"
-msgid "Search timeout (seconds)"
-msgstr "Тайм-аут для пошуку (секунд)"
-
-msgctxt "#32071"
-msgid "Timeout setting must be lower than Elementum's"
-msgstr "Значення тайм-ауту повинно бути меншим, ніж у Elementum"
-
-msgctxt "#32076"
-msgid "Passkey"
-msgstr ""
-
-msgctxt "#32077"
-msgid "Domain Alias [Optional]"
-msgstr "Альтернативний домен [Опціонально]"
-
-msgctxt "#32078"
-msgid "Allow results without seeds"
-msgstr "Дозволяти результати пошуку без сідів"
-
-msgctxt "#32080"
-msgid "Contains only"
-msgstr "Включаючи тільки"
-
-msgctxt "#32081"
-msgid "All"
-msgstr "Всі"
-
-msgctxt "#32082"
-msgid "Movies"
-msgstr "Фільми"
-
-msgctxt "#32083"
-msgid "Shows"
-msgstr "Серіали"
-
-msgctxt "#32084"
-msgid "Use Public DNS (Google, Quad9, Opennic)"
-msgstr ""
-
-msgctxt "#32085"
-msgid "For Developers"
-msgstr "Для розробників"
-
-msgctxt "#32086"
-msgid "Log debug messages for parsing"
-msgstr "Логірувати роботу парсерів"
-
-msgctxt "#32087"
-msgid "Filtering"
-msgstr "Фільтрувати"
-
-msgctxt "#32088"
-msgid "Require matching of these settings"
-msgstr "Потрібно відповідність до налаштуваннь"
-
-msgctxt "#32089"
-msgid "Resolution"
-msgstr "Розширення"
-
-msgctxt "#32090"
-msgid "Required keywords"
-msgstr "Потрібні ключові слова"
-
-msgctxt "#32091"
-msgid "Release type"
-msgstr "Тип релізу"
-
-msgctxt "#32092"
-msgid "Size"
-msgstr "Розмір"
-
-msgctxt "#32093"
-msgid "List of public DNS IPs"
-msgstr ""
-
-msgctxt "#32094"
-msgid "List of Opennic DNS IPs"
-msgstr ""
-
-msgctxt "#32095"
-msgid "Proxy"
-msgstr ""
-
-msgctxt "#32096"
-msgid "Enabled"
-msgstr "Увімкнено"
-
-msgctxt "#32097"
-msgid "Host"
-msgstr "хост"
-
-msgctxt "#32098"
-msgid "Port"
-msgstr "порт"
-
-msgctxt "#32099"
-msgid "Login"
-msgstr "Ім'я користувача"
-
-msgctxt "#32100"
-msgid "Password"
-msgstr "Пароль"
-
-msgctxt "#32101"
-msgid "Proxy type"
-msgstr ""
-
-msgctxt "#32102"
-msgid "SOCKS4"
-msgstr ""
-
-msgctxt "#32103"
-msgid "SOCKS5"
-msgstr ""
-
-msgctxt "#32104"
-msgid "HTTP"
-msgstr ""
-
-msgctxt "#32105"
-msgid "HTTPS"
-msgstr ""
-
-msgctxt "#32106"
-msgid "Use proxy settings"
-msgstr ""
-
-msgctxt "#32107"
-msgid "From Elementum settings"
-msgstr "Згідно з налаштуваннями Elementum"
-
-msgctxt "#32108"
-msgid "Custom settings"
-msgstr "Налаштування користувача"
-
-msgctxt "#32110"
-msgid "International"
-msgstr "Міжнародні"
-
-msgctxt "#32111"
-msgid "English"
-msgstr "Англійська"
-
-msgctxt "#32112"
-msgid "Italian"
-msgstr "Італійська"
-
-msgctxt "#32113"
-msgid "French"
-msgstr "Французська"
-
-msgctxt "#32114"
-msgid "Russian"
-msgstr "Російська"
-
-msgctxt "#32115"
-msgid "Ukrainian"
-msgstr "Українська"
-
-msgctxt "#32116"
-msgid "Bulgarian"
-msgstr "Болгарська"
-
-msgctxt "#32117"
-msgid "Romanian"
-msgstr "Румунська"
-
-msgctxt "#32118"
-msgid "Hungarian"
-msgstr "Угорська"
-
-msgctxt "#32119"
-msgid "Sort returned results by"
-msgstr ""
-
-msgctxt "#32120"
-msgid "Resolution"
-msgstr "Розширення"
-
-msgctxt "#32121"
-msgid "Seeds"
-msgstr "Сіди"
-
-msgctxt "#32122"
-msgid "Size"
-msgstr "Розмір"
-
-msgctxt "#32123"
-msgid "Balanced"
-msgstr "Збалансовано"
-
-msgctxt "#32124"
-msgid "Automatically adjust timeout according to Elementum settings"
-msgstr ""
-
-msgctxt "#32125"
-msgid "Proxy http requests with Elementum"
-msgstr ""
-
-msgctxt "#32126"
-msgid "Polish"
-msgstr "Польска"
-
-msgctxt "#32127"
-msgid "Lithuanian"
-msgstr "Літовська"
-
-msgctxt "#32128"
-msgid "Public trackers [A .. M]"
-msgstr "Відкриті трекери [A .. M]"
-
-msgctxt "#32129"
-msgid "Public trackers [N .. ]"
-msgstr "Відкриті трекери [N .. ]"
-
-msgctxt "#32130"
-msgid "Private trackers [A .. M]"
-msgstr "Закриті трекери [A .. M]"
-
-msgctxt "#32131"
-msgid "Private trackers [N .. ]"
-msgstr "Закриті трекери [N .. ]"
-
-msgctxt "#32132"
-msgid "Remove quotes from search query"
-msgstr "Знищити значки цитування з пошуку"
-
-msgctxt "#32133"
-msgid "Resolution"
-msgstr "Розширення"
-
-msgctxt "#32134"
-msgid "Video quality"
-msgstr "Якість відео"
-
-msgctxt "#32135"
-msgid "Belarusian"
-msgstr "Біларуська"
-
-msgctxt "#32136"
-msgid "SOCKS4a"
-msgstr ""
-
-msgctxt "#32137"
-msgid "SOCKS5h"
-msgstr ""
-
-msgctxt "#32138"
-msgid "From Elementum settings (resolve hosts by proxy)"
-msgstr ""
-
-msgctxt "#32139"
-msgid "First enable built-in HTTP proxy in Elementum"
-msgstr ""
-
-msgctxt "#32140"
-msgid "Use Tor domain alias"
-msgstr ""
-
-msgctxt "#32141"
-msgid "First set SOCKS both in Burst&Elementum or proxy http via Elementum"
-msgstr ""
+        # Add-on Name: Elementum Burst
+        # Add-on id: script.elementum.burst
+        # Add-on provider: elgatito
+        #
+        msgid ""
+        msgstr ""
+        "Project-Id-Version: Elementum Burst\n"
+        "Report-Msgid-Bugs-To: \n"
+        "POT-Creation-Date: 2015-09-05 05:53-0400\n"
+        "PO-Revision-Date: 2017-02-13 10:38-0500\n"
+        "Last-Translator: \n"
+        "Language-Team: \n"
+        "Language: ua\n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=UTF-8\n"
+        "Content-Transfer-Encoding: 8bit\n"
+        "X-Generator: Poedit 1.8.11\n"
+        "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+        msgctxt "#32000"
+        msgid "General"
+        msgstr "Загальні"
+
+        msgctxt "#32004"
+        msgid "Advanced"
+        msgstr "Додатково"
+
+        msgctxt "#32006"
+        msgid "Movies"
+        msgstr "Фільми"
+
+        msgctxt "#32008"
+        msgid "Seasons"
+        msgstr "Сезони"
+
+        msgctxt "#32009"
+        msgid "Episodes"
+        msgstr "Епізоди"
+
+        msgctxt "#32015"
+        msgid "Username"
+        msgstr "Користувач"
+
+        msgctxt "#32016"
+        msgid "Password"
+        msgstr "Пароль"
+
+        msgctxt "#32017"
+        msgid "Require"
+        msgstr "Обов'язково"
+
+        msgctxt "#32018"
+        msgid "Use language preference from Kodi when a translation is available"
+        msgstr "Використовувати мову Kodi коли є переклад"
+
+        msgctxt "#32033"
+        msgid "Minimum size (GB)"
+        msgstr "Мінімальний розмір (ГБ)"
+
+        msgctxt "#32034"
+        msgid "Maximum size (GB)"
+        msgstr "Максимальний розмір (ГБ)"
+
+        msgctxt "#32035"
+        msgid "Use separate size range for movies, seasons and episodes"
+        msgstr "Використовувати різні розміри для фільмів, сезонів, епизодів"
+
+        msgctxt "#32036"
+        msgid "Additional keyword filters (comma-separated)"
+        msgstr "Додаткові слова-фільтри (через кому)"
+
+        msgctxt "#32037"
+        msgid "Use underscores around keywords to require a space/dot, eg. _HEVC_"
+        msgstr "Використовувати підкреслення для вимоги пробілу/точки біля слова"
+
+        msgctxt "#32038"
+        msgid "Accept"
+        msgstr "Прийняти"
+
+        msgctxt "#32039"
+        msgid "Block"
+        msgstr "Заблокувати"
+
+        msgctxt "#32040"
+        msgid "Maximum results per provider"
+        msgstr "Максимальна кіл-ть результатів для провайдера"
+
+        msgctxt "#32050"
+        msgid "Exceptions"
+        msgstr "Виключення"
+
+        msgctxt "#32051"
+        msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
+        msgstr "Список провайдерів для виключення, через кому, напр. yts, rarbg"
+
+        msgctxt "#32060"
+        msgid "No providers enabled"
+        msgstr "Не увімкнені провайдери"
+
+        msgctxt "#32061"
+        msgid "Starting..."
+        msgstr "Запуск…"
+
+        msgctxt "#32062"
+        msgid "%d providers left"
+        msgstr "Провайдерів залишилось: %d"
+
+        msgctxt "#32063"
+        msgid "1 provider left"
+        msgstr "Провайдер залишився: 1"
+
+        msgctxt "#32064"
+        msgid " timed out"
+        msgstr " працюють надто повільно"
+
+        msgctxt "#32070"
+        msgid "Search timeout (seconds)"
+        msgstr "Тайм-аут для пошуку (секунд)"
+
+        msgctxt "#32071"
+        msgid "Timeout setting must be lower than Elementum's"
+        msgstr "Значення тайм-ауту повинно бути меншим, ніж у Elementum"
+
+        msgctxt "#32076"
+        msgid "Passkey"
+        msgstr ""
+
+        msgctxt "#32077"
+        msgid "Domain Alias [Optional]"
+        msgstr "Альтернативний домен [Опціонально]"
+
+        msgctxt "#32078"
+        msgid "Allow results without seeds"
+        msgstr "Дозволяти результати пошуку без сідів"
+
+        msgctxt "#32080"
+        msgid "Contains only"
+        msgstr "Включаючи тільки"
+
+        msgctxt "#32081"
+        msgid "All"
+        msgstr "Всі"
+
+        msgctxt "#32082"
+        msgid "Movies"
+        msgstr "Фільми"
+
+        msgctxt "#32083"
+        msgid "Shows"
+        msgstr "Серіали"
+
+        msgctxt "#32084"
+        msgid "Use Public DNS (Google, Quad9, Opennic)"
+        msgstr ""
+
+        msgctxt "#32085"
+        msgid "For Developers"
+        msgstr "Для розробників"
+
+        msgctxt "#32086"
+        msgid "Log debug messages for parsing"
+        msgstr "Логірувати роботу парсерів"
+
+        msgctxt "#32087"
+        msgid "Filtering"
+        msgstr "Фільтрувати"
+
+        msgctxt "#32088"
+        msgid "Require matching of these settings"
+        msgstr "Потрібно відповідність до налаштуваннь"
+
+        msgctxt "#32089"
+        msgid "Resolution"
+        msgstr "Розширення"
+
+        msgctxt "#32090"
+        msgid "Required keywords"
+        msgstr "Потрібні ключові слова"
+
+        msgctxt "#32091"
+        msgid "Release type"
+        msgstr "Тип релізу"
+
+        msgctxt "#32092"
+        msgid "Size"
+        msgstr "Розмір"
+
+        msgctxt "#32093"
+        msgid "List of public DNS IPs"
+        msgstr ""
+
+        msgctxt "#32094"
+        msgid "List of Opennic DNS IPs"
+        msgstr ""
+
+        msgctxt "#32095"
+        msgid "Proxy"
+        msgstr ""
+
+        msgctxt "#32096"
+        msgid "Enabled"
+        msgstr "Увімкнено"
+
+        msgctxt "#32097"
+        msgid "Host"
+        msgstr "хост"
+
+        msgctxt "#32098"
+        msgid "Port"
+        msgstr "порт"
+
+        msgctxt "#32099"
+        msgid "Login"
+        msgstr "Ім'я користувача"
+
+        msgctxt "#32100"
+        msgid "Password"
+        msgstr "Пароль"
+
+        msgctxt "#32101"
+        msgid "Proxy type"
+        msgstr ""
+
+        msgctxt "#32102"
+        msgid "SOCKS4"
+        msgstr ""
+
+        msgctxt "#32103"
+        msgid "SOCKS5"
+        msgstr ""
+
+        msgctxt "#32104"
+        msgid "HTTP"
+        msgstr ""
+
+        msgctxt "#32105"
+        msgid "HTTPS"
+        msgstr ""
+
+        msgctxt "#32106"
+        msgid "Use proxy settings"
+        msgstr ""
+
+        msgctxt "#32107"
+        msgid "From Elementum settings"
+        msgstr "Згідно з налаштуваннями Elementum"
+
+        msgctxt "#32108"
+        msgid "Custom settings"
+        msgstr "Налаштування користувача"
+
+        msgctxt "#32110"
+        msgid "International"
+        msgstr "Міжнародні"
+
+        msgctxt "#32111"
+        msgid "English"
+        msgstr "Англійська"
+
+        msgctxt "#32112"
+        msgid "Italian"
+        msgstr "Італійська"
+
+        msgctxt "#32113"
+        msgid "French"
+        msgstr "Французська"
+
+        msgctxt "#32114"
+        msgid "Russian"
+        msgstr "Російська"
+
+        msgctxt "#32115"
+        msgid "Ukrainian"
+        msgstr "Українська"
+
+        msgctxt "#32116"
+        msgid "Bulgarian"
+        msgstr "Болгарська"
+
+        msgctxt "#32117"
+        msgid "Romanian"
+        msgstr "Румунська"
+
+        msgctxt "#32118"
+        msgid "Hungarian"
+        msgstr "Угорська"
+
+        msgctxt "#32119"
+        msgid "Sort returned results by"
+        msgstr "Сортувати по"
+
+        msgctxt "#32120"
+        msgid "Resolution"
+        msgstr "Розширенню"
+
+        msgctxt "#32121"
+        msgid "Seeds"
+        msgstr "Сідам"
+
+        msgctxt "#32122"
+        msgid "Size"
+        msgstr "Розміру"
+
+        msgctxt "#32123"
+        msgid "Balanced"
+        msgstr "Збалансовано"
+
+        msgctxt "#32124"
+        msgid "Automatically adjust timeout according to Elementum settings"
+        msgstr "Автоматично налаштовувати таймаут (відповідно Elementum)"
+
+        msgctxt "#32125"
+        msgid "Proxy http requests with Elementum"
+        msgstr ""
+
+        msgctxt "#32126"
+        msgid "Polish"
+        msgstr "Польска"
+
+        msgctxt "#32127"
+        msgid "Lithuanian"
+        msgstr "Літовська"
+
+        msgctxt "#32128"
+        msgid "Public trackers [A .. M]"
+        msgstr "Відкриті трекери [A .. M]"
+
+        msgctxt "#32129"
+        msgid "Public trackers [N .. ]"
+        msgstr "Відкриті трекери [N .. ]"
+
+        msgctxt "#32130"
+        msgid "Private trackers [A .. M]"
+        msgstr "Закриті трекери [A .. M]"
+
+        msgctxt "#32131"
+        msgid "Private trackers [N .. ]"
+        msgstr "Закриті трекери [N .. ]"
+
+        msgctxt "#32132"
+        msgid "Remove quotes from search query"
+        msgstr "Знищити значки цитування з пошуку"
+
+        msgctxt "#32133"
+        msgid "Resolution"
+        msgstr "Розширення"
+
+        msgctxt "#32134"
+        msgid "Video quality"
+        msgstr "Якість відео"
+
+        msgctxt "#32135"
+        msgid "Belarusian"
+        msgstr "Біларуська"
+
+        msgctxt "#32136"
+        msgid "SOCKS4a"
+        msgstr ""
+
+        msgctxt "#32137"
+        msgid "SOCKS5h"
+        msgstr ""
+
+        msgctxt "#32138"
+        msgid "From Elementum settings (resolve hosts by proxy)"
+        msgstr ""
+
+        msgctxt "#32139"
+        msgid "First enable built-in HTTP proxy in Elementum"
+        msgstr ""
+
+        msgctxt "#32140"
+        msgid "Use Tor domain alias"
+        msgstr ""
+
+        msgctxt "#32141"
+        msgid "First set SOCKS both in Burst&Elementum or proxy http via Elementum"
+        msgstr ""
