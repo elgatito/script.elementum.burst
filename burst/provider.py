@@ -18,10 +18,10 @@ from .providers.definitions import definitions, longest
 from .utils import ADDON_PATH, get_int, clean_size, get_alias
 from kodi_six import xbmc, xbmcaddon, py2_encode
 if PY3:
-    from urllib.parse import quote
+    from urllib.parse import quote, unquote
     unicode = str
 else:
-    from urllib import quote
+    from urllib import quote, unquote
 
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
     """ Payload formatter to format results the way Elementum expects them
@@ -172,7 +172,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 payload[key] = filtering.post_data[key].replace('QUERY', query)
             else:
                 payload[key] = filtering.post_data[key]
-            payload[key] = urllib.unquote(payload[key])
+            payload[key] = unquote(payload[key])
 
         # Creating the payload for GET method
         headers = None
