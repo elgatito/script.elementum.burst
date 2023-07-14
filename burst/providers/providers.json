@@ -1020,12 +1020,12 @@
         "name": "iTorrent",
         "parser": {
             "infohash": "",
-            "name": "item(tag='a', order=1)",
+            "name": "item(tag='a', order=2)",
             "peers": "item(tag='td', order=8)",
             "row": "find_once('table', ('class', ['table', 'main-table', 'table-striped'])).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=7)",
             "size": "item(tag='td', order=5)",
-            "torrent": "('https://itorrent.ws/%s' % item(tag='a', attribute='href', order=1))"
+            "torrent": "'https://itorrent.ws/%s' % item(tag='a', attribute='href', order=2)"
         },
         "predefined": false,
         "private": false,
@@ -1146,7 +1146,6 @@
         "general_extra": "",
         "general_keywords": "{title:original}",
         "general_query": "",
-        "initial_url": "https://itorrents.org/",
         "language": null,
         "languages": "en",
         "login_failed": "",
