@@ -3007,7 +3007,7 @@
         "anime_keywords2": "{title:en:ru} {season:2}x01",
         "anime_keywords_fallback": "\"{title:original} {season}\"",
         "anime_query": "&cat=6",
-        "base_url": "http://torrent.by/search?search=QUERY&search_in=0",
+        "base_url": "https://torrent.by/search?search=QUERY&search_in=0",
         "color": "FFFFFFFF",
         "enabled": true,
         "general_keywords": "{title:original}",
@@ -3028,11 +3028,11 @@
             "row": "find_once('table', ('id', 'torrents_table'), order=1).find_all('tr', start=2)",
             "seeds": "item(tag='font', select=('color', 'green'), order=1)",
             "size": "item(tag='td', order=5)",
-            "torrent": "'http://torrent.by%s' % item(tag='a', select=('class','dwnld'), attribute='href', order=1)"
+            "torrent": "'https://torrent.by%s' % item(tag='a', select=('class','dwnld'), attribute='href', order=1)"
         },
         "predefined": false,
         "private": false,
-        "root_url": "http://torrent.by",
+        "root_url": "https://torrent.by",
         "season_keywords": "{title:en:ru} S{season:2}",
         "season_extra": "3",
         "season_keywords2": "{title:en:ru} {season:2}x01",
