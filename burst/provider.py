@@ -10,7 +10,6 @@ import os
 import re
 import json
 import time
-import urllib
 from .client import Client
 from elementum.provider import log, get_setting, set_setting
 from .filtering import cleanup_results
