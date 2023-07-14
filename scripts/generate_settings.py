@@ -37,6 +37,7 @@ languages = {
     'pl': 32126,
     'lt': 32127,
     'by': 32135,
+    'ar': 32142,
 }
 
 def char_range(c1, c2):
