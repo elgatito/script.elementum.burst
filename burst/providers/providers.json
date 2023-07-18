@@ -2233,7 +2233,7 @@
         "anime_keywords2": "{title} {season:2}x01|S{season:2}",
         "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "anime/torrents/QUERYEXTRA.html?sort=seeds&order=desc",
-        "base_url": "https://www.torlock2.com/",
+        "base_url": "https://www.torlock.com/",
         "color": "FFE8C233",
         "enabled": true,
         "filter_title": true,
@@ -2253,10 +2253,10 @@
             "infohash": "",
             "name": "item('a')",
             "peers": "item(tag='td', order=5)",
-            "row": "find_once('div', ('class', ['panel', 'panel-default'])).find_all('tr', start=1)",
+            "row": "find_once('div', ('class', ['table-responsive']), order=2).find_all('tr', start=1)",
             "seeds": "item(tag='td', order=4)",
             "size": "item(tag='td', order=3)",
-            "torrent": "'https://www.torlock2.com/tor/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
+            "torrent": "'https://lt.0c.gay/tor/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
         },
         "predefined": false,
         "private": false,
