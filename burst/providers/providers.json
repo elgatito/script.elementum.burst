@@ -1191,7 +1191,7 @@
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
         "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "",
-        "base_url": "https://www.limetorrents.info/search/all/QUERY/seeds/1/",
+        "base_url": "https://www.limetorrents.lol/search/all/QUERY/seeds/1/",
         "color": "FFFFFFFF",
         "enabled": true,
         "general_extra": "",
