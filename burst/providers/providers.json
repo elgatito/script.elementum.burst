@@ -837,7 +837,7 @@
         "name": "idope",
         "parser": {
             "infohash": "item(tag='div', select=('class', 'hideinfohash'))",
-            "name": "item('a')",
+            "name": "item(tag='div', select=('class', 'resultdivtopname'))",
             "peers": "",
             "row": "find_all(tag='div', select=('class', 'resultdiv'))",
             "seeds": "item(tag='div', select=('class', 'resultdivbottonseed'))",
