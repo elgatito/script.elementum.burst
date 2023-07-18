@@ -2253,7 +2253,7 @@
             "infohash": "",
             "name": "item('a')",
             "peers": "item(tag='td', order=5)",
-            "row": "find_once('div', ('class', ['table-responsive']), order=2).find_all('tr', start=1)",
+            "row": "find_once('div', ('class', ['table-responsive']), order=2).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=4)",
             "size": "item(tag='td', order=3)",
             "torrent": "'https://lt.0c.gay/tor/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
