@@ -2433,7 +2433,7 @@
             "infohash": "",
             "name": "item('a')",
             "peers": "item(tag='td', order=5)",
-            "row": "find_once('table', select=('class', 'tmain'), order=2).find_all('tr')",
+            "row": "find_once('table', select=('class', 'tmain'), order=2).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=4)",
             "size": "item(tag='td', order=3)",
             "torrent": "'https://ft.0c.gay/tor/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
