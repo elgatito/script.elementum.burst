@@ -468,6 +468,9 @@ class Filtering:
                             use_language = self.kodi_language
                         if not use_language and language and language in self.info['titles']:
                             use_language = language
+                        if use_language not in self.info['titles'] or not self.info['titles'][use_language]:
+                            log.info("[%s] Falling back to original title in absence of %s language title" % (provider, use_language))
+                            use_language = "original"
 
                         if use_language in self.info['titles'] and self.info['titles'][use_language]:
                             title = self.info['titles'][use_language]
