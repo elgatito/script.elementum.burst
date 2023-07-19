@@ -837,7 +837,7 @@
         "name": "idope",
         "parser": {
             "infohash": "item(tag='div', select=('class', 'hideinfohash'))",
-            "name": "item('a')",
+            "name": "item(tag='div', select=('class', 'resultdivtopname'))",
             "peers": "",
             "row": "find_all(tag='div', select=('class', 'resultdiv'))",
             "seeds": "item(tag='div', select=('class', 'resultdivbottonseed'))",
@@ -2433,10 +2433,10 @@
             "infohash": "",
             "name": "item('a')",
             "peers": "item(tag='td', order=5)",
-            "row": "find_once('table', order=4).find_all('tr')",
+            "row": "find_once('table', select=('class', 'tmain'), order=2).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=4)",
             "size": "item(tag='td', order=3)",
-            "torrent": "'https://www.torrentfunk.com/tor/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
+            "torrent": "'https://ft.0c.gay/tor/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
         },
         "predefined": false,
         "private": false,
