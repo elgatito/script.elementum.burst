@@ -2840,11 +2840,11 @@
         "parser": {
             "infohash": "",
             "name": "item('a')",
-            "peers": "item(tag='td', order=5)",
-            "row": "find_once('div', ('class', 'contentmain')).find_once('table', ('class', ['table', 'table-sm', 'table-striped']), order=2).find_all('tr')",
-            "seeds": "item(tag='td', order=4)",
-            "size": "item(tag='td', order=2)",
-            "torrent": "'https://yourbittorrent.com/down/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
+            "peers": "item(tag='td', order=6)",
+            "row": "find_once('div', ('class', 'table-responsive'), order=2).find_all('tr', start=2)",
+            "seeds": "item(tag='td', order=5)",
+            "size": "item(tag='td', order=3)",
+            "torrent": "'https://yt.0c.gay/down/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
         },
         "predefined": false,
         "private": false,
