@@ -9,13 +9,14 @@ import os
 import sys
 import json
 import time
-import collections
 from glob import glob
 if PY3:
     from urllib.parse import urlparse
+    from collections.abc import Mapping
 else:
     from urlparse import urlparse
     from io import open
+    from collections import Mapping
 
 from elementum.provider import log
 from kodi_six import xbmc, xbmcaddon, xbmcvfs
@@ -116,7 +117,7 @@ def update(d, u):
         u (dict): Dictionary of definitions to be updated
     """
     for k, v in iteritems(u):
-        if isinstance(v, collections.Mapping):
+        if isinstance(v, Mapping):
             r = update(d.get(k, {}), v)
             d[k] = r
         else:
