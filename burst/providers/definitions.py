@@ -18,7 +18,7 @@ else:
     from io import open
     from collections import Mapping
 
-from elementum.provider import log
+from elementum.provider import log, get_setting
 from kodi_six import xbmc, xbmcaddon, xbmcvfs
 
 start_time = time.time()
@@ -155,8 +155,12 @@ custom_overrides = translatePath(ADDON_PROFILE)
 if os.path.exists(os.path.join(custom_overrides, 'overrides.py')):
     load_overrides(custom_overrides, custom=True)
 
-# Load json overrides
-load_providers(os.path.join(translatePath(ADDON_PROFILE), 'overrides.json'))
+# Load json overrides from Kodi settings folder, if that does not exist - fallback to default value
+overrides_path = os.path.join(translatePath(get_setting("overrides_path")), 'overrides.json')
+if not os.path.exists(overrides_path):
+    overrides_path = os.path.join(translatePath(ADDON_PROFILE), 'overrides.json')
+
+load_providers(overrides_path)
 
 # Setting mandatory fields to their default values for each provider.
 for provider in definitions:

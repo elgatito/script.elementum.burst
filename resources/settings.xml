@@ -10,13 +10,22 @@
       <setting id="opennic_dns_list" label="32094" type="text" default="163.172.168.171, 152.70.189.130, 167.86.112.174" enable="eq(-2,true) + eq(-4,false)" />
     <setting label="32140" id="use_tor_dns" type="bool" default="false" enable="eq(-3,false)" />
     <setting id="tor_dns_help" label="32141" type="text" enable="false" subsetting="true" />
+
+    <setting type="sep"/>
+    <setting label="32143" id="overrides_path" type="folder" default="special://profile/addon_data/script.elementum.burst/os.path.join(translatePath(ADDON_PROFILE), 'overrides.json')" source="auto" option="writeable" />
+
+    <setting type="sep"/>
     <setting label="32033" id="min_size" type="slider" option="float" range="0,0.25,100" default="0" />
     <setting label="32034" id="max_size" type="slider" option="float" range="1,0.25,500" default="100" />
     <setting label="32040" id="max_results" type="slider" default="10" option="int" range="1,1,25" />
+    <setting label="32119" id="sort_by" type="enum" lvalues="32120|32121|32122|32123" default="3" />
+
+    <setting type="sep"/>
     <setting label="32124" id="auto_timeout" type="bool" default="true" />
     <setting label="32070" id="timeout" type="slider" default="25" option="int" range="3,1,180" enable="eq(-1,false)" />
     <setting label="32071" id="timeout_help" type="text" enable="false" subsetting="true" />
-    <setting label="32119" id="sort_by" type="enum" lvalues="32120|32121|32122|32123" default="3" />
+
+    <setting type="sep"/>
     <setting label="32132" id="filter_quotes" type="bool" default="false" />
   </category>
 

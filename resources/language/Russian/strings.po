@@ -381,3 +381,7 @@ msgstr "Сперва вкл. SOCKS5h в Burst&Elementum или вкл. прок�
 msgctxt "#32142"
 msgid "Arabic"
 msgstr "Арабский"
+
+msgctxt "#32143"
+msgid "Location of overrides.json file"
+msgstr "Местоположение файла overrides.json"

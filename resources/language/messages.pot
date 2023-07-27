@@ -382,3 +382,7 @@ msgstr ""
 msgctxt "#32142"
 msgid "Arabic"
 msgstr ""
+
+msgctxt "#32143"
+msgid "Location of overrides.json file"
+msgstr ""
