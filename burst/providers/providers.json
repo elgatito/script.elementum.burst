@@ -345,7 +345,7 @@
             "row": "find_all(tag='li', select=('class', 'search-result'))",
             "seeds": "item.find_once(tag='div', select=('class', 'stats')).find_once(tag='div', order=3).text()",
             "size": "item.find_once(tag='div', select=('class', 'stats')).find_once(tag='div', order=2).text()",
-            "torrent": "item(tag='a', select=('class', 'dl-torrent'), attribute='href', order=1, divider=('?', 0))"
+            "torrent": "item(tag='a', select=('class', 'dl-magnet'), attribute='href', order=1)"
         },
         "predefined": false,
         "private": false,
