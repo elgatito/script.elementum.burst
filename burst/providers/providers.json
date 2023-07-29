@@ -2684,7 +2684,7 @@
         "anime_keywords_fallback": "{title:en} s{season:2}",
         "base_url": "https://torrentz2k.xyz/api.php?url=/q.php?q=QUERY&cat=200",
         "color": "FFF14E13",
-        "enabled": false,
+        "enabled": true,
         "general_keywords": "{title:original}",
         "language": "en",
         "languages": "en",
