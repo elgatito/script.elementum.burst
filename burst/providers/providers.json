@@ -1863,7 +1863,7 @@
         "movie_query": "0/0/300/2/QUERYEXTRA",
         "name": "RuTor",
         "parser": {
-            "infohash": "",
+            "infohash": "item(tag='a', attribute='href', order=2, divider=('&', 0)).replace('magnet:?xt=urn:btih:', '')",
             "name": "item(tag='td', order=2)",
             "peers": "item(tag='span', order=1, select=('class', 'red'))",
             "row": "find_once('table', order=3).find_all('tr', start=2)",
