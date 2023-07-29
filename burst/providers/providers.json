@@ -141,10 +141,8 @@
     },
     "ArabP2P": {
         "anime_extra": "",
-        "anime_keywords": "",
-        "anime_keywords_fallback": "",
-        "anime_keywords_fallback2": "",
-        "anime_keywords_fallback3": "",
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "",
         "base_url": "https://www.arabp2p.net/index.php?page=torrents&search=QUERY&category=0&active=1&internel=0&search_type=like",
         "color": "FFF14E13",
