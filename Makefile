@@ -44,6 +44,7 @@ ifneq ($(EXISTS),1)
 		--description "$(VERSION)"
 endif
 
+	sleep 5
 	github-release upload \
 		--user $(GIT_USER) \
 		--repo $(GIT_REPOSITORY) \

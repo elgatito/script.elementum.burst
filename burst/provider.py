@@ -10,17 +10,17 @@ import os
 import re
 import json
 import time
-import urllib
 from .client import Client
 from elementum.provider import log, get_setting, set_setting
+from .filtering import cleanup_results
 from .providers.definitions import definitions, longest
 from .utils import ADDON_PATH, get_int, clean_size, get_alias
 from kodi_six import xbmc, xbmcaddon, py2_encode
 if PY3:
-    from urllib.parse import quote
+    from urllib.parse import quote, unquote
     unicode = str
 else:
-    from urllib import quote
+    from urllib import quote, unquote
 
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
     """ Payload formatter to format results the way Elementum expects them
@@ -69,6 +69,8 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
             log.debug(filtering.reason)
 
     log.debug('[%s] >>>>>> %s would send %d torrents to Elementum <<<<<<<' % (provider, provider, len(results)))
+    results = cleanup_results(results)
+    log.debug('[%s] >>>>>> %s would send %d torrents to Elementum after cleanup <<<<<<<' % (provider, provider, len(results)))
 
     return results
 
@@ -169,7 +171,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 payload[key] = filtering.post_data[key].replace('QUERY', query)
             else:
                 payload[key] = filtering.post_data[key]
-            payload[key] = urllib.unquote(payload[key])
+            payload[key] = unquote(payload[key])
 
         # Creating the payload for GET method
         headers = None

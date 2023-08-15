@@ -104,6 +104,13 @@ and make sure it follows the format below (hopefully with `"subpage": false`):
 }
 ```
 
+### Release
+
+Release is done by running `release.sh` script, that collects zip artifacts and push it as a release (if we are on the tag).
+
+*Note*: Tag version should be the same as the plugin version in `addon.xml`.
+
+
 ### Credits
 - @scakemyer for initial Quasar Burst module!
 - @mancuniancol for all his work on Magnetic, this add-on wouldn't have been

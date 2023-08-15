@@ -184,20 +184,23 @@ def normalize_string(string, charset=None, replacing=False):
             string = unicode(string, errors='ignore')
             pass
 
-    string = remove_control_chars(string)
-    string = fix_bad_unicode(string)
-    string = unquote(string)
-    string = string.replace(u'<![CDATA[', u'').replace(u']]', u'')
+    try:
+        string = remove_control_chars(string)
+        string = fix_bad_unicode(string)
+        string = unquote(string)
+        string = string.replace(u'<![CDATA[', u'').replace(u']]', u'')
 
-    if PY3:
-        string = html.unescape(string)
-    else:
-        string = HTMLParser().unescape(string)
+        if PY3:
+            string = html.unescape(string)
+        else:
+            string = HTMLParser().unescape(string)
 
-    if replacing:
-        string = string.replace(u"'", '')
+        if replacing:
+            string = string.replace(u"'", '')
 
-    string = string.lower()
+        string = string.lower()
+    except:
+        pass
 
     return string
 
@@ -309,6 +312,9 @@ def fix_bad_unicode(string):
             import traceback
             log.warning("Could not fix unicode string: %s" % repr(e))
             map(log.debug, traceback.format_exc().split("\n"))
+            pass
+
+    return string
 
 def reinterpret_latin1_as_utf8(wrong_text):
     new_bytes = py2_encode(wrong_text, 'latin-1', 'replace')

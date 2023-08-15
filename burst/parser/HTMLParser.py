@@ -456,7 +456,7 @@ class HTMLParser(markupbase.ParserBase):
                         c = int(s[1:], 16)
                     else:
                         c = int(s)
-                    return unichr(c)
+                    return unichr(c)  # noqa: F821
             except ValueError:
                 return '&#'+s+';'
             else:
@@ -466,7 +466,7 @@ class HTMLParser(markupbase.ParserBase):
                 if HTMLParser.entitydefs is None:
                     entitydefs = HTMLParser.entitydefs = {'apos': u"'"}
                     for k, v in htmlentitydefs.name2codepoint.iteritems():
-                        entitydefs[k] = unichr(v)
+                        entitydefs[k] = unichr(v)  # noqa: F821
                 try:
                     return self.entitydefs[s]
                 except KeyError:
