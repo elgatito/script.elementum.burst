@@ -515,7 +515,7 @@ def extract_from_api(provider, client):
         if 'torrent' in api_format:
             torrent = result[api_format['torrent']]
             if 'download_path' in definition:
-                torrent = definition['base_url'] + definition['download_path'] + torrent
+                torrent = definition['download_path'] + torrent
             if client.token:
                 user_agent = USER_AGENT
                 headers = {'Authorization': client.token, 'User-Agent': user_agent}

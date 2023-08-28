@@ -149,10 +149,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             return filtering.results
 
         url_search = filtering.url.replace('QUERY', query)
-        if extra:
-            url_search = url_search.replace('EXTRA', extra)
-        else:
-            url_search = url_search.replace('EXTRA', '')
+        url_search = url_search.replace('EXTRA', extra)
 
         url_search = url_search.replace(' ', definition['separator'])
         if definition['separator'] != '%20':
@@ -167,22 +164,18 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         payload = dict()
         for key, value in iteritems(filtering.post_data):
-            if 'QUERY' in value:
-                payload[key] = filtering.post_data[key].replace('QUERY', query)
-            else:
-                payload[key] = filtering.post_data[key]
+            payload[key] = filtering.post_data[key].replace('QUERY', query)
+            payload[key] = payload[key].replace('EXTRA', extra)
             payload[key] = unquote(payload[key])
 
-        # Creating the payload for GET method
-        headers = None
+        # Creating the payload for GET method (unused at the moment)
         data = None
         if filtering.get_data:
             data = dict()
             for key, value in iteritems(filtering.get_data):
-                if 'QUERY' in value:
-                    data[key] = filtering.get_data[key].replace('QUERY', query)
-                else:
-                    data[key] = filtering.get_data[key]
+                data[key] = filtering.get_data[key].replace('QUERY', query)
+                data[key] = data[key].replace('EXTRA', extra)
+                data[key] = unquote(data[key])
 
         log.debug("-   %s query: %s" % (provider, repr(query)))
         log.debug("--  %s url_search before token: %s" % (provider, repr(url_search)))
@@ -313,6 +306,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         log.info("[%s] >  %s search URL: %s" % (provider, definition['name'].rjust(longest), url_search))
 
+        headers = None
         if 'headers' in definition and definition['headers']:
             headers = eval(definition['headers'])
             log.info("[%s] >  %s headers: %s" % (provider, definition['name'].rjust(longest), headers))
