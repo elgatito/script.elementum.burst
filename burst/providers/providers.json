@@ -406,7 +406,6 @@
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
         "tv_keywords_fallback": "{title:original} s{season:2}"
-
     },
     "electrotorrent": {
         "anime_extra": null,
@@ -664,7 +663,7 @@
         },
         "predefined": false,
         "private": false,
-        "remove_special_characters" : "'",
+        "remove_special_characters": "'",
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "'{title:original}' S{season:2}",
@@ -1542,7 +1541,7 @@
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
         "tv_keywords_fallback": "{title:original} s{season:2}"
-     },
+    },
     "ncore": {
         "anime_keywords": "{title} s{season:2}e{episode:2}",
         "anime_keywords_fallback": "{title} s{season:2}",
@@ -1822,7 +1821,7 @@
         },
         "predefined": true,
         "private": false,
-        "remove_special_characters" : "'",
+        "remove_special_characters": "'",
         "season_extra": null,
         "season_keywords": "{title:en:original} s{season:2}",
         "season_query": "?mode=search&search_string=QUERY&category=18;41;49&format=json_extended&app_id=script.elementum.burst&token=TOKEN",
@@ -1915,7 +1914,7 @@
         "predefined": false,
         "private": false,
         "public_dns_alias": "rutor.lib",
-        "remove_special_characters" : "'",
+        "remove_special_characters": "'",
         "season_query": "0/EXTRA/300/2/QUERY",
         "season_keywords": "{title:en:ru} {season:2}x01|(01-{season:2}x01)|S{season:2}|(S01-{season:2})",
         "season_extra": "4",
@@ -2199,7 +2198,7 @@
         },
         "predefined": false,
         "private": false,
-        "remove_special_characters" : "'",
+        "remove_special_characters": "'",
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:en} s{season:2}",
@@ -2669,7 +2668,7 @@
         "season_query": "/lt/torrents?cats=58-79-42-56-59-84&search=QUERY",
         "separator": "+",
         "show_query": "/lt/torrents?cats=58-79-42-56-59-84&search=QUERY",
-        "subpage": false, 
+        "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original:en} s{season:2}e{episode:2}",
