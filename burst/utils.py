@@ -290,6 +290,8 @@ def clean_size(string):
         pos = string.rfind('B')
         if pos > 0:
             string = string[:pos] + 'B'
+    else:
+        string = ""
     return string
 
 
