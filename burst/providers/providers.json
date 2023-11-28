@@ -637,7 +637,7 @@
     "eztv": {
         "anime_extra": null,
         "anime_keywords": "'{title:original}' s{season:2}e{episode:2}",
-        "base_url": "https://eztv.re/search/QUERYEXTRA",
+        "base_url": "https://eztv.li/search/QUERYEXTRA",
         "color": "FF0F559D",
         "enabled": true,
         "general_extra": "",
