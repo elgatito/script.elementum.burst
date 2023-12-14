@@ -655,4 +655,3 @@ def get_search_query(definition, key):
     if key == 'key' or key == 'table' or key == 'row':
         return "dom." + definition['parser'][key]
     return definition['parser'][key]
-
