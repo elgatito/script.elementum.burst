@@ -2342,7 +2342,7 @@
             "row": "find_once('div', ('class', ['table-responsive']), order=2).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=4)",
             "size": "item(tag='td', order=3)",
-            "torrent": "'https://lt.0c.gay/tor/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
+            "torrent": "'https://www.torlock.com/tor/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
         },
         "predefined": false,
         "private": false,
