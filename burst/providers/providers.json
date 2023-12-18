@@ -2924,7 +2924,7 @@
             "row": "find_once('div', ('class', 'table-responsive'), order=2).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=5)",
             "size": "item(tag='td', order=3)",
-            "torrent": "'https://yourbittorrent.com/?q=QUERYEXTRA/down/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
+            "torrent": "'https://yourbittorrent.com/down/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
         },
         "predefined": false,
         "private": false,
