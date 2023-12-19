@@ -10,7 +10,6 @@
     <extension point="xbmc.python.script" library="burst.py">
         <provides>executable</provides>
     </extension>
-    <extension point="xbmc.python.pluginsource" library="navigation.py" />
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Elementum torrents provider</summary>
         <summary lang="hr">Elementum torrent pružatelji usluga</summary>
