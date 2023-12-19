@@ -385,3 +385,11 @@ msgstr ""
 msgctxt "#32143"
 msgid "Location of overrides.json file"
 msgstr ""
+
+msgctxt "#32144"
+msgid "Maintenance"
+msgstr ""
+
+msgctxt "#32145"
+msgid "Remove cookies"
+msgstr ""

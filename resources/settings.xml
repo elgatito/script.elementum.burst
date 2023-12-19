@@ -393,4 +393,10 @@
     <setting label="32085" type="lsep" />
     <setting label="32086" id="use_debug_parser" type="bool" default="false" />
   </category>
+
+  <!-- Maintenance -->
+  <category label="32144">
+    <setting type="action" label="32145" option="close" action="RunPlugin(plugin://script.elementum.burst/clear_cookies)" />
+  </category>
+
 </settings>

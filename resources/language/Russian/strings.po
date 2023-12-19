@@ -385,3 +385,11 @@ msgstr "Арабский"
 msgctxt "#32143"
 msgid "Location of overrides.json file"
 msgstr "Местоположение файла overrides.json"
+
+msgctxt "#32144"
+msgid "Maintenance"
+msgstr "Обслуживание"
+
+msgctxt "#32145"
+msgid "Remove cookies"
+msgstr "Удалить файлы cookie"
