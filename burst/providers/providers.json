@@ -3238,3 +3238,47 @@
         "tv_extra_fallback2": "cartoons"
     }
 }
+"ztracker": {
+        "anime_keywords": "{title:original} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original} s{season:2}",
+        "anime_query": "",
+        "base_url": "http://ztracker.cc/browse_old.php?keywords=QUERYEXTRA&search_type=t_name&cat=0",
+        "color": "FFFFFFFF",
+        "enabled": true,
+        "general_extra": "",
+        "general_keywords": "{title:original}",
+        "general_query": "",
+        "language": null,
+        "languages": "hu",
+        "login_failed": "",
+        "login_object": "{'username': USERNAME, 'password': PASSWORD}",
+        "login_path": "/takelogin.php",
+		"login_headers": "{'Origin': 'http://ztracker.cc', 'Referer': 'http://ztracker.cc/login.php'}",
+        "movie_extra": "",
+        "movie_keywords": "{title:original} {year}",
+        "movie_query": "",
+        "name": "Ztracker.cc",
+        "parser": {
+            "infohash": "",
+            "name": "item(tag='a', order=2)",
+            "peers": "item(tag='td', order=8)",
+            "row": "find_once('table', order=1).find_all('tr', start=2)",
+            "seeds": "item(tag='td', order=7)",
+            "size": "item(tag='td', order=11)",
+            "torrent": "'http://ztracker.cc/download.php?id=%s' % item(tag='a', attribute='href', order=2, divider=('=', 1))"
+        },
+        "predefined": false,
+        "private": true,
+        "season_extra": "",
+        "season_extra2": "",
+        "season_keywords": "{title:original} season {season:2}",
+        "season_keywords2": "{title:original} s{season:2}",
+        "season_query": "",
+        "separator": ".",
+        "show_query": "",
+        "subpage": false,
+        "tv_extra": "",
+        "tv_extra2": "",
+        "tv_keywords": "{title:original} s{season:2}e{episode:2}",
+        "tv_keywords_fallback": "{title:original} s{season:2}"
+    }
