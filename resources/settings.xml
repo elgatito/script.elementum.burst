@@ -302,6 +302,12 @@
       <setting id="zelka_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="zelka_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
 
+    <setting label="[B]Ztracker.cc[/B]   [COLOR gray][$ADDON[script.elementum.burst 32118]][/COLOR]" id="use_ztracker" type="bool" default="false" />
+      <setting id="ztracker_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="ztracker_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="ztracker_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="ztracker_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+
     <setting label="[B]Гуртом[/B]   [COLOR gray][$ADDON[script.elementum.burst 32115]][/COLOR]" id="use_toloka" type="bool" default="false" />
       <setting id="toloka_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="toloka_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
