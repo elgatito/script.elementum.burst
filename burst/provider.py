@@ -14,7 +14,7 @@ from .client import Client
 from elementum.provider import log, get_setting, set_setting
 from .filtering import cleanup_results
 from .providers.definitions import definitions, longest
-from .utils import ADDON_PATH, get_int, clean_size, get_alias
+from .utils import ADDON_PATH, get_int, clean_size, get_alias, with_defaults
 from kodi_six import xbmc, xbmcaddon, py2_encode
 if PY3:
     from urllib.parse import quote, unquote
@@ -88,7 +88,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
     """
     log.debug("[%s] execute_process for %s with %s" % (provider, provider, repr(generator)))
     definition = definitions[provider]
-    definition = get_alias(definition, get_setting("%s_alias" % provider))
+    definition = with_defaults(get_alias(definition, get_setting("%s_alias" % provider)))
 
     client = Client(info=filtering.info, request_charset=definition['charset'], response_charset=definition['response_charset'], is_api='is_api' in definition and definition['is_api'])
     token = None
@@ -289,7 +289,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         log.error("[%s] Token auth failed with response: %s" % (provider, repr(client.content)))
                         return filtering.results
                 elif not logged_in and client.login(definition['root_url'], definition['login_path'],
-                                                    eval(login_object), login_headers, definition['login_failed']):
+                                                    eval(login_object), login_headers, definition['login_failed'], definition['login_prerequest']):
                     log.info('[%s] Login successful' % provider)
                     logged_in = True
                 elif not logged_in:

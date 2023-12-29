@@ -349,7 +349,7 @@ class Client:
 
         return self.status == 200
 
-    def login(self, root_url, url, data, headers, fails_with):
+    def login(self, root_url, url, data, headers, fails_with, prerequest=None):
         """ Login wrapper around ``open``
 
         Args:
@@ -363,9 +363,13 @@ class Client:
         if not url.startswith('http'):
             url = root_url + url
 
+        if prerequest:
+            log.debug("Running prerequest to %s" % (prerequest))
+            self.open(prerequest.encode('utf-8'), headers=headers)
+
         if self.open(url.encode('utf-8'), post_data=encode_dict(data, self.request_charset), headers=headers):
             try:
-                if fails_with in self.content:
+                if fails_with and fails_with in self.content:
                     self.status = 'Wrong username or password'
                     return False
             except Exception as e:
