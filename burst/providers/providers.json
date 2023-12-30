@@ -3241,7 +3241,7 @@
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
         "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "",
-        "base_url": "http://ztracker.cc/browse_old.php?keywords=QUERYEXTRA&search_type=t_name&cat=0",
+        "base_url": "http://ztracker.cc/browse_old.php?keywords=QUERYEXTRA&search_type=t_name&cat=0&sort=7&type=desc",
         "color": "FFFFFFFF",
         "enabled": true,
         "general_extra": "",
