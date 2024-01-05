@@ -79,7 +79,7 @@ def with_defaults(definition):
     if 'login_prerequest' not in definition:
         definition['login_prerequest'] = ''
     return definition
-    
+
 def get_alias(definition, alias):
     definition["alias"] = ""
 
