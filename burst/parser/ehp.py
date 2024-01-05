@@ -417,7 +417,7 @@ class Root(list):
         seq = self.match(*args)
 
         try:
-            item = seq.next()
+            item = next(seq)
         except StopIteration:
             return None
         else:
@@ -431,7 +431,7 @@ class Root(list):
         seq = self.match_with_root(*args)
 
         try:
-            item = seq.next()
+            item = next(seq)
         except StopIteration:
             return None
         else:
@@ -599,7 +599,7 @@ class Root(list):
         seq = self.find(name, 1, 1, *args)
 
         try:
-            item = seq.next()
+            item = next(seq)
         except StopIteration:
             return None
         else:
@@ -637,7 +637,7 @@ class Root(list):
         seq = self.find_with_root(name, *args)
 
         try:
-            item = seq.next()
+            item = next(seq)
         except StopIteration:
             return None
         else:
