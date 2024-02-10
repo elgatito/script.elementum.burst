@@ -67,7 +67,7 @@ def search(payload, method="general"):
 
     Args:
         payload (dict): Search payload from Elementum.
-        method   (str): Type of search, can be ``general``, ``movie``, ``show``, ``season`` or ``anime``
+        method   (str): Type of search, can be ``general``, ``movie``, ``show``, ``season`` or ``episode``
 
     Returns:
         list: All filtered results in the format Elementum expects
