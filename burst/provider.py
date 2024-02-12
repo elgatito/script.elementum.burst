@@ -301,7 +301,8 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                     if provider == 'hd-torrents':
                         client.open(definition['root_url'] + '/torrents.php')
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
-                        url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
+                        if csrf_token:
+                            url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
                     client.save_cookies()
 
         log.info("[%s] >  %s search URL: %s" % (provider, definition['name'].rjust(longest), url_search))
@@ -312,10 +313,13 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             log.info("[%s] >  %s headers: %s" % (provider, definition['name'].rjust(longest), headers))
 
         client.open(py2_encode(url_search), post_data=payload, get_data=data, headers=headers)
-        filtering.results.extend(
-            generate_payload(provider,
-                             generator(provider, client),
-                             filtering,
-                             verify_name,
-                             verify_size))
+        try:
+            filtering.results.extend(
+                generate_payload(provider,
+                                generator(provider, client),
+                                filtering,
+                                verify_name,
+                                verify_size))
+        except Exception as e:
+            log.error("[%s] Error from payload generator: %s", provider, e)
     return filtering.results
