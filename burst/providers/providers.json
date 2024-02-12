@@ -594,7 +594,7 @@
         "anime_keywords2": "{title:original} {season:2}x01|S{season:2}",
         "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "",
-        "base_url": "https://extranet.torrentbay.net/search/?order=seed&sort=desc&q=QUERYEXTRA",
+        "base_url": "https://extranet.torrentbay.st/search/?order=seed&sort=desc&q=QUERYEXTRA",
         "color": "FF4A86B8",
         "enabled": true,
         "general_extra": "",
