@@ -1357,8 +1357,7 @@
         "tv_extra2": "",
         "tv_keywords": "+{title:original:en} s{season:2}e{episode:2}",
         "tv_keywords2": "+{title:original:en} s{season:2}",
-        "tv_keywords_fallback": "+{title:original:en}",
-        "tv_keywords_fallback": "+{title}"
+        "tv_keywords_fallback": "+{title:original:en}"
     },
     "magnetdl": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -3135,7 +3134,7 @@
     "torrentby": {
         "anime_keywords": "{title:en:ru} S{season:2}",
         "anime_keywords2": "{title:en:ru} {season:2}x01",
-        "anime_keywords_fallback": "\"{title:original} {season}\"",
+        "anime_keywords_fallback": "{title:original} {season}",
         "anime_query": "&cat=6",
         "base_url": "https://torrent.by/search?search=QUERY&search_in=0",
         "color": "FFFFFFFF",
@@ -3171,10 +3170,10 @@
         "season_extra_fallback": "5",
         "season_keywords_fallback2": "{title:en:ru} {season:2}x01",
         "season_extra_fallback2": "5",
-        "season_keywords_fallback3": "{title:original} S{season:2}",
-        "season_extra_fallback3": "3",
-        "season_keywords_fallback4": "{title:original} {season:2}x01",
-        "season_extra_fallback4": "3",
+        "season_keywords_fallback3": "{title:en:ru} S{season:2}",
+        "season_extra_fallback3": "14",
+        "season_keywords_fallback4": "{title:en:ru} {season:2}x01",
+        "season_extra_fallback4": "14",
         "season_query": "&cat=EXTRA",
         "separator": "%20",
         "subpage": null,
@@ -3187,8 +3186,10 @@
         "tv_extra_fallback": "5",
         "tv_keywords_fallback2": "{title:en:ru} {season:2}x01",
         "tv_extra_fallback2": "5",
-        "tv_keywords_fallback3": "\"{title:original} {season}\"",
-        "tv_extra_fallback3": "3"
+        "tv_keywords_fallback3": "{title:en:ru} S{season:2}",
+        "tv_extra_fallback3": "14",
+        "tv_keywords_fallback4": "{title:en:ru} {season:2}x01",
+        "tv_extra_fallback4": "14"
     },
     "filebase": {
         "anime_keywords": "{title:en:ru}",
