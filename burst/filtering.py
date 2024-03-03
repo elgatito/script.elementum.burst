@@ -463,8 +463,8 @@ class Filtering:
         for keyword in keywords:
             keyword = keyword.lower()
             if 'title' in keyword:
-                title = self.info["title"]
-                language = definitions[provider]['language']
+                title = self.info['title']
+                provider_language = definitions[provider]['language']
                 use_language = None
                 if ':' in keyword:
                     use_language = keyword.split(':')[1].lower()
@@ -474,8 +474,8 @@ class Filtering:
                     try:
                         if not use_language and self.kodi_language and self.kodi_language in self.info['titles']:
                             use_language = self.kodi_language
-                        if not use_language and language and language in self.info['titles']:
-                            use_language = language
+                        if not use_language and provider_language and provider_language in self.info['titles']:
+                            use_language = provider_language
                         if use_language not in self.info['titles'] or not self.info['titles'][use_language]:
                             log.info("[%s] Falling back to original title in absence of %s language title" % (provider, use_language))
                             use_language = "original"
