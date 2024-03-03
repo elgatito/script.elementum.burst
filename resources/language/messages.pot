@@ -394,3 +394,15 @@ msgstr ""
 msgctxt "#32145"
 msgid "Remove cookies"
 msgstr ""
+
+msgctxt "#32146"
+msgid "Set 'original' title of Anime to:"
+msgstr ""
+
+msgctxt "#32147"
+msgid "Romanization of Japanese"
+msgstr ""
+
+msgctxt "#32148"
+msgid "Original"
+msgstr ""

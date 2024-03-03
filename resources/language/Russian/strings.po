@@ -393,3 +393,15 @@ msgstr "Обслуживание"
 msgctxt "#32145"
 msgid "Remove cookies"
 msgstr "Удалить файлы cookie"
+
+msgctxt "#32146"
+msgid "Set 'original' title of Anime to:"
+msgstr "Установить 'оригинальное' название Аниме как:"
+
+msgctxt "#32147"
+msgid "Romanization of Japanese"
+msgstr "Японский латиницей (Ромадзи)"
+
+msgctxt "#32148"
+msgid "Original"
+msgstr "Исходное"
