@@ -38,6 +38,7 @@ use_min_size = get_setting('min_size')
 use_max_size = get_setting('max_size')
 use_filter_quotes = get_setting("filter_quotes", bool)
 use_allow_noseeds = get_setting('allow_noseeds', bool)
+overwrite_anime_original_title = get_setting('overwrite_anime_original_title', choices=('original', 'jp', 'en'))
 
 class Filtering:
     """
@@ -263,7 +264,7 @@ class Filtering:
 
         self.collect_queries('tv', definition)
 
-    def use_season(self, provider, info):
+    def use_season(self, provider, payload):
         """ Setup method to define season search parameters
 
         Args:
@@ -283,12 +284,12 @@ class Filtering:
             self.min_size = get_float(get_setting('min_size_seasons'))
             self.max_size = get_float(get_setting('max_size_seasons'))
             self.check_sizes()
-        self.info = info
+        self.info = payload
         self.url = u"%s%s" % (definition['base_url'], season_query)
 
         self.collect_queries('season', definition)
 
-    def use_anime(self, provider, info):
+    def use_anime(self, provider, payload):
         """ Setup method to define anime search parameters
 
         Args:
@@ -308,7 +309,14 @@ class Filtering:
             self.min_size = get_float(get_setting('min_size_episodes'))
             self.max_size = get_float(get_setting('max_size_episodes'))
             self.check_sizes()
-        self.info = info
+        self.info = payload
+        if 'titles' in self.info and self.info['titles']:
+            if overwrite_anime_original_title == 'jp':
+                if 'jp' in self.info['titles'] and self.info['titles']['jp']:
+                    self.info['titles']['original'] = self.info['titles']['jp']
+            elif overwrite_anime_original_title == 'en':
+                if 'en' in self.info['titles'] and self.info['titles']['en']:
+                    self.info['titles']['original'] = self.info['titles']['en']
         self.url = u"%s%s" % (definition['base_url'], anime_query)
 
         self.collect_queries('anime', definition)
@@ -455,8 +463,8 @@ class Filtering:
         for keyword in keywords:
             keyword = keyword.lower()
             if 'title' in keyword:
-                title = self.info["title"]
-                language = definitions[provider]['language']
+                title = self.info['title']
+                provider_language = definitions[provider]['language']
                 use_language = None
                 if ':' in keyword:
                     use_language = keyword.split(':')[1].lower()
@@ -466,8 +474,8 @@ class Filtering:
                     try:
                         if not use_language and self.kodi_language and self.kodi_language in self.info['titles']:
                             use_language = self.kodi_language
-                        if not use_language and language and language in self.info['titles']:
-                            use_language = language
+                        if not use_language and provider_language and provider_language in self.info['titles']:
+                            use_language = provider_language
                         if use_language not in self.info['titles'] or not self.info['titles'][use_language]:
                             log.info("[%s] Falling back to original title in absence of %s language title" % (provider, use_language))
                             use_language = "original"
