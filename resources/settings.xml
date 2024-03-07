@@ -393,7 +393,7 @@
     <setting type="sep"/>
     <setting label="32132" id="filter_quotes" type="bool" default="false" />
     <setting label="32146" id="overwrite_anime_original_title" type="enum" default="1" subsetting="true" lvalues="32148|32147|32111" />
-    <setting label="32018" id="kodi_language" type="bool" default="false" />
+    <setting label="32018" id="kodi_language" type="bool" default="true" />
     <setting label="32050" id="language_exceptions" type="text" subsetting="true" enable="eq(-1,true)" />
     <setting label="32051" id="language_help" type="text" enable="false" subsetting="true" />
 
