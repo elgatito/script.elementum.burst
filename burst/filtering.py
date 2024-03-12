@@ -311,10 +311,10 @@ class Filtering:
             self.check_sizes()
         self.info = payload
         if 'titles' in self.info and self.info['titles']:
-            if overwrite_anime_original_title == 'jp':
+            if overwrite_anime_original_title == 'jp' or overwrite_anime_original_title == '1':
                 if 'jp' in self.info['titles'] and self.info['titles']['jp']:
                     self.info['titles']['original'] = self.info['titles']['jp']
-            elif overwrite_anime_original_title == 'en':
+            elif overwrite_anime_original_title == 'en' or overwrite_anime_original_title == '2':
                 if 'en' in self.info['titles'] and self.info['titles']['en']:
                     self.info['titles']['original'] = self.info['titles']['en']
         self.url = u"%s%s" % (definition['base_url'], anime_query)
