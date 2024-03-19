@@ -384,15 +384,16 @@
     <setting label="32009" type="lsep" subsetting="true" enable="eq(-7,true)" />
     <setting label="32033" id="min_size_episodes" type="slider" option="float" range="0,0.25,100" default="0" subsetting="true" enable="eq(-8,true)" />
     <setting label="32034" id="max_size_episodes" type="slider" option="float" range="1,0.25,200" default="100" subsetting="true" enable="eq(-9,true)" />
-    <setting type="lsep" />
+    <setting type="sep" />
     <setting label="32036" id="additional_filters" type="bool" default="false" />
-    <setting label="32037" id="filtering_help" type="text" enable="false" subsetting="true" />
+    <setting label="32149" id="filtering_help1" type="text" enable="false" subsetting="true" />
     <setting label="32038" id="accept" type="text" default="" subsetting="true" enable="eq(-2,true)" />
     <setting label="32039" id="block" type="text" default="" subsetting="true" enable="eq(-3,true)" />
     <setting label="32017" id="require" type="text" default="" subsetting="true" enable="eq(-4,true)" />
+    <setting label="32150" id="filtering_help2" type="text" enable="false" subsetting="true" />
     <setting type="sep"/>
     <setting label="32132" id="filter_quotes" type="bool" default="false" />
-    <setting label="32146" id="overwrite_anime_original_title" type="enum" default="1" subsetting="true" lvalues="32148|32147|32111" />
+    <setting label="32146" id="overwrite_anime_original_title" type="enum" default="1" lvalues="32148|32147|32111" />
     <setting label="32018" id="kodi_language" type="bool" default="true" />
     <setting label="32050" id="language_exceptions" type="text" subsetting="true" enable="eq(-1,true)" />
     <setting label="32051" id="language_help" type="text" enable="false" subsetting="true" />

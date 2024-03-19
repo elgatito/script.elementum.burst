@@ -70,10 +70,6 @@ msgctxt "#32036"
 msgid "Additional keyword filters (comma-separated)"
 msgstr "Dodatni filtri ključne riječi (zarezom odvojeno)"
 
-msgctxt "#32037"
-msgid "Use underscores around keywords to require a space/dot, eg. _HEVC_"
-msgstr "Koristite podvlake oko ključnih riječi za zahtijev razmaka/ točke, npr. _HEVC_"
-
 msgctxt "#32038"
 msgid "Accept"
 msgstr "Prihvati"
@@ -404,4 +400,12 @@ msgstr ""
 
 msgctxt "#32148"
 msgid "Original"
+msgstr ""
+
+msgctxt "#32149"
+msgid "Accept/Block: any of keywords should be in torrent name to [CR]accept/block torrent. Require: all keywords must be in name."
+msgstr ""
+
+msgctxt "#32150"
+msgid "Example: 'HDR, .?265, Hindi'. Regexp are supported.[CR]You can filter languages, video/audio features, etc."
 msgstr ""

@@ -70,10 +70,6 @@ msgctxt "#32036"
 msgid "Additional keyword filters (comma-separated)"
 msgstr "Дополнительные слова-фильтры (через запятую)"
 
-msgctxt "#32037"
-msgid "Use underscores around keywords to require a space/dot, eg. _HEVC_"
-msgstr "Использовать подчеркивание для требования наличия пробела/точки возле слова"
-
 msgctxt "#32038"
 msgid "Accept"
 msgstr "Принять"
@@ -92,7 +88,7 @@ msgstr "Исключения"
 
 msgctxt "#32051"
 msgid "Comma-separated list of providers to exclude, eg. yts, rarbg"
-msgstr "Список провайдеров для исключения, через запятую, напр. yts, rarbg"
+msgstr "Список провайдеров для исключ. через запятую, напр. yts, rarbg"
 
 msgctxt "#32060"
 msgid "No providers enabled"
@@ -376,7 +372,7 @@ msgstr "Использовать домены в Tor"
 
 msgctxt "#32141"
 msgid "First set SOCKS both in Burst&Elementum or proxy http via Elementum"
-msgstr "Сперва вкл. SOCKS5h в Burst&Elementum или вкл. прокси через Elementum"
+msgstr "Сперва вкл. SOCKS5h в Burst&Elementum или [CR]вкл. прокси через Elementum"
 
 msgctxt "#32142"
 msgid "Arabic"
@@ -405,3 +401,11 @@ msgstr "Японский латиницей (Ромадзи)"
 msgctxt "#32148"
 msgid "Original"
 msgstr "Исходное"
+
+msgctxt "#32149"
+msgid "Accept/Block: any of keywords should be in torrent name to [CR]accept/block torrent. Require: all keywords must be in name."
+msgstr "Принять/Забл.: любое из слов должно быть в названии торрента,[CR]чтобы его принять/забл. Обязательно: все слова должны быть."
+
+msgctxt "#32150"
+msgid "Example: 'HDR, .?265, Hindi'. Regexp are supported.[CR]You can filter languages, video/audio features, etc."
+msgstr "Пример: 'HDR, .?265, Hindi'. Можно регулярные выражения.[CR]Вы можете фильтровать языки, видео/аудио фишки и т.д."
