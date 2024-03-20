@@ -347,7 +347,7 @@
             "size": "item.find_once(tag='div', select=('class', 'stats')).find_once(tag='div', order=2).text()",
             "torrent": "item(tag='a', select=('class', 'dl-magnet'), attribute='href', order=1)"
         },
-        "predefined": false,
+        "predefined": true,
         "private": false,
         "season_extra": "",
         "season_extra2": "",
@@ -1387,7 +1387,7 @@
             "size": "item(tag='td', order=6)",
             "torrent": "item(tag='a', attribute='href')"
         },
-        "predefined": false,
+        "predefined": true,
         "private": false,
         "season_extra": "",
         "season_extra2": "",
@@ -1818,7 +1818,7 @@
             "size": null,
             "torrent": null
         },
-        "predefined": true,
+        "predefined": false,
         "private": false,
         "remove_special_characters": "'",
         "season_extra": null,
@@ -2061,7 +2061,7 @@
             "size": "item(tag='td', order=2)",
             "torrent": "item(tag='a', attribute='href', order=3)"
         },
-        "predefined": true,
+        "predefined": false,
         "private": false,
         "season_extra": "",
         "season_extra2": "",
@@ -2196,7 +2196,7 @@
             "size": "item(tag='font', divider=(' ', 3))",
             "torrent": "item(tag='a', attribute='href', order=4)"
         },
-        "predefined": false,
+        "predefined": true,
         "private": false,
         "remove_special_characters": "'",
         "season_extra": "",
