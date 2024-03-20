@@ -502,7 +502,7 @@
         "anime_keywords2": "{title:fr} {season:2}x01|S{season:2}",
         "anime_keywords_fallback": "{title:fr} s{season:2}",
         "anime_query": "QUERYEXTRA",
-        "base_url": "https://www.cpasbien.si/recherche/",
+        "base_url": "https://www.cpasbien.gs/recherche/",
         "color": "FFD1181E",
         "enabled": true,
         "general_extra": "",
@@ -524,11 +524,10 @@
             "row": "find_once('table', ('class', 'table-corps')).find_all('tr', start=1)",
             "seeds": "item(tag='div', order=2)",
             "size": "item(tag='div', order=1)",
-            "torrent": "item(tag='a', attribute='href')"
+            "torrent": "item(tag='a', attribute='onclick').replace('location.href=', '').replace('\\'', '')"
         },
         "predefined": false,
         "private": false,
-        "root_url": "https://www.cpasbien.si",
         "season_extra": "",
         "season_extra2": "",
         "season_keywords": "{title:fr} season {season:2}",
@@ -2410,7 +2409,7 @@
         "anime_keywords2": "{title} {season:2}x01|S{season:2}",
         "anime_keywords_fallback": "{title} s{season:2}",
         "anime_query": "",
-        "base_url": "https://www.torrent9.cm/recherche/QUERYEXTRA",
+        "base_url": "https://www.torrent911.pe/recherche/QUERYEXTRA",
         "color": "FF277A9C",
         "enabled": true,
         "general_extra": "",
@@ -2432,7 +2431,7 @@
             "row": "find_all('tr', start=2)",
             "seeds": "item(tag='td', order=3)",
             "size": "item(tag='td', order=2)",
-            "torrent": "item(tag='a', attribute='href', order=1)"
+            "torrent": "item(tag='a', attribute='onclick').replace('location.href=', '').replace('\\'', '')"
         },
         "predefined": false,
         "private": false,
