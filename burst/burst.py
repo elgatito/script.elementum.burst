@@ -605,6 +605,12 @@ def extract_from_page(provider, content):
             result = definition['root_url'] + matches[0]
             log.debug('[%s] Matched download link: %s' % (provider, repr(result)))
             return result
+
+        matches = re.findall('/get_torrent/([A-Fa-f0-9]{40})', content)
+        if matches:
+            result = "magnet:?xt=urn:btih:" + matches[0]
+            log.debug('[%s] Matched magnet info_hash search: %s' % (provider, repr(result)))
+            return result
     except:
         pass
 
