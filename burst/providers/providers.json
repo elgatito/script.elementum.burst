@@ -2339,7 +2339,7 @@
             "infohash": "",
             "name": "item('a')",
             "peers": "item(tag='td', order=5)",
-            "row": "find_once('div', ('class', ['table-responsive']), order=2).find_all('tr', start=2)",
+            "row": "find_once('div', ('class', 'table-responsive'), order=2).find_all('tr')",
             "seeds": "item(tag='td', order=4)",
             "size": "item(tag='td', order=3)",
             "torrent": "'https://www.torlock.com/tor/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
@@ -2519,7 +2519,7 @@
             "infohash": "",
             "name": "item('a')",
             "peers": "item(tag='td', order=5)",
-            "row": "find_once('table', select=('class', 'tmain'), order=2).find_all('tr', start=2)",
+            "row": "find_once('table', select=('class', 'tmain'), order=2).find_all('tr')",
             "seeds": "item(tag='td', order=4)",
             "size": "item(tag='td', order=3)",
             "torrent": "'https://www.torrentfunk.com/tor/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
@@ -2921,7 +2921,7 @@
             "infohash": "",
             "name": "item('a')",
             "peers": "item(tag='td', order=6)",
-            "row": "find_once('div', ('class', 'table-responsive'), order=2).find_all('tr', start=2)",
+            "row": "find_once('div', ('class', 'table-responsive'), order=2).find_all('tr')",
             "seeds": "item(tag='td', order=5)",
             "size": "item(tag='td', order=3)",
             "torrent": "'https://yourbittorrent.com/down/%s.torrent' % item(tag='a', attribute='href', divider=('/', 2))"
