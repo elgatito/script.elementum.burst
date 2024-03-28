@@ -657,7 +657,7 @@ class Filtering:
             for key in keys:
                 res2 = []
                 for item in re.split(r'\s', key):
-                    item = item.replace('_', ' ') # for keyword like _HEVC_
+                    item = item.replace('_', ' ')  # for keyword like _HEVC_
                     if strict:
                         item = ' ' + item + ' '
                     if item.lower() in value:
