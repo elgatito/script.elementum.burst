@@ -239,7 +239,6 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 url_search = url_search.replace('USERNAME', username)
 
             if passkey:
-                logged_in = True
                 client.passkey = passkey
                 url_search = url_search.replace('PASSKEY', passkey)
 
