@@ -282,11 +282,14 @@ class Filtering:
             self.max_size = get_float(get_setting('max_size_episodes'))
             self.check_sizes()
         self.info = payload
+        # Overwrite anime's original title if needed
         if 'titles' in self.info and self.info['titles']:
             if overwrite_anime_original_title == 'jp' or overwrite_anime_original_title == '1':
                 if 'jp' in self.info['titles'] and self.info['titles']['jp']:
                     self.info['titles']['original'] = self.info['titles']['jp']
-            elif overwrite_anime_original_title == 'en' or overwrite_anime_original_title == '2':
+                else:
+                    overwrite_anime_original_title = 'en' # fallback to English if Romaji is not available
+            if overwrite_anime_original_title == 'en' or overwrite_anime_original_title == '2':
                 if 'en' in self.info['titles'] and self.info['titles']['en']:
                     self.info['titles']['original'] = self.info['titles']['en']
         self.url = u"%s%s" % (definition['base_url'], anime_query)
