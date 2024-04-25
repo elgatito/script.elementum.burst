@@ -902,7 +902,6 @@
     },
     "idope": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
-        "anime_keywords2": "{title:originak} {season:2}x01|S{season:2}",
         "anime_keywords_fallback": "{title:original} s{season:2}",
         "anime_query": "4",
         "base_url": "https://idope.se/torrent-list/QUERYEXTRA/?&c=",
@@ -942,7 +941,6 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:originak} {season:2}x01|S{season:2}",
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "ilcorsaroblu": {
