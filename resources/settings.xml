@@ -7,7 +7,7 @@
 
     <setting label="32084" id="use_public_dns" type="bool" default="false" enable="eq(-2,false) + eq(3,false)" />
       <setting id="public_dns_list" label="32093" type="text" default="8.8.8.8, 8.8.4.4, 9.9.9.9" enable="eq(-1,true) + eq(-3,false)" />
-      <setting id="opennic_dns_list" label="32094" type="text" default="163.172.168.171, 152.70.189.130, 167.86.112.174" enable="eq(-2,true) + eq(-4,false)" />
+      <setting id="opennic_dns_list" label="32094" type="text" default="54.36.111.116, 192.3.165.37, 80.78.132.79" enable="eq(-2,true) + eq(-4,false)" />
     <setting label="32140" id="use_tor_dns" type="bool" default="false" enable="eq(-3,false)" />
     <setting id="tor_dns_help" label="32141" type="text" enable="false" subsetting="true" />
 
@@ -340,7 +340,7 @@
     <setting label="[B]240p[/B]" id="filter_240p" type="bool" default="false" />
   </category>
 
-  <!-- Release type -->
+  <!-- Video quality -->
   <category label="32134">
     <setting label="[B]BRRip/BDRip/Bluray[/B]" id="filter_brrip" type="bool" default="true" />
     <setting label="[B]WebDL/WebRip[/B]" id="filter_webdl" type="bool" default="true" />
@@ -372,7 +372,7 @@
         <setting id="proxy_password" label="32100" type="text" default="" option="hidden" subsetting="true" enable="eq(-5,1)" />
   </category>
 
-  <!-- Additional -->
+  <!-- Advanced -->
   <category label="32004">
     <setting label="32035" id="separate_sizes" type="bool" default="false" />
     <setting label="32006" type="lsep" subsetting="true" enable="eq(-1,true)" />
