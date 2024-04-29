@@ -3254,7 +3254,7 @@
         "login_failed": "Felhasználónév",
         "login_object": "{'username': USERNAME, 'password': PASSWORD}",
         "login_path": "/takelogin.php",
-		"login_headers": "{'Origin': 'http://ztracker.cc', 'Referer': 'http://ztracker.cc/login.php'}",
+        "login_headers": "{'Origin': definition['login_prerequest'], 'Referer': definition['login_prerequest']}",
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
