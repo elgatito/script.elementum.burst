@@ -189,7 +189,7 @@ class Client:
                     'http': self.proxy_url,
                     'https': self.proxy_url,
                 }
-        elif proxy['enabled']:
+        if proxy['enabled']:
             if proxy['use_type'] == 0 and info and "proxy_url" in info:
                 log.debug("Setting proxy from Elementum: %s" % (info["proxy_url"]))
 
