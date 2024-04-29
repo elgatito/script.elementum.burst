@@ -281,7 +281,7 @@
         "anime_keywords_fallback": "{title:original} s{season:2}",
         "base_url": "https://bitnova.info/search?q=QUERY&cid=0",
         "color": "FFFFFFFF",
-        "enabled": true,
+        "enabled": false,
         "general_extra": "",
         "general_keywords": "{title:original}",
         "general_query": "",
