@@ -376,7 +376,7 @@
         "language": null,
         "languages": "pl",
         "login_failed": "Forgot your password?",
-        "login_object": "{'login': USERNAME, 'pass': PASSWORD, 'remember': '1'}",
+        "login_object": "{'uid': USERNAME, 'pwd': PASSWORD}",
         "login_path": "/login.php",
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
@@ -389,7 +389,7 @@
             "row": "find_once('table', ('id', 'searchRes')).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=5)",
             "size": "item(tag='td', order=4)",
-            "torrent": "'helltorrents.com/%s/' % item(tag='a', attribute='id', order=4).replace('_','/')"
+            "torrent": "'https://helltorrents.com/%s/' % item(tag='a', attribute='id', order=4).replace('_','/')"
         },
         "predefined": false,
         "private": true,
