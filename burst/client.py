@@ -364,6 +364,8 @@ class Client:
             url = root_url + url
 
         if prerequest:
+            if not prerequest.startswith('http'):
+                prerequest = root_url + prerequest
             log.debug("Running prerequest to %s" % (prerequest))
             self.open(prerequest.encode('utf-8'), headers=headers)
 

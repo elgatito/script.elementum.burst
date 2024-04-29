@@ -372,7 +372,7 @@ msgstr "Использовать домены в Tor"
 
 msgctxt "#32141"
 msgid "First set SOCKS both in Burst&Elementum or proxy http via Elementum"
-msgstr "Сперва вкл. SOCKS5h в Burst&Elementum или [CR]вкл. прокси через Elementum"
+msgstr "Сперва вкл. SOCKS в Burst&Elementum или [CR]вкл. прокси через Elementum"
 
 msgctxt "#32142"
 msgid "Arabic"
