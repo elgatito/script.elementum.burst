@@ -379,6 +379,9 @@ def extract_torrents(provider, client):
             if not torrent.startswith('magnet'):
                 user_agent = USER_AGENT
 
+                if not torrent.startswith('http'):
+                    torrent = definition['root_url'] + py2_encode(torrent)
+
                 if client.passkey:
                     torrent = torrent.replace('PASSKEY', client.passkey)
                 elif client.token:
