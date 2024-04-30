@@ -283,6 +283,7 @@ class Filtering:
             self.check_sizes()
         self.info = payload
         # Overwrite anime's original title if needed
+        global overwrite_anime_original_title
         if 'titles' in self.info and self.info['titles']:
             if overwrite_anime_original_title == 'jp' or overwrite_anime_original_title == '1':
                 if 'jp' in self.info['titles'] and self.info['titles']['jp']:
