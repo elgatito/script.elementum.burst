@@ -95,6 +95,10 @@
       <setting id="yts_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="yts_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
+    <setting label="[B]NewStudio.TV[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_newstudio" type="bool" default="false" />
+      <setting id="newstudio_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="newstudio_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+
     <setting label="[B]Nyaa[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_nyaa" type="bool" default="false" />
       <setting id="nyaa_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="nyaa_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
@@ -144,7 +148,7 @@
   <category label="32130">
     <!-- Providers-Private-1-Begin -->
 
-    <setting label="[B]0day[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114], $ADDON[script.elementum.burst 32115]][/COLOR]" id="use_0day" type="bool" default="false" />
+    <setting label="[B]0day[/B]   [COLOR gray][$ADDON[script.elementum.burst 32115], $ADDON[script.elementum.burst 32114]][/COLOR]" id="use_0day" type="bool" default="false" />
       <setting id="0day_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="0day_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="0day_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
@@ -156,7 +160,7 @@
       <setting id="ArabP2P_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="ArabP2P_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
 
-    <setting label="[B]BaibaKo.TV[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_baibako" type="bool" default="false" />
+    <setting label="[B]BaibaKo.TV[/B]   [COLOR gray][$ADDON[script.elementum.burst 32115]][/COLOR]" id="use_baibako" type="bool" default="false" />
       <setting id="baibako_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="baibako_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="baibako_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
@@ -167,12 +171,6 @@
       <setting id="bithumen_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="bithumen_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="bithumen_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
-
-    <setting label="[B]BitNova[/B]   [COLOR gray][$ADDON[script.elementum.burst 32126]][/COLOR]" id="use_bitnova" type="bool" default="false" />
-      <setting id="bitnova_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="bitnova_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
-      <setting id="bitnova_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
-      <setting id="bitnova_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
 
     <setting label="[B]BlueBird[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_bluebird" type="bool" default="false" />
       <setting id="bluebird_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -186,7 +184,7 @@
       <setting id="electrotorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="electrotorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
 
-    <setting label="[B]FileList[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111], $ADDON[script.elementum.burst 32117]][/COLOR]" id="use_filelist" type="bool" default="false" />
+    <setting label="[B]FileList[/B]   [COLOR gray][$ADDON[script.elementum.burst 32117], $ADDON[script.elementum.burst 32111]][/COLOR]" id="use_filelist" type="bool" default="false" />
       <setting id="filelist_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="filelist_passkey" label="32076" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="filelist_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
