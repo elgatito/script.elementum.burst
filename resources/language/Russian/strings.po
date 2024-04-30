@@ -411,5 +411,5 @@ msgid "Example: 'HDR, .?265, Hindi'. Regexp are supported.[CR]You can filter lan
 msgstr "Пример: 'HDR, .?265, Hindi'. Можно регулярные выражения.[CR]Вы можете фильтровать языки, видео/аудио фишки и т.д."
 
 msgctxt "#32151"
-msgid "Configure proxy in elementum in the same way as here[CR]to avoid issues with downloading torrent files."
+msgid "Configure proxy in Elementum in the same way as here[CR]to avoid issues with downloading torrent files."
 msgstr "Настройте прокси в elementum так же как тут,[CR]чтобы избежать проблем с загрузкой торрент-файлов."
