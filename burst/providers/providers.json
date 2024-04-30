@@ -499,7 +499,7 @@
         "anime_keywords2": "{title:fr} {season:2}x01|S{season:2}",
         "anime_keywords_fallback": "{title:fr} s{season:2}",
         "anime_query": "QUERYEXTRA",
-        "base_url": "https://www.cpasbien.gs/recherche/",
+        "base_url": "https://www.cpasbien.zip/recherche/",
         "color": "FFD1181E",
         "enabled": true,
         "general_extra": "",
@@ -521,7 +521,7 @@
             "row": "find_once('table', ('class', 'table-corps')).find_all('tr', start=1)",
             "seeds": "item(tag='div', order=2)",
             "size": "item(tag='div', order=1)",
-            "torrent": "item(tag='a', attribute='onclick').replace('location.href=', '').replace('\\'', '')"
+            "torrent": "item(tag='a', attribute='href')"
         },
         "predefined": false,
         "private": false,
