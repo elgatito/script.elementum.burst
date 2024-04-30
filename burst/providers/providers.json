@@ -1008,7 +1008,7 @@
             "name": "item('a', order=2)",
             "peers": "item(tag='td', order=6).replace('n/a', '0')",
             "row": "find_all('tr', ('class', ['odd', 'odd2']))",
-            "seeds": "item(tag='td', order=5).replace('n/a', '0')",
+            "seeds": "item(tag='td', order=5).replace('n/a', '1')",
             "size": "item(tag='td', order=2)",
             "torrent": "'magnet:?xt=urn:btih:%s' % item(tag='input', attribute='value')"
         },
