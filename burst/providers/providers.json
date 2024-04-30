@@ -232,8 +232,8 @@
     },
     "bithumen": {
         "anime_extra": "",
-        "anime_keywords": "{title:en:hu} s{season:2}e{episode:2}",
-        "anime_keywords_fallback": "{title:en:hu} s{season:2}",
+        "anime_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original:en:hu} s{season:2}",
         "base_url": "https://bithumen.be/browse.php?search=QUERY",
         "color": "FF6AC045",
         "enabled": true,
@@ -260,16 +260,16 @@
         },
         "predefined": false,
         "private": true,
-        "season_keywords": "{title:en:hu} s{season:2}",
-        "season_keywords2": "{title:en:hu} season {season:2}",
+        "season_keywords": "{title:original:en:hu} s{season:2}",
+        "season_keywords2": "{title:original:en:hu} season {season:2}",
         "season_query": "&c7=1&c41=1",
         "separator": "+",
         "show_query": "&c7=1&c41=1",
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:en:hu} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:en:hu} s{season:2}"
+        "tv_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
+        "tv_keywords_fallback": "{title:original:en:hu} s{season:2}"
     },
     "bitnova": {
         "anime_extra": null,
@@ -1130,8 +1130,8 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "itorrent": {
-        "anime_keywords": "{title:en:hu} s{season:2}e{episode:2}",
-        "anime_keywords_fallback": "{title:en:hu} s{season:2}",
+        "anime_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original:en:hu} s{season:2}",
         "anime_query": null,
         "base_url": "https://itorrent.ws/torrentek/title/QUERY/",
         "color": "FFF14E13",
@@ -1145,7 +1145,7 @@
         "login_object": "",
         "login_path": null,
         "movie_extra": "",
-        "movie_keywords": "{title:en:hu} {year}",
+        "movie_keywords": "{title:original:en:hu} {year}",
         "movie_query": "",
         "name": "iTorrent",
         "parser": {
@@ -1161,16 +1161,16 @@
         "private": false,
         "season_extra": "",
         "season_extra2": "",
-        "season_keywords": "{title:en:hu} s{season:2}",
-        "season_keywords2": "{title:en:hu} season {season:2}",
+        "season_keywords": "{title:original:en:hu} s{season:2}",
+        "season_keywords2": "{title:original:en:hu} season {season:2}",
         "season_query": "",
         "separator": "+",
         "show_query": "",
         "subpage": true,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:en:hu} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:en:hu} s{season:2}"
+        "tv_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
+        "tv_keywords_fallback": "{title:original:en:hu} s{season:2}"
     },
     "kickass": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -1535,8 +1535,8 @@
         "tv_keywords_fallback": "{title:original} s{season:2}"
     },
     "ncore": {
-        "anime_keywords": "{title:en:hu} s{season:2}e{episode:2}",
-        "anime_keywords_fallback": "{title:en:hu} s{season:2}",
+        "anime_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original:en:hu} s{season:2}",
         "anime_query": "",
         "base_url": "https://ncore.pro/torrents.php?mire=QUERY",
         "color": "FF6AC045",
@@ -1550,7 +1550,7 @@
         "login_object": "{'nev': USERNAME, 'pass': PASSWORD, 'ne_leptessen_ki': '1'}",
         "login_path": "/login.php",
         "movie_extra": "",
-        "movie_keywords": "{title:en:hu} {year}",
+        "movie_keywords": "{title:original:en:hu} {year}",
         "movie_query": "",
         "name": "nCore",
         "parser": {
@@ -1568,8 +1568,8 @@
         "root_url": "https://ncore.pro",
         "season_extra": "",
         "season_extra2": "",
-        "season_keywords": "{title:en:hu} s{season:2}",
-        "season_keywords2": "{title:en:hu} season {season}",
+        "season_keywords": "{title:original:en:hu} s{season:2}",
+        "season_keywords2": "{title:original:en:hu} season {season}",
         "season_keywords3": "",
         "season_query": "",
         "separator": "+",
@@ -1577,8 +1577,8 @@
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:en:hu} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:en:hu} s{season:2}"
+        "tv_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
+        "tv_keywords_fallback": "{title:original:en:hu} s{season:2}"
     },
     "newstudio": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -3232,8 +3232,8 @@
         "tv_extra_fallback2": "cartoons"
     },
     "ztracker": {
-        "anime_keywords": "{title:en:hu} s{season:2}e{episode:2}",
-        "anime_keywords_fallback": "{title:en:hu} s{season:2}",
+        "anime_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
+        "anime_keywords_fallback": "{title:original:en:hu} s{season:2}",
         "anime_query": "",
         "base_url": "http://ztracker.cc/browse_old.php?keywords=QUERYEXTRA&search_type=t_name&cat=0&sort=7&type=desc",
         "color": "FFFFFFFF",
@@ -3249,7 +3249,7 @@
         "login_path": "/takelogin.php",
         "login_headers": "{'Origin': definition['login_prerequest'], 'Referer': definition['login_prerequest']}",
         "movie_extra": "",
-        "movie_keywords": "{title:en:hu} {year}",
+        "movie_keywords": "{title:original:en:hu} {year}",
         "movie_query": "",
         "name": "Ztracker.cc",
         "parser": {
@@ -3265,15 +3265,15 @@
         "private": true,
         "season_extra": "",
         "season_extra2": "",
-        "season_keywords": "{title:en:hu} s{season:2}",
-        "season_keywords2": "{title:en:hu} season {season:2}",
+        "season_keywords": "{title:original:en:hu} s{season:2}",
+        "season_keywords2": "{title:original:en:hu} season {season:2}",
         "season_query": "",
         "separator": ".",
         "show_query": "",
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:en:hu} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:en:hu} s{season:2}"
+        "tv_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
+        "tv_keywords_fallback": "{title:original:en:hu} s{season:2}"
     }
 }
