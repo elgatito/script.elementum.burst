@@ -10,20 +10,28 @@ from future.utils import PY3, iteritems
 import re
 import json
 import time
+import requests
+import datetime
 from threading import Thread
-from elementum.provider import append_headers, get_setting, log
+from elementum.provider import append_headers, get_setting, set_setting, log
+
 if PY3:
     from queue import Queue
     from urllib.parse import urlparse
     from urllib.parse import unquote
+
     basestring = str
     long = int
+    unicode = str
 else:
     from Queue import Queue
     from urlparse import urlparse
     from urllib import unquote
+
 from .parser.ehp import Html
 from kodi_six import xbmc, xbmcgui, xbmcaddon, py2_encode
+from Cryptodome.Cipher import AES
+from Cryptodome.Util.Padding import unpad
 
 from .provider import process
 from .providers.definitions import definitions, longest
@@ -43,6 +51,13 @@ timeout = get_setting("timeout", int)
 debug_parser = get_setting("use_debug_parser", bool)
 max_results = get_setting('max_results', int)
 sort_by = get_setting('sort_by', int)
+
+cookie_sync_enabled = get_setting("cookie_sync_enabled", bool)
+cookie_sync_token = get_setting("cookie_sync_token", unicode)
+cookie_sync_password = get_setting("cookie_sync_password", unicode)
+cookie_sync_gist_id = get_setting("cookie_sync_gist_id", unicode)
+cookie_sync_filename = get_setting("cookie_sync_filename", unicode)
+cookie_sync_fileurl = get_setting("cookie_sync_fileurl", unicode)
 
 special_chars = "()\"':.[]<>/\\?"
 elementum_timeout = 0
@@ -129,6 +144,7 @@ def search(payload, method="general"):
     available_providers = 0
     request_time = time.time()
 
+    cookie_sync()
     providers = get_enabled_providers(method)
 
     if len(providers) == 0:
@@ -664,3 +680,132 @@ def get_search_query(definition, key):
     if key == 'key' or key == 'table' or key == 'row':
         return "dom." + definition['parser'][key]
     return definition['parser'][key]
+
+def cookie_sync():
+    if not cookie_sync_enabled or not cookie_sync_token:
+        return
+
+    cookie_check_defaults()
+
+    log.debug("Fetching cookies from Github")
+
+    global cookie_sync_gist_id
+    if not cookie_sync_gist_id and not cookie_fetch_gist_id():
+        log.error("Could not fetch gist id for cookie-sync")
+        return
+
+    set_setting('cookie_sync_gist_id', cookie_sync_gist_id)
+    set_setting('cookie_sync_fileurl', cookie_sync_fileurl)
+
+    cookies = cookie_fetch_file()
+    if not cookies:
+        return
+
+    try:
+        log.debug("Adding %d cookies to http client" % (len(cookies)))
+        client = Client()
+        client._read_cookies()
+
+        for cookie in cookies:
+            client.add_cookie(cookie)
+
+        client.save_cookies()
+    except Exception as e:
+        log.error("Failed adding cookies with: %s" % (repr(e)))
+
+def cookie_check_defaults():
+    global cookie_sync_filename
+    if not cookie_sync_filename:
+        cookie_sync_filename = "kevast-gist-default.json"
+
+def cookie_fetch_gist_id():
+    global cookie_sync_gist_id, cookie_sync_token, cookie_sync_filename, cookie_sync_fileurl
+
+    try:
+        url = "https://api.github.com/gists"
+        headers = {'Authorization': 'Bearer %s' % cookie_sync_token}
+        params = {'scope': 'gist'}
+        resp = requests.get(url, headers=headers, params=params)
+        resp_items = json.loads(resp.text)
+
+        for item in resp_items:
+            if "files" not in item or "id" not in item:
+                continue
+            for k, v in iteritems(item["files"]):
+                if "filename" not in v or v["filename"] != cookie_sync_filename:
+                    continue
+                cookie_sync_gist_id = item["id"]
+                cookie_sync_fileurl = v["raw_url"]
+
+                return True
+    except Exception as e:
+        log.error("Gist list failed with: %s" % (repr(e)))
+
+    return False
+
+def cookie_fetch_file():
+    try:
+        domains_count = 0
+        cookies_count = 0
+
+        cookies = []
+
+        resp = requests.get(cookie_sync_fileurl)
+        resp_items = json.loads(resp.text)
+
+        expires = datetime.datetime.utcnow() + datetime.timedelta(days=1000)
+
+        for k, v in iteritems(resp_items):
+            if k.startswith("__"):
+                continue
+
+            domains_count = domains_count + 1
+
+            # Decode data if encrypted
+            if cookie_sync_password:
+                v = aes_decode(v)
+
+            # Loop through and force cookies into cookie jar
+            for cookie in json.loads(py2_encode(v)):
+                cookie["domain"] = k
+
+                if "expirationDate" not in cookie or not cookie["expirationDate"]:
+                    datetime.datetime.utcnow() + datetime.timedelta(days=30)
+                    cookie["expirationDate"] = int(expires.timestamp())
+                else:
+                    cookie["expirationDate"] = int(cookie["expirationDate"])
+                cookie["rest"] = {'HttpOnly': cookie["httpOnly"]}
+
+                cookies.append(cookie)
+                cookies_count = cookies_count + 1
+
+        log.debug("Cookie sync fetched for %d domains, %d cookies" % (domains_count, cookies_count))
+        return cookies
+    except Exception as e:
+        log.error("Gist file download failed with: %s" % (repr(e)))
+        import traceback
+        map(log.error, traceback.format_exc().split("\n"))
+
+    return None
+
+def EVP_BytesToKey(password, salt, key_len, iv_len):
+    """
+    Derive the key and the IV from the given password and salt.
+    """
+    from hashlib import md5
+    dtot = md5(password + salt).digest()
+    d = [dtot]
+    while len(dtot) < (iv_len+key_len):
+        d.append(md5(d[-1] + password + salt).digest())
+        dtot += d[-1]
+    return dtot[:key_len], dtot[key_len:key_len+iv_len]
+
+def aes_decode(data):
+    try:
+        key, iv = EVP_BytesToKey(cookie_sync_password.encode('utf-8'), b'', 16, 16)
+    except:
+        key, iv = EVP_BytesToKey(py2_encode(cookie_sync_password), b'', 16, 16)
+
+    aes = AES.new(key, AES.MODE_CBC, IV=iv)
+    raw = aes.decrypt(bytes.fromhex(data))
+    return unpad(raw, block_size=AES.block_size)

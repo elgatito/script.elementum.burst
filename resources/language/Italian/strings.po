@@ -409,3 +409,31 @@ msgstr ""
 msgctxt "#32150"
 msgid "Example: 'HDR, .?265, Hindi'. Regexp are supported.[CR]You can filter languages, video/audio features, etc."
 msgstr ""
+
+msgctxt "#32151"
+msgid "Cookie sync"
+msgstr ""
+
+msgctxt "#32152"
+msgid "Enable Cookie sync"
+msgstr ""
+
+msgctxt "#32153"
+msgid "Github Token"
+msgstr ""
+
+msgctxt "#32154"
+msgid "Encryption password (optional)"
+msgstr ""
+
+msgctxt "#32155"
+msgid "Gist ID (optional)"
+msgstr ""
+
+msgctxt "#32156"
+msgid "File name (optional)"
+msgstr ""
+
+msgctxt "#32157"
+msgid "File url (optional)"
+msgstr ""

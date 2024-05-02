@@ -409,3 +409,31 @@ msgstr "Принять/Забл.: любое из слов должно быть
 msgctxt "#32150"
 msgid "Example: 'HDR, .?265, Hindi'. Regexp are supported.[CR]You can filter languages, video/audio features, etc."
 msgstr "Пример: 'HDR, .?265, Hindi'. Можно регулярные выражения.[CR]Вы можете фильтровать языки, видео/аудио фишки и т.д."
+
+msgctxt "#32151"
+msgid "Cookie sync"
+msgstr "Синхронизация cookie"
+
+msgctxt "#32152"
+msgid "Enable Cookie sync"
+msgstr "Включить синхронизацию cookie"
+
+msgctxt "#32153"
+msgid "Github Token"
+msgstr "Токен Github"
+
+msgctxt "#32154"
+msgid "Encryption password (optional)"
+msgstr "Пароль шифрования (опционально)"
+
+msgctxt "#32155"
+msgid "Gist ID (optional)"
+msgstr "Gist ID (опционально)"
+
+msgctxt "#32156"
+msgid "File name (optional)"
+msgstr "Название файла (опционально)"
+
+msgctxt "#32157"
+msgid "File url (optional)"
+msgstr "Ссылка на файл (опционально)"

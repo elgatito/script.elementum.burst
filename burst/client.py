@@ -28,6 +28,7 @@ from kodi_six import xbmcaddon
 
 from requests.packages.urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
+from requests.cookies import create_cookie
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"
 if os.name == 'nt':
@@ -236,6 +237,16 @@ class Client:
                 self._cookies.load(self._cookies_filename)
             except Exception as e:
                 log.debug("Reading cookies error: %s" % repr(e))
+
+    def cookie_exists(self, cookie_name, domain):
+        for cookie in self._cookies:
+            if cookie.domain == domain and cookie.name == cookie_name:
+                return True
+        return False
+
+    def add_cookie(self, cookie):
+        cookie_obj = create_cookie(domain=cookie["domain"], name=cookie["name"], value=cookie["value"], path=cookie["path"], secure=cookie["secure"], expires=cookie["expirationDate"], discard=False, rest=cookie["rest"])
+        self._cookies.set_cookie(cookie_obj)
 
     def save_cookies(self):
         self._cookies_filename = self._locate_cookies(self.url)

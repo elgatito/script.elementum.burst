@@ -17,10 +17,10 @@ from .providers.definitions import definitions, longest
 from .utils import ADDON_PATH, get_int, clean_size, get_alias, with_defaults
 from kodi_six import xbmc, xbmcaddon, py2_encode
 if PY3:
-    from urllib.parse import quote, unquote
+    from urllib.parse import quote, unquote, urlparse
     unicode = str
 else:
-    from urllib import quote, unquote
+    from urllib import quote, unquote, urlparse
 
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
     """ Payload formatter to format results the way Elementum expects them
@@ -266,6 +266,15 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                             login_object = login_object.replace('CSRF_TOKEN', '"%s"' % csrf_token.group(1))
                         else:
                             logged_in = True
+
+                if not logged_in and 'login_cookie' in definition and definition['login_cookie']:
+                    cookie_domain = '{uri.netloc}'.format(uri=urlparse(definition['root_url']))
+                    cookie_domain = re.sub('www\d*\.', '', cookie_domain)
+
+                    client._read_cookies()
+                    if client.cookie_exists(definition['login_cookie'], urlparse(definition['root_url']).netloc):
+                        logged_in = True
+                        log.info("[%s] Using Cookie sync for authentication" % (provider))
 
                 if 'token_auth' in definition:
                     # log.debug("[%s] logging in with: %s" % (provider, login_object))

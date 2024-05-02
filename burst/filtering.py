@@ -289,7 +289,7 @@ class Filtering:
                 if 'jp' in self.info['titles'] and self.info['titles']['jp']:
                     self.info['titles']['original'] = self.info['titles']['jp']
                 else:
-                    overwrite_anime_original_title = 'en' # fallback to English if Romaji is not available
+                    overwrite_anime_original_title = 'en'  # fallback to English if Romaji is not available
             if overwrite_anime_original_title == 'en' or overwrite_anime_original_title == '2':
                 if 'en' in self.info['titles'] and self.info['titles']['en']:
                     self.info['titles']['original'] = self.info['titles']['en']

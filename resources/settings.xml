@@ -26,6 +26,17 @@
     <setting label="32071" id="timeout_help" type="text" enable="false" subsetting="true" />
   </category>
 
+<!-- Cookie Sync -->
+  <category label="32151">
+    <setting label="32152" id="cookie_sync_enabled" type="bool" default="true" />
+
+    <setting label="32153" id="cookie_sync_token" type="text" enable="eq(-1,true)" />
+    <setting label="32154" id="cookie_sync_password" type="text" enable="eq(-2,true)" />
+    <setting label="32155" id="cookie_sync_gist_id" type="text" enable="eq(-3,true)" />
+    <setting label="32156" id="cookie_sync_filename" type="text" enable="eq(-4,true)" default="kevast-gist-default.json" />
+    <setting label="32157" id="cookie_sync_fileurl" type="text" enable="eq(-5,true)" default="" />
+  </category>
+
   <!-- Providers -->
   <category label="32128">
     <!-- Providers-Public-1-Begin -->
