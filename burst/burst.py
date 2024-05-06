@@ -37,7 +37,7 @@ try:
     hasCrypto = True
 except:
     hasCrypto = False
-    
+
 from .provider import process
 from .providers.definitions import definitions, longest
 from .filtering import apply_filters, Filtering, cleanup_results
@@ -703,7 +703,7 @@ def get_search_query(definition, key):
 def cookie_sync():
     if not cookie_sync_enabled or not cookie_sync_token:
         return
-    
+
     if not hasCrypto:
         log.error("Cryptodome Python module is not available for current Kodi version")
         return
