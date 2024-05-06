@@ -120,6 +120,8 @@ class Client:
         self.url = None
         self.user_agent = USER_AGENT
         self.content = None
+        self.request_cookies = None
+        self.response_cookies = None
         self.status = None
         self.username = None
         self.token = None
@@ -340,6 +342,8 @@ class Client:
                     self.content = response.content.decode(self.response_charset, 'ignore')
                 else:
                     self.content = response.text
+                self.request_cookies = response.request.headers.get('Cookie')
+                self.response_cookies = response.cookies.get_dict()
 
         except requests.exceptions.InvalidSchema as e:
             # If link points to a magnet: then it can be used as a content

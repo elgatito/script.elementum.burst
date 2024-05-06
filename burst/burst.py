@@ -409,22 +409,36 @@ def extract_torrents(provider, client):
                     parsed_url = urlparse(torrent.split('|')[0])
                     cookie_domain = '{uri.netloc}'.format(uri=parsed_url)
                     cookie_domain = re.sub('www\d*\.', '', cookie_domain)
-                    cookies = []
+                    cookies = {}
+
+                    # Collect cookies used in request
+                    if client.request_cookies:
+                        for item in client.request_cookies.split(';'):
+                            item = item.strip()
+                            if not item:
+                                continue
+                            if '=' not in item:
+                                cookies[item] = None
+                                continue
+                            k, v = item.split('=', 1)
+                            cookies[k] = v
+
+                    # Collect session cookies for current domain
                     for cookie in client._cookies:
-                        if cookie_domain in cookie.domain:
-                            cookies.append(cookie)
-                    headers = {}
+                        if cookie.domain in cookie_domain:
+                            cookies[cookie.name] = cookie.value
+
+                    headers = {'User-Agent': user_agent}
+                    if client.request_headers:
+                        headers.update(client.request_headers)
+
+                    if client.url:
+                        headers['Referer'] = client.url
+                        headers['Origin'] = client.url
+
                     if cookies:
-                        headers = {'User-Agent': user_agent}
-                        if client.request_headers:
-                            headers.update(client.request_headers)
-                        if client.url:
-                            headers['Referer'] = client.url
-                            headers['Origin'] = client.url
                         # Need to set Cookie afterwards to avoid rewriting it with session Cookies
-                        headers['Cookie'] = ";".join(["%s=%s" % (c.name, c.value) for c in cookies])
-                    else:
-                        headers = {'User-Agent': user_agent}
+                        headers['Cookie'] = ";".join(["%s=%s" % (k, v) for (k, v) in iteritems(cookies)])
 
                     torrent = append_headers(torrent, headers)
 
