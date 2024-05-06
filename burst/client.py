@@ -240,7 +240,7 @@ class Client:
 
     def cookie_exists(self, cookie_name, domain):
         for cookie in self._cookies:
-            if cookie.domain == domain and cookie.name == cookie_name:
+            if cookie.name == cookie_name and cookie.domain in domain:
                 return True
         return False
 
