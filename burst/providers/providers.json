@@ -2594,6 +2594,7 @@
         "general_query": "",
         "language": null,
         "languages": "en",
+        "login_cookie": "tluid",
         "login_failed": "Invalid",
         "login_object": "{'username': USERNAME, 'password': PASSWORD}",
         "login_path": "/user/account/login/",
