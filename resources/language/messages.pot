@@ -438,3 +438,7 @@ msgstr ""
 msgctxt "#32157"
 msgid "File url (optional)"
 msgstr ""
+
+msgctxt "#32158"
+msgid "Configure proxy in Elementum in the same way as here[CR]to avoid issues with downloading torrent files."
+msgstr ""

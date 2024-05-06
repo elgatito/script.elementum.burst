@@ -437,3 +437,7 @@ msgstr "Название файла (опционально)"
 msgctxt "#32157"
 msgid "File url (optional)"
 msgstr "Ссылка на файл (опционально)"
+
+msgctxt "#32158"
+msgid "Configure proxy in Elementum in the same way as here[CR]to avoid issues with downloading torrent files."
+msgstr "Настройте прокси в elementum так же как тут,[CR]чтобы избежать проблем с загрузкой торрент-файлов."
