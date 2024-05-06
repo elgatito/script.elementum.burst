@@ -6,7 +6,7 @@
         <import addon="script.module.kodi-six" />
         <import addon="script.module.requests" />
         <import addon="script.module.future" version="0.16.0.4"/>
-        <import addon="script.module.pycryptodome" />
+        <import addon="script.module.pycryptodome" optional="true" />
     </requires>
     <extension point="xbmc.python.script" library="burst.py">
         <provides>executable</provides>
