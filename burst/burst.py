@@ -690,9 +690,12 @@ def cookie_sync():
     log.debug("Fetching cookies from Github")
 
     global cookie_sync_gist_id
-    if not cookie_sync_gist_id and not cookie_fetch_gist_id():
-        log.error("Could not fetch gist id for cookie-sync")
-        return
+    # Try to get url to a Gist's file first, if we have Gist ID
+    if not cookie_sync_gist_id or not cookie_fetch_fileurl():
+        # Try to get both Gist ID and Gist's file url
+        if not cookie_fetch_gist_id():
+            log.error("Could not fetch gist id for cookie-sync")
+            return
 
     set_setting('cookie_sync_gist_id', cookie_sync_gist_id)
     set_setting('cookie_sync_fileurl', cookie_sync_fileurl)
@@ -740,6 +743,29 @@ def cookie_fetch_gist_id():
                 return True
     except Exception as e:
         log.error("Gist list failed with: %s" % (repr(e)))
+
+    return False
+
+def cookie_fetch_fileurl():
+    global cookie_sync_gist_id, cookie_sync_token, cookie_sync_filename, cookie_sync_fileurl
+
+    try:
+        url = "https://api.github.com/gists/%s" % (cookie_sync_gist_id)
+        headers = {'Authorization': 'Bearer %s' % cookie_sync_token}
+        resp = requests.get(url, headers=headers)
+        item = json.loads(resp.text)
+
+        if "files" not in item or "id" not in item:
+            return False
+        for k, v in iteritems(item["files"]):
+            if "filename" not in v or v["filename"] != cookie_sync_filename:
+                continue
+            cookie_sync_gist_id = item["id"]
+            cookie_sync_fileurl = v["raw_url"]
+
+            return True
+    except Exception as e:
+        log.error("Gist get failed with: %s" % (repr(e)))
 
     return False
 
