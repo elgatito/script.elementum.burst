@@ -951,6 +951,7 @@
         "general_query": "",
         "language": null,
         "languages": "it",
+        "login_cookie": "uid",
         "login_failed": "Nome Utente non corretto",
         "login_object": "{'uid': USERNAME, 'pwd': PASSWORD}",
         "login_path": "/index.php?page=login&returnto=index.php",
