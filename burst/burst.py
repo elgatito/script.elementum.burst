@@ -518,19 +518,22 @@ def extract_from_api(provider, client):
         results = get_nested_value(data, api_format['results'], [])
     log.debug("[%s] results: %s" % (provider, repr(results)))
 
-    if 'subresults' in api_format:
+    if 'subresults' in api_format:  # A little too specific to YTS/AniLibria but who cares...
         from copy import deepcopy
-        for result in results:  # A little too specific to YTS but who cares...
-            result['name'] = result[api_format['name']]
         subresults = []
-        subresults_keys = api_format['subresults'].split('.')
-        for key in subresults_keys:
-            for result in results:
+        for result in results:
+            subresults_keys = api_format['subresults'].split('.')
+            for key in subresults_keys:
                 if key in result:
-                    for subresult in result[key]:
+                    if isinstance(result[key], list):
+                        for subresult in result[key]:
+                            sub = deepcopy(result)
+                            sub.update(subresult)
+                            subresults.append(sub)
+                    elif isinstance(result[key], dict):
                         sub = deepcopy(result)
-                        sub.update(subresult)
-                        subresults.append(sub)
+                        sub.update(result[key])
+                        result = sub
         results = subresults
         log.debug("[%s] with subresults: %s" % (provider, repr(results)))
 
@@ -564,7 +567,7 @@ def extract_from_api(provider, client):
                 log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
         if 'info_hash' in api_format:
             info_hash = result[api_format['info_hash']]
-        if 'quality' in api_format:  # Again quite specific to YTS...
+        if 'quality' in api_format:  # Again quite specific to YTS and AniLibria
             name = "%s - %s" % (name, get_nested_value(result, api_format['quality'], ""))
         if 'size' in api_format:
             size = result[api_format['size']]
