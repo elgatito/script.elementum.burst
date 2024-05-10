@@ -187,11 +187,6 @@ class Client:
                 self.proxy_url = "{0}://{1}:{2}".format("http", "127.0.0.1", "65222")
                 if info and "internal_proxy_url" in info:
                     self.proxy_url = info["internal_proxy_url"]
-
-                self.session.proxies = {
-                    'http': self.proxy_url,
-                    'https': self.proxy_url,
-                }
         if proxy['enabled']:
             if proxy['use_type'] == 0 and info and "proxy_url" in info:
                 log.debug("Setting proxy from Elementum: %s" % (info["proxy_url"]))
@@ -212,12 +207,11 @@ class Client:
                 elementum_proxy_url_prefix = elementum_proxy_url_parts[0].lower()
                 if elementum_proxy_url_prefix in elementum_proxy_types_overrides:
                     self.proxy_url = proxy_url_scheme_separator.join([elementum_proxy_types_overrides[elementum_proxy_url_prefix]] + elementum_proxy_url_parts[1:])
-
-            if self.proxy_url:
-                self.session.proxies = {
-                    'http': self.proxy_url,
-                    'https': self.proxy_url,
-                }
+        if self.proxy_url:
+            self.session.proxies = {
+                'http': self.proxy_url,
+                'https': self.proxy_url,
+            }
 
     def _create_cookies(self, payload):
         return urlencode(payload)
