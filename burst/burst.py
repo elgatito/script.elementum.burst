@@ -500,20 +500,22 @@ def extract_from_api(provider, client):
     definition = get_alias(definition, get_setting("%s_alias" % provider))
     api_format = definition['api_format']
 
+    def get_nested_value(result, key, default):
+        keys = key.split('.')
+        for key in keys:
+            if key in result:
+                result = result[key]
+            else:
+                result = default
+        return result
+
     results = []
     # If 'results' is empty - then we can try to take all the data as an array of results.
     # Usable when api returns results without any other data.
     if not api_format['results']:
         results = data
     else:
-        result_keys = api_format['results'].split('.')
-        log.debug("[%s] result_keys: %s" % (provider, repr(result_keys)))
-        for key in result_keys:
-            if key in data:
-                data = data[key]
-            else:
-                data = []
-        results = data
+        results = get_nested_value(data, api_format['results'], [])
     log.debug("[%s] results: %s" % (provider, repr(results)))
 
     if 'subresults' in api_format:
@@ -545,11 +547,11 @@ def extract_from_api(provider, client):
         if 'id' in api_format:
             id = result[api_format['id']]
         if 'name' in api_format:
-            name = result[api_format['name']]
+            name = get_nested_value(result, api_format['name'], "")
         if 'description' in api_format:
             if name:
                 name += ' '
-            name += result[api_format['description']]
+            name += get_nested_value(result, api_format['description'], "")
         if 'torrent' in api_format:
             torrent = result[api_format['torrent']]
             if 'download_path' in definition:
@@ -563,7 +565,7 @@ def extract_from_api(provider, client):
         if 'info_hash' in api_format:
             info_hash = result[api_format['info_hash']]
         if 'quality' in api_format:  # Again quite specific to YTS...
-            name = "%s - %s" % (name, result[api_format['quality']])
+            name = "%s - %s" % (name, get_nested_value(result, api_format['quality'], ""))
         if 'size' in api_format:
             size = result[api_format['size']]
             if isinstance(size, (long, int)):
