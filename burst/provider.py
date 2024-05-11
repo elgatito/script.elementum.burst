@@ -269,9 +269,6 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                             logged_in = True
 
                 if not logged_in and 'login_cookie' in definition and definition['login_cookie']:
-                    cookie_domain = '{uri.netloc}'.format(uri=urlparse(definition['root_url']))
-                    cookie_domain = re.sub('www\d*\.', '', cookie_domain)
-
                     client._read_cookies()
                     if client.cookie_exists(definition['login_cookie'], urlparse(definition['root_url']).netloc):
                         logged_in = True
