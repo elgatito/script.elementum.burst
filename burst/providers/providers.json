@@ -140,14 +140,14 @@
         "tv_keywords2": ""
     },
     "anilibria": {
-        "anime_keywords": "{title:jp}",
+        "anime_keywords": "{title:ru:jp}",
         "base_url": "https://api.anilibria.tv/v3/title/search?search=QUERY&filter=names,torrents&limit=15",
         "color": "FFFFFFFF",
         "enabled": true,
         "general_keywords": "{title}",
-        "language": "jp",
+        "language": "ru",
         "languages": "ru",
-        "movie_keywords": "{title:jp}",
+        "movie_keywords": "{title:ru:jp}",
         "name": "AniLibria",
         "is_api": true,
         "api_format": {
@@ -164,10 +164,10 @@
         },
         "predefined": false,
         "private": false,
-        "season_keywords": "{title:jp}",
+        "season_keywords": "{title:ru:jp}",
         "separator": "%20",
         "subpage": false,
-        "tv_keywords": "{title:jp}"
+        "tv_keywords": "{title:ru:jp}"
     },
     "ArabP2P": {
         "anime_extra": "",
