@@ -2888,6 +2888,7 @@
         "initial_url": "/",
         "language": "fr",
         "languages": "fr",
+        "login_cookie": "ygg_",
         "login_failed": "Bad credentials",
         "login_headers": "{'X-Requested-With': 'XMLHttpRequest', 'Origin': definition['root_url'], 'Referer': definition['root_url']}",
         "login_object": "{'id': USERNAME, 'pass': PASSWORD, 'ci_csrf_token' : ''}",
