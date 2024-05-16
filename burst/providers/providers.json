@@ -1273,7 +1273,7 @@
         "name": "Кинозал",
         "parser": {
             "infohash": "",
-            "name": "item('a', order=1)",
+            "name": "'{} ({})'.format(item('a', order=1), item(tag='a', attribute='class', order=1).replace('r0', 'Обычная раздача').replace('r1', 'Золотая раздача').replace('r2', 'Серебрянная раздача'))",
             "peers": "item(tag='td', order=5)",
             "referer": "'https://s-kinozal-tv.appspot.com%s' % item(tag='a', attribute='href', order=1)",
             "row": "find_once('table', ('class', 't_peer'), order=1).find_all('tr', start=2)",
@@ -1725,7 +1725,7 @@
         "name": "NNM-Club",
         "parser": {
             "infohash": "",
-            "name": "item('a', order=1)",
+            "name": "'{} ({})'.format(item('a', order=1), item(tag='span', attribute='title', order=1))",
             "peers": "item(tag='td', order=7)",
             "row": "find_once('table', ('class', 'tablesorter'), order=1).find_all('tr', ('class', ['prow1', 'prow2']))",
             "seeds": "item(tag='td', order=6)",
