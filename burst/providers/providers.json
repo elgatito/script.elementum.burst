@@ -3162,7 +3162,7 @@
         "anime_query": "&cat=6",
         "base_url": "https://torrent.by/search?search=QUERY&search_in=0",
         "color": "FFFFFFFF",
-        "enabled": true,
+        "enabled": false,
         "general_keywords": "{title:original}",
         "general_query": "&cat=0",
         "language": "ru",
