@@ -71,29 +71,29 @@ class Filtering:
     """
     def __init__(self):
         resolutions = OrderedDict()
-        resolutions['filter_240p'] = ['240[pр]', 'vhs\-?rip']
-        resolutions['filter_480p'] = ['480[pр]', 'xvid|dvd|dvdrip|hdtv|web\-(dl)?rip|iptv|sat\-?rip|tv\-?rip']
-        resolutions['filter_720p'] = ['720[pр]|1280x720', 'hd720p?|hd\-?rip|b[rd]rip']
-        resolutions['filter_1080p'] = ['1080[piр]|1920x1080', 'hd1080p?|fullhd|fhd|blu\W*ray|bd\W*remux']
+        resolutions['filter_240p'] = ['240[pр]', r'vhs\-?rip']
+        resolutions['filter_480p'] = ['480[pр]', r'xvid|dvd|dvdrip|hdtv|web\-(dl)?rip|iptv|sat\-?rip|tv\-?rip']
+        resolutions['filter_720p'] = ['720[pр]|1280x720', r'hd720p?|hd\-?rip|b[rd]rip']
+        resolutions['filter_1080p'] = ['1080[piр]|1920x1080', r'hd1080p?|fullhd|fhd|blu\W*ray|bd\W*remux']
         resolutions['filter_2k'] = ['1440[pр]', '2k']
         resolutions['filter_4k'] = ['4k|2160[pр]|uhd', '4k|hd4k']
-        resolutions['filter_music'] = ['mp3|flac|alac|ost|sound\-?track']
+        resolutions['filter_music'] = [r'mp3|flac|alac|ost|sound\-?track']
         self.resolutions = resolutions
 
         self.release_types = {
-            'filter_brrip': ['brrip|bd\-?rip|blu\-?ray|bd\-?remux'],
-            'filter_webdl': ['web_?\-?dl|web\-?rip|dl\-?rip|yts'],
-            'filter_hdrip': ['hd\-?rip'],
-            'filter_hdtv': ['hd\-?tv'],
-            'filter_dvd': ['dvd|dvd\-?rip|vcd\-?rip'],
-            'filter_dvdscr': ['dvd\-?scr'],
+            'filter_brrip': [r'brrip|bd\-?rip|blu\-?ray|bd\-?remux'],
+            'filter_webdl': [r'web_?\-?dl|web\-?rip|dl\-?rip|yts'],
+            'filter_hdrip': [r'hd\-?rip'],
+            'filter_hdtv': [r'hd\-?tv'],
+            'filter_dvd': [r'dvd|dvd\-?rip|vcd\-?rip'],
+            'filter_dvdscr': [r'dvd\-?scr'],
             'filter_screener': ['screener|scr'],
             'filter_3d': ['3d'],
             'filter_telesync': ['telesync|ts|tc'],
-            'filter_cam': ['cam|hd\-?cam'],
-            'filter_tvrip': ['tv\-?rip|sat\-?rip|dvb'],
-            'filter_iptvrip': ['iptv\-?rip'],
-            'filter_vhsrip': ['vhs\-?rip'],
+            'filter_cam': [r'cam|hd\-?cam'],
+            'filter_tvrip': [r'tv\-?rip|sat\-?rip|dvb'],
+            'filter_iptvrip': [r'iptv\-?rip'],
+            'filter_vhsrip': [r'vhs\-?rip'],
             'filter_trailer': ['trailer|трейлер|тизер'],
             'filter_workprint': ['workprint'],
             'filter_line': ['line']

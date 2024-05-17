@@ -100,10 +100,10 @@ def safe_name_torrent(string):
     """
     # erase keyword
     string = string.lower()
-    string = re.sub(u'^\[.*?\]', u'', string)  # erase [HorribleSub] for ex.
+    string = re.sub(r'^\[.*?\]', u'', string)  # erase [HorribleSub] for ex.
     # check for anime
-    string = re.sub(u'- ([0-9][0-9][0-9][0-9]) ', u' \g<1>', string + u' ')
-    string = re.sub(u'- ([0-9]+) ', u'- EP\g<1>', string + u' ')
+    string = re.sub(r'- ([0-9][0-9][0-9][0-9]) ', r' \g<1>', string + u' ')
+    string = re.sub(r'- ([0-9]+) ', r'- EP\g<1>', string + u' ')
     if 'season' not in string.lower():
         string = string.lower().replace(u' episode ', u' - EP')
 

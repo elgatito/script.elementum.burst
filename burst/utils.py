@@ -45,7 +45,7 @@ class Magnet:
     def __init__(self, magnet):
         self.magnet = magnet + '&'
 
-        info_hash = re.search('urn:btih:(\w+)&', self.magnet, re.IGNORECASE)
+        info_hash = re.search(r'urn:btih:(\w+)&', self.magnet, re.IGNORECASE)
         self.info_hash = None
         if info_hash:
             self.info_hash = info_hash.group(1)

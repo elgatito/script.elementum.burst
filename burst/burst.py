@@ -413,7 +413,7 @@ def extract_torrents(provider, client):
                 else:
                     parsed_url = urlparse(torrent.split('|')[0])
                     cookie_domain = '{uri.netloc}'.format(uri=parsed_url)
-                    cookie_domain = re.sub('www\d*\.', '', cookie_domain)
+                    cookie_domain = re.sub(r'www\d*\.', '', cookie_domain)
                     cookies = {}
 
                     # Collect cookies used in request
@@ -606,50 +606,50 @@ def extract_from_page(provider, content):
             log.debug('[%s] Matched magnet link: %s' % (provider, repr(result)))
             return result
 
-        matches = re.findall('http(.*?).torrent["\']', content)
+        matches = re.findall(r'http(.*?).torrent["\']', content)
         if matches:
             result = 'http' + matches[0] + '.torrent'
             result = result.replace('torcache.net', 'itorrents.org')
             log.debug('[%s] Matched torrent link: %s' % (provider, repr(result)))
             return result
 
-        matches = re.findall('/download\?token=[A-Za-z0-9%]+', content)
+        matches = re.findall(r'/download\?token=[A-Za-z0-9%]+', content)
         if matches:
             result = definition['root_url'] + matches[0]
             log.debug('[%s] Matched download link with token: %s' % (provider, repr(result)))
             return result
 
-        matches = re.findall('"(/download/[A-Za-z0-9]+)"', content)
+        matches = re.findall(r'"(/download/[A-Za-z0-9]+)"', content)
         if matches:
             result = definition['root_url'] + matches[0]
             log.debug('[%s] Matched download link: %s' % (provider, repr(result)))
             return result
 
-        matches = re.findall('/torrents/download/\?id=[a-z0-9-_.]+', content)  # t411
+        matches = re.findall(r'/torrents/download/\?id=[a-z0-9-_.]+', content)  # t411
         if matches:
             result = definition['root_url'] + matches[0]
             log.debug('[%s] Matched download link with an ID: %s' % (provider, repr(result)))
             return result
 
-        matches = re.findall('\: ([A-Fa-f0-9]{40})', content)
+        matches = re.findall(r'\: ([A-Fa-f0-9]{40})', content)
         if matches:
             result = "magnet:?xt=urn:btih:" + matches[0]
             log.debug('[%s] Matched magnet info_hash search: %s' % (provider, repr(result)))
             return result
 
-        matches = re.findall('/download.php\?id=([A-Za-z0-9]{40})\W', content)
+        matches = re.findall(r'/download.php\?id=([A-Za-z0-9]{40})\W', content)
         if matches:
             result = "magnet:?xt=urn:btih:" + matches[0]
             log.debug('[%s] Matched download link: %s' % (provider, repr(result)))
             return result
 
-        matches = re.findall('(/download.php\?id=[A-Za-z0-9]+[^\s\'"]*)', content)
+        matches = re.findall(r'(/download.php\?id=[A-Za-z0-9]+[^\s\'"]*)', content)
         if matches:
             result = definition['root_url'] + matches[0]
             log.debug('[%s] Matched download link: %s' % (provider, repr(result)))
             return result
 
-        matches = re.findall('/get_torrent/([A-Fa-f0-9]{40})', content)
+        matches = re.findall(r'/get_torrent/([A-Fa-f0-9]{40})', content)
         if matches:
             result = "magnet:?xt=urn:btih:" + matches[0]
             log.debug('[%s] Matched magnet info_hash search: %s' % (provider, repr(result)))
