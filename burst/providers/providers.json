@@ -1881,6 +1881,7 @@
         "parser": {
             "infohash": "",
             "name": "item(tag='a', select=('class', 'genmed'), order=1)",
+            "description": "item(tag='img', attribute='title', order=2)",
             "peers": "item(tag='td', select=('class', 'leechmed'), order=1)",
             "row": "find_once('table', ('class', 'forumline'), order=1).find_all('tr', start=2)",
             "seeds": "item(tag='td', select=('class', 'seedmed'), order=1)",
