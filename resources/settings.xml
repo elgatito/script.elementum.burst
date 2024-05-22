@@ -118,6 +118,10 @@
       <setting id="nyaa_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="nyaa_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
+    <setting label="[B]PiratBit[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_piratbit" type="bool" default="false" />
+      <setting id="piratbit_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="piratbit_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+
     <setting label="[B]RuTor[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_rutor" type="bool" default="false" />
       <setting id="rutor_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="rutor_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
