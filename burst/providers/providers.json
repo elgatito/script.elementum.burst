@@ -1973,7 +1973,6 @@
         "anime_keywords_fallback": "\"{title:en:ru:original}\" Сезон {season}",
         "anime_keywords_fallback2": "\"{title:en:ru:original}\" {season}",
         "base_url": "https://rutracker.org/forum/tracker.php?nm=QUERYEXTRA&prev_new=0&prev_oop=1&f[]=-1&o=10&s=2&oop=1&pn=",
-        "charset": "windows-1251",
         "color": "FF89D644",
         "enabled": true,
         "general_extra": "",
