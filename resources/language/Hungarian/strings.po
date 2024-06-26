@@ -440,3 +440,31 @@ msgstr ""
 msgctxt "#32158"
 msgid "Configure proxy in Elementum in the same way as here[CR]to avoid issues with downloading torrent files."
 msgstr ""
+
+msgctxt "#32159"
+msgid "Network configuration"
+msgstr ""
+
+msgctxt "#32160"
+msgid "Custom providers"
+msgstr ""
+
+msgctxt "#32161"
+msgid "Search results"
+msgstr ""
+
+msgctxt "#32162"
+msgid "Search timeout"
+msgstr ""
+
+msgctxt "#32163"
+msgid "Additional settings"
+msgstr ""
+
+msgctxt "#32164"
+msgid "Use custom browser User Agent"
+msgstr ""
+
+msgctxt "#32165"
+msgid "User Agent"
+msgstr ""

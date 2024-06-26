@@ -2,6 +2,8 @@
 <settings>
   <!-- General -->
   <category label="32000">
+    <setting label="32159" type="lsep" />
+
     <setting label="32125" id="use_elementum_proxy" type="bool" default="true" />
     <setting id="elementum_proxy_help" label="32139" type="text" enable="false" subsetting="true" />
 
@@ -11,19 +13,23 @@
     <setting label="32140" id="use_tor_dns" type="bool" default="false" enable="eq(-3,false)" />
     <setting id="tor_dns_help" label="32141" type="text" enable="false" subsetting="true" />
 
-    <setting type="sep"/>
+    <setting label="32160" type="lsep" />
     <setting label="32143" id="overrides_path" type="folder" default="special://profile/addon_data/script.elementum.burst/os.path.join(translatePath(ADDON_PROFILE), 'overrides.json')" source="auto" option="writeable" />
 
-    <setting type="sep"/>
+    <setting label="32161" type="lsep" />
     <setting label="32033" id="min_size" type="slider" option="float" range="0,0.25,100" default="0" />
     <setting label="32034" id="max_size" type="slider" option="float" range="1,0.25,500" default="100" />
     <setting label="32040" id="max_results" type="slider" default="10" option="int" range="1,1,25" />
     <setting label="32119" id="sort_by" type="enum" lvalues="32120|32121|32122|32123" default="3" />
 
-    <setting type="sep"/>
+    <setting label="32162" type="lsep" />
     <setting label="32124" id="auto_timeout" type="bool" default="true" />
     <setting label="32070" id="timeout" type="slider" default="25" option="int" range="3,1,180" enable="eq(-1,false)" />
     <setting label="32071" id="timeout_help" type="text" enable="false" subsetting="true" />
+
+    <setting label="32163" type="lsep" />
+    <setting label="32164" id="use_custom_user_agent" type="bool" default="false" />
+      <setting id="custom_user_agent" label="32165" type="text" default="" enable="eq(-1,true)" />
   </category>
 
 <!-- Cookie Sync -->

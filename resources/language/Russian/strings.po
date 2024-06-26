@@ -441,3 +441,31 @@ msgstr "Ссылка на файл (опционально)"
 msgctxt "#32158"
 msgid "Configure proxy in Elementum in the same way as here[CR]to avoid issues with downloading torrent files."
 msgstr "Настройте прокси в elementum так же как тут,[CR]чтобы избежать проблем с загрузкой торрент-файлов."
+
+msgctxt "#32159"
+msgid "Network configuration"
+msgstr "Сетевые настройки"
+
+msgctxt "#32160"
+msgid "Custom providers"
+msgstr "Пользовательские трекеры"
+
+msgctxt "#32161"
+msgid "Search results"
+msgstr "Результаты поиска"
+
+msgctxt "#32162"
+msgid "Search timeout"
+msgstr "Тайм-аут для поиска"
+
+msgctxt "#32163"
+msgid "Additional settings"
+msgstr "Дополнительные настройки"
+
+msgctxt "#32164"
+msgid "Use custom browser User Agent"
+msgstr "Использовать пользовательский User Agent браузера"
+
+msgctxt "#32165"
+msgid "User Agent"
+msgstr ""

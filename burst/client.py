@@ -33,6 +33,13 @@ from requests.cookies import create_cookie
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
 if os.name == 'nt':
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+
+if get_setting("use_custom_user_agent", bool):
+    agent = get_setting("custom_user_agent", unicode)
+    if agent:
+        USER_AGENT = agent
+        log.debug("Using custom User Agent: %s" % (USER_AGENT))
+
 PATH_TEMP = translatePath("special://temp")
 
 # Custom DNS default data
