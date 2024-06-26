@@ -26,9 +26,9 @@ commentclose = re.compile(r'--\s*>')
 # see http://www.w3.org/TR/html5/tokenization.html#tag-open-state
 # and http://www.w3.org/TR/html5/tokenization.html#tag-name-state
 # note: if you change tagfind/attrfind remember to update locatestarttagend too
-tagfind = re.compile('([a-zA-Z][^\t\n\r\f />\x00]*)(?:\s|/(?!>))*')
+tagfind = re.compile(r'([a-zA-Z][^\t\n\r\f />\x00]*)(?:\s|/(?!>))*')
 # this regex is currently unused, but left for backward compatibility
-tagfind_tolerant = re.compile('[a-zA-Z][^\t\n\r\f />\x00]*')
+tagfind_tolerant = re.compile(r'[a-zA-Z][^\t\n\r\f />\x00]*')
 
 attrfind = re.compile(
     r'((?<=[\'"\s/])[^\s/>][^\s/=>]*)(\s*=+\s*'
@@ -51,7 +51,7 @@ locatestarttagend = re.compile(r"""
 endendtag = re.compile('>')
 # the HTML 5 spec, section 8.1.2.2, doesn't allow spaces between
 # </ and the tag name, so maybe this should be fixed
-endtagfind = re.compile('</\s*([a-zA-Z][-.a-zA-Z0-9:_]*)\s*>')
+endtagfind = re.compile(r'</\s*([a-zA-Z][-.a-zA-Z0-9:_]*)\s*>')
 
 
 class HTMLParseError(Exception):

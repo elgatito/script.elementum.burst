@@ -3130,7 +3130,7 @@
         "name": "Zamunda",
         "parser": {
             "infohash": "",
-            "name": "item(tag='a', order=2) + ' | ' + unquote(re.sub('/download\\.php/\\d+/','',item.take_with_root(('class', 'fa fa-download'))[0].attr['href'].replace('.torrent', '')))",
+            "name": "item(tag='a', order=2) + ' | ' + unquote(re.sub(r'/download\\.php/\\d+/','',item.take_with_root(('class', 'fa fa-download'))[0].attr['href'].replace('.torrent', '')))",
             "peers": "item(tag='td', order=-1)",
             "row": "find_once('table', ('id', 'zbtable')).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=-2)",
@@ -3175,7 +3175,7 @@
         "name": "Zelka",
         "parser": {
             "infohash": "item.take_with_root(('src', '//img.zamunda.se/pic/magnet-icon-12w-12h.gif'))[0].attr['href'].replace('magnet:?xt=urn:btih:', '') if item.take_with_root(('src', '//img.zamunda.se/pic/magnet-icon-12w-12h.gif')) else ''",
-            "name": "item(tag='a', order=2) + ' | ' + unquote(re.sub('download\\.php/\\d+/','',item.take_with_root(('src', '//img.zamunda.se/pic/download.gif'))[0].attr['href'].replace('.torrent', '')))",
+            "name": "item(tag='a', order=2) + ' | ' + unquote(re.sub(r'download\\.php/\\d+/','',item.take_with_root(('src', '//img.zamunda.se/pic/download.gif'))[0].attr['href'].replace('.torrent', '')))",
             "peers": "item(tag='td', order=-1)",
             "row": "find_once('table', ('width', '900')).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=-2)",
