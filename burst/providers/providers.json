@@ -2392,7 +2392,7 @@
         "language": "en",
         "languages": "ua",
         "login_cookie": "toloka_sid",
-        "login_failed": "Такий псевдонім не існує, або не збігається пароль.",
+        "login_failed": "Зареєструватися",
         "login_object": "{'username': USERNAME, 'password': PASSWORD, 'autologin': '1', 'login': 'Enter'}",
         "login_path": "/login.php",
         "movie_extra": "",
