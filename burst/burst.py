@@ -734,7 +734,7 @@ def cookie_sync(is_silent):
         if not cookie_fetch_gist_id():
             err = "Could not fetch gist id for cookie-sync"
             log.error(err)
-            
+
             if not is_silent:
                 p_dialog.close()
                 notify(translation(32167) % (err), image=get_icon_path())
