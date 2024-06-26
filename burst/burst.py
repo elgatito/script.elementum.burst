@@ -399,7 +399,8 @@ def extract_torrents(provider, client):
                 if referer_search:
                     log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', referer_search, referer))
 
-            name = '{} ({})'.format(name, description) if description else name
+            if description:
+                name = '{} ({})'.format(name, description)
 
             # Pass client cookies with torrent if private
             if not torrent.startswith('magnet'):
