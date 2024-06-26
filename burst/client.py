@@ -139,6 +139,7 @@ class Client:
         self.response_charset = response_charset
         self.is_api = is_api
 
+        self.use_cookie_sync = False
         self.needs_proxylock = False
 
         self.headers = dict()

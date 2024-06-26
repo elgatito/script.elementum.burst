@@ -468,3 +468,15 @@ msgstr ""
 msgctxt "#32165"
 msgid "User Agent"
 msgstr ""
+
+msgctxt "#32166"
+msgid "Syncing cookies ..."
+msgstr ""
+
+msgctxt "#32167"
+msgid "[B]Sync error:[/B] %s"
+msgstr ""
+
+msgctxt "#32168"
+msgid "[B]Cookie Sync could not authorize:[/B] %s"
+msgstr ""

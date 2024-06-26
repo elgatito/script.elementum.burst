@@ -149,7 +149,7 @@ def search(payload, method="general"):
     available_providers = 0
     request_time = time.time()
 
-    cookie_sync()
+    cookie_sync(payload['silent'])
     providers = get_enabled_providers(method)
 
     if len(providers) == 0:
@@ -695,9 +695,9 @@ def run_provider(provider, payload, method, start_time, timeout):
         filterInstance.use_general(provider, payload)
 
     if 'is_api' in definitions[provider]:
-        results = process(provider=provider, generator=extract_from_api, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'], start_time=start_time, timeout=timeout)
+        results = process(provider=provider, generator=extract_from_api, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'], start_time=start_time, timeout=timeout, is_silent=payload['silent'])
     else:
-        results = process(provider=provider, generator=extract_torrents, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'], start_time=start_time, timeout=timeout)
+        results = process(provider=provider, generator=extract_torrents, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'], start_time=start_time, timeout=timeout, is_silent=payload['silent'])
 
     # Cleanup results from duplcates before limiting each provider's results.
     results = cleanup_results(results)
@@ -711,7 +711,7 @@ def get_search_query(definition, key):
         return "dom." + definition['parser'][key]
     return definition['parser'][key]
 
-def cookie_sync():
+def cookie_sync(is_silent):
     if not cookie_sync_enabled or not cookie_sync_token:
         return
 
@@ -723,12 +723,23 @@ def cookie_sync():
 
     log.debug("Fetching cookies from Github")
 
+    p_dialog = xbmcgui.DialogProgressBG()
+    if not is_silent:
+        p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', translation(32166))
+
     global cookie_sync_gist_id
     # Try to get url to a Gist's file first, if we have Gist ID
     if not cookie_sync_gist_id or not cookie_fetch_fileurl():
         # Try to get both Gist ID and Gist's file url
         if not cookie_fetch_gist_id():
-            log.error("Could not fetch gist id for cookie-sync")
+            err = "Could not fetch gist id for cookie-sync"
+            log.error(err)
+            
+            if not is_silent:
+                p_dialog.close()
+                notify(translation(32167) % (err), image=get_icon_path())
+            del p_dialog
+
             return
 
     set_setting('cookie_sync_gist_id', cookie_sync_gist_id)
@@ -736,8 +747,12 @@ def cookie_sync():
 
     cookies = cookie_fetch_file()
     if not cookies:
+        if not is_silent:
+            p_dialog.close()
+        del p_dialog
         return
 
+    err = None
     try:
         log.debug("Adding %d cookies to http client" % (len(cookies)))
         client = Client()
@@ -749,6 +764,13 @@ def cookie_sync():
         client.save_cookies()
     except Exception as e:
         log.error("Failed adding cookies with: %s" % (repr(e)))
+        err = e
+
+    if not is_silent:
+        p_dialog.close()
+        if err:
+            notify(translation(32167) % (err), image=get_icon_path())
+    del p_dialog
 
 def cookie_check_defaults():
     global cookie_sync_filename

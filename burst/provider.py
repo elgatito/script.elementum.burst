@@ -14,7 +14,7 @@ from .client import Client
 from elementum.provider import log, get_setting, set_setting
 from .filtering import cleanup_results
 from .providers.definitions import definitions, longest
-from .utils import ADDON_PATH, get_int, clean_size, get_alias, with_defaults
+from .utils import ADDON_PATH, get_int, clean_size, get_alias, with_defaults, notify, translation, get_icon_path
 from kodi_six import xbmc, xbmcaddon, py2_encode
 if PY3:
     from urllib.parse import quote, unquote, urlparse
@@ -76,7 +76,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
     return results
 
 
-def process(provider, generator, filtering, has_special, verify_name=True, verify_size=True, skip_auth=False, start_time=None, timeout=None):
+def process(provider, generator, filtering, has_special, verify_name=True, verify_size=True, skip_auth=False, start_time=None, timeout=None, is_silent=False):
     """ Method for processing provider results using its generator and Filtering class instance
 
     Args:
@@ -271,6 +271,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 if not logged_in and 'login_cookie' in definition and definition['login_cookie']:
                     client._read_cookies()
                     if client.cookie_exists(definition['login_cookie'], urlparse(definition['root_url']).netloc):
+                        client.use_cookie_sync = True
                         logged_in = True
                         log.info("[%s] Using Cookie sync for authentication" % (provider))
 
@@ -319,6 +320,12 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             log.info("[%s] >  %s headers: %s" % (provider, definition['name'].rjust(longest), headers))
 
         client.open(py2_encode(url_search), post_data=payload, get_data=data, headers=headers)
+        if client.use_cookie_sync and 'login_failed' in definition and definition['login_failed'] and definition['login_failed'] in client.content:
+            client.status = 403
+            if not is_silent:
+                log.error("[%s] > Could not authorize provider using cookie sync" % (provider))
+                notify(translation(32168) % (definition['name']), image=get_icon_path())
+
         try:
             filtering.results.extend(
                 generate_payload(provider,
