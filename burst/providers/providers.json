@@ -1495,12 +1495,12 @@
         "name": "MegaPeer",
         "parser": {
             "infohash": "",
-            "name": "item(tag='div', select=('class', 't-title'), order=1)",
-            "peers": "",
-            "row": "find_once('table', ('id', 'tor-tbl'), order=1).find_all('tr')",
-            "seeds": "item(tag='span', select=('class', 'seedmed'), order=1)",
-            "size": "item(tag='a', select=('class', 'tr-dl'), order=1)",
-            "torrent": "'http://megapeer.vip/%s' % item(tag='a', select=('class', 'tr-dl'), attribute='href', order=1)"
+            "name": "item(tag='a', order=2)",
+            "peers": "item(tag='font', order=2)",
+            "row": "find_all(tag='tr', select=('class', 'table_fon'))",
+            "seeds": "item(tag='font', order=1)",
+            "size": "item(tag='td', order=4)",
+            "torrent": "'http://megapeer.vip%s' % item(tag='a', attribute='href', order=1)"
         },
         "predefined": false,
         "private": false,
