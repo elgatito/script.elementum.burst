@@ -55,10 +55,6 @@
       <setting id="bitsearch_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="bitsearch_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="[B]MagnetDL[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_magnetdl" type="bool" default="true" />
-      <setting id="magnetdl_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="magnetdl_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="[B]AniLibria[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_anilibria" type="bool" default="false" />
       <setting id="anilibria_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="anilibria_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
