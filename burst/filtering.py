@@ -684,7 +684,7 @@ class Filtering:
         """
         value = ' ' + value.lower() + ' '
         for key in keys:
-            rr = r'\W+(' + key + r')\W*'
+            rr = r'\W+(' + key + r')\W+'
             if re.search(rr, value):
                 return True
         return False
