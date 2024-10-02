@@ -89,7 +89,7 @@ class Filtering:
             'filter_dvdscr': [r'dvd\-?scr'],
             'filter_screener': ['screener|scr'],
             'filter_3d': ['3d'],
-            'filter_telesync': ['telesync|ts|tc'],
+            'filter_telesync': ['telesync|ts|telecine|tc|hdts'],
             'filter_cam': [r'cam|hd\-?cam'],
             'filter_tvrip': [r'tv\-?rip|sat\-?rip|dvb'],
             'filter_iptvrip': [r'iptv\-?rip'],
