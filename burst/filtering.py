@@ -89,8 +89,8 @@ class Filtering:
             'filter_dvdscr': [r'dvd\-?scr'],
             'filter_screener': ['screener|scr'],
             'filter_3d': ['3d'],
-            'filter_telesync': ['telesync|ts|tc'],
-            'filter_cam': [r'cam|hd\-?cam'],
+            'filter_telesync': ['telesync|ts|telecine|tc|hdts'],
+            'filter_cam': [r'cam|cam\-?rip|hd\-?cam'],
             'filter_tvrip': [r'tv\-?rip|sat\-?rip|dvb'],
             'filter_iptvrip': [r'iptv\-?rip'],
             'filter_vhsrip': [r'vhs\-?rip'],
@@ -684,7 +684,7 @@ class Filtering:
         """
         value = ' ' + value.lower() + ' '
         for key in keys:
-            rr = r'\W+(' + key + r')\W*'
+            rr = r'\W+(' + key + r')\W+'
             if re.search(rr, value):
                 return True
         return False
