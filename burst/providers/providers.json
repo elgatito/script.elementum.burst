@@ -1434,7 +1434,7 @@
         "anime_query": "",
         "base_url": "https://www.magnetdl.com/FIRSTLETTER/QUERYEXTRA/",
         "color": "FF017BD4",
-        "enabled": true,
+        "enabled": false,
         "general_extra": "",
         "general_keywords": "{title:original}",
         "general_query": "",
@@ -1456,7 +1456,7 @@
             "size": "item(tag='td', order=6)",
             "torrent": "item(tag='a', attribute='href')"
         },
-        "predefined": true,
+        "predefined": false,
         "private": false,
         "season_extra": "",
         "season_extra2": "",
