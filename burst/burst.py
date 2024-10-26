@@ -649,6 +649,13 @@ def extract_from_page(provider, content):
             log.debug('[%s] Matched magnet info_hash search: %s' % (provider, repr(result)))
             return result
 
+        matches = re.findall(r'/engine/download.php\?id=[A-Za-z0-9]+[^\s\'"]*', content) # animaunt
+        if matches:
+            result = definition['root_url'] + matches[0]
+            result += "|Referer=" + result # we need to add Referer header to download .torrent
+            log.debug('[%s] Matched download link: %s' % (provider, repr(result)))
+            return result
+
         matches = re.findall(r'(/download.php\?id=[A-Za-z0-9]+[^\s\'"]*)', content)
         if matches:
             result = definition['root_url'] + matches[0]
