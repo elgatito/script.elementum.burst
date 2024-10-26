@@ -397,7 +397,7 @@ def extract_torrents(provider, client):
                 if info_hash_search:
                     log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', info_hash_search, info_hash))
                 if referer_search:
-                    log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'info_hash', referer_search, referer))
+                    log.debug("[%s] Parser debug | Matched '%s' iteration for query '%s': %s" % (provider, 'referer', referer_search, referer))
 
             if description:
                 name = '{} ({})'.format(name, description)
@@ -609,7 +609,7 @@ def extract_from_page(provider, content):
         matches = re.findall(r'magnet:\?[^\'"\s<>\[\]]+', content)
         if matches:
             result = matches[0]
-            log.debug('[%s] Matched magnet link: %s' % (provider, repr(result)))
+            log.debug('[%s] Matched magnet info_hash search: %s' % (provider, repr(result)))
             return result
 
         matches = re.findall(r'http(.*?).torrent["\']', content)
@@ -646,7 +646,7 @@ def extract_from_page(provider, content):
         matches = re.findall(r'/download.php\?id=([A-Za-z0-9]{40})\W', content)
         if matches:
             result = "magnet:?xt=urn:btih:" + matches[0]
-            log.debug('[%s] Matched download link: %s' % (provider, repr(result)))
+            log.debug('[%s] Matched magnet info_hash search: %s' % (provider, repr(result)))
             return result
 
         matches = re.findall(r'(/download.php\?id=[A-Za-z0-9]+[^\s\'"]*)', content)
