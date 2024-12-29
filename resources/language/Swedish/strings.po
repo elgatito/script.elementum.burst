@@ -392,7 +392,7 @@ msgstr "Ta bort kakor"
 
 msgctxt "#32146"
 msgid "Set 'original' title of Anime to:"
-msgstr "Ställ in 'original'-titel på anime till:"
+msgstr "Ställ in \"original\"-titel på anime till:"
 
 msgctxt "#32147"
 msgid "Romanization of Japanese"
