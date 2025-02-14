@@ -171,7 +171,7 @@
     },
     "animaunt": {
         "anime_keywords": "{title:ru:jp}",
-        "base_url": "https://animaunt.org/",
+        "base_url": "https://animaunt.online/",
         "post_data": "{'story': 'QUERY', 'do': 'search', 'subaction': 'search'}",
         "color": "FFFFFFFF",
         "enabled": true,
