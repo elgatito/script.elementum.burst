@@ -169,6 +169,34 @@
         "subpage": false,
         "tv_keywords": "{title:ru:jp}"
     },
+    "animaunt": {
+        "anime_keywords": "{title:ru:jp}",
+        "base_url": "https://animaunt.online/",
+        "post_data": "{'story': 'QUERY', 'do': 'search', 'subaction': 'search'}",
+        "color": "FFFFFFFF",
+        "enabled": true,
+        "general_keywords": "{title}",
+        "language": "ru",
+        "languages": "ru",
+        "movie_keywords": "{title:ru:jp}",
+        "name": "AniMaunt",
+        "parser": {
+            "infohash": "",
+            "name": "item(tag='a', select=('class', 'th-title'))",
+            "description": "'WebDL 1080p'",
+            "peers": "",
+            "row": "find_all(tag='div', select=('class', 'thumb'))",
+            "seeds": "1",
+            "size": "",
+            "torrent": "item(tag='a', select=('class', 'th-title'), attribute='href')"
+        },
+        "predefined": false,
+        "private": false,
+        "season_keywords": "{title:ru:jp}",
+        "separator": "+",
+        "subpage": true,
+        "tv_keywords": "{title:ru:jp}"
+    },
     "ArabP2P": {
         "anime_extra": "",
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
