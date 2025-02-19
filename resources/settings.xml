@@ -59,6 +59,10 @@
       <setting id="anilibria_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="anilibria_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
+    <setting label="[B]AniMaunt[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_animaunt" type="bool" default="false" />
+      <setting id="animaunt_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="animaunt_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+
     <setting label="[B]BT4G[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_bt4g" type="bool" default="false" />
       <setting id="bt4g_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="bt4g_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />

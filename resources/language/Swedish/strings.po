@@ -320,19 +320,19 @@ msgstr "Litauiska"
 
 msgctxt "#32128"
 msgid "Public trackers [A .. M]"
-msgstr "Publika bevakare [A .. M]"
+msgstr "Publika spårare [A .. M]"
 
 msgctxt "#32129"
 msgid "Public trackers [N .. ]"
-msgstr "Publika bevakare [N .. ]"
+msgstr "Publika spårare [N .. ]"
 
 msgctxt "#32130"
 msgid "Private trackers [A .. M]"
-msgstr "Privata bevakare [A .. M]"
+msgstr "Privata spårare [A .. M]"
 
 msgctxt "#32131"
 msgid "Private trackers [N .. ]"
-msgstr "Privata bevakare [N .. ]"
+msgstr "Privata spårare [N .. ]"
 
 msgctxt "#32132"
 msgid "Remove quotes from search query"
@@ -376,108 +376,108 @@ msgstr "Ställ först in SOCKS i både Burst & Elementum eller proxy-http via El
 
 msgctxt "#32142"
 msgid "Arabic"
-msgstr ""
+msgstr "Arabiska"
 
 msgctxt "#32143"
 msgid "Location of overrides.json file"
-msgstr ""
+msgstr "Plats för overrides.json-fil"
 
 msgctxt "#32144"
 msgid "Maintenance"
-msgstr ""
+msgstr "Underhåll"
 
 msgctxt "#32145"
 msgid "Remove cookies"
-msgstr ""
+msgstr "Ta bort kakor"
 
 msgctxt "#32146"
 msgid "Set 'original' title of Anime to:"
-msgstr ""
+msgstr "Ställ in \"original\"-titel på anime till:"
 
 msgctxt "#32147"
 msgid "Romanization of Japanese"
-msgstr ""
+msgstr "Romanisering av japanska"
 
 msgctxt "#32148"
 msgid "Original"
-msgstr ""
+msgstr "Original"
 
 msgctxt "#32149"
 msgid "Accept/Block: any of keywords should be in torrent name to [CR]accept/block torrent. Require: all keywords must be in name."
-msgstr ""
+msgstr "Acceptera/blockera: ett av nyckelord bör vara i torrent namn för att [CR]acceptera/blockera torrent. Kräver: Alla nyckelord måste vara i namnet."
 
 msgctxt "#32150"
 msgid "Example: 'HDR, .?265, Hindi'. Regexp are supported.[CR]You can filter languages, video/audio features, etc."
-msgstr ""
+msgstr "Exempel: 'HDR, .?265, Hindi'. Regexp Stöds. [CR]Du kan filtrera språk, video-/ljudfunktioner, etc."
 
 msgctxt "#32151"
 msgid "Cookie sync"
-msgstr ""
+msgstr "Kaksynkronisering"
 
 msgctxt "#32152"
 msgid "Enable Cookie sync"
-msgstr ""
+msgstr "Aktivera kaksynkronisering"
 
 msgctxt "#32153"
 msgid "Github Token"
-msgstr ""
+msgstr "Github-token"
 
 msgctxt "#32154"
 msgid "Encryption password (optional)"
-msgstr ""
+msgstr "Krypteringslösenord (valfritt)"
 
 msgctxt "#32155"
 msgid "Gist ID (optional)"
-msgstr ""
+msgstr "Gist-ID (valfritt)"
 
 msgctxt "#32156"
 msgid "File name (optional)"
-msgstr ""
+msgstr "Filnamn (valfritt)"
 
 msgctxt "#32157"
 msgid "File url (optional)"
-msgstr ""
+msgstr "Fil-URL (valfritt)"
 
 msgctxt "#32158"
 msgid "Configure proxy in Elementum in the same way as here[CR]to avoid issues with downloading torrent files."
-msgstr ""
+msgstr "Konfigurera proxy i Elementum på samma sätt som här[CR]för att undvika problem med att hämta torrentfiler."
 
 msgctxt "#32159"
 msgid "Network configuration"
-msgstr ""
+msgstr "Nätverkskonfiguration"
 
 msgctxt "#32160"
 msgid "Custom providers"
-msgstr ""
+msgstr "Anpassade leverantörer"
 
 msgctxt "#32161"
 msgid "Search results"
-msgstr ""
+msgstr "Sökresultat"
 
 msgctxt "#32162"
 msgid "Search timeout"
-msgstr ""
+msgstr "Tidsgräns för sökning överskreds"
 
 msgctxt "#32163"
 msgid "Additional settings"
-msgstr ""
+msgstr "Ytterligare inställningar"
 
 msgctxt "#32164"
 msgid "Use custom browser User Agent"
-msgstr ""
+msgstr "Använd anpassad webbläsares användaragent"
 
 msgctxt "#32165"
 msgid "User Agent"
-msgstr ""
+msgstr "Användaragent"
 
 msgctxt "#32166"
 msgid "Syncing cookies ..."
-msgstr ""
+msgstr "Synkronisering av kakor ..."
 
 msgctxt "#32167"
 msgid "[B]Sync error:[/B] %s"
-msgstr ""
+msgstr "[B]Synkroniseringsfel:[/B] %s"
 
 msgctxt "#32168"
 msgid "[B]Cookie Sync could not authorize:[/B] %s"
-msgstr ""
+msgstr "[B]Kaksynkronisering kunde inte auktorisera:[/B] %s"
