@@ -481,3 +481,7 @@ msgstr "[B]Synkroniseringsfel:[/B] %s"
 msgctxt "#32168"
 msgid "[B]Cookie Sync could not authorize:[/B] %s"
 msgstr "[B]Kaksynkronisering kunde inte auktorisera:[/B] %s"
+
+msgctxt "#32169"
+msgid "Login to {0} failed"
+msgstr ""
