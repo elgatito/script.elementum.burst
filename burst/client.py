@@ -388,13 +388,13 @@ class Client:
 
         if self.open(url.encode('utf-8'), post_data=encode_dict(data, self.request_charset), headers=headers):
             try:
-                if fails_with and fails_with in self.content:
+                if fails_with and re.search(fails_with, self.content):
                     self.status = 'Wrong username or password'
                     return False
             except Exception as e:
                 log.debug("Login failed with: %s" % e)
                 try:
-                    if fails_with in self.content.decode('utf-8'):
+                    if re.search(fails_with, self.content.decode('utf-8')):
                         self.status = 'Wrong username or password'
                         return False
                 except:

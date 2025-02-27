@@ -332,7 +332,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             log.info("[%s] >  %s headers: %s" % (provider, definition['name'].rjust(longest), headers))
 
         client.open(py2_encode(url_search), post_data=payload, get_data=data, headers=headers)
-        if client.use_cookie_sync and 'login_failed' in definition and definition['login_failed'] and definition['login_failed'] in client.content:
+        if client.use_cookie_sync and 'login_failed' in definition and definition['login_failed'] and re.search(definition['login_failed'], client.content):
             client.status = 403
             if not is_silent:
                 log.error("[%s] > Could not authorize provider using cookie sync" % (provider))
