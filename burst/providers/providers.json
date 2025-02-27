@@ -405,7 +405,7 @@
             "size": "item.find_once(tag='div', select=('class', 'stats')).find_once(tag='div', order=2).text()",
             "torrent": "item(tag='a', select=('class', 'dl-magnet'), attribute='href', order=1)"
         },
-        "predefined": true,
+        "predefined": false,
         "private": false,
         "season_extra": "",
         "season_extra2": "",
@@ -452,7 +452,7 @@
             "size": "item(tag='b', select=('class', 'red-pill'))",
             "torrent": "'https://bt4gprx.com%s' % item(tag='a', attribute='href', order=1)"
         },
-        "predefined": false,
+        "predefined": true,
         "private": false,
         "season_extra": "",
         "season_keywords": "{title:original:en} s{season:2}",
