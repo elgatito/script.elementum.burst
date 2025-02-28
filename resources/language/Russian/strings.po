@@ -481,3 +481,7 @@ msgstr "[B]Ошибка синхронизации:[/B] %s"
 msgctxt "#32168"
 msgid "[B]Cookie Sync could not authorize:[/B] %s"
 msgstr "[B]Синхронизация cookie не смогла авторизовать:[/B] %s"
+
+msgctxt "#32169"
+msgid "Login to {0} failed"
+msgstr "Вход в {0} не удался"
