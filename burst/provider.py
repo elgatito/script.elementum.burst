@@ -304,6 +304,19 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                     return filtering.results
 
                 if logged_in:
+                    if provider == 'lostfilm':
+                        log.info('[%s] Search lostfilm ID...', provider)
+                        client.open(py2_encode(url_search), post_data=payload, get_data=data)
+                        series_details = re.search(r'PlayEpisode\(\'(\d+)\'\)">', client.content)
+                        if series_details:
+                            url_search = definition['root_url'] + '/v_search.php?a=%s' % series_details.group(1)
+                            client.open(url_search)
+                            redirect_url = re.search(r'url=(.*?)">', client.content)
+                            if redirect_url is not None:
+                                url_search = redirect_url.group(1)
+                        else:
+                            log.info('[%s] Have not found lostfilm ID in %s' % (provider, url_search))
+                            return filtering.results
                     if provider == 'hd-torrents':
                         client.open(definition['root_url'] + '/torrents.php')
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
@@ -319,7 +332,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             log.info("[%s] >  %s headers: %s" % (provider, definition['name'].rjust(longest), headers))
 
         client.open(py2_encode(url_search), post_data=payload, get_data=data, headers=headers)
-        if client.use_cookie_sync and 'login_failed' in definition and definition['login_failed'] and definition['login_failed'] in client.content:
+        if client.use_cookie_sync and 'login_failed' in definition and definition['login_failed'] and re.search(definition['login_failed'], client.content):
             client.status = 403
             if not is_silent:
                 log.error("[%s] > Could not authorize provider using cookie sync" % (provider))
