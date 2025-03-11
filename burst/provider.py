@@ -109,7 +109,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
     last_priority = 1
     for query, extra, priority in zip(filtering.queries, filtering.extras, filtering.queries_priorities):
-        log.debug("[%s] Before keywords - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
+        log.debug("[%s] Before keywords - Query: %s - Extra: %s - Priority: %d" % (provider, repr(query), repr(extra), priority))
         if has_special:
             # Removing quotes, surrounding {title*} keywords, when title contains special chars
             query = re.sub("[\"']({title.*?})[\"']", '\\1', query)
@@ -119,12 +119,13 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
         if not query:
             continue
-        elif query+extra in used_queries:
-            # Make sure we don't run same query for this provider
-            continue
         elif priority > last_priority and filtering.results:
             # Skip fallbacks if there are results
             log.debug("[%s] Skip fallback as there are already results" % provider)
+            continue
+        elif query+extra in used_queries:
+            # Make sure we don't run same query for this provider
+            log.debug("[%s] Skip query as it was already used" % provider)
             continue
         elif start_time and timeout and time.time() - start_time + 3 >= timeout:
             # Stop doing requests if there is 3 seconds left for the overall task
@@ -144,7 +145,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             log.debug("[%s] Could not quote the query (%s): %s" % (provider, query, e))
             pass
 
-        log.debug("[%s] After keywords  - Query: %s - Extra: %s" % (provider, repr(query), repr(extra)))
+        log.debug("[%s] After keywords  - Query: %s - Extra: %s - Priority: %d" % (provider, repr(query), repr(extra), priority))
         if not query:
             return filtering.results
 
