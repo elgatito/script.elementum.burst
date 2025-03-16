@@ -3550,7 +3550,7 @@
         "anime_keywords_fallback": "{title}+S{season}E{episode}",
         "anime_query": "/t?q={title}+S{season}E{episode}&qf=&-8=on#torrents",
         "base_url": "https://www.torrentday.com",
-        "color": "4287f5",
+        "color": "FF4287F5",
         "enabled": true,
         "general_extra": "",
         "general_keywords": "{title}",
@@ -3578,16 +3578,16 @@
         "private": true,
         "season_extra": "",
         "season_extra2": "",
-        "season_keywords": "{title}+S{season}E{episode}",
-        "season_keywords2": "{title}+S{season}E{episode}",
+        "season_keywords": "{title:original:en}+S{season}E{episode}",
+        "season_keywords2": "{title:original:en}+S{season}E{episode}",
         "season_query": "/t?-8&q={title}+S{season}E{episode}",
         "separator": "+",
         "show_query": "/t?-8&q=QUERY",
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title}+S{season}E{episode}",
-        "tv_keywords2": "{title}+S{season}E{episode}",
-        "tv_keywords_fallback": "{title}+S{season}E{episode}"
+        "tv_keywords": "{title:original:en}+S{season}E{episode}",
+        "tv_keywords2": "{title:original:en}+S{season}E{episode}",
+        "tv_keywords_fallback": "{title:original:en}+S{season}E{episode}"
     }
 }
