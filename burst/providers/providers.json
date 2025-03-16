@@ -197,7 +197,7 @@
         "subpage": true,
         "tv_keywords": "{title:ru:jp}"
     },
-    "ArabP2P": {
+    "arabp2p": {
         "anime_extra": "",
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
         "anime_keywords_fallback": "{title:original} s{season:2}",
