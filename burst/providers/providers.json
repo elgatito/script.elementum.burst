@@ -179,7 +179,7 @@
         "language": "ru",
         "languages": "ru",
         "movie_keywords": "{title:ru:jp}",
-        "name": "AniMaunt",
+        "name": "есть реклама, AniMaunt",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', select=('class', 'th-title'))",
@@ -1444,7 +1444,7 @@
         "language": "ru",
         "languages": "ru",
         "movie_keywords": "{title:ru:en} {year}",
-        "name": "LE-Production",
+        "name": "есть реклама, LE-Production",
         "parser": {
             "infohash": "",
             "name": "item.find_once(tag='div', select=('class', 'short-info'))(tag='a', order=1)",
