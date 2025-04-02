@@ -2863,6 +2863,7 @@
         "tv_extra2": "",
         "tv_keywords": "{title:en} s{season:2}e{episode:2}",
         "tv_keywords_fallback": "{title:en} s{season:2}"
+    },
     "torrentby": {
         "anime_keywords": "{title:en:ru} S{season:2}",
         "anime_keywords2": "{title:en:ru} {season:2}x01",
