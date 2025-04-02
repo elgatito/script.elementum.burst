@@ -169,6 +169,34 @@
         "subpage": false,
         "tv_keywords": "{title:ru:jp}"
     },
+    "anidub": {
+        "anime_keywords": "{title:ru:jp}",
+        "base_url": "https://tr.anidub.com/",
+        "post_data": "{'story': 'QUERY', 'do': 'search', 'subaction': 'search'}",
+        "color": "FFFFFFFF",
+        "enabled": true,
+        "general_keywords": "{title}",
+        "language": "ru",
+        "languages": "ru",
+        "movie_keywords": "{title:ru:jp}",
+        "name": "есть реклама, AniDUB",
+        "parser": {
+            "infohash": "",
+            "name": "item(tag='h2')",
+            "description": "'WebDL 1080p'",
+            "peers": "",
+            "row": "find_all(tag='div', select=('class', 'search_post'))",
+            "seeds": "1",
+            "size": "",
+            "torrent": "item(tag='a', attribute='href')"
+        },
+        "predefined": false,
+        "private": false,
+        "season_keywords": "{title:ru:jp}",
+        "separator": "+",
+        "subpage": true,
+        "tv_keywords": "{title:ru:jp}"
+    },
     "animaunt": {
         "anime_keywords": "{title:ru:jp}",
         "base_url": "https://animaunt.online/",

@@ -172,6 +172,10 @@
       <setting id="yourbittorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="yourbittorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
+    <setting label="[B]есть реклама, AniDUB[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_anidub" type="bool" default="false" />
+      <setting id="anidub_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="anidub_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+
     <setting label="[B]есть реклама, AniMaunt[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_animaunt" type="bool" default="false" />
       <setting id="animaunt_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="animaunt_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
