@@ -314,6 +314,12 @@
       <setting id="torrentlt_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="torrentlt_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
 
+    <setting label="[B]TorrentDay[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_torrentday" type="bool" default="false" />
+      <setting id="torrentday_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="torrentday_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="torrentday_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="torrentday_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+
     <setting label="[B]TorrentLeech[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_torrentleech" type="bool" default="false" />
       <setting id="torrentleech_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrentleech_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
