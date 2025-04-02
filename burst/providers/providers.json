@@ -179,7 +179,7 @@
         "language": "ru",
         "languages": "ru",
         "movie_keywords": "{title:ru:jp}",
-        "name": "AniMaunt",
+        "name": "есть реклама, AniMaunt",
         "parser": {
             "infohash": "",
             "name": "item(tag='a', select=('class', 'th-title'))",
@@ -197,7 +197,7 @@
         "subpage": true,
         "tv_keywords": "{title:ru:jp}"
     },
-    "ArabP2P": {
+    "arabp2p": {
         "anime_extra": "",
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
         "anime_keywords_fallback": "{title:original} s{season:2}",
@@ -1481,6 +1481,34 @@
         "tv_keywords": "{title:ru:en} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:ru:en} {season}+Сезон",
         "tv_keywords_fallback": "{title:original} {season}+Сезон"
+    },
+    "leproduction": {
+        "anime_keywords": "{title:ru:en}",
+        "base_url": "https://le-production.tv/",
+        "post_data": "{'story': 'QUERY', 'do': 'search', 'subaction': 'search'}",
+        "color": "FFFFFFFF",
+        "enabled": true,
+        "general_keywords": "{title}",
+        "language": "ru",
+        "languages": "ru",
+        "movie_keywords": "{title:ru:en} {year}",
+        "name": "есть реклама, LE-Production",
+        "parser": {
+            "infohash": "",
+            "name": "item.find_once(tag='div', select=('class', 'short-info'))(tag='a', order=1)",
+            "description": "'WebDL 1080p'",
+            "peers": "",
+            "row": "find_all(tag='div', select=('class', 'short-item'))",
+            "seeds": "1",
+            "size": "",
+            "torrent": "item(tag='a', select=('class', 'short-img'), attribute='href')"
+        },
+        "predefined": false,
+        "private": false,
+        "season_keywords": "{title:ru:en}",
+        "separator": "+",
+        "subpage": true,
+        "tv_keywords": "{title:ru:en}"
     },
     "limetorrents": {
         "anime_extra": "",
