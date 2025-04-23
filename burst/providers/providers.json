@@ -225,6 +225,36 @@
         "subpage": true,
         "tv_keywords": "{title:ru:jp}"
     },
+    "animelayer": {
+        "anime_keywords": "{title:ru:jp}",
+        "base_url": "https://animelayer.ru/torrents/anime/?q=QUERY",
+        "color": "FFFFFFFF",
+        "enabled": true,
+        "general_keywords": "{title}",
+        "language": "ru",
+        "languages": "ru",
+        "movie_keywords": "{title:ru:jp}",
+        "name": "Animelayer",
+        "login_failed": "Неверное имя пользователя или пароль",
+        "login_object": "{'login': USERNAME, 'password': PASSWORD}",
+        "login_path": "/auth/login/",
+        "parser": {
+            "infohash": "",
+            "name": "item(tag='div',  select=('class', 'title'))",
+            "description": "'WebDL 1080p'",
+            "peers": "",
+            "row": "find_all(tag='li', select=('class', 'torrent-item'))",
+            "seeds": "1",
+            "size": "",
+            "torrent": "item(tag='a', select=('class', 'cover'), attribute='href')+'download'"
+        },
+        "predefined": false,
+        "private": true,
+        "season_keywords": "{title:ru:jp}",
+        "separator": "+",
+        "subpage": false,
+        "tv_keywords": "{title:ru:jp}"
+    },
     "arabp2p": {
         "anime_extra": "",
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
