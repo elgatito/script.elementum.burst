@@ -16,6 +16,7 @@
         "login_failed": "Ошибка входа",
         "login_object": "{'username': USERNAME, 'password': PASSWORD, 'returnto': '/browse.php'}",
         "login_path": "/takelogin.php",
+        "login_cookie": "0day_session",
         "movie_extra": "",
         "movie_keywords": "{title:original} {year}",
         "movie_query": "",
