@@ -97,7 +97,7 @@ def get_alias(definition, alias):
             definition["alias"] = new_domain
             definition["old_domain"] = old_domain
 
-            # Substitute all ocurrences of old domain name and replace with new one
+            # Replace all occurrences of old domain name with new one
             for k in definition:
                 if isinstance(definition[k], basestring):
                     definition[k] = definition[k].replace(old_domain, new_domain)
