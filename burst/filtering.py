@@ -172,12 +172,14 @@ class Filtering:
             provider (str): Provider ID
             payload (dict): Elementum search payload
         """
+        # Domain name preferred order:
+        # root_url -> base_url (see update_definitions()) -> public_dns_alias OR tor_dns_alias -> user defined alias
         definition = definitions[provider]
-        definition = get_alias(definition, get_setting("%s_alias" % provider))
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
         if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
             definition = get_alias(definition, definition["tor_dns_alias"])
+        definition = get_alias(definition, get_setting("%s_alias" % provider))
 
         general_query = definition['general_query'] if 'general_query' in definition and definition['general_query'] else ''
         log.debug("[%s] General URL: %s%s" % (provider, definition['base_url'], general_query))
@@ -193,12 +195,14 @@ class Filtering:
             provider (str): Provider ID
             payload (dict): Elementum search payload
         """
+        # Domain name preferred order:
+        # root_url -> base_url (see update_definitions()) -> public_dns_alias OR tor_dns_alias -> user defined alias
         definition = definitions[provider]
-        definition = get_alias(definition, get_setting("%s_alias" % provider))
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
         if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
             definition = get_alias(definition, definition["tor_dns_alias"])
+        definition = get_alias(definition, get_setting("%s_alias" % provider))
 
         movie_query = definition['movie_query'] if 'movie_query' in definition and definition['movie_query'] else ''
         log.debug("[%s] Movies URL: %s%s" % (provider, definition['base_url'], movie_query))
@@ -218,12 +222,14 @@ class Filtering:
             provider (str): Provider ID
             payload (dict): Elementum search payload
         """
+        # Domain name preferred order:
+        # root_url -> base_url (see update_definitions()) -> public_dns_alias OR tor_dns_alias -> user defined alias
         definition = definitions[provider]
-        definition = get_alias(definition, get_setting("%s_alias" % provider))
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
         if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
             definition = get_alias(definition, definition["tor_dns_alias"])
+        definition = get_alias(definition, get_setting("%s_alias" % provider))
 
         show_query = definition['show_query'] if 'show_query' in definition and definition['show_query'] else ''
         log.debug("[%s] Episode URL: %s%s" % (provider, definition['base_url'], show_query))
@@ -243,12 +249,14 @@ class Filtering:
             provider (str): Provider ID
             payload (dict): Elementum search payload
         """
+        # Domain name preferred order:
+        # root_url -> base_url (see update_definitions()) -> public_dns_alias OR tor_dns_alias -> user defined alias
         definition = definitions[provider]
-        definition = get_alias(definition, get_setting("%s_alias" % provider))
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
         if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
             definition = get_alias(definition, definition["tor_dns_alias"])
+        definition = get_alias(definition, get_setting("%s_alias" % provider))
 
         season_query = definition['season_query'] if 'season_query' in definition and definition['season_query'] else ''
         log.debug("[%s] Season URL: %s%s" % (provider, definition['base_url'], season_query))
@@ -269,11 +277,13 @@ class Filtering:
             payload (dict): Elementum search payload
         """
         definition = definitions[provider]
-        definition = get_alias(definition, get_setting("%s_alias" % provider))
+        # Domain name preferred order:
+        # root_url -> base_url (see update_definitions()) -> public_dns_alias OR tor_dns_alias -> user defined alias
         if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
             definition = get_alias(definition, definition["public_dns_alias"])
         if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
             definition = get_alias(definition, definition["tor_dns_alias"])
+        definition = get_alias(definition, get_setting("%s_alias" % provider))
 
         anime_query = definition['anime_query'] if 'anime_query' in definition and definition['anime_query'] else ''
         log.debug("[%s] Anime URL: %s%s" % (provider, definition['base_url'], anime_query))
