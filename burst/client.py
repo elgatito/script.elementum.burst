@@ -24,7 +24,7 @@ else:
     from cookielib import LWPCookieJar
     from urllib import urlencode
     from urlparse import urlparse
-from kodi_six import xbmcaddon
+from kodi_six import xbmcaddon, py2_encode
 
 from requests.packages.urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
@@ -384,9 +384,9 @@ class Client:
             if not prerequest.startswith('http'):
                 prerequest = root_url + prerequest
             log.debug("Running prerequest to %s" % (prerequest))
-            self.open(prerequest.encode('utf-8'), headers=headers)
+            self.open(py2_encode(prerequest), headers=headers)
 
-        if self.open(url.encode('utf-8'), post_data=encode_dict(data, self.request_charset), headers=headers):
+        if self.open(py2_encode(url), post_data=encode_dict(data, self.request_charset), headers=headers):
             try:
                 if fails_with and re.search(fails_with, self.content):
                     self.status = 'Wrong username or password'
