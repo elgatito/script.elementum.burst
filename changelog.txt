@@ -1,4 +1,4 @@
-Burst changelog
+script.elementum.burst changelog
 ===============
 
 [B]v0.0.93[/B] - 2025-04-02
@@ -853,7 +853,8 @@ Burst changelog
  - added Hungarian translation
  - fixed provider extraction paths
  - fixed changelog version sorting
- - fixed wrong alphareign credentials, in case it comes back
+ - fixed wrong alphareign credentials, in case it comes 
+   back
  - fixed uhdbits name parsing
  - fixed regression from unicode fix for cookies path
  - updated documentation for adding private providers
@@ -875,54 +876,72 @@ Burst changelog
  - updated documentation
  - fixes to loading refactor
  - refactored loading of providers and overrides
- - added BaibaKo.TV, torrent3d.ru, 3d-tracker.ru, HDCLUB.org, fixed a few other ones
+ - added BaibaKo.TV, torrent3d.ru, 3d-tracker.ru, HDCLUB.org, 
+   fixed a few other ones
  - updated Hebrew strings
  - fixed HD Torrent's mono-result reliability
- - added tfile provider, fixed blocked domains for cyrillic trackers
+ - added tfile provider, fixed blocked domains for cyrillic 
+   trackers
  - removed broken and expensive string normalization
  - added serialz provider
  - updated documentation
  - added Ukrainian language, updated Russian language
- - added charset detection and decoding, fixed unicode definitions
+ - added charset detection and decoding, fixed unicode 
+   definitions
  - added Russian and Ukrainian trackers
- - fixed nyaa provider with protocol missing in url, moved to https
+ - fixed nyaa provider with protocol missing in url, moved to 
+   https
  - fixed OrderedDict missing in Kodi 16
  - fixed creating cookies directory in temp folder
- - previous token or login cookies reused across multiple queries for the same search
+ - previous token or login cookies reused across multiple 
+   queries for the same search
  - added exceptions to language preference setting
  - improved unicode handling
  - fixed regression in new resolution matching
  - fixed resolution matching to be consistent with Quasar
  - updated Hebrew strings
  - fixed exception when titles in translations is None
- - fixed edge case with XtremeZone finding wrong torrent link
+ - fixed edge case with XtremeZone finding wrong torrent 
+   link
  - disabled sound with notifications
  - fixed XtremeZone again...
  - fixed YTS not returning actual download link
- - added note in settings about timeout needing to be lower than Quasar's
- - reduced default number of results per provider to 10, maximum 20, and max timeout to 20s
- - fixed exception on invalid result in extraction from APIs
- - added language preference setting from Kodi, fixed timeouts on bad requests and added (almost) full documentation
+ - added note in settings about timeout needing to be lower 
+   than Quasar's
+ - reduced default number of results per provider to 10, 
+   maximum 20, and max timeout to 20s
+ - fixed exception on invalid result in extraction from 
+   APIs
+ - added language preference setting from Kodi, fixed timeouts 
+   on bad requests and added (almost) full documentation
  - updated Hebrew strings
- - fixed magnet links getting passed with cookies when CloudHole was enabled
- - fixed empty Block keyword in Advanced settings, and added 'Require' keyword filtering
+ - fixed magnet links getting passed with cookies when 
+   CloudHole was enabled
+ - fixed empty Block keyword in Advanced settings, and added 
+   'Require' keyword filtering
  - updated Hebrew strings
  - added keyword filtering in Advanced settings
- - added Advanced settings with separate size range for movies, seasons and episodes
+ - added Advanced settings with separate size range for movies, 
+   seasons and episodes
  - fixed XtremeZone provider
  - give credit to mancuniancol
  - fixed broken Spanish string formatters in translations
  - updated idope icon
- - fix overquoting of URLs, add half-baked HD Torrents provider
+ - fix overquoting of URLs, add half-baked HD Torrents 
+   provider
  - reduce default timeout
- - add support for custom providers and overrides (see readme)
+ - add support for custom providers and overrides (see 
+   readme)
  - clarify release types in settings names
  - release to website
  - improve changelog format
  - fixed more logging errors (fixes ruhunt)
- - fixed number parsing (fixes rutor), traceback logging errors, added website URL
- - fix sending valid magnets, empty int parsing, source link
- - fixed most season searches, size parsing and comparison, special t411 handling
+ - fixed number parsing (fixes rutor), traceback logging 
+   errors, added website URL
+ - fix sending valid magnets, empty int parsing, source 
+   link
+ - fixed most season searches, size parsing and comparison, 
+   special t411 handling
  - Hebrew strings update
  - workaround picky tv_keywords2 for idope and rutor
  - add dates to changelog

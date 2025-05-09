@@ -18,7 +18,7 @@ $(ZIP_FILE):
 zip: $(ZIP_FILE)
 
 clean_arch:
-	 rm -f $(ZIP_FILE)
+	rm -f $(ZIP_FILE)
 
 clean:
 	rm -f $(ZIP_FILE)
