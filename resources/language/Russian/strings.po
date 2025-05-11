@@ -246,6 +246,10 @@ msgctxt "#32108"
 msgid "Custom settings"
 msgstr "Пользовательские настройки"
 
+msgctxt "#32109"
+msgid "Antizapret proxy (only for Russia)"
+msgstr "Antizapret прокси (только для РФ)"
+
 msgctxt "#32110"
 msgid "International"
 msgstr "Международный"
