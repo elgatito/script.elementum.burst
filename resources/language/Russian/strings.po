@@ -246,6 +246,10 @@ msgctxt "#32108"
 msgid "Custom settings"
 msgstr "Пользовательские настройки"
 
+msgctxt "#32109"
+msgid "Antizapret proxy (only for Russia)"
+msgstr "Antizapret прокси (только для РФ)"
+
 msgctxt "#32110"
 msgid "International"
 msgstr "Международный"
@@ -485,3 +489,7 @@ msgstr "[B]Синхронизация cookie не смогла авторизо�
 msgctxt "#32169"
 msgid "Login to {0} failed"
 msgstr "Вход в {0} не удался"
+
+msgctxt "#32170"
+msgid "Antizapret PAC file URL"
+msgstr "URL файла PAC Antizapret"

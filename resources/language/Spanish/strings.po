@@ -246,6 +246,10 @@ msgctxt "#32108"
 msgid "Custom settings"
 msgstr "Personalizada"
 
+msgctxt "#32109"
+msgid "Antizapret proxy (only for Russia)"
+msgstr ""
+
 msgctxt "#32110"
 msgid "International"
 msgstr "Internacional"
@@ -484,4 +488,8 @@ msgstr ""
 
 msgctxt "#32169"
 msgid "Login to {0} failed"
+msgstr ""
+
+msgctxt "#32170"
+msgid "Antizapret PAC file URL"
 msgstr ""

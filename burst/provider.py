@@ -192,7 +192,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             url = definition['initial_url']
             if not url.startswith('http'):
                 url = definition['root_url'] + url
-            client.open(url)
+            client.open(py2_encode(url))
 
         if token:
             log.info('[%s] Reusing existing token' % provider)
@@ -260,7 +260,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
                 # TODO generic flags in definitions for those...
                 if 'csrf_token' in definition and definition['csrf_token']:
-                    client.open(definition['root_url'] + definition['login_path'])
+                    client.open(py2_encode(definition['root_url'] + definition['login_path']))
                     if client.content:
                         csrf_token = re.search(r'name=\"_?csrf_token\" value=\"(.*?)\"', client.content)
                         if csrf_token:
@@ -277,7 +277,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
                 if 'token_auth' in definition:  # token_auth login currently unused by any tracker
                     # log.debug("[%s] logging in with: %s" % (provider, login_object))
-                    if client.open(definition['root_url'] + definition['token_auth'], post_data=eval(login_object)):
+                    if client.open(py2_encode(definition['root_url'] + definition['token_auth']), post_data=eval(login_object)):
                         try:
                             token_data = json.loads(client.content)
                         except:
@@ -313,7 +313,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                         series_details = re.search(r'PlayEpisode\(\'(\d+)\'\)">', client.content)
                         if series_details:
                             url_search = definition['root_url'] + '/v_search.php?a=%s' % series_details.group(1)
-                            client.open(url_search)
+                            client.open(py2_encode(url_search))
                             redirect_url = re.search(r'url=(.*?)">', client.content)
                             if redirect_url is not None:
                                 url_search = redirect_url.group(1)
@@ -321,7 +321,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                             log.info('[%s] Have not found lostfilm ID in %s' % (provider, url_search))
                             return filtering.results
                     if provider == 'hd-torrents':
-                        client.open(definition['root_url'] + '/torrents.php')
+                        client.open(py2_encode(definition['root_url'] + '/torrents.php'))
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         if csrf_token:
                             url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
