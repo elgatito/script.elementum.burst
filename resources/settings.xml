@@ -420,6 +420,7 @@
         <setting id="proxy_port" label="32098" type="number" default="1080" subsetting="true" enable="eq(-3,1)" />
         <setting id="proxy_login" label="32099" type="text" default="" subsetting="true" enable="eq(-4,1)" />
         <setting id="proxy_password" label="32100" type="text" default="" option="hidden" subsetting="true" enable="eq(-5,1)" />
+        <setting id="antizapret_pac_url" label="32170" type="text" default="https://p.thenewone.lol:8443/proxy.pac" subsetting="true" visible="eq(-6,3)" />
   </category>
 
   <!-- Advanced -->
