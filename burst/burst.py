@@ -549,6 +549,12 @@ def extract_from_api(provider, client):
         size = ''
         seeds = ''
         peers = ''
+
+        if provider == 'torrentio':
+            title = result['title'].encode('unicode-escape').decode('utf-8')
+            seeds = re.findall(r"\\U0001f464\s\d+",title)[0].split(' ')[1]
+            size  = re.findall("\\b(\\d+(?:\\.\\d+)? [MG]B)\\b",title)[0]
+
         if 'name' in api_format:
             name = get_nested_value(result, api_format['name'], "")
         if 'description' in api_format:
