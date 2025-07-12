@@ -2367,7 +2367,7 @@
         },
         "predefined": false,
         "private": true,
-        "public_dns_alias": "rutracker.lib",
+        "public_dns_alias": "rutracker.org",
         "root_url": "https://rutracker.org",
         "season_extra": "",
         "season_keywords": "\"{title:en:ru}\" \"Сезон {season}\"",
