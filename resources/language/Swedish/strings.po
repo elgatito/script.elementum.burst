@@ -488,7 +488,7 @@ msgstr "[B]Kaksynkronisering kunde inte auktorisera:[/B] %s"
 
 msgctxt "#32169"
 msgid "Login to {0} failed"
-msgstr ""
+msgstr "Inloggning till {0} misslyckades"
 
 msgctxt "#32170"
 msgid "Antizapret PAC file URL"
