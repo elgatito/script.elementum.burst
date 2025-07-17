@@ -9,9 +9,13 @@ from future.utils import PY3, iteritems
 import re
 import os
 import urllib3
-import dns.resolver
 import requests
 import antizapret
+try:
+    import dns.resolver
+    platform_can_resolve = True
+except:
+    platform_can_resolve = False
 
 from elementum.provider import log, get_setting
 from time import sleep
@@ -188,7 +192,7 @@ class Client:
         except:
             pass
 
-        if use_public_dns:
+        if use_public_dns and platform_can_resolve:
             connection.create_connection = patched_create_connection
 
         if use_elementum_proxy:
