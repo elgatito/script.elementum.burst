@@ -10,6 +10,7 @@ import re
 import os
 import urllib3
 import requests
+import antizapret
 try:
     import dns.resolver
     platform_can_resolve = True
@@ -28,7 +29,7 @@ else:
     from cookielib import LWPCookieJar
     from urllib import urlencode
     from urlparse import urlparse
-from kodi_six import xbmcaddon
+from kodi_six import xbmcaddon, py2_encode
 
 from requests.packages.urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
@@ -139,12 +140,13 @@ class Client:
         self.passkey = None
         self.info = info
         self.proxy_url = None
+        self.use_antizapret = False
+        self.antizapret_proxy = None
         self.request_charset = request_charset
         self.response_charset = response_charset
         self.is_api = is_api
 
         self.use_cookie_sync = False
-        self.needs_proxylock = False
 
         self.headers = dict()
         self.request_headers = None
@@ -211,7 +213,7 @@ class Client:
                     self.proxy_url = "{0}://{1}:{2}@{3}:{4}".format(proxy['type'], proxy['login'], proxy['password'], proxy['host'], proxy['port'])
                 else:
                     self.proxy_url = "{0}://{1}:{2}".format(proxy['type'], proxy['host'], proxy['port'])
-            if proxy['use_type'] == 2 and info and "proxy_url" in info:
+            elif proxy['use_type'] == 2 and info and "proxy_url" in info:
                 log.debug("Setting proxy with hosts resolve from Elementum: %s" % (info["proxy_url"]))
 
                 proxy_url_scheme_separator = '://'
@@ -219,6 +221,12 @@ class Client:
                 elementum_proxy_url_prefix = elementum_proxy_url_parts[0].lower()
                 if elementum_proxy_url_prefix in elementum_proxy_types_overrides:
                     self.proxy_url = proxy_url_scheme_separator.join([elementum_proxy_types_overrides[elementum_proxy_url_prefix]] + elementum_proxy_url_parts[1:])
+            elif proxy['use_type'] == 3:
+                log.debug("Setting proxy to Antizapret proxy")
+
+                self.use_antizapret = True
+                self.proxy_url = None
+                self.antizapret_proxy = antizapret.AntizapretProxy()
         if self.proxy_url:
             self.session.proxies = {
                 'http': self.proxy_url,
@@ -289,6 +297,16 @@ class Client:
 
         if get_data:
             url += '?' + urlencode(get_data)
+
+        if self.use_antizapret:
+            parsed = urlparse(url)
+            proxy = self.antizapret_proxy.detect(host=parsed.netloc)
+            if proxy:
+                log.debug("Detected Antizapret proxy for %s: %s" % (parsed.netloc, proxy))
+                self.session.proxies = {
+                    'http': proxy,
+                    'https': proxy,
+                }
 
         log.debug("Opening URL: %s" % repr(url))
         if self.session.proxies:
@@ -388,9 +406,9 @@ class Client:
             if not prerequest.startswith('http'):
                 prerequest = root_url + prerequest
             log.debug("Running prerequest to %s" % (prerequest))
-            self.open(prerequest.encode('utf-8'), headers=headers)
+            self.open(py2_encode(prerequest), headers=headers)
 
-        if self.open(url.encode('utf-8'), post_data=encode_dict(data, self.request_charset), headers=headers):
+        if self.open(py2_encode(url), post_data=encode_dict(data, self.request_charset), headers=headers):
             try:
                 if fails_with and re.search(fails_with, self.content):
                     self.status = 'Wrong username or password'

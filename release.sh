@@ -24,5 +24,5 @@ make
 if [[ $TAG != *-* ]]
 then
 	make zip
-    make upload
+	make upload
 fi
