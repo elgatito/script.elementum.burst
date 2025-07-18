@@ -9,7 +9,7 @@
 
     <setting label="32084" id="use_public_dns" type="bool" default="false" enable="eq(-2,false) + eq(3,false)" />
       <setting id="public_dns_list" label="32093" type="text" default="8.8.8.8, 8.8.4.4, 9.9.9.9" enable="eq(-1,true) + eq(-3,false)" />
-      <setting id="opennic_dns_list" label="32094" type="text" default="54.36.111.116, 192.3.165.37, 80.78.132.79" enable="eq(-2,true) + eq(-4,false)" />
+      <setting id="opennic_dns_list" label="32094" type="text" default="94.247.43.254, 152.53.15.127, 185.181.61.24" enable="eq(-2,true) + eq(-4,false)" />
     <setting label="32140" id="use_tor_dns" type="bool" default="false" enable="eq(-3,false)" />
     <setting id="tor_dns_help" label="32141" type="text" enable="false" subsetting="true" />
 
@@ -95,10 +95,6 @@
       <setting id="itorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="itorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="[B]KickAss[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_kickass" type="bool" default="false" />
-      <setting id="kickass_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="kickass_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="[B]LimeTorrents[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_limetorrents" type="bool" default="false" />
       <setting id="limetorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="limetorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
@@ -160,10 +156,6 @@
       <setting id="torrentz_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="torrentz_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
-    <setting label="[B]Torrentz2K[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_torrentz2k" type="bool" default="false" />
-      <setting id="torrentz2k_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
-      <setting id="torrentz2k_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
-
     <setting label="[B]UIndex[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_uindex" type="bool" default="false" />
       <setting id="uindex_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="uindex_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
@@ -194,6 +186,12 @@
       <setting id="0day_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
       <setting id="0day_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
       <setting id="0day_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
+
+    <setting label="[B]Animelayer[/B]   [COLOR gray][$ADDON[script.elementum.burst 32114]][/COLOR]" id="use_animelayer" type="bool" default="false" />
+      <setting id="animelayer_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="animelayer_password" label="32016" type="text" default="" option="hidden" subsetting="true" visible="eq(-2,true)" />
+      <setting id="animelayer_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-3,true)" />
+      <setting id="animelayer_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-4,true)" />
 
     <setting label="[B]ArabP2P[/B]   [COLOR gray][$ADDON[script.elementum.burst 32142]][/COLOR]" id="use_arabp2p" type="bool" default="false" />
       <setting id="arabp2p_username" label="32015" type="text" default="" subsetting="true" visible="eq(-1,true)" />
@@ -416,12 +414,13 @@
       <setting label="32095" type="lsep" />
       <setting id="proxy_help" label="32158" type="text" enable="false" />
       <setting id="proxy_enabled" label="32096" type="bool" default="false" />
-        <setting id="proxy_use_type" label="32106" type="enum" default="2" subsetting="true" lvalues="32107|32108|32138" enable="eq(-1,true)" />
+        <setting id="proxy_use_type" label="32106" type="enum" default="2" subsetting="true" lvalues="32107|32108|32138|32109" enable="eq(-1,true)" />
         <setting id="proxy_type" label="32101" type="enum" default="5" subsetting="true" lvalues="32102|32103|32104|32105|32136|32137" enable="eq(-1,1)" />
         <setting id="proxy_host" label="32097" type="text" default="" subsetting="true" enable="eq(-2,1)" />
         <setting id="proxy_port" label="32098" type="number" default="1080" subsetting="true" enable="eq(-3,1)" />
         <setting id="proxy_login" label="32099" type="text" default="" subsetting="true" enable="eq(-4,1)" />
         <setting id="proxy_password" label="32100" type="text" default="" option="hidden" subsetting="true" enable="eq(-5,1)" />
+        <setting id="antizapret_pac_url" label="32170" type="text" default="https://p.thenewone.lol:8443/proxy.pac" subsetting="true" visible="eq(-6,3)" />
   </category>
 
   <!-- Advanced -->

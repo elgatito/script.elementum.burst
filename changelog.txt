@@ -1,0 +1,963 @@
+script.elementum.burst changelog
+===============
+
+[B]v0.0.93[/B] - 2025-04-02
+ - Version 0.0.93
+ - Fixed json
+ - Add Torrentday.com provider, fixes for TorrentLeech. 
+   (#459)
+ - Add AniDUB tracker. (#458)
+ - Add LE-Production tracker. (#457)
+ - Add UIndex tracker. (#455)
+ - Really use kodi_language for search. (#454)
+
+[B]v0.0.92[/B] - 2025-02-28
+ - Version 0.0.92
+ - Make bt4g predefined, make bitsearch not predefined. 
+   (#451)
+ - Show in GUI "login to tracker failed" error (#450)
+ - Make nnmclub semi-private. (#449)
+ -  Add LostFilm tracker (#448)
+
+[B]v0.0.91[/B] - 2025-02-19
+ - Updated version to 0.0.91
+ - Fixed linting issues
+ - Add BT4G tracker. (#446)
+ - Fix ilcorsaronero (new design), cpasbien, megapeer, 
+   newstudio, torrent9. (#445)
+ - Update strings.po (#444)
+ -  Add AniMaunt tracker (#442)
+ - Remove unused "id" field from parser and api_format 
+   (#441)
+
+[B]v0.0.90[/B] - 2024-10-03
+ - Version 0.0.90
+ - Fix release types detection to avoid false blocks (#439)
+ - Disable magnetdl as of 02.10.2024 (#440)
+ - Fix megapeer as of 27.06.2024 (#435)
+
+[B]v0.0.89[/B] - 2024-06-26
+ - Fixed linting
+ - Version 0.0.89
+ - Added support for showing errors and messages for cookie-sync
+ - Changed login_failed message for toloka
+ - Update kinozal & nnmclub & rustorka to show type of "share" 
+   (#425)
+ - Adding custom messages to make settings more human friendly. 
+   Added support for using custom User Agent.
+ - Use raw strings for regexp (#427)
+ - Add ExtraTorrent tracker
+ - Fix YggTorrent login_path
+ - Uupdate yggtorrent as 23.05.2024
+ - rutracker: remove "charset": "windows-1251". it is not 
+   needed these days.
+ - update rustorka keywords
+ - update megapeer keywords
+ - update ztracker.png
+ - Fix icon canvas for anilibria itorrent megapeer
+ - Add piratbit provider
+ - Disable torrent.by, does not wortk b/c of anti-bot 
+   protection
+ - remove initial_url in yggtorrent to make login_cookie 
+   work
+ - add login_cookie to yggtorrent
+ - Update Linux USER_AGENT
+ - Update anilibria keywords
+
+[B]v0.0.88[/B] - 2024-05-10
+ - Version 0.0.88
+ - fix requests/compat.py to work on python 2.7
+ - Add AniLibria provider
+ - cleanup YTS json
+ - add support of dict to subresults
+ - add get_nested_value
+ - remove redundant self.session.proxies code
+ - Update urllib3 to 1.26.18
+
+[B]v0.0.87[/B] - 2024-05-06
+ - Version 0.0.87
+ - Fixed linting
+ - Updated UserAgent for Windows hosts. Added login_cookie for 
+   ilcorsaroblu
+ - Fixed urlparse import
+ - Set cryptodome as optional
+ - Added login_cookie for torrentleech.
+ - Reorganized the code that collects cookies and headers.
+ - Changed cookie_exists to match subdomains as well
+ - Fixed issue with cached Gist file url
+ - Added login_cookie for more providers
+ - Added proxy help message to settings file
+ - Added few examples for cookie sync settings
+ - Added support for Cookie Sync
+ - generate settings.xml
+ - fix and enable newstudio
+ - fix torrent9
+ - nyaa: add :en to keywords
+ - ilcorsaronero: set seeds to 1 when n/a
+ - fix cpasbien
+ - fix typo
+ - add :original to hungarian trackers
+ - fix baibako search
+ - add :original to 1337x to avoid issue when alternative_titles 
+   overwrite en title
+ - fix overwrite_anime_original_title (was local scope)
+ - Fix trackers as of 29.04.2024 (#411)
+ - update opennic dns servers 27.04.2024 (#406)
+ - Update Hungarian trackers to use en and hu titles (#405)
+ - Use English as fallback for overwrite_anime_original_title 
+   when Romaji is not avaialble (#404)
+ - proxy_enabled should not be disabled by use_elementum_proxy 
+   (#407)
+
+[B]v0.0.86[/B] - 2024-03-28
+ - Version 0.0.86
+ - Fixed linter issue
+ - Fix strings replacement not occuring on subsequent api calls 
+   (#398)
+ - Update trackers as of March 2024 (#396)
+ - fix thepiratebay parsing and url. add infohash. (#394)
+ - Use included_rx func for require_keywords, same as for other 
+   checks. (#395)
+ - Support elementum with old get_setting (#392)
+
+[B]v0.0.85[/B] - 2024-03-07
+ - Version 0.0.85
+ - Fixed issue with detecting content type.
+ - Enable kodi_language by default. (#390)
+
+[B]v0.0.84[/B] - 2024-03-07
+ - Fixed linting errors
+ - Version 0.0.84
+ - fix get_setting usage in get_enabled_providers (#388)
+ - improve rutor shows and anime search (#385)
+ - improve rutracker shows and anime search (#384)
+ - improve torrentby shows search (#383)
+ - Add overwrite_anime_original_title option (#389)
+
+[B]v0.0.83[/B] - 2024-02-12
+ - Version 0.0.83
+ - Added a check for failed provider to avoid timeouts.
+ - Improve nyaa anime_keywords (#379)
+ - Update extranet URL (#380)
+ - Added license
+
+[B]v0.0.82[/B] - 2024-01-05
+ - Fixed linting error
+ - Version 0.0.82
+ - fix zelka parsing and use https (#376)
+ - update six.py to avoid future issues with python2/3 
+   (#374)
+ - Fix 'generator' object has no attribute 'next'. (#373)
+ - Add hungarian Ztracker (#371)
+ - Added support for having `login_prerequest` field in 
+   providers.
+ - Update strings.po uk_ua (#368)
+
+[B]v0.0.81[/B] - 2023-12-19
+ - Version 0.0.81
+ - Fixed issue with timeout
+
+[B]v0.0.80[/B] - 2023-12-19
+ - Version 0.0.80
+ - Added setting/handler for clearing cookies in Burst
+ - Fix Yourbittorrent, TorrentFunk & Tolock (#366)
+
+[B]v0.0.79[/B] - 2023-12-14
+ - Removed extra line
+ - Version 0.0.79
+ - Update EZTVX.to + Fix code (#361)
+ - fix results sorting when allow_noseeds, fix sorting by size 
+   (#358)
+
+[B]v0.0.78[/B] - 2023-08-28
+ - Version 0.0.78
+ - Reformatted settings.
+ - Fixed formatting issues
+ - Improve TorrentGalaxy search (#356)
+ - Convert Torrentz2k to API based and enable it (#354)
+ - Fix TorrentZ tracker (#353)
+ - Add BitSearch tracker (#351)
+
+[B]v0.0.77[/B] - 2023-07-27
+ - Version 0.0.77
+ - Added Kodi setting to define location of overrides.json file 
+   on the disk.
+ - fix load_overrides for python3 (#350)
+ - Added english language to 1337 queries.
+
+[B]v0.0.76[/B] - 2023-07-20
+ - Version 0.0.76
+ - Add itorrent icon (#348)
+ - Fix yggtorrent tracker (#346)
+ - Add EXT tracker (#347)
+ - Added a check to use original title if requested one not 
+   available.
+ - fix yourbittorrent (#345)
+ - fix torrentfunk tracker (#343)
+ - Fix torlock tracker (#342)
+ - Update providers.json (#344)
+
+[B]v0.0.75[/B] - 2023-07-14
+ - Fixed linter issue.
+ - Version 0.0.75
+ - Regenerated settings.
+ - Disable dead trackers as of 25.06.2023 (#336)
+ - Add arabp2p tracker (#333)
+ - Make ilcorsaroblu private (#334)
+ - Fix post_data unquote error (#335)
+ - Fix itorrent parsing (#337)
+ - Update torrent.by: HTTPS and new icon (#338)
+
+[B]v0.0.74[/B] - 2023-06-22
+ - Version 0.0.74
+ - Fixed broken json syntax.
+ - Removed Rarbg provider.
+ - Update TorrentDownloads base_url (#328)
+ - Update torrent9 and cpasbien trackers (#326)
+ - Update providers.json (#324)
+ - Added release.sh and notes about it.
+ - Changed search parameters for rutor.
+
+[B]v0.0.73[/B] - 2023-01-15
+ - Version 0.0.73
+ - Added different UserAgent for Windows platform
+ - Added functionality to split {year} into different years, if 
+   there multiple release years defined for the entry.
+ - Modified back Kinozal domain.
+
+[B]v0.0.72[/B] - 2023-01-09
+ - Added a sleep into release process
+ - Version 0.0.72
+ - Updated generate_settings script to use python3. Regenerated 
+   settings.
+ - Added an exception pass in normalize.py
+ - Changes for the rutracker and kinozal trackers.
+ - Adding hell (#322)
+ - Rutor onion v3 hostname (#317)
+ - Fixed check for xgettext
+ - Added check for xgettext
+ - Added flake rule to skip a check.
+
+[B]v0.0.71[/B] - 2022-01-14
+ - Version 0.0.71
+ - Added a try/except to catch unicode errors.
+ - Onion v3 addesses (#313)
+ - Update Kickass url (#312)
+ - Update GloTorrents url (#310)
+ - Cleanup results before adding to the result list (#303)
+ - Update strings.po (#302)
+ - Updated default Opennic DNS IPs.
+
+[B]v0.0.70[/B] - 2021-07-06
+ - version 0.0.70.
+ - Зробив ще кілька текстів українською (#299)
+ - минорный фикс (#298)
+ - Add `Use Tor domain alias` (use_tor_dns) setting (#297)
+ - added requests dependency.
+ - also use tmdb_id in rarbg (#296)
+
+[B]v0.0.69[/B] - 2021-06-04
+ - Version 0.0.69
+ - fixed issue with selecting custom DNS in settings.
+
+[B]v0.0.68[/B] - 2021-05-31
+ - Version 0.0.68
+ - linter changes
+ - Proxy settings fixes (#285)
+ - Search improvements for Linkomanija and Torrent.lt 
+   (#294)
+ - Update addon.xml (#292)
+ - Torrent.lt changes in website structure (#293)
+ - added separate keyword 'absolute_episode' to queries, to use 
+   absolute episode number. If number is not available
+ - Фикс поиска Аниме в 3ёх торрентах (#290)
+ - added swedish information to addon.xml (#282)
+ - Cleanup old messages (#288)
+ - merged translations
+
+[B]v0.0.67[/B] - 2021-05-19
+ - Version 0.0.67
+ - fix comparison in process_keywords (#286)
+ - added another clause to remove accents for english 
+   query.
+ - added additional check to avoid removing accents for 
+   languages, defined for provider.
+ - added another implementation of remove accents
+ - add logo for filebase (#281)
+ - use spaces in addon.xml (#279)
+
+[B]v0.0.66[/B] - 2021-04-28
+ - Version 0.0.66
+ - Add filebase.ws tracker (#278)
+ - fixed issue with using language for 'general' searches.
+ - use imdb_id for movies in rarbg. add new category (#276)
+ - we can not use lang :id in general search query (#277)
+
+[B]v0.0.65[/B] - 2021-04-19
+ - version 0.0.65
+ - Update providers queries for 1337x/magnetdl/rarbg/thepiratebay 
+   (#272)
+ - Use remove_special_characters in EZTV (#273)
+ - Use remove_special_characters in rutor and thepiratebay 
+   (#271)
+
+[B]v0.0.64[/B] - 2021-04-02
+ - Version 0.0.64
+ - added handling of 'remove_special_characters' to remove 
+   unwanted characters.
+ - added handling of 'id' fields in providers parser.
+ - add Torrent.by provider (#269)
+ - Refactor rutor and rutracker (#268)
+ - add support of _fallback_extra (#267)
+ - fixed issue with anime season searches.
+ - added keywords handling of 'tvdb_id', 'tmdb_id', 'imdb_id', 
+   'show_tmdb_id' to search queries.
+ - make generate_settings.py work for both py2 and py3 
+   (#266)
+
+[B]v0.0.63[/B] - 2021-03-20
+ - added initial BUILD page.
+ - Version 0.0.63.
+ - added a check to avoid running same query again.
+ - fix remove_accents for non-ASCII language (#262)
+ - we use encode('ASCII') to remove accents, so do this in py3 
+   as well. (#261)
+ - Remove old messages (#260)
+
+[B]v0.0.62[/B] - 2021-02-22
+ - Version 0.0.62.
+ - Changed logic of finding titles to avoid using default title 
+   when required is not found.
+ - Removed Referer header for API providers (Fix for rarbg).
+
+[B]v0.0.61[/B] - 2021-02-18
+ - Version 0.0.61
+ - fixed warning for python 3.9
+ - fixed issue with selecting title from available titles.
+
+[B]v0.0.60[/B] - 2021-02-14
+ - Version 0.0.60
+ - Added caching of subpage requests to avoid duplicate 
+   requests. Added check for remaining time for each provider 
+   to abort searches when 3 or less seconds left. Added remove 
+   of accents for all non-original titles. Added results-deduplication 
+   before limiting each providers results to desired number.
+
+[B]v0.0.59[/B] - 2021-02-08
+ - Version 0.0.59
+ - added few check for existing definitions.
+ - updated anime keywords for all providers. change yts 
+   domain.
+ - added few checks to definitions. reduced retry sleep 
+   timer.
+
+[B]v0.0.58[/B] - 2021-02-07
+ - Version 0.0.58
+ - modified default headers, increased retry timeout
+ - modified providers for latest changes with titles and anime 
+   searches.
+ - fixed issue with single-languages titles.
+ - added support for multi-language title keywords: {title:ru:en:original} 
+   -> {title:ru} + {title:en} + {title:original}
+ - make sure to take hash per url without headers
+ - added a switch to anime searching when elementum is sending 
+   anime:true.
+ - updated ncore provider
+ - Update Swedish translation (#249)
+
+[B]v0.0.57[/B] - 2021-01-17
+ - Version 0.0.57
+ - fixed the issue with filtering duplicates from different 
+   providers.
+ - Fix for Python 3.9 (#247)
+
+[B]v0.0.56[/B] - 2021-01-15
+ - Version 0.0.56
+ - added additional messages to see why items are filteres from 
+   results.
+ - make sure nulls are not sent to sorters.
+ - make sure releases are properly collected from custom 
+   filters
+ - ensure we don't get exception from unicode fixup
+ - make sure sort_balanced is nit influenced by empty seeds 
+   count.
+ - Update es_AR translations. (#242)
+ - Update "Sky torrents" URL (#238)
+
+[B]v0.0.55[/B] - 2021-01-06
+ - Version 0.0.55
+ - fixed issue with multiple queries, not being collected
+
+[B]v0.0.54[/B] - 2021-01-05
+ - version 0.0.54
+ - fixed providers icons. thanks to @burekas7
+ - fixed thepiratebay url
+ - KAT fix (#230)
+ - idope fix (#232)
+ - Update "TorrentDownloads" URL (#233)
+ - rearranged tv keywords to set season keywords as fallback 
+   entries only
+ - unidified collecting of keywords and fallback keywords to 
+   allow up to 4 combinations of all types.
+ - Update "GloTorrents" URL (#225)
+
+[B]v0.0.53[/B] - 2020-12-15
+ - removed requirements for pip
+ - version 0.0.53
+ - fixed torrentgalaxy id. added missing icons. thanks to 
+   @burekas7
+
+[B]v0.0.52[/B] - 2020-12-09
+ - Version 0.0.52
+ - added TorrentGalaxy provider
+ - Fix for Kickass (#219)
+ - py2_encode do not let generate hash on kodi 19 (#220)
+
+[B]v0.0.51[/B] - 2020-12-07
+ - make linter happy
+ - version 0.0.51
+ - modified timeouts getters to avoid mistaken settings
+ - updated kickass provider
+ - Fix "The Pirate Bay" (#218)
+ - Update "Zooqle" search separator (#216)
+ - Disabled "SUMOTorrent" since website died (#215)
+ - Other URLs corrected (#214)
+ - Update "zamunda" URL (#213)
+ - Update "torrent9" URL (#212)
+ - Update "GloTorrents" URL (#211)
+ - Matrix compatibility updated (#210)
+ - Update "TorrentZ" URL (#208)
+ - Update "ilcorsaronero" URL (#206)
+
+[B]v0.0.50[/B] - 2020-11-08
+ - version 0.0.50
+ - fixed url for ThePirateBay, Rutracker, Kickass
+ - add python3 support (#202)
+
+[B]v0.0.49[/B] - 2020-05-23
+ - linter change
+ - fixed linter issue
+ - version 0.0.49
+ - added few changes for handling csrf_token for logging in. 
+   still it does not work bacause of CloudFLare.
+ - changed range increments for max sizes
+ - fixed getter for kickass magnet links
+ - added api implementation for filelist. added passkey 
+   management in client routines.
+ - modified settings generator to add fields for passkey.
+ - added a force for string encode for hashing and added a 
+   try/catch for possible string issues.
+
+[B]v0.0.48[/B] - 2020-04-17
+ - version 0.0.48
+ - reverted hiding of settings.
+ - returned idope
+ - Update "Il Corsaro Nero" URL (#174)
+
+[B]v0.0.47[/B] - 2020-03-29
+ - version 0.0.47
+ - corrected thepiratebay url
+ - Update "Il Corsaro Nero" (#172)
+ - added polish torrent trackers
+ - added new magnet matchers
+ - adjusted flake8 config
+
+[B]v0.0.46[/B] - 2020-03-10
+ - version 0.0.46
+ - added dvb to TVRip keywords
+
+[B]v0.0.45[/B] - 2020-03-10
+ - version 0.0.45
+ - changed rutor to use magnets.
+ - changed max_size setting
+ - added information
+ - LT trackers updates (#165)
+
+[B]v0.0.44[/B] - 2019-12-31
+ - version 0.0.44
+ - changed default headers for making requests from Burst. 
+   fixed second query for magnetdl.
+
+[B]v0.0.43[/B] - 2019-12-31
+ - version 0.0.43
+ - changed language for thepiratebay requests
+ - added provider to logger messages
+ - fixed parser for ettv
+ - returned skytorrents. returned kinozal.
+ - Color change (#164)
+ - Linkomanija: change target from border to cell padding 
+   (#161)
+
+[B]v0.0.42[/B] - 2019-12-30
+ - version 0.0.42
+ - fix provider linkomanija.net (#159)
+ - fixed ilcorsaroblu parser of torrents
+ - added try/except for avoiding getting Burst errors because 
+   of errors in providers.json
+ - added sorting by seeds to torlock
+ - added sumotorrent
+ - added torrentz2k. removed idope provider.
+ - implied json sorting to the file
+ - added corsaro.red provider. modified api extraction to add 
+   description to the name
+ - Limetorrents fix (#160)
+
+[B]v0.0.41[/B] - 2019-12-29
+ - updated settings
+ - disabled tntvillage
+ - version 0.0.41
+ - changed fallbacks for all providers. fixes #145.
+ - added initial_url for limetorrents to be sure cloudflare is 
+   authorized
+ - fixed the issue when torrents are on different domain than 
+   search website.
+ - disabled kinozal provider. changed url for limetorrents.
+ - Update Italian translation (#148)
+ - Improve ilcorsaronero (#149)
+ - Update providers.json (#154)
+ - fixed yggtorrent urls
+
+[B]v0.0.40[/B] - 2019-10-06
+ - version 0.0.40
+ - fixed issue with placing "-" in the end of a query. fixed 
+   fallback keywords for yggtorrent
+
+[B]v0.0.39[/B] - 2019-09-28
+ - version 0.0.39
+ - added initial_url property in definitions
+ - changes to itorrent provider
+
+[B]v0.0.38[/B] - 2019-09-26
+ - version 0.0.38
+ - added a check to avoid fatal errors
+ - fixed yggtorrent
+ - headers should be added to public trackers as well (to 
+   bypass cloudflare and others)
+ - anonymous commit (#135)
+ - Fix/update for LT trackers (#134)
+ - added functionality to add custom headers for providers.
+
+[B]v0.0.37[/B] - 2019-07-29
+ - removed whitespaces to make linter happy
+ - version 0.0.37
+ - small changes to yggtorrent (not helping with not getting 
+   results)
+ - added retry for some errors
+ - added SkipAuth and Silent processing
+ - added check target to makefile
+ - Fix Linkomanija search with flag (free) torrents (#130)
+ - fix host (#127)
+ - Upgraded translation to spanish [es_ES] (#125)
+ - Update Croatian language (#120)
+ - remove fallback query for eztv
+
+[B]v0.0.36[/B] - 2019-04-24
+ - version 0.0.36
+ - added Line filtering
+ - fixed eztv queries
+ - added torrent.lt
+ - fixed nyaa provider
+ - removed newstudio, modified many default keywords
+ - corrections to tv keywords of many providers
+
+[B]v0.0.35[/B] - 2019-03-03
+ - megapeer.org has moved to megapeer.ru (#112)
+ - merged PRs. version 0.0.35
+ - New tv keywords for ncore provider (#103)
+ - tntvillage: fixed URL, fixed search language, updated 
+   tv_keywords2 (#107)
+ - 1337x: search language and EXTRA fixes, new tv_keywords2 
+   (#108)
+ - ilcorsaronero: updated domain, fixed issue #105 (#109)
+ - thepiratebay: search language, EXTRA fixes (#110)
+ - original rutracker host (#111)
+
+[B]v0.0.34[/B] - 2018-12-27
+ - version 0.0.34
+ - added bitnova tracker
+ - removed antizapret. added setting to remove quotes from 
+   queries. fixed formats for older python.
+ - changed settings to split over multiple tabs
+
+[B]v0.0.33[/B] - 2018-12-22
+ - removed travis build
+ - fixed flake8
+ - version 0.0.33
+ - removed antizapret usage. added additional params handling
+ - small change
+
+[B]v0.0.32[/B] - 2018-12-16
+ - version 0.0.32
+ - added fixes for having redirections from providers.
+ - changes for french trackers
+
+[B]v0.0.31[/B] - 2018-12-16
+ - version 0.0.31
+ - adding check for working elementum http proxy
+ - fixing settings visibility
+ - merged translations
+ - fixed few privoders. added linkmanija. added iptorrents.
+ - removed cloudhole usage. added Elementum's proxy as default 
+   one. fixed some providers.
+
+[B]v0.0.30[/B] - 2018-11-04
+ - version 0.0.30
+ - changing settings.xml
+ - fixed ilconsaronero. fixed ilconsaroblu.
+ - fixed double quoting for POST requests. fixed very long 
+   timeouts.
+ - rearranged tvrip/iptv settings
+ - added IPTV setting
+ - Disable subpage in nCore provider (#87)
+ - Remove general extra and Update link (#81)
+
+[B]v0.0.29[/B] - 2018-08-22
+ - version 0.0.29
+ - fixed whitespace
+ - Update croatian language (#78)
+ - removed useless fix_seasons. update seasons query to how it 
+   should be. added overrides.json parser.
+ - fixed idope domain.
+
+[B]v0.0.28[/B] - 2018-08-17
+ - version 0.0.28
+ - added auto-timeout option.
+ - fixed translation of settings' labels in kodi 18. added a 
+   catch for antizapret initialization failure. fixed tfile 
+   provider.
+ - Update YGG link (#77)
+
+[B]v0.0.27[/B] - 2018-08-13
+ - version 0.0.27
+ - small changes to antizapret
+ - changing default timeout settings
+ - adding fix for non available profile directory.
+
+[B]v0.0.26[/B] - 2018-08-09
+ - version 0.0.26
+ - added back kinozal provider. added sorting for provider 
+   results. added filters for mp3/soundtrack results.
+ - fixed baibako provider. adding more headers to torrent 
+   returned results.
+ - fixed filelist
+
+[B]v0.0.25[/B] - 2018-08-09
+ - version 0.0.25
+ - fixed query encoding for non latin characters. added 
+   retrying for requests. added setting to force response 
+   charset encoding.
+ - changed resolution detection
+ - fixed newstudio provider
+ - Update YGGTorrent (#71)
+
+[B]v0.0.24[/B] - 2018-08-07
+ - version 0.0.24
+ - added dependencies
+
+[B]v0.0.23[/B] - 2018-08-07
+ - version 0.0.23
+ - initial migration to requests
+ - added requests library
+ - fixed few providers
+
+[B]v0.0.22[/B] - 2018-08-06
+ - version 0.0.22
+ - fixed bug with encoding login/password
+ - changing default timeout
+ - fixed bug with rarbg
+
+[B]v0.0.21[/B] - 2018-08-03
+ - version 0.0.21
+ - fixed missing module for windows
+
+[B]v0.0.20[/B] - 2018-07-31
+ - modification to searcher functionality, added few try 
+   catches. added limetorrents/worldwidetorrents/il corsaro 
+   blu. added proper language information for all providers.
+ - fixed unicode in provider names
+ - added targets for helper scripts
+ - fixed usage of unicode characters in login/password. added 
+   defaults setters for definitions. fixes to antizapret.
+ - fixing unicode chars in the username/password
+ - fixes to antizapret script
+ - version 0.0.20
+ - adjusting settings to latest version with generated 
+   providers
+ - changed providers to be able to generate settings. added 
+   settings generator script
+ - added proxy support
+ - localization merge after proxy addition
+ - altered match filters for search results.
+ - removed unused code. altered kinozal definition
+ - added support for 'key' definition and headers enforcement
+ - adjusting filters for detection of resolution and release 
+   type
+ - updated localization
+ - Update YGG link (#61)
+ - fixed missing unquote
+
+[B]v0.0.19[/B] - 2018-07-12
+ - version 0.0.19
+ - adding season search to tpb privder
+ - fixed italian providers. fixed non-unicode chars in page 
+   content
+ - ncore changes. bithumer logo.
+ - addition of two Bulgarian trackers: zamunda and zelka and 
+   correction of custom filter keywords code to allow use of 
+   cyrillic (#54)
+ - Add spanish as spoken in Argentina (es_AR) translation. 
+   (#55)
+ - fixed torrentleech
+
+[B]v0.0.18[/B] - 2018-06-25
+ - version 0.0.18
+ - fixing case match for releases. added tntvillage logo.
+ - added filtering on/off to settings
+ - fixed nyaa provider
+ - fixing filelist. thanks to @herrwusel
+ - fixed missing lower() in normalization, added vcdrip 
+   tag
+ - added debug mode for parser
+ - added bithumen provider
+ - Correcting filter_ts to filter_telesync (#47)
+ - fix torrent9 provider (#49)
+ - fixing search object transformation for simple query
+ - adjusting gitignore
+ - fix YGG provider (#51)
+ - setting default size for mvgroup
+
+[B]v0.0.17[/B] - 2018-04-11
+ - fixed trailing space
+ - version 0.0.17
+ - move filelist to https
+ - Fix yggtorrent and update torrent9 url (#39)
+ - adjusting resolution matcher for cyrillic language. added 
+   trailer stopwords. added hdtv matcher for 720p.
+ - added mvgroup provider
+ - making kinozal a private tracker
+ - Improve 1337x parser (#34)
+ - removed skytorrents
+ - Update providers.json (#37)
+ - Last element as point of reference (#40)
+
+[B]v0.0.16[/B] - 2018-02-15
+ - fixed bluebird, newstudio providers. newstudio moved to 
+   public section. added skytorrents provider. version 
+   0.0.16
+
+[B]v0.0.15[/B] - 2018-02-07
+ - version 0.0.15
+ - adding categories for rarbg queries
+ - cleaning up providers. fixing public providers. changing 
+   default providers.
+ - fixed title
+ - Remove a bunch of sites (#20)
+ - Update hr transaltion (#19)
+ - Change Serials > Shows (#22)
+
+[B]v0.0.14[/B] - 2018-02-01
+ - version 0.0.14
+ - added use_custom_dns setting. reverted to not-using public 
+   dns as default behavior.
+
+[B]v0.0.13[/B] - 2018-01-31
+ - removing dns package from flake checks
+ - commenting out HTTPS custom handler
+ - version 0.0.13
+ - added support for OpenNic and Google DNS
+ - adding dns package
+
+[B]v0.0.12[/B] - 2018-01-30
+ - version 0.0.12
+ - fixing wrong charset and queries for few providers
+
+[B]v0.0.11[/B] - 2018-01-29
+ - version 0.0.11
+ - cleaning up definitions. moving all definitions to one json. 
+   setting title:original for search queries
+ - lower-casing payload data titles to make it sure lower-case.
+ - Update hrv lng (#16)
+ - fix torrent9 (#17)
+ - Update cro lng (#15)
+ - Add option to providers 'Contain only'. (#14)
+
+[B]v0.0.10[/B] - 2018-01-15
+ - version v0.0.10
+ - Fix lostfilm (#13)
+ - Fix nyaa (#11)
+ - Add croatian lng (#12)
+
+[B]v0.0.9[/B] - 2018-01-10
+ - fixing newline missing
+ - version v0.0.9
+ - Fix for search Russian movie on sites with Windows-1251 
+   charset
+
+[B]v0.0.8[/B] - 2018-01-10
+ - version 0.0.8
+ - add settings for non-filtering results without seeds
+ - change for flake8 checks
+ - [rutor] Fix search Russian movie. Change search category 
+   from 'Зарубежное кино' to 'Любая категория' [tfile] Correct 
+   domain
+ - Add support LostFilm.tv
+ - fix yggtorrent and torrent9
+
+[B]v0.0.7[/B] - 2017-12-14
+ - version v0.0.7
+ - fixed missing titles[] in payload
+
+[B]v0.0.6[/B] - 2017-12-13
+ - removing quotes surrounding {title} if title has special 
+   characters
+ - fixing ssl workaround for older python
+ - removing unused 'docs'
+ - version v0.0.6
+ - removing unused makefile targets
+ - Update addon.xml
+ - Update Makefile
+
+[B]v0.0.5[/B] - 2017-12-12
+ - fixed po file
+ - added yggtorrent, fixed torrent9
+ - skipping ssl verification
+ - adding lithuanian language
+ - added bluebird provider
+ - version v0.0.5
+ - Add Rustorka.com and remove dead HDClub.org
+ - fixes to pass flake tests
+ - disable travis deploy
+ - added upload target to makefile
+
+[B]v0.0.4[/B] - 2017-11-24
+ - added domain alias support
+ - make plugin.video.elementum optional, alter version to 
+   0.0.4
+
+[B]v0.0.3[/B] - 2017-11-21
+ - fixed missing ruhunt
+
+[B]v0.0.2[/B] - 2017-11-21
+ - removed ruhunt as it's dead
+ - changed plugin meta info
+ - Appending version to 0.0.2
+ - Skipping flake for builds. Adding ignore rules for 
+   flake.
+ - Updated flake8 rules
+ - Added travis support
+
+[B]v0.0.1[/B] - 2017-10-31
+ - fixed merge issues
+ - initial commit
+ - fix for mistaken tvrip match
+ - added Hungarian translation
+ - fixed provider extraction paths
+ - fixed changelog version sorting
+ - fixed wrong alphareign credentials, in case it comes 
+   back
+ - fixed uhdbits name parsing
+ - fixed regression from unicode fix for cookies path
+ - updated documentation for adding private providers
+ - updated t411 URL
+ - added nCore provider
+ - fixed custom private provider checks for username
+ - fixed custom private provider checks for username
+ - fixed issue with cookies path having unicode chars
+ - fixed uhdbits torrent catcher
+ - updated Hebrew strings
+ - added 240p resolution and release tags for TV/VHS rips
+ - fixed unicode error from URLError exceptions
+ - fixed custom providers not getting enabled
+ - fixed baibako.tv provider
+ - fixed error message for non-existing overrides.py
+ - added missing definitions after loading refactor
+ - updated French language
+ - benchmark loading definitions
+ - updated documentation
+ - fixes to loading refactor
+ - refactored loading of providers and overrides
+ - added BaibaKo.TV, torrent3d.ru, 3d-tracker.ru, HDCLUB.org, 
+   fixed a few other ones
+ - updated Hebrew strings
+ - fixed HD Torrent's mono-result reliability
+ - added tfile provider, fixed blocked domains for cyrillic 
+   trackers
+ - removed broken and expensive string normalization
+ - added serialz provider
+ - updated documentation
+ - added Ukrainian language, updated Russian language
+ - added charset detection and decoding, fixed unicode 
+   definitions
+ - added Russian and Ukrainian trackers
+ - fixed nyaa provider with protocol missing in url, moved to 
+   https
+ - fixed OrderedDict missing in Kodi 16
+ - fixed creating cookies directory in temp folder
+ - previous token or login cookies reused across multiple 
+   queries for the same search
+ - added exceptions to language preference setting
+ - improved unicode handling
+ - fixed regression in new resolution matching
+ - fixed resolution matching to be consistent with Quasar
+ - updated Hebrew strings
+ - fixed exception when titles in translations is None
+ - fixed edge case with XtremeZone finding wrong torrent 
+   link
+ - disabled sound with notifications
+ - fixed XtremeZone again...
+ - fixed YTS not returning actual download link
+ - added note in settings about timeout needing to be lower 
+   than Quasar's
+ - reduced default number of results per provider to 10, 
+   maximum 20, and max timeout to 20s
+ - fixed exception on invalid result in extraction from 
+   APIs
+ - added language preference setting from Kodi, fixed timeouts 
+   on bad requests and added (almost) full documentation
+ - updated Hebrew strings
+ - fixed magnet links getting passed with cookies when 
+   CloudHole was enabled
+ - fixed empty Block keyword in Advanced settings, and added 
+   'Require' keyword filtering
+ - updated Hebrew strings
+ - added keyword filtering in Advanced settings
+ - added Advanced settings with separate size range for movies, 
+   seasons and episodes
+ - fixed XtremeZone provider
+ - give credit to mancuniancol
+ - fixed broken Spanish string formatters in translations
+ - updated idope icon
+ - fix overquoting of URLs, add half-baked HD Torrents 
+   provider
+ - reduce default timeout
+ - add support for custom providers and overrides (see 
+   readme)
+ - clarify release types in settings names
+ - release to website
+ - improve changelog format
+ - fixed more logging errors (fixes ruhunt)
+ - fixed number parsing (fixes rutor), traceback logging 
+   errors, added website URL
+ - fix sending valid magnets, empty int parsing, source 
+   link
+ - fixed most season searches, size parsing and comparison, 
+   special t411 handling
+ - Hebrew strings update
+ - workaround picky tv_keywords2 for idope and rutor
+ - add dates to changelog
+ - add WTFPL license
+ - generate changelog, push icon/fanart/changelog to repo
+ - add .gitlab-ci.yml
+ - fix english strings.po, add translation checking script
+ - a few definitions fixes, mostly temporary for t411..
+ - fix general search
+ - proper language/utf-8 handling
+ - use API for t411
+ - add token authorization support
+ - extract torrents from subpages
+ - conditional private provider settings for user/pass
+ - t411 and filelist overrides
+ - fix returning max results per provider
+ - first version
+ - initial commit
+
