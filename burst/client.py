@@ -113,7 +113,7 @@ def ResolvePublic(host):
 
 def ResolveOpennic(host):
     try:
-        log.debug("Custom DNS resolving with public DNS for: %s" % host)
+        log.debug("Custom DNS resolving with OpenNIC DNS for: %s" % host)
         resolver = dns.resolver.Resolver()
         resolver.nameservers = dns_opennic_list
         answer = resolver.query(host, 'A')
