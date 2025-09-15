@@ -1541,34 +1541,6 @@
         "tv_keywords2": "{title:ru:en} {season}+Сезон",
         "tv_keywords_fallback": "{title:original} {season}+Сезон"
     },
-    "leproduction": {
-        "anime_keywords": "{title:ru:en}",
-        "base_url": "https://le-production.tv/",
-        "post_data": "{'story': 'QUERY', 'do': 'search', 'subaction': 'search'}",
-        "color": "FFFFFFFF",
-        "enabled": true,
-        "general_keywords": "{title}",
-        "language": "ru",
-        "languages": "ru",
-        "movie_keywords": "{title:ru:en} {year}",
-        "name": "есть реклама, LE-Production",
-        "parser": {
-            "infohash": "",
-            "name": "item.find_once(tag='div', select=('class', 'short-info'))(tag='a', order=1)",
-            "description": "'WebDL 1080p'",
-            "peers": "",
-            "row": "find_all(tag='div', select=('class', 'short-item'))",
-            "seeds": "1",
-            "size": "",
-            "torrent": "item(tag='a', select=('class', 'short-img'), attribute='href')"
-        },
-        "predefined": false,
-        "private": false,
-        "season_keywords": "{title:ru:en}",
-        "separator": "+",
-        "subpage": true,
-        "tv_keywords": "{title:ru:en}"
-    },
     "knaben": {
         "anime_extra": "",
         "anime_keywords": "{title:original:en} s{season:2}e{episode:2}",
@@ -1618,6 +1590,34 @@
         "tv_keywords_fallback": "{title:original:en} s{season:2}",
         "tv_keywords_fallback2": "{title:original:en} season {season}",
         "tv_keywords_fallback3": "{title:original:en} {season:2}x01"
+    },
+    "leproduction": {
+        "anime_keywords": "{title:ru:en}",
+        "base_url": "https://le-production.tv/",
+        "post_data": "{'story': 'QUERY', 'do': 'search', 'subaction': 'search'}",
+        "color": "FFFFFFFF",
+        "enabled": true,
+        "general_keywords": "{title}",
+        "language": "ru",
+        "languages": "ru",
+        "movie_keywords": "{title:ru:en} {year}",
+        "name": "есть реклама, LE-Production",
+        "parser": {
+            "infohash": "",
+            "name": "item.find_once(tag='div', select=('class', 'short-info'))(tag='a', order=1)",
+            "description": "'WebDL 1080p'",
+            "peers": "",
+            "row": "find_all(tag='div', select=('class', 'short-item'))",
+            "seeds": "1",
+            "size": "",
+            "torrent": "item(tag='a', select=('class', 'short-img'), attribute='href')"
+        },
+        "predefined": false,
+        "private": false,
+        "season_keywords": "{title:ru:en}",
+        "separator": "+",
+        "subpage": true,
+        "tv_keywords": "{title:ru:en}"
     },
     "limetorrents": {
         "anime_extra": "",
