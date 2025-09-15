@@ -95,6 +95,10 @@
       <setting id="itorrent_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="itorrent_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
 
+    <setting label="[B]Knaben[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_knaben" type="bool" default="true" />
+      <setting id="knaben_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
+      <setting id="knaben_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
+
     <setting label="[B]LimeTorrents[/B]   [COLOR gray][$ADDON[script.elementum.burst 32111]][/COLOR]" id="use_limetorrents" type="bool" default="false" />
       <setting id="limetorrents_alias" label="32077" type="text" default="" subsetting="true" visible="eq(-1,true)" />
       <setting id="limetorrents_contains" type="enum" label="32080" subsetting="true" lvalues="32081|32082|32083" visible="eq(-2,true)" />
