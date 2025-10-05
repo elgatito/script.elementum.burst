@@ -435,3 +435,7 @@ def patched_create_connection(address, *args, **kwargs):
     hostname = MyResolver(host)
 
     return _orig_create_connection((hostname, port), *args, **kwargs)
+
+def change_agent(userAgent):
+    global USER_AGENT
+    USER_AGENT = userAgent

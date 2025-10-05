@@ -41,7 +41,7 @@ except:
 from .provider import process
 from .providers.definitions import definitions, longest
 from .filtering import apply_filters, Filtering, cleanup_results
-from .client import USER_AGENT, Client
+from .client import USER_AGENT, Client, change_agent
 from .utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias, size_int
 
 provider_names = []
@@ -759,7 +759,11 @@ def cookie_sync(is_silent):
     set_setting('cookie_sync_gist_id', cookie_sync_gist_id)
     set_setting('cookie_sync_fileurl', cookie_sync_fileurl)
 
-    cookies = cookie_fetch_file()
+    userAgent, cookies = cookie_fetch_file()
+    if userAgent:
+        set_setting('cookie_sync_useragent', userAgent)
+        log.debug("Persisted user-agent for cookie-sync: %s" % (repr(userAgent)))
+        change_agent(userAgent)
     if not cookies:
         if not is_silent:
             p_dialog.close()
@@ -851,6 +855,11 @@ def cookie_fetch_file():
 
         expires = datetime.datetime.utcnow() + datetime.timedelta(days=1000)
 
+        # Read persisted user-agent if available
+        userAgent = resp_items["__userAgent"] if "__userAgent" in resp_items else None
+        if userAgent and cookie_sync_password:
+            userAgent = aes_decode(userAgent)
+
         for k, v in iteritems(resp_items):
             if k.startswith("__"):
                 continue
@@ -862,21 +871,25 @@ def cookie_fetch_file():
                 v = aes_decode(v)
 
             # Loop through and force cookies into cookie jar
-            for cookie in json.loads(py2_encode(v)):
-                cookie["domain"] = k
+            try:
+                for cookie in json.loads(py2_encode(v)):
+                    cookie["domain"] = k
 
-                if "expirationDate" not in cookie or not cookie["expirationDate"]:
-                    datetime.datetime.utcnow() + datetime.timedelta(days=30)
-                    cookie["expirationDate"] = int(expires.timestamp())
-                else:
-                    cookie["expirationDate"] = int(cookie["expirationDate"])
-                cookie["rest"] = {'HttpOnly': cookie["httpOnly"]}
+                    if "expirationDate" not in cookie or not cookie["expirationDate"]:
+                        datetime.datetime.utcnow() + datetime.timedelta(days=30)
+                        cookie["expirationDate"] = int(expires.timestamp())
+                    else:
+                        cookie["expirationDate"] = int(cookie["expirationDate"])
+                    cookie["rest"] = {'HttpOnly': cookie["httpOnly"]}
 
-                cookies.append(cookie)
-                cookies_count = cookies_count + 1
-
+                    cookies.append(cookie)
+                    cookies_count = cookies_count + 1
+            except Exception as e:
+                log.error("Failed parsing cookies for %s with: %s" % (k, repr(e)))
+                import traceback
+                map(log.error, traceback.format_exc().split("\n"))
         log.debug("Cookie sync fetched for %d domains, %d cookies" % (domains_count, cookies_count))
-        return cookies
+        return userAgent, cookies
     except Exception as e:
         log.error("Gist file download failed with: %s" % (repr(e)))
         import traceback
