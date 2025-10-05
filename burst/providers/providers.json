@@ -3094,7 +3094,7 @@
     "torrentio": {
         "enabled": true,
         "is_api":true,
-        "predefined": false,
+        "predefined": true,
         "color": "FFFFFFFF",
         "name": "Torrentio",
         "private": false,
@@ -3105,7 +3105,7 @@
         "anime_keywords_fallback2": "",
         "anime_keywords_fallback3": "",
         "anime_query": "",
-        "base_url": "https://torrentio.strem.fun/providers=yts,eztv,rarbg,1337x,thepiratebay,kickasstorrents,torrentgalaxy,magnetdl,horriblesubs,nyaasi,comando,bludv|sort=qualitysize|qualityfilter=480p,scr,cam/QUERY",
+        "base_url": "https://torrentio.strem.fun/providers=yts,eztv,rarbg,1337x,thepiratebay,kickasstorrents,torrentgalaxy,magnetdl,horriblesubs,nyaasi,comando,bludv|sort=qualitysize|qualityfilter=scr,cam/QUERY",
         "general_extra": "",
         "general_keywords": "",
         "general_query": "",
