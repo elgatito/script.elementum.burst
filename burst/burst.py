@@ -556,7 +556,7 @@ def extract_from_api(provider, client):
             size = re.findall("\\b(\\d+(?:\\.\\d+)? [MG]B)\\b", title)[0]
 
         if 'name' in api_format:
-            name = get_nested_value(result, api_format['name'], "").split()[0]
+            name = get_nested_value(result, api_format['name'], "").replace('\n', ' ').replace('\r', '')
         if 'description' in api_format:
             if name:
                 name += ' '
