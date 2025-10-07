@@ -3595,6 +3595,7 @@
         "api_format": {
             "info_hash": "hash",
             "name": "title_long",
+            "description": "type",
             "peers": "peers",
             "quality": "quality",
             "results": "data.movies",
