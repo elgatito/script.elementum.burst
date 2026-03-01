@@ -77,7 +77,7 @@ proxy_port = get_setting("proxy_port", int)
 proxy_login = get_setting("proxy_login", unicode)
 proxy_password = get_setting("proxy_password", unicode)
 proxy_type = get_setting("proxy_type", int)
-use_public_dns = get_setting("use_public_dns", bool)
+use_custom_dns = get_setting("use_custom_dns", bool)
 use_tor_dns = get_setting("use_tor_dns", bool)
 use_elementum_proxy = get_setting("use_elementum_proxy", bool)
 
@@ -192,7 +192,7 @@ class Client:
         except:
             pass
 
-        if use_public_dns and platform_can_resolve:
+        if use_custom_dns and platform_can_resolve:
             connection.create_connection = patched_create_connection
 
         if use_elementum_proxy:

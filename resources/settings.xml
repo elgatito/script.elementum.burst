@@ -7,7 +7,7 @@
     <setting label="32125" id="use_elementum_proxy" type="bool" default="true" />
     <setting id="elementum_proxy_help" label="32139" type="text" enable="false" subsetting="true" />
 
-    <setting label="32084" id="use_public_dns" type="bool" default="false" enable="eq(-2,false) + eq(3,false)" />
+    <setting label="32084" id="use_custom_dns" type="bool" default="false" enable="eq(-2,false) + eq(3,false)" />
       <setting id="public_dns_list" label="32093" type="text" default="8.8.8.8, 8.8.4.4, 9.9.9.9" enable="eq(-1,true) + eq(-3,false)" />
       <setting id="opennic_dns_list" label="32094" type="text" default="94.247.43.254, 152.53.15.127, 185.181.61.24" enable="eq(-2,true) + eq(-4,false)" />
     <setting label="32140" id="use_tor_dns" type="bool" default="false" enable="eq(-3,false)" />
