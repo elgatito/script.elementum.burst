@@ -493,3 +493,7 @@ msgstr "Inloggning till {0} misslyckades"
 msgctxt "#32170"
 msgid "Antizapret PAC file URL"
 msgstr ""
+
+msgctxt "#32171"
+msgid "Use OpenNIC DNS servers"
+msgstr ""

@@ -8,6 +8,7 @@ from future.utils import PY2, PY3, iteritems
 
 import os
 import re
+import socket
 from elementum.provider import get_setting
 from .providers.definitions import definitions, translatePath
 if PY3:
@@ -369,3 +370,18 @@ def encode_dict(dict_in, charset='utf8'):
         return dict_out
     except:
         return dict_in
+
+def is_ipv4_address(string_ip):
+    """ Checks if a string is a valid IPv4 address
+
+    Args:
+        string_ip (str): String to check
+
+    Returns:
+        bool: True if string is a valid IPv4 address, False otherwise
+    """
+    try:
+        socket.inet_aton(string_ip)
+    except socket.error:
+        return False
+    return True

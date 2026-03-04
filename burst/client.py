@@ -20,7 +20,7 @@ except:
 from elementum.provider import log, get_setting
 from time import sleep
 from urllib3.util import connection
-from .utils import encode_dict, translatePath
+from .utils import encode_dict, translatePath, is_ipv4_address
 if PY3:
     from http.cookiejar import LWPCookieJar
     from urllib.parse import urlparse, urlencode
@@ -48,9 +48,11 @@ if get_setting("use_custom_user_agent", bool):
 PATH_TEMP = translatePath("special://temp")
 
 # Custom DNS default data
+OPENNIC_API_URL = 'https://api.opennicproject.org/geoip/?bare&res=2&adm=2&rnd=true&ipv=4'
+OPENNIC_DNS_FALLBACK = ['94.247.43.254', '152.53.15.127', '185.181.61.24']
 dns_cache = {}
 dns_public_list = ['9.9.9.9', '8.8.8.8', '8.8.4.4']
-dns_opennic_list = ['94.247.43.254', '152.53.15.127', '185.181.61.24']
+dns_opennic_list = list(OPENNIC_DNS_FALLBACK)
 # Save original DNS resolver
 _orig_create_connection = connection.create_connection
 
@@ -69,7 +71,6 @@ urllib3.disable_warnings()
 
 # Kodi settings
 public_dns_list = get_setting("public_dns_list", unicode)
-opennic_dns_list = get_setting("opennic_dns_list", unicode)
 proxy_enabled = get_setting("proxy_enabled", bool)
 proxy_use_type = get_setting("proxy_use_type", int)
 proxy_host = get_setting("proxy_host", unicode)
@@ -78,6 +79,7 @@ proxy_login = get_setting("proxy_login", unicode)
 proxy_password = get_setting("proxy_password", unicode)
 proxy_type = get_setting("proxy_type", int)
 use_custom_dns = get_setting("use_custom_dns", bool)
+use_opennic_dns = get_setting("use_opennic_dns", bool)
 use_tor_dns = get_setting("use_tor_dns", bool)
 use_elementum_proxy = get_setting("use_elementum_proxy", bool)
 
@@ -91,7 +93,7 @@ def MyResolver(host):
         pass
 
     ip = ResolvePublic(host)
-    if not ip:
+    if not ip and use_opennic_dns:
         ip = ResolveOpennic(host)
 
     if ip:
@@ -120,6 +122,28 @@ def ResolveOpennic(host):
         return answer.rrset.items[0].address
     except:
         return
+
+
+def FetchOpenNICDnsServers():
+    try:
+        response = requests.get(OPENNIC_API_URL, timeout=5, headers={'User-Agent': USER_AGENT})
+        response.raise_for_status()
+        dns_servers = []
+        for line in response.text.splitlines():
+            candidate = line.strip()
+            if not candidate or not is_ipv4_address(candidate):
+                continue
+            if candidate in dns_servers:
+                continue
+            dns_servers.append(candidate)
+
+        if dns_servers:
+            log.debug("Loaded %d OpenNIC DNS servers from API" % len(dns_servers))
+            return dns_servers
+        log.debug("OpenNIC API returned no valid IPv4 DNS servers, using fallback list")
+    except Exception as e:
+        log.debug("Failed to fetch OpenNIC DNS servers from API: %s" % repr(e))
+    return list(OPENNIC_DNS_FALLBACK)
 
 class Client:
     """
@@ -173,7 +197,10 @@ class Client:
         global dns_public_list
         global dns_opennic_list
         dns_public_list = public_dns_list.replace(" ", "").split(",")
-        dns_opennic_list = opennic_dns_list.replace(" ", "").split(",")
+        if use_opennic_dns:
+            dns_opennic_list = FetchOpenNICDnsServers()
+        else:
+            dns_opennic_list = list(OPENNIC_DNS_FALLBACK)
         # socket.setdefaulttimeout(60)
 
         # Parsing proxy information
