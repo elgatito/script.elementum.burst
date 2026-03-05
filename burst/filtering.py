@@ -176,6 +176,7 @@ class Filtering:
         # root_url -> base_url (see update_definitions()) -> opennic_dns_alias OR tor_dns_alias -> user defined alias
         definition = definitions[provider]
         if get_setting("use_opennic_dns", bool) and "opennic_dns_alias" in definition:
+            log.debug("use_opennic_dns is true and opennic_dns_alias is in definition:%s" % definition["opennic_dns_alias"]) # TODO: remove
             definition = get_alias(definition, definition["opennic_dns_alias"])
         if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
             definition = get_alias(definition, definition["tor_dns_alias"])

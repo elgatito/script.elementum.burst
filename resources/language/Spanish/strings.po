@@ -147,7 +147,7 @@ msgid "Shows"
 msgstr "Programas de TV"
 
 msgctxt "#32084"
-msgid "Use Public DNS (Google, Quad9, Opennic)"
+msgid "Use Public DNS (Google, Quad9, OpenNIC)"
 msgstr "Usar DNS Público (Google, Quad9, Openic)"
 
 msgctxt "#32085"
@@ -187,7 +187,7 @@ msgid "List of public DNS IPs"
 msgstr "DNS Público"
 
 msgctxt "#32094"
-msgid "List of Opennic DNS IPs"
+msgid "List of OpenNIC DNS IPs"
 msgstr "DNS Openic"
 
 msgctxt "#32095"

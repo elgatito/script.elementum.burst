@@ -147,8 +147,8 @@ msgid "Shows"
 msgstr "Programmi"
 
 msgctxt "#32084"
-msgid "Use Public DNS (Google, Quad9, Opennic)"
-msgstr "Usa DNS pubblico (Google, Quad9, Opennic)"
+msgid "Use Public DNS (Google, Quad9, OpenNIC)"
+msgstr "Usa DNS pubblico (Google, Quad9, OpenNIC)"
 
 msgctxt "#32085"
 msgid "For Developers"
@@ -187,8 +187,8 @@ msgid "List of public DNS IPs"
 msgstr "Elenco di IP DNS pubblici"
 
 msgctxt "#32094"
-msgid "List of Opennic DNS IPs"
-msgstr "Elenco di IP DNS di Opennic"
+msgid "List of OpenNIC DNS IPs"
+msgstr "Elenco di IP DNS di OpenNIC"
 
 msgctxt "#32095"
 msgid "Proxy"
