@@ -3604,7 +3604,7 @@
             "subresults": "torrents",
             "torrent": "url"
         },
-        "base_url": "https://yts.mx/api/v2/list_movies.json?query_term=QUERY&sort_by=seeds&order_by=desc",
+        "base_url": "https://movies-api.accel.li/api/v2/list_movies.json?query_term=QUERY&sort_by=seeds&order_by=desc",
         "color": "FF6AC045",
         "enabled": true,
         "general_extra": null,

@@ -41,7 +41,7 @@ if __name__ == "__main__":
         "thepiratebay10.xyz",
         "1337x.to",
         "glodls.to",
-        "yts.mx",
+        "yts.lt",
         "eztvx.to",
         "bt4gprx.com",
         "bitsearch.to",
