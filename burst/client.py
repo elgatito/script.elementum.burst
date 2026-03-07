@@ -49,7 +49,7 @@ PATH_TEMP = translatePath("special://temp")
 
 # Custom DNS default data
 OPENNIC_API_URL = 'https://api.opennicproject.org/geoip/?bare&res=3&adm=3&rnd=true&ipv=4'
-OPENNIC_DNS_FALLBACK = ['94.247.43.254', '152.53.15.127', '185.181.61.24']
+OPENNIC_DNS_FALLBACK = ['94.247.43.254', '152.53.15.127', '95.216.99.249']
 dns_cache = {}
 dns_public_list = ['9.9.9.9', '8.8.8.8', '8.8.4.4']
 dns_opennic_list = list(OPENNIC_DNS_FALLBACK)
