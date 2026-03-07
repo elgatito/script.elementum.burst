@@ -173,10 +173,11 @@ class Filtering:
             payload (dict): Elementum search payload
         """
         # Domain name preferred order:
-        # root_url -> base_url (see update_definitions()) -> public_dns_alias OR tor_dns_alias -> user defined alias
+        # root_url -> base_url (see update_definitions()) -> opennic_dns_alias OR tor_dns_alias -> user defined alias
         definition = definitions[provider]
-        if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
-            definition = get_alias(definition, definition["public_dns_alias"])
+        if get_setting("use_opennic_dns", bool) and "opennic_dns_alias" in definition:
+            log.debug("use_opennic_dns is true and opennic_dns_alias is in definition:%s" % definition["opennic_dns_alias"]) # TODO: remove
+            definition = get_alias(definition, definition["opennic_dns_alias"])
         if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
             definition = get_alias(definition, definition["tor_dns_alias"])
         definition = get_alias(definition, get_setting("%s_alias" % provider))
@@ -196,10 +197,10 @@ class Filtering:
             payload (dict): Elementum search payload
         """
         # Domain name preferred order:
-        # root_url -> base_url (see update_definitions()) -> public_dns_alias OR tor_dns_alias -> user defined alias
+        # root_url -> base_url (see update_definitions()) -> opennic_dns_alias OR tor_dns_alias -> user defined alias
         definition = definitions[provider]
-        if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
-            definition = get_alias(definition, definition["public_dns_alias"])
+        if get_setting("use_opennic_dns", bool) and "opennic_dns_alias" in definition:
+            definition = get_alias(definition, definition["opennic_dns_alias"])
         if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
             definition = get_alias(definition, definition["tor_dns_alias"])
         definition = get_alias(definition, get_setting("%s_alias" % provider))
@@ -223,10 +224,10 @@ class Filtering:
             payload (dict): Elementum search payload
         """
         # Domain name preferred order:
-        # root_url -> base_url (see update_definitions()) -> public_dns_alias OR tor_dns_alias -> user defined alias
+        # root_url -> base_url (see update_definitions()) -> opennic_dns_alias OR tor_dns_alias -> user defined alias
         definition = definitions[provider]
-        if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
-            definition = get_alias(definition, definition["public_dns_alias"])
+        if get_setting("use_opennic_dns", bool) and "opennic_dns_alias" in definition:
+            definition = get_alias(definition, definition["opennic_dns_alias"])
         if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
             definition = get_alias(definition, definition["tor_dns_alias"])
         definition = get_alias(definition, get_setting("%s_alias" % provider))
@@ -250,10 +251,10 @@ class Filtering:
             payload (dict): Elementum search payload
         """
         # Domain name preferred order:
-        # root_url -> base_url (see update_definitions()) -> public_dns_alias OR tor_dns_alias -> user defined alias
+        # root_url -> base_url (see update_definitions()) -> opennic_dns_alias OR tor_dns_alias -> user defined alias
         definition = definitions[provider]
-        if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
-            definition = get_alias(definition, definition["public_dns_alias"])
+        if get_setting("use_opennic_dns", bool) and "opennic_dns_alias" in definition:
+            definition = get_alias(definition, definition["opennic_dns_alias"])
         if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
             definition = get_alias(definition, definition["tor_dns_alias"])
         definition = get_alias(definition, get_setting("%s_alias" % provider))
@@ -278,9 +279,9 @@ class Filtering:
         """
         definition = definitions[provider]
         # Domain name preferred order:
-        # root_url -> base_url (see update_definitions()) -> public_dns_alias OR tor_dns_alias -> user defined alias
-        if get_setting("use_public_dns", bool) and "public_dns_alias" in definition:
-            definition = get_alias(definition, definition["public_dns_alias"])
+        # root_url -> base_url (see update_definitions()) -> opennic_dns_alias OR tor_dns_alias -> user defined alias
+        if get_setting("use_opennic_dns", bool) and "opennic_dns_alias" in definition:
+            definition = get_alias(definition, definition["opennic_dns_alias"])
         if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
             definition = get_alias(definition, definition["tor_dns_alias"])
         definition = get_alias(definition, get_setting("%s_alias" % provider))

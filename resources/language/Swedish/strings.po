@@ -147,8 +147,8 @@ msgid "Shows"
 msgstr "Serier"
 
 msgctxt "#32084"
-msgid "Use Public DNS (Google, Quad9, Opennic)"
-msgstr "Använd publik DNS (Google, Quad9, Opennic)"
+msgid "Use Public DNS (Google, Quad9, OpenNIC)"
+msgstr "Använd publik DNS (Google, Quad9, OpenNIC)"
 
 msgctxt "#32085"
 msgid "For Developers"
@@ -187,8 +187,8 @@ msgid "List of public DNS IPs"
 msgstr "Lista över publika DNS-IP:er"
 
 msgctxt "#32094"
-msgid "List of Opennic DNS IPs"
-msgstr "Lista över Opennic DNS-IP:er"
+msgid "List of OpenNIC DNS IPs"
+msgstr "Lista över OpenNIC DNS-IP:er"
 
 msgctxt "#32095"
 msgid "Proxy"
@@ -492,4 +492,8 @@ msgstr "Inloggning till {0} misslyckades"
 
 msgctxt "#32170"
 msgid "Antizapret PAC file URL"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Use OpenNIC DNS servers"
 msgstr ""

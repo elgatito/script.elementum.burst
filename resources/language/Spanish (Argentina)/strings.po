@@ -147,8 +147,8 @@ msgid "Shows"
 msgstr "Series"
 
 msgctxt "#32084"
-msgid "Use Public DNS (Google, Quad9, Opennic)"
-msgstr "Usar DNS público (Google, Quad9, Opennic)"
+msgid "Use Public DNS (Google, Quad9, OpenNIC)"
+msgstr "Usar DNS público (Google, Quad9, OpenNIC)"
 
 msgctxt "#32085"
 msgid "For Developers"
@@ -187,8 +187,8 @@ msgid "List of public DNS IPs"
 msgstr "Lista de direcciones IP de DNS públicos"
 
 msgctxt "#32094"
-msgid "List of Opennic DNS IPs"
-msgstr "Lista de direcciones IP de DNS Opennic"
+msgid "List of OpenNIC DNS IPs"
+msgstr "Lista de direcciones IP de DNS OpenNIC"
 
 msgctxt "#32095"
 msgid "Proxy"
@@ -492,4 +492,8 @@ msgstr ""
 
 msgctxt "#32170"
 msgid "Antizapret PAC file URL"
+msgstr ""
+
+msgctxt "#32171"
+msgid "Use OpenNIC DNS servers"
 msgstr ""
