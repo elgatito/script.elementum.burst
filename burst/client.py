@@ -382,7 +382,6 @@ class Client:
 
         try:
             self._good_spider()
-            log.debug("Send request to %s with prepared request: %s" % (repr(url), repr(prepped))) # TODO: remove
             with self.session.send(prepped) as response:
                 self.headers = response.headers
                 self.status = response.status_code
