@@ -317,6 +317,8 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                             redirect_url = re.search(r'url=(.*?)">', client.content)
                             if redirect_url is not None:
                                 url_search = redirect_url.group(1)
+                                if not url_search.startswith("http"):
+                                    url_search = definition["root_url"] + url_search
                         else:
                             log.info('[%s] Have not found lostfilm ID in %s' % (provider, url_search))
                             return filtering.results
