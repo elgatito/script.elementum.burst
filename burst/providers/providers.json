@@ -3779,7 +3779,7 @@
         "anime_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
         "anime_keywords_fallback": "{title:original:en:hu} s{season:2}",
         "anime_query": "",
-        "base_url": "http://ztracker.cc/browse_old.php?keywords=QUERYEXTRA&search_type=t_name&cat=0&sort=7&type=desc",
+        "base_url": "https://ztracker.cc/browse_old.php?keywords=QUERYEXTRA&search_type=t_name&cat=0&sort=7&type=desc",
         "color": "FFFFFFFF",
         "enabled": true,
         "general_extra": "",
@@ -3787,7 +3787,7 @@
         "general_query": "",
         "language": "hu",
         "languages": "hu",
-        "login_prerequest": "http://ztracker.cc/login.php",
+        "login_prerequest": "https://ztracker.cc/login.php",
         "login_failed": "Felhasználónév",
         "login_object": "{'username': USERNAME, 'password': PASSWORD}",
         "login_path": "/takelogin.php",
@@ -3803,7 +3803,7 @@
             "row": "find_once('table', select=('border', '1'), order=1).find_all('tr', start=2)",
             "seeds": "item(tag='td', order=7)",
             "size": "item(tag='td', order=11)",
-            "torrent": "'http://ztracker.cc/download.php?id=%s' % item(tag='a', attribute='href', order=2, divider=('=', 1))"
+            "torrent": "'https://ztracker.cc/download.php?id=%s' % item(tag='a', attribute='href', order=2, divider=('=', 1))"
         },
         "predefined": false,
         "private": true,
