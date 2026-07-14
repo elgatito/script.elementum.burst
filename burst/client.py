@@ -104,8 +104,10 @@ def FetchOpenNICDnsServers():
         log.debug("Failed to fetch OpenNIC DNS servers from API: %s" % repr(e))
     return list(OPENNIC_DNS_FALLBACK)
 
+
 if use_opennic_dns:
     dns_opennic_list = FetchOpenNICDnsServers()
+
 
 def MyResolver(host):
     if '.' not in host:
