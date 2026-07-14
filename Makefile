@@ -58,3 +58,5 @@ settings:
 
 locales:
 	scripts/xgettext_merge.sh
+	scripts/xgettext.sh
+

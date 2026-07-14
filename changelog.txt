@@ -246,7 +246,7 @@ script.elementum.burst changelog
  - Update GloTorrents url (#310)
  - Cleanup results before adding to the result list (#303)
  - Update strings.po (#302)
- - Updated default Opennic DNS IPs.
+ - Updated default OpenNIC DNS IPs.
 
 [B]v0.0.70[/B] - 2021-07-06
  - version 0.0.70.
