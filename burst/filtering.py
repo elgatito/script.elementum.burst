@@ -448,7 +448,7 @@ class Filtering:
             keyword = keyword.lower()
             if 'title' in keyword:
                 title = self.info['title']
-                provider_language = definitions[provider]['language']
+                provider_language = definitions[provider].get('language', None)
                 use_language = None
                 if ':' in keyword:
                     use_language = keyword.split(':')[1].lower()

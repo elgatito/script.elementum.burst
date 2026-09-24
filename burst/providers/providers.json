@@ -2435,6 +2435,38 @@
         "tv_keywords_fallback": "\"{title:original}\" \"Сезон {season}\"",
         "tv_keywords_fallback2": "\"{title:en:ru:original}\" {season}"
     },
+    "seedpool": {
+        "api_format": {
+            "name": "attributes.name",
+            "peers": "attributes.leechers",
+            "results": "data",
+            "seeds": "attributes.seeders",
+            "size": "attributes.size",
+            "torrent": "attributes.download_link"
+        },
+        "base_url": "https://seedpool.org/api/torrents/filter",
+        "color": "FF00A8FF",
+        "enabled": true,
+        "filter_title": true,
+        "general_keywords": "{title:original}",
+        "general_query": "?api_token=PASSKEY&name=QUERY&sortField=seeders&sortDirection=desc&perPage=50",
+        "is_api": true,
+        "language": null,
+        "languages": "en",
+        "login_passkey": true,
+        "movie_keywords": "{title:original} {year}",
+        "movie_query": "?api_token=PASSKEY&name=QUERY&sortField=seeders&sortDirection=desc&perPage=50",
+        "name": "Seedpool",
+        "predefined": false,
+        "private": true,
+        "season_keywords": "{title:original} s{season:2}",
+        "season_query": "?api_token=PASSKEY&name=QUERY&sortField=seeders&sortDirection=desc&perPage=50",
+        "separator": "%20",
+        "show_query": "?api_token=PASSKEY&name=QUERY&sortField=seeders&sortDirection=desc&perPage=50",
+        "subpage": false,
+        "tv_keywords": "{title:original} s{season:2}e{episode:2}",
+        "tv_query": "?api_token=PASSKEY&name=QUERY&sortField=seeders&sortDirection=desc&perPage=50"
+    },
     "serialz": {
         "anime_extra": "",
         "anime_keywords": "{title:original} Сезон {season} Серия {episode}",
