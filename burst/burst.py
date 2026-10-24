@@ -226,8 +226,6 @@ def got_results(provider, results):
         provider (str): The provider ID
         results (list): The list of results
     """
-    global provider_names
-    global provider_results
     global available_providers
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
@@ -741,7 +739,6 @@ def cookie_sync(is_silent):
     if not is_silent:
         p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', translation(32166))
 
-    global cookie_sync_gist_id
     # Try to get url to a Gist's file first, if we have Gist ID
     if not cookie_sync_gist_id or not cookie_fetch_fileurl():
         # Try to get both Gist ID and Gist's file url
@@ -796,7 +793,7 @@ def cookie_check_defaults():
         cookie_sync_filename = "kevast-gist-default.json"
 
 def cookie_fetch_gist_id():
-    global cookie_sync_gist_id, cookie_sync_token, cookie_sync_filename, cookie_sync_fileurl
+    global cookie_sync_gist_id, cookie_sync_fileurl
 
     try:
         url = "https://api.github.com/gists"
@@ -821,7 +818,7 @@ def cookie_fetch_gist_id():
     return False
 
 def cookie_fetch_fileurl():
-    global cookie_sync_gist_id, cookie_sync_token, cookie_sync_filename, cookie_sync_fileurl
+    global cookie_sync_gist_id, cookie_sync_fileurl
 
     try:
         url = "https://api.github.com/gists/%s" % (cookie_sync_gist_id)

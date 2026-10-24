@@ -47,8 +47,6 @@ def char_range(c1, c2):
 
 def cleanup_settings(path):
     global settings
-    global public
-    global private
 
     print("Cleaning settings at %s" % (path))
     try:
@@ -63,10 +61,6 @@ def cleanup_settings(path):
 
 
 def load_providers(path):
-    global settings
-    global public
-    global private
-
     print("Loading providers from %s" % (path))
     try:
         with open(path, encoding='utf-8') as file:
@@ -99,8 +93,6 @@ def load_providers(path):
 
 def store_providers(path):
     global settings
-    global public
-    global private
 
     public1_string = ""
     private1_string = ""
