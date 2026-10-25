@@ -79,7 +79,7 @@ proxy_password = get_setting("proxy_password", unicode)
 proxy_type = get_setting("proxy_type", int)
 use_custom_dns = get_setting("use_custom_dns", bool)
 public_dns_list = get_setting("public_dns_list", unicode)
-use_opennic_dns = get_setting("use_opennic_dns", bool)
+use_opennic_dns = use_custom_dns and get_setting("use_opennic_dns", bool)
 use_tor_dns = get_setting("use_tor_dns", bool)
 use_elementum_proxy = get_setting("use_elementum_proxy", bool)
 

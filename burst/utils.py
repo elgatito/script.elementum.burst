@@ -81,6 +81,11 @@ def with_defaults(definition):
         definition['login_prerequest'] = ''
     return definition
 
+def use_opennic_dns():
+    # use_opennic_dns is a sub-setting of use_custom_dns and defaults to true
+    return get_setting("use_custom_dns", bool) and get_setting("use_opennic_dns", bool)
+
+
 def get_alias(definition, alias):
     definition["alias"] = ""
 
