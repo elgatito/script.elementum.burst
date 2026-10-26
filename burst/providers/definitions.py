@@ -36,6 +36,7 @@ mandatory_fields = {
     'private': False,
     'id': '',
     'languages': '',
+    'language': None,
     'charset': 'utf8',
     'response_charset': None
 }

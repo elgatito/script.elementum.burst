@@ -560,7 +560,7 @@ def extract_from_api(provider, client):
                 name += ' '
             name += get_nested_value(result, api_format['description'], "")
         if 'torrent' in api_format:
-            torrent = result[api_format['torrent']]
+            torrent = get_nested_value(result, api_format['torrent'], "")
             if 'download_path' in definition:
                 torrent = definition['download_path'] + torrent
             if client.token:
@@ -569,22 +569,26 @@ def extract_from_api(provider, client):
                 log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                 torrent = append_headers(torrent, headers)
                 log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
+            elif not torrent.startswith('magnet'):
+                user_agent = USER_AGENT
+                headers = {'User-Agent': user_agent}
+                torrent = append_headers(torrent, headers)
         if 'info_hash' in api_format:
-            info_hash = result[api_format['info_hash']]
+            info_hash = get_nested_value(result, api_format['info_hash'], "")
         if 'quality' in api_format:  # Again quite specific to YTS and AniLibria
             name = "%s - %s" % (name, get_nested_value(result, api_format['quality'], ""))
         if 'size' in api_format:
-            size = result[api_format['size']]
+            size = get_nested_value(result, api_format['size'], "")
             if isinstance(size, (long, int)):
                 size = sizeof(size)
             elif isinstance(size, basestring) and size.isdigit():
                 size = sizeof(int(size))
         if 'seeds' in api_format:
-            seeds = result[api_format['seeds']]
+            seeds = get_nested_value(result, api_format['seeds'], 0)
             if isinstance(seeds, basestring) and seeds.isdigit():
                 seeds = int(seeds)
         if 'peers' in api_format:
-            peers = result[api_format['peers']]
+            peers = get_nested_value(result, api_format['peers'], 0)
             if isinstance(peers, basestring) and peers.isdigit():
                 peers = int(peers)
         yield (name, info_hash, torrent, size, seeds, peers)
