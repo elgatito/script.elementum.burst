@@ -9,6 +9,7 @@ from future.utils import PY3
 
 import re
 import hashlib
+import traceback
 from elementum.provider import log, get_setting
 from .normalize import normalize_string, remove_accents
 from .providers.definitions import definitions
@@ -400,9 +401,8 @@ class Filtering:
                             # If title for specific language cannot be read - cancel this query
                             return ""
                     except Exception as e:
-                        import traceback
                         log.error("%s failed with: %s" % (provider, repr(e)))
-                        map(log.debug, traceback.format_exc().split("\n"))
+                        log.debug(traceback.format_exc())
                 else:
                     log.debug("[%s] Not using any translation" % provider)
                 text = text.replace('{%s}' % keyword, title)
@@ -640,7 +640,7 @@ def cleanup_results(results_list):
             log.debug('[%s] Skipping due to empty uri: %s' % (result['provider'][16:-8], repr(result)))
             continue
 
-        hash_ = result['info_hash'].upper()
+        hash_ = (result['info_hash'] or '').upper()
 
         if not hash_:
             try:
@@ -658,13 +658,6 @@ def cleanup_results(results_list):
 
         # Make sure all are upper-case and provider-scoped
         hash_ = result['provider'] + hash_.upper()
-
-        # try:
-        #     log.debug("[%s] Hash for %s: %s" % (result['provider'][16:-8], repr(result['name']), hash_))
-        # except Exception as e:
-        #     import traceback
-        #     log.warning("%s logging failed with: %s" % (result['provider'], repr(e)))
-        #     map(log.debug, traceback.format_exc().split("\n"))
 
         if not any(existing == hash_ for existing in hashes):
             filtered_list.append(result)

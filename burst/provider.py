@@ -249,7 +249,8 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 logged_in = skip_auth
 
                 try:
-                    login_object = definition['login_object'].replace('USERNAME', 'u"%s"' % username).replace('PASSWORD', 'u"%s"' % password)
+                    # repr() gives a valid literal for eval() even with quotes or backslashes in credentials
+                    login_object = definition['login_object'].replace('USERNAME', repr(username)).replace('PASSWORD', repr(password))
                 except Exception as e:
                     log.error("Could not make login object for %s: %s" % (provider, e))
                 try:

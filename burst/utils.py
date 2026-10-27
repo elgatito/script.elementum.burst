@@ -4,7 +4,7 @@
 Burst utilities
 """
 
-from future.utils import PY2, PY3, iteritems
+from future.utils import PY3, iteritems
 
 import os
 import re
@@ -135,14 +135,14 @@ def get_enabled_providers(method):
         if 'enabled' in definitions[provider] and not definitions[provider]['enabled']:
             continue
 
-        if get_setting('use_%s' % provider, bool):
+        if 'custom' in definitions[provider] and definitions[provider]['custom']:
+            results.append(provider)
+        elif get_setting('use_%s' % provider, bool):
             contains = get_setting('%s_contains' % provider, choices=('All', 'Movies', 'Shows'))
             if not contains or contains == 'All' or contains == '0':  # treat absence of setting as All
                 results.append(provider)
             elif contains == content_type_string or contains == content_type_int:
                 results.append(provider)
-        if 'custom' in definitions[provider] and definitions[provider]['custom']:
-            results.append(provider)
     return results
 
 
@@ -181,14 +181,10 @@ def get_int(string):
     try:
         return int(string)
     except:
-        try:
-            return int(get_float(string))
-        except:
-            pass
-    try:
-        return int(filter(type(string).isdigit, string))
-    except:
-        return 0
+        pass
+    # Counters on sites come with thousand separators, ie. "1,234", "1.234" or "1 234"
+    match = re.search(r'\d[\d,. ]*', '%s' % string)
+    return int(re.sub(r'\D', '', match.group(0))) if match else 0
 
 
 def get_float(string):
@@ -321,33 +317,40 @@ def notify(message, image=None):
 
 
 def encode_dict(dict_in, charset='utf8'):
-    """ Encodes dict values to UTF-8
+    """ Encodes dict values to the given charset
 
     Args:
         dict_in (dict): Input dictionary with unicode values
 
     Returns:
-        dict: Output dictionary with UTF-8 encoded values
+        dict: Output dictionary with encoded values
     """
     try:
         dict_out = {}
         for k, v in iteritems(dict_in):
-            if PY2 and isinstance(v, unicode):
-                v = v.encode('utf8')
-            elif PY2 and isinstance(v, str):
+            if isinstance(v, bytes):
                 v = v.decode('utf8')
-            elif PY3 and isinstance(v, str):
-                v = v
-            elif PY3 and isinstance(v, bytes):
-                v = v.decode()
-
-            if charset != 'utf8':
-                v = v.decode('utf8').encode(charset)
-
+            if isinstance(v, unicode):
+                v = v.encode(charset)
             dict_out[k] = v
         return dict_out
     except:
         return dict_in
+
+def domain_matches(host, cookie_domain):
+    """ Checks if cookie domain applies to the host, ie. '.example.com' applies to 'www.example.com'
+
+    Args:
+        host          (str): Host name, port is ignored
+        cookie_domain (str): Domain of the cookie
+
+    Returns:
+        bool: True if cookie can be sent to the host, False otherwise
+    """
+    host = host.split(':')[0].lower()
+    cookie_domain = cookie_domain.lstrip('.').lower()
+    return bool(cookie_domain) and (host == cookie_domain or host.endswith('.' + cookie_domain))
+
 
 def is_ipv4_address(string_ip):
     """ Checks if a string is a valid IPv4 address

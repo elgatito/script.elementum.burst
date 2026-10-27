@@ -9,6 +9,8 @@ from future.utils import PY3, iteritems
 import re
 import os
 import urllib3
+import traceback
+import threading
 import requests
 import antizapret
 try:
@@ -20,7 +22,7 @@ except:
 from elementum.provider import log, get_setting
 from time import sleep
 from urllib3.util import connection
-from .utils import encode_dict, is_ipv4_address
+from .utils import encode_dict, is_ipv4_address, domain_matches
 from .providers.definitions import translatePath
 if PY3:
     from http.cookiejar import LWPCookieJar
@@ -47,6 +49,10 @@ if get_setting("use_custom_user_agent", bool):
         log.debug("Using custom User Agent: %s" % (USER_AGENT))
 
 PATH_TEMP = translatePath("special://temp")
+# (connect, read) seconds, so a stalled tracker can't hold a provider thread forever
+REQUEST_TIMEOUT = (5, 20)
+# Cookie jar file is shared by all provider threads
+cookies_lock = threading.Lock()
 
 # Custom DNS default data
 OPENNIC_API_URL = 'https://api.opennicproject.org/geoip/?bare&res=3&adm=3&rnd=true&ipv=4'
@@ -83,6 +89,8 @@ public_dns_list = get_setting("public_dns_list", unicode)
 use_opennic_dns = use_custom_dns and get_setting("use_opennic_dns", bool)
 use_tor_dns = get_setting("use_tor_dns", bool)
 use_elementum_proxy = get_setting("use_elementum_proxy", bool)
+# Read once: each xbmcaddon.Addon() instance makes Kodi load Elementum's settings file again
+use_elementum_internal_proxy = use_elementum_proxy and xbmcaddon.Addon(id='plugin.video.elementum').getSetting('internal_proxy_enabled') == "true"
 
 def FetchOpenNICDnsServers():
     try:
@@ -191,7 +199,8 @@ class Client:
             connect=2,
             redirect=3,
             backoff_factor=0.2,
-            status_forcelist=[429, 500, 502, 503, 504]
+            status_forcelist=[429, 500, 502, 503, 504],
+            respect_retry_after_header=False
         )
 
         self.session.mount('http://', HTTPAdapter(max_retries=retries))
@@ -223,12 +232,10 @@ class Client:
         if use_custom_dns and platform_can_resolve:
             connection.create_connection = patched_create_connection
 
-        if use_elementum_proxy:
-            elementum_addon = xbmcaddon.Addon(id='plugin.video.elementum')
-            if elementum_addon and elementum_addon.getSetting('internal_proxy_enabled') == "true":
-                self.proxy_url = "{0}://{1}:{2}".format("http", "127.0.0.1", "65222")
-                if info and "internal_proxy_url" in info:
-                    self.proxy_url = info["internal_proxy_url"]
+        if use_elementum_internal_proxy:
+            self.proxy_url = "{0}://{1}:{2}".format("http", "127.0.0.1", "65222")
+            if info and "internal_proxy_url" in info:
+                self.proxy_url = info["internal_proxy_url"]
         if proxy['enabled']:
             if proxy['use_type'] == 0 and info and "proxy_url" in info:
                 log.debug("Setting proxy from Elementum: %s" % (info["proxy_url"]))
@@ -244,6 +251,7 @@ class Client:
             elif proxy['use_type'] == 2 and info and "proxy_url" in info:
                 log.debug("Setting proxy with hosts resolve from Elementum: %s" % (info["proxy_url"]))
 
+                self.proxy_url = info["proxy_url"]
                 proxy_url_scheme_separator = '://'
                 elementum_proxy_url_parts = info["proxy_url"].split(proxy_url_scheme_separator)
                 elementum_proxy_url_prefix = elementum_proxy_url_parts[0].lower()
@@ -273,15 +281,16 @@ class Client:
 
     def _read_cookies(self, url=''):
         self._cookies_filename = self._locate_cookies(url)
-        if os.path.exists(self._cookies_filename):
-            try:
-                self._cookies.load(self._cookies_filename)
-            except Exception as e:
-                log.debug("Reading cookies error: %s" % repr(e))
+        with cookies_lock:
+            if os.path.exists(self._cookies_filename):
+                try:
+                    self._cookies.load(self._cookies_filename)
+                except Exception as e:
+                    log.debug("Reading cookies error: %s" % repr(e))
 
     def cookie_exists(self, cookie_name, domain):
         for cookie in self._cookies:
-            if cookie.name == cookie_name and cookie.domain in domain:
+            if cookie.name == cookie_name and domain_matches(domain, cookie.domain):
                 return True
         return False
 
@@ -292,10 +301,11 @@ class Client:
     def save_cookies(self):
         self._cookies_filename = self._locate_cookies(self.url)
 
-        try:
-            self._cookies.save(self._cookies_filename)
-        except Exception as e:
-            log.debug("Saving cookies error: %s" % repr(e))
+        with cookies_lock:
+            try:
+                self._cookies.save(self._cookies_filename)
+            except Exception as e:
+                log.debug("Saving cookies error: %s" % repr(e))
 
     def _good_spider(self):
         self._counter += 1
@@ -372,9 +382,14 @@ class Client:
         prepped = self.session.prepare_request(req)
         self.request_headers = prepped.headers
 
+        # Do not leave previous response around if this request fails
+        self.status = None
+        self.content = ''
+        self.headers = dict()
+
         try:
             self._good_spider()
-            with self.session.send(prepped) as response:
+            with self.session.send(prepped, timeout=REQUEST_TIMEOUT) as response:
                 self.headers = response.headers
                 self.status = response.status_code
                 self.url = response.url
@@ -393,13 +408,11 @@ class Client:
                 self.content = matches[0]
                 return True
 
-            import traceback
             log.error("%s failed with %s:" % (repr(url), repr(e)))
-            map(log.debug, traceback.format_exc().split("\n"))
+            log.debug(traceback.format_exc())
         except Exception as e:
-            import traceback
             log.error("%s failed with %s:" % (repr(url), repr(e)))
-            map(log.debug, traceback.format_exc().split("\n"))
+            log.debug(traceback.format_exc())
 
         log.debug("Status for %s : %s" % (repr(url), str(self.status)))
         if self.status != 200:

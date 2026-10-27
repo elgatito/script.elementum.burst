@@ -9,6 +9,7 @@ import os
 import sys
 import json
 import time
+import traceback
 from glob import glob
 if PY3:
     from urllib.parse import urlparse
@@ -57,9 +58,8 @@ def load_providers(path, custom=False):
         for provider in providers:
             update_definitions(provider, providers[provider], custom)
     except Exception as e:
-        import traceback
         log.error("Failed importing providers from %s: %s", path, repr(e))
-        map(log.error, traceback.format_exc().split("\n"))
+        log.error(traceback.format_exc())
 
 
 def load_overrides(path):
@@ -79,9 +79,8 @@ def load_overrides(path):
             update_definitions(provider, overrides[provider])
         log.info("Successfully loaded overrides from %s", os.path.join(path, "overrides.py"))
     except Exception as e:
-        import traceback
         log.error("Failed importing custom overrides: %s", repr(e))
-        map(log.error, traceback.format_exc().split("\n"))
+        log.error(traceback.format_exc())
 
 
 def update_definitions(provider, definition, custom=False):

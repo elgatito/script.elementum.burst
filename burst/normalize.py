@@ -13,6 +13,7 @@ from future.utils import PY3
 
 import json
 import re
+import traceback
 import unicodedata
 if PY3:
     import html
@@ -59,11 +60,9 @@ def remove_control_chars(string):
     return control_char_re.sub(' ', tem_string)
 
 
-def normalize_string(string, charset=None, replacing=False):
+def normalize_string(string, replacing=False):
     """
     Decode and Convert to Unicode any string
-    :param charset: encoding
-    :type charset: str
     :param string: string to convert
     :type string: str or unicode
     :param replacing: Whether is ' is replaced
@@ -76,19 +75,11 @@ def normalize_string(string, charset=None, replacing=False):
             if re.search(u'=[0-9a-fA-F]{2}', string):
                 string = py2_decode(string, 'Quoted-printable')
 
-            string = json.loads(u'%s' % string, encoding=charset)
+            string = json.loads(u'%s' % string)
 
         except ValueError:
-            try:
-                string = unicode(eval(string), 'raw_unicode_escape')
-
-            except (SyntaxError, NameError):
-                string = py2_decode(string, 'latin-1')
-                pass
-
-            except TypeError:
-                string = unicode(string, errors='ignore')
-                pass
+            # Wrongly decoded utf-8 gets repaired by fix_bad_unicode() below
+            string = py2_decode(string, 'latin-1')
 
         except LookupError:
             return u''
@@ -222,10 +213,8 @@ def fix_bad_unicode(string):
             else:
                 return fix_bad_unicode(good_text)
         except Exception as e:
-            import traceback
             log.warning("Could not fix unicode string: %s" % repr(e))
-            map(log.debug, traceback.format_exc().split("\n"))
-            pass
+            log.debug(traceback.format_exc())
 
     return string
 
