@@ -27,6 +27,7 @@ use_filter_quotes = get_setting("filter_quotes", bool)
 use_allow_noseeds = get_setting('allow_noseeds', bool)
 overwrite_anime_original_title = get_setting('overwrite_anime_original_title', choices=('original', 'jp', 'en'))
 keys_rx = {}
+COLOR_TAGS_RE = re.compile(r'\[/?COLOR[^\]]*\]')
 
 class Filtering:
     """
@@ -611,6 +612,11 @@ def apply_filters(results_list):
     return results_list
 
 
+def provider_name(result):
+    """ Provider name of a result, without Kodi color tags """
+    return COLOR_TAGS_RE.sub('', result['provider'])
+
+
 def cleanup_results(results_list):
     """ Remove duplicate results, hash results without an info_hash, and sort by seeders
 
@@ -627,28 +633,19 @@ def cleanup_results(results_list):
     filtered_list = []
     for result in results_list:
         if not result['seeds'] and not use_allow_noseeds:
-            log.debug('[%s] Skipping due to no seeds: %s' % (result['provider'][16:-8], repr(result['name'])))
+            log.debug('[%s] Skipping due to no seeds: %s' % (provider_name(result), repr(result['name'])))
             continue
 
         if not result['uri']:
-            log.debug('[%s] Skipping due to empty uri: %s' % (result['provider'][16:-8], repr(result)))
+            log.debug('[%s] Skipping due to empty uri: %s' % (provider_name(result), repr(result)))
             continue
 
-        hash_ = (result['info_hash'] or '').upper()
-
+        hash_ = result['info_hash'] or ''
+        if not hash_ and result['uri'].startswith('magnet'):
+            hash_ = Magnet(result['uri']).info_hash or ''
         if not hash_:
-            try:
-                if result['uri'] and result['uri'].startswith('magnet'):
-                    hash_ = Magnet(result['uri']).info_hash.upper()
-                else:
-                    hash_ = result['uri'].split("|")[0]
-                    try:
-                        hash_ = hash_.encode()
-                    except:
-                        pass
-                    hash_ = hashlib.md5(hash_).hexdigest()
-            except:
-                pass
+            # Results without info hash are unique by their link, without appended headers
+            hash_ = hashlib.md5(result['uri'].split("|")[0].encode('utf-8', 'replace')).hexdigest()
 
         # Make sure all are upper-case and provider-scoped
         hash_ = result['provider'] + hash_.upper()
@@ -657,6 +654,6 @@ def cleanup_results(results_list):
             filtered_list.append(result)
             hashes.add(hash_)
         else:
-            log.debug('[%s] Skipping due to repeating hash: %s' % (result['provider'][16:-8], repr(result)))
+            log.debug('[%s] Skipping due to repeating hash: %s' % (provider_name(result), repr(result)))
 
     return sorted(filtered_list, key=lambda r: (get_int(r['seeds'])), reverse=True)

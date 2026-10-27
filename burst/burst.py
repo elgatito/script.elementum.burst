@@ -61,15 +61,15 @@ cookie_sync_fileurl = get_setting("cookie_sync_fileurl", str)
 cookie_sync_content = None
 
 special_chars = "()\"':.[]<>/\\?"
-elementum_timeout = 0
 
 elementum_addon = xbmcaddon.Addon(id='plugin.video.elementum')
-if elementum_addon:
-    if elementum_addon.getSetting('custom_provider_timeout_enabled') == "true":
+elementum_timeout = 30
+if elementum_addon.getSetting('custom_provider_timeout_enabled') == "true":
+    try:
         elementum_timeout = int(elementum_addon.getSetting('custom_provider_timeout'))
-    else:
-        elementum_timeout = 30
-    log.info("Using timeout from Elementum: %d seconds" % (elementum_timeout))
+    except ValueError:
+        log.warning("Invalid custom provider timeout in Elementum, using %d seconds" % elementum_timeout)
+log.info("Using timeout from Elementum: %d seconds" % (elementum_timeout))
 
 # Make sure timeout is always less than the one from Elementum.
 if auto_timeout:
@@ -77,6 +77,9 @@ if auto_timeout:
 elif elementum_timeout > 0 and timeout > elementum_timeout - 3:
     log.info("Redefining timeout to be less than Elementum's: %d to %d seconds" % (timeout, elementum_timeout - 3))
     timeout = elementum_timeout - 3
+
+# Time when results are not needed anymore, set again for each search()
+search_deadline = time.time() + timeout
 
 def search(payload, method="general"):
     """ Main search entrypoint
@@ -134,6 +137,7 @@ def search(payload, method="general"):
         payload['skip_auth'] = False
 
     global request_time
+    global search_deadline
     global provider_cache
     global provider_names
     global provider_results
@@ -174,6 +178,7 @@ def search(payload, method="general"):
         log.debug("Translated titles from Elementum: %s" % (repr(payload['titles'])))
 
     providers_time = time.time()
+    search_deadline = providers_time + timeout
 
     # Count all providers before starting any, so an early finished one can't bring the counter to zero
     available_providers = len(providers)
@@ -323,6 +328,9 @@ def extract_torrents(provider, client):
 
             uri = torrent.split('|')  # Split cookies for private trackers
             with subpage_slots:
+                # Subpages still waiting for a slot when search is over would be thrown away anyway
+                if time.time() >= search_deadline:
+                    return
                 subclient.open(uri[0], headers=headers)
 
             if 'bittorrent' in subclient.headers.get('content-type', ''):
@@ -470,7 +478,7 @@ def extract_torrents(provider, client):
         for t in threads:
             t.start()
         for t in threads:
-            t.join()
+            t.join(max(0, search_deadline - time.time()))
 
         for i in range(q.qsize()):
             ret = q.get_nowait()

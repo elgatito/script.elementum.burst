@@ -29,6 +29,7 @@ import xbmcaddon
 from requests.packages.urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
 from requests.cookies import create_cookie
+from requests.structures import CaseInsensitiveDict
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
 if os.name == 'nt':
@@ -322,10 +323,8 @@ class Client:
             proxy = self.antizapret_proxy.detect(host=parsed.netloc)
             if proxy:
                 log.debug("Detected Antizapret proxy for %s: %s" % (parsed.netloc, proxy))
-                self.session.proxies = {
-                    'http': proxy,
-                    'https': proxy,
-                }
+            # Reset for hosts without a proxy, session keeps proxies from the previous request otherwise
+            self.session.proxies = {'http': proxy, 'https': proxy} if proxy else {}
 
         log.debug("Opening URL: %s" % repr(url))
         if self.session.proxies:
@@ -337,7 +336,7 @@ class Client:
         # log.debug("Cookies for %s: %s" % (repr(url), repr(self._cookies)))
 
         # Default headers for any request. Pretend like we are the usual browser.
-        req_headers = {
+        req_headers = CaseInsensitiveDict({
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7,uk;q=0.6,pl;q=0.5',
             'Cache-Control': 'max-age=0',
@@ -345,7 +344,7 @@ class Client:
             'Origin': url,
             'Referer': url,
             'User-Agent': self.user_agent
-        }
+        })
 
         # Remove referer for API providers
         if self.is_api:
@@ -359,8 +358,8 @@ class Client:
                     value = u.path
                 if value:
                     req_headers[key] = value
-                elif key.capitalize() in req_headers:
-                    del req_headers[key.capitalize()]
+                elif key in req_headers:
+                    del req_headers[key]
 
         if self.token:
             req_headers["Authorization"] = self.token
