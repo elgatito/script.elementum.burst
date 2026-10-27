@@ -13,7 +13,7 @@ import time
 import requests
 import traceback
 from binascii import unhexlify
-from threading import Lock, Thread
+from threading import BoundedSemaphore, Event, Lock, Thread
 from elementum.provider import append_headers, get_setting, set_setting, log
 
 if PY3:
@@ -51,6 +51,10 @@ provider_cache = {}
 available_providers = 0
 request_time = time.time()
 results_lock = Lock()
+providers_done = Event()
+parser_code = {}
+# Concurrent subpage requests per provider, more only gets us rate limited
+SUBPAGE_THREADS = 10
 
 use_kodi_language = get_setting('kodi_language', bool)
 auto_timeout = get_setting("auto_timeout", bool)
@@ -65,6 +69,8 @@ cookie_sync_password = get_setting("cookie_sync_password", unicode)
 cookie_sync_gist_id = get_setting("cookie_sync_gist_id", unicode)
 cookie_sync_filename = get_setting("cookie_sync_filename", unicode)
 cookie_sync_fileurl = get_setting("cookie_sync_fileurl", unicode)
+# Gist file content, if it came inline with the gist info, saves a request for the file itself
+cookie_sync_content = None
 
 special_chars = "()\"':.[]<>/\\?"
 elementum_timeout = 0
@@ -150,6 +156,7 @@ def search(payload, method="general"):
     provider_results = []
     available_providers = 0
     request_time = time.time()
+    providers_done.clear()
 
     cookie_sync(payload['silent'])
     providers = get_enabled_providers(method)
@@ -180,9 +187,10 @@ def search(payload, method="general"):
 
     providers_time = time.time()
 
+    # Count all providers before starting any, so an early finished one can't bring the counter to zero
+    available_providers = len(providers)
+    provider_names = [definitions[provider]['name'] for provider in providers]
     for provider in providers:
-        available_providers += 1
-        provider_names.append(definitions[provider]['name'])
         task = Thread(target=run_provider, args=(provider, payload, method, providers_time, timeout))
         task.start()
 
@@ -197,7 +205,7 @@ def search(payload, method="general"):
         message = translation(32062) % available_providers if available_providers > 1 else translation(32063)
         if not payload['silent']:
             p_dialog.update(int((total - available_providers) / total * 100), message=message)
-        time.sleep(0.25)
+        providers_done.wait(0.25)
 
     if not payload['silent']:
         p_dialog.close()
@@ -259,6 +267,8 @@ def got_results(provider, results):
         available_providers -= 1
         if definition['name'] in provider_names:
             provider_names.remove(definition['name'])
+        if available_providers <= 0:
+            providers_done.set()
 
 
 def extract_torrents(provider, client):
@@ -301,6 +311,8 @@ def extract_torrents(provider, client):
     needs_subpage = 'subpage' in definition and definition['subpage']
 
     if needs_subpage:
+        subpage_slots = BoundedSemaphore(SUBPAGE_THREADS)
+
         def extract_subpage(q, name, torrent, size, seeds, peers, info_hash, referer):
             try:
                 log.debug("[%s] Getting subpage at %s" % (provider, repr(torrent)))
@@ -322,7 +334,8 @@ def extract_torrents(provider, client):
                 headers['Referer'] = referer
 
             uri = torrent.split('|')  # Split cookies for private trackers
-            subclient.open(py2_encode(uri[0]), headers=headers)
+            with subpage_slots:
+                subclient.open(py2_encode(uri[0]), headers=headers)
 
             if 'bittorrent' in subclient.headers.get('content-type', ''):
                 log.debug('[%s] bittorrent content-type for %s' % (provider, repr(torrent)))
@@ -371,14 +384,14 @@ def extract_torrents(provider, client):
             continue
 
         try:
-            name = eval(name_search) if name_search else ""
-            description = eval(description_search) if description_search else ""
-            torrent = eval(torrent_search) if torrent_search else ""
-            size = eval(size_search) if size_search else ""
-            seeds = eval(seeds_search) if seeds_search else ""
-            peers = eval(peers_search) if peers_search else ""
-            info_hash = eval(info_hash_search) if info_hash_search else ""
-            referer = eval(referer_search) if referer_search else ""
+            name = eval(compiled(name_search)) if name_search else ""
+            description = eval(compiled(description_search)) if description_search else ""
+            torrent = eval(compiled(torrent_search)) if torrent_search else ""
+            size = eval(compiled(size_search)) if size_search else ""
+            seeds = eval(compiled(seeds_search)) if seeds_search else ""
+            peers = eval(compiled(peers_search)) if peers_search else ""
+            info_hash = eval(compiled(info_hash_search)) if info_hash_search else ""
+            referer = eval(compiled(referer_search)) if referer_search else ""
 
             if 'magnet:?' in torrent:
                 torrent = torrent[torrent.find('magnet:?'):]
@@ -723,6 +736,13 @@ def run_provider(provider, payload, method, start_time, timeout):
         # Always report back, otherwise search() waits for the full timeout
         got_results(provider, results)
 
+def compiled(expression):
+    """ Compiles parser expression once, eval() of a string compiles it again on every call """
+    code = parser_code.get(expression)
+    if code is None:
+        code = parser_code[expression] = compile(expression, '<parser>', 'eval')
+    return code
+
 def get_search_query(definition, key):
     if 'parser' not in definition or key not in definition['parser']:
         return ""
@@ -761,12 +781,12 @@ def cookie_sync(is_silent):
 
             return
 
-    set_setting('cookie_sync_gist_id', cookie_sync_gist_id)
-    set_setting('cookie_sync_fileurl', cookie_sync_fileurl)
+    set_setting_if_changed('cookie_sync_gist_id', cookie_sync_gist_id)
+    set_setting_if_changed('cookie_sync_fileurl', cookie_sync_fileurl)
 
     userAgent, cookies = cookie_fetch_file()
     if userAgent:
-        set_setting('cookie_sync_useragent', userAgent)
+        set_setting_if_changed('cookie_sync_useragent', userAgent)
         log.debug("Persisted user-agent for cookie-sync: %s" % (repr(userAgent)))
         change_agent(userAgent)
     if not cookies:
@@ -795,13 +815,18 @@ def cookie_sync(is_silent):
             notify(translation(32167) % (err), image=get_icon_path())
     del p_dialog
 
+def set_setting_if_changed(key, value):
+    # Every set_setting() makes Kodi write the settings file
+    if get_setting(key, unicode) != value:
+        set_setting(key, value)
+
 def cookie_check_defaults():
     global cookie_sync_filename
     if not cookie_sync_filename:
         cookie_sync_filename = "kevast-gist-default.json"
 
 def cookie_fetch_gist_id():
-    global cookie_sync_gist_id, cookie_sync_fileurl
+    global cookie_sync_gist_id, cookie_sync_fileurl, cookie_sync_content
 
     try:
         url = "https://api.github.com/gists"
@@ -818,6 +843,7 @@ def cookie_fetch_gist_id():
                     continue
                 cookie_sync_gist_id = item["id"]
                 cookie_sync_fileurl = v["raw_url"]
+                cookie_sync_content = None  # Gists list does not include files content
 
                 return True
     except Exception as e:
@@ -826,7 +852,7 @@ def cookie_fetch_gist_id():
     return False
 
 def cookie_fetch_fileurl():
-    global cookie_sync_gist_id, cookie_sync_fileurl
+    global cookie_sync_gist_id, cookie_sync_fileurl, cookie_sync_content
 
     try:
         url = "https://api.github.com/gists/%s" % (cookie_sync_gist_id)
@@ -841,6 +867,7 @@ def cookie_fetch_fileurl():
                 continue
             cookie_sync_gist_id = item["id"]
             cookie_sync_fileurl = v["raw_url"]
+            cookie_sync_content = v["content"] if v.get("content") and not v.get("truncated") else None
 
             return True
     except Exception as e:
@@ -855,8 +882,11 @@ def cookie_fetch_file():
 
         cookies = []
 
-        resp = requests.get(cookie_sync_fileurl, timeout=10)
-        resp_items = json.loads(resp.text)
+        if cookie_sync_content:
+            resp_items = json.loads(cookie_sync_content)
+        else:
+            resp = requests.get(cookie_sync_fileurl, timeout=10)
+            resp_items = json.loads(resp.text)
 
         expires = int(time.time()) + 1000 * 86400
 

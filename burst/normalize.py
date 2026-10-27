@@ -45,6 +45,10 @@ def remove_accents(string):
     return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
 
 
+CONTROL_CHARS_RE = re.compile(u'[%s]' % re.escape(''.join(map(chr, list(range(0, 32)) + list(range(127, 160))))))
+NBSP_RE = re.compile(u'[%s]' % re.escape(chr(160)))
+
+
 def remove_control_chars(string):
     """
         remove control characters
@@ -53,11 +57,7 @@ def remove_control_chars(string):
     :return: modified string
     :rtype: unicode
     """
-    control_chars = ''.join(map(chr, list(range(0, 32)) + list(range(127, 160))))
-    control_char_re = re.compile(u'[%s]' % re.escape(control_chars))
-    tem_string = control_char_re.sub('', string)
-    control_char_re = re.compile(u'[%s]' % re.escape(chr(160)))
-    return control_char_re.sub(' ', tem_string)
+    return NBSP_RE.sub(' ', CONTROL_CHARS_RE.sub('', string))
 
 
 def normalize_string(string, replacing=False):

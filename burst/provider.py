@@ -13,6 +13,7 @@ import time
 from .client import Client
 from elementum.provider import log, get_setting, set_setting
 from .filtering import cleanup_results
+from .normalize import normalize_string
 from .providers.definitions import definitions, longest
 from .utils import ADDON_PATH, get_int, clean_size, get_alias, with_defaults, notify, translation, get_icon_path
 from kodi_six import xbmc, xbmcaddon, py2_encode
@@ -69,6 +70,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
             log.debug(filtering.reason)
 
     log.debug('[%s] >>>>>> %s would send %d torrents to Elementum <<<<<<<' % (provider, provider, len(results)))
+    # Also drops results without seeds, so fallback queries still run when there are no usable results
     results = cleanup_results(results)
     log.debug('[%s] >>>>>> %s would send %d torrents to Elementum after cleanup <<<<<<<' % (provider, provider, len(results)))
 
@@ -186,7 +188,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         # Set search's "title" in filtering to double-check results' names
         if 'filter_title' in definition and definition['filter_title']:
             filtering.filter_title = True
-            filtering.title = query
+            filtering.title = normalize_string(query)
 
         if 'initial_url' in definition and definition['initial_url']:
             url = definition['initial_url']

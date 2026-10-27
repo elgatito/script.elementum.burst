@@ -33,6 +33,7 @@ use_max_size = get_setting('max_size')
 use_filter_quotes = get_setting("filter_quotes", bool)
 use_allow_noseeds = get_setting('allow_noseeds', bool)
 overwrite_anime_original_title = get_setting('overwrite_anime_original_title', choices=('original', 'jp', 'en'))
+keys_rx = {}
 
 class Filtering:
     """
@@ -496,8 +497,6 @@ class Filtering:
             return False
 
         name = normalize_string(name)
-        if self.filter_title and self.title:
-            self.title = normalize_string(self.title)
 
         self.reason = "[%s] %70s ***" % (provider, name)
 
@@ -578,12 +577,14 @@ class Filtering:
         Returns:
             bool: True if any of keys is included, False otherwise.
         """
-        value = ' ' + value.lower() + ' '
-        for key in keys:
-            rr = r'\W+(' + key + r')\W+'
-            if re.search(rr, value):
-                return True
-        return False
+        if not keys:
+            return False
+        # One combined regex for all keys, compiled once for each list of keys
+        cache_key = tuple(keys)
+        rx = keys_rx.get(cache_key)
+        if rx is None:
+            rx = keys_rx[cache_key] = re.compile(r'\W+(' + '|'.join('(?:%s)' % key for key in keys) + r')\W+')
+        return bool(rx.search(' ' + value.lower() + ' '))
 
     def add_provider_language(self, language):
         if language not in self.provider_languages:
@@ -629,7 +630,7 @@ def cleanup_results(results_list):
     if len(results_list) == 0:
         return []
 
-    hashes = []
+    hashes = set()
     filtered_list = []
     for result in results_list:
         if not result['seeds'] and not use_allow_noseeds:
@@ -659,9 +660,9 @@ def cleanup_results(results_list):
         # Make sure all are upper-case and provider-scoped
         hash_ = result['provider'] + hash_.upper()
 
-        if not any(existing == hash_ for existing in hashes):
+        if hash_ not in hashes:
             filtered_list.append(result)
-            hashes.append(hash_)
+            hashes.add(hash_)
         else:
             log.debug('[%s] Skipping due to repeating hash: %s' % (result['provider'][16:-8], repr(result)))
 
