@@ -10,7 +10,7 @@ import os
 import re
 import socket
 from elementum.provider import get_setting
-from .providers.definitions import definitions, translatePath
+from .providers.definitions import definitions
 if PY3:
     from urllib.parse import urlparse
     basestring = str
@@ -20,14 +20,9 @@ else:
 from kodi_six import xbmcgui, xbmcaddon
 
 ADDON = xbmcaddon.Addon()
-ADDON_ID = ADDON.getAddonInfo("id")
 ADDON_NAME = ADDON.getAddonInfo("name")
 ADDON_PATH = ADDON.getAddonInfo("path")
 ADDON_ICON = ADDON.getAddonInfo("icon")
-ADDON_PROFILE = ADDON.getAddonInfo("profile")
-ADDON_VERSION = ADDON.getAddonInfo("version")
-PATH_ADDONS = translatePath("special://home/addons/")
-PATH_TEMP = translatePath("special://temp")
 if not ADDON_PATH:
     ADDON_PATH = '..'
 
@@ -119,18 +114,6 @@ def get_alias(definition, alias):
                         definition["parser"][k] = definition["parser"][k].replace("https://", protocol + "://")
 
     return definition
-
-
-def get_providers():
-    """ Utility method to get all provider IDs available in the definitions
-
-    Returns:
-        list: All available provider IDs
-    """
-    results = []
-    for provider in definitions:
-        results.append(provider)
-    return results
 
 
 def get_enabled_providers(method):
@@ -335,16 +318,6 @@ def notify(message, image=None):
     dialog = xbmcgui.Dialog()
     dialog.notification(ADDON_NAME, message, icon=image, sound=False)
     del dialog
-
-
-def clear_cache():
-    """ Clears cookies from Burst's cache
-    """
-    cookies_path = os.path.join(translatePath("special://temp"), "burst")
-    if os.path.isdir(cookies_path):
-        for f in os.listdir(cookies_path):
-            if re.search('.jar', f):
-                os.remove(os.path.join(cookies_path, f))
 
 
 def encode_dict(dict_in, charset='utf8'):

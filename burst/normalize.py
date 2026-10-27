@@ -25,37 +25,6 @@ from kodi_six import py2_encode, py2_decode
 
 from elementum.provider import log
 
-def clean_title(string=None):
-    """
-        Checks if the two string are equals even without accents
-    :param string: first string
-    :type: string: unicode
-    :return: clean title
-    :rtype: unicode
-    """
-    if string:
-        string = re.sub(r'\((.*?)\)', u'', string).strip()
-
-    return string
-
-
-def are_equals(string_1='', string_2=''):
-    """
-        Checks if the two string are equals even without accents
-    :param string_1: first string
-    :type: string_1: unicode
-    :param string_2: second string
-    :type: string_2: unicode
-    :return: True if it is equal, False otherwise
-    :rtype: bool
-    """
-    string_1 = safe_name(string_1)
-    string_2 = safe_name(string_2)
-    string_a = remove_accents(string_1)
-    string_b = remove_accents(string_2)
-    return any([string_1 == string_2, string_a == string_b])
-
-
 def remove_accents(string):
     """
         Remove any accent in the string
@@ -88,62 +57,6 @@ def remove_control_chars(string):
     tem_string = control_char_re.sub('', string)
     control_char_re = re.compile(u'[%s]' % re.escape(chr(160)))
     return control_char_re.sub(' ', tem_string)
-
-
-def safe_name_torrent(string):
-    """
-        Make the name directory and filename safe
-    :param string: string to modify
-    :type string: unicode
-    :return: modified string
-    :rtype: unicode
-    """
-    # erase keyword
-    string = string.lower()
-    string = re.sub(r'^\[.*?\]', u'', string)  # erase [HorribleSub] for ex.
-    # check for anime
-    string = re.sub(r'- ([0-9][0-9][0-9][0-9]) ', r' \g<1>', string + u' ')
-    string = re.sub(r'- ([0-9]+) ', r'- EP\g<1>', string + u' ')
-    if 'season' not in string.lower():
-        string = string.lower().replace(u' episode ', u' - EP')
-
-    # check for qualities
-    string = string.replace(u'1920x1080', u'1080p')
-    string = string.replace(u'1280x720', u'720p')
-    string = string.replace(u'853x480', u'480p')
-    string = string.replace(u'848x480', u'480p')
-    string = string.replace(u'704x480', u'480p')
-    string = string.replace(u'640x480', u'480p')
-    string = string.replace(u'microhd', u' microhd')  # sometimes comes with the year
-    string = string.replace(u'dvdrip', u' dvdrip')  # sometimes comes with the year
-    string = string.replace(u'1080p', u'')
-    string = string.replace(u'720p', u'')
-    string = string.replace(u'480p', u'')
-    string = safe_name(string)
-    return string.replace(u's h i e l d', u'SHIELD').replace(u'c s i', u'CSI')
-
-
-def safe_name(string, charset='utf-8', replacing=False):
-    """
-    Make the name directory and filename safe
-    :param charset: encoding
-    :type charset: str
-    :param string: string to convert
-    :type string: str or unicode
-    :param replacing: Whether is ' is replaced
-    :type replacing: bool
-    :return: converted string
-    :rtype: unicode
-    """
-    string = normalize_string(string, charset, replacing)
-    string = string.lower().title()
-    keys = {u'*': u' ', u'/': u' ', u':': u' ', u'<': u' ', u'>': u' ', u'?': u' ', u'|': u' ', u'_': u' ',
-            u'.': u' ', u')': u' ', u'(': u' ', u'[': u' ', u']': u' ', u'-': u' '}
-    for key in keys.keys():
-        string = string.replace(key, keys[key])
-
-    string = re.sub(u' +', u' ', string)
-    return string
 
 
 def normalize_string(string, charset=None, replacing=False):

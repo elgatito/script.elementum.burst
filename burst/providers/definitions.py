@@ -62,27 +62,25 @@ def load_providers(path, custom=False):
         map(log.error, traceback.format_exc().split("\n"))
 
 
-def load_overrides(path, custom=False):
-    """ Overrides loader for Python files
+def load_overrides(path):
+    """ Custom overrides loader for Python files
 
     Note:
         Overrides must be in an ``overrides`` dictionary.
 
     Args:
-        path    (str): Path to Python file to be loaded
-        custom (bool): Boolean flag to specify if this is a custom overrides file
+        path    (str): Path to folder with ``overrides.py`` to be loaded
     """
     try:
-        if custom:
-            sys.path.append(path)
-            from overrides import overrides
-            log.debug("Imported overrides: %s", repr(overrides))
-            for provider in overrides:
-                update_definitions(provider, overrides[provider])
-            log.info("Successfully loaded overrides from %s", os.path.join(path, "overrides.py"))
+        sys.path.append(path)
+        from overrides import overrides
+        log.debug("Imported overrides: %s", repr(overrides))
+        for provider in overrides:
+            update_definitions(provider, overrides[provider])
+        log.info("Successfully loaded overrides from %s", os.path.join(path, "overrides.py"))
     except Exception as e:
         import traceback
-        log.error("Failed importing %soverrides: %s", "custom " if custom else "", repr(e))
+        log.error("Failed importing custom overrides: %s", repr(e))
         map(log.error, traceback.format_exc().split("\n"))
 
 
@@ -125,18 +123,14 @@ def update(d, u):
     return d
 
 def translatePath(*args, **kwargs):
-    kodi_version = xbmc.getInfoLabel('System.BuildVersion').split('.')[0]
-    if kodi_version >= '19':
+    # xbmc.translatePath was moved to xbmcvfs in Kodi 19
+    if hasattr(xbmcvfs, 'translatePath'):
         return xbmcvfs.translatePath(*args, **kwargs)
-    else:
-        return xbmc.translatePath(*args, **kwargs)
+    return xbmc.translatePath(*args, **kwargs)
 
 
 # Load providers
 load_providers(os.path.join(ADDON_PATH, 'burst', 'providers', 'providers.json'))
-
-# Load providers overrides
-load_overrides(os.path.join(ADDON_PATH, 'burst', 'providers'))
 
 # Load user's custom providers
 custom_providers = os.path.join(translatePath(ADDON_PROFILE), "providers")
@@ -153,7 +147,7 @@ for provider_file in glob(os.path.join(custom_providers, "*.json")):
 # Load user's custom overrides
 custom_overrides = translatePath(ADDON_PROFILE)
 if os.path.exists(os.path.join(custom_overrides, 'overrides.py')):
-    load_overrides(custom_overrides, custom=True)
+    load_overrides(custom_overrides)
 
 # Load json overrides from Kodi settings folder, if that does not exist - fallback to default value
 overrides_path = os.path.join(translatePath(get_setting("overrides_path")), 'overrides.json')
@@ -169,8 +163,6 @@ for provider in definitions:
             definitions[provider][k] = v
 
 # Finding the largest provider name for further use in loggers.
-longest = 10
-if len(definitions) > 0:
-    longest = len(definitions[sorted(definitions, key=lambda p: len(definitions[p]['name']), reverse=True)[0]]['name'])
+longest = max([len(d['name']) for d in definitions.values()] or [10])
 
 log.info("Loading definitions took %fs", time.time() - start_time)

@@ -13,18 +13,11 @@ from elementum.provider import log, get_setting
 from .normalize import normalize_string, remove_accents
 from .providers.definitions import definitions
 from .utils import Magnet, get_int, get_float, clean_number, size_int, get_alias, use_opennic_dns
+from collections import OrderedDict
 if PY3:
-    import html
     unicode = str
-else:
-    from .parser.HTMLParser import HTMLParser
 
 from kodi_six.utils import py2_encode
-
-try:
-    from collections import OrderedDict
-except ImportError:
-    from ordereddict import OrderedDict
 
 use_require_resolution = get_setting('require_resolution', bool)
 use_additional_filters = get_setting('additional_filters', bool)
@@ -165,12 +158,17 @@ class Filtering:
         self.reason = ''
         self.results = []
 
-    def use_general(self, provider, payload):
-        """ Setup method to define general search parameters
+    def _setup(self, provider, payload, query_key, sizes=None):
+        """ Common setup for search methods: resolves domain aliases, size limits and search URL
 
         Args:
-            provider (str): Provider ID
-            payload (dict): Elementum search payload
+            provider  (str): Provider ID
+            payload  (dict): Elementum search payload
+            query_key (str): Definition key with the URL query suffix, ie. ``movie_query``
+            sizes     (str): Suffix of ``min_size_*``/``max_size_*`` settings to use with ``separate_sizes``
+
+        Returns:
+            dict: Provider definition with aliases applied
         """
         # Domain name preferred order:
         # root_url -> base_url (see update_definitions()) -> opennic_dns_alias OR tor_dns_alias -> user defined alias
@@ -181,117 +179,35 @@ class Filtering:
             definition = get_alias(definition, definition["tor_dns_alias"])
         definition = get_alias(definition, get_setting("%s_alias" % provider))
 
-        general_query = definition['general_query'] if 'general_query' in definition and definition['general_query'] else ''
-        log.debug("[%s] General URL: %s%s" % (provider, definition['base_url'], general_query))
+        query = definition.get(query_key) or ''
+        log.debug("[%s] %s URL: %s%s" % (provider, query_key, definition['base_url'], query))
+        if sizes and get_setting('separate_sizes', bool):
+            self.min_size = get_float(get_setting('min_size_%s' % sizes))
+            self.max_size = get_float(get_setting('max_size_%s' % sizes))
+            self.check_sizes()
         self.info = payload
-        self.url = u"%s%s" % (definition['base_url'], general_query)
+        self.url = u"%s%s" % (definition['base_url'], query)
+        return definition
 
-        self.collect_queries('general', definition)
+    def use_general(self, provider, payload):
+        """ Setup method to define general search parameters """
+        self.collect_queries('general', self._setup(provider, payload, 'general_query'))
 
     def use_movie(self, provider, payload):
-        """ Setup method to define movie search parameters
-
-        Args:
-            provider (str): Provider ID
-            payload (dict): Elementum search payload
-        """
-        # Domain name preferred order:
-        # root_url -> base_url (see update_definitions()) -> opennic_dns_alias OR tor_dns_alias -> user defined alias
-        definition = definitions[provider]
-        if use_opennic_dns() and "opennic_dns_alias" in definition:
-            definition = get_alias(definition, definition["opennic_dns_alias"])
-        if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
-            definition = get_alias(definition, definition["tor_dns_alias"])
-        definition = get_alias(definition, get_setting("%s_alias" % provider))
-
-        movie_query = definition['movie_query'] if 'movie_query' in definition and definition['movie_query'] else ''
-        log.debug("[%s] Movies URL: %s%s" % (provider, definition['base_url'], movie_query))
-        if get_setting('separate_sizes', bool):
-            self.min_size = get_float(get_setting('min_size_movies'))
-            self.max_size = get_float(get_setting('max_size_movies'))
-            self.check_sizes()
-        self.info = payload
-        self.url = u"%s%s" % (definition['base_url'], movie_query)
-
-        self.collect_queries('movie', definition)
+        """ Setup method to define movie search parameters """
+        self.collect_queries('movie', self._setup(provider, payload, 'movie_query', 'movies'))
 
     def use_episode(self, provider, payload):
-        """ Setup method to define episode search parameters
-
-        Args:
-            provider (str): Provider ID
-            payload (dict): Elementum search payload
-        """
-        # Domain name preferred order:
-        # root_url -> base_url (see update_definitions()) -> opennic_dns_alias OR tor_dns_alias -> user defined alias
-        definition = definitions[provider]
-        if use_opennic_dns() and "opennic_dns_alias" in definition:
-            definition = get_alias(definition, definition["opennic_dns_alias"])
-        if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
-            definition = get_alias(definition, definition["tor_dns_alias"])
-        definition = get_alias(definition, get_setting("%s_alias" % provider))
-
-        show_query = definition['show_query'] if 'show_query' in definition and definition['show_query'] else ''
-        log.debug("[%s] Episode URL: %s%s" % (provider, definition['base_url'], show_query))
-        if get_setting('separate_sizes', bool):
-            self.min_size = get_float(get_setting('min_size_episodes'))
-            self.max_size = get_float(get_setting('max_size_episodes'))
-            self.check_sizes()
-        self.info = payload
-        self.url = u"%s%s" % (definition['base_url'], show_query)
-
-        self.collect_queries('tv', definition)
+        """ Setup method to define episode search parameters """
+        self.collect_queries('tv', self._setup(provider, payload, 'show_query', 'episodes'))
 
     def use_season(self, provider, payload):
-        """ Setup method to define season search parameters
-
-        Args:
-            provider (str): Provider ID
-            payload (dict): Elementum search payload
-        """
-        # Domain name preferred order:
-        # root_url -> base_url (see update_definitions()) -> opennic_dns_alias OR tor_dns_alias -> user defined alias
-        definition = definitions[provider]
-        if use_opennic_dns() and "opennic_dns_alias" in definition:
-            definition = get_alias(definition, definition["opennic_dns_alias"])
-        if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
-            definition = get_alias(definition, definition["tor_dns_alias"])
-        definition = get_alias(definition, get_setting("%s_alias" % provider))
-
-        season_query = definition['season_query'] if 'season_query' in definition and definition['season_query'] else ''
-        log.debug("[%s] Season URL: %s%s" % (provider, definition['base_url'], season_query))
-        if get_setting('separate_sizes', bool):
-            self.min_size = get_float(get_setting('min_size_seasons'))
-            self.max_size = get_float(get_setting('max_size_seasons'))
-            self.check_sizes()
-        self.info = payload
-        self.url = u"%s%s" % (definition['base_url'], season_query)
-
-        self.collect_queries('season', definition)
+        """ Setup method to define season search parameters """
+        self.collect_queries('season', self._setup(provider, payload, 'season_query', 'seasons'))
 
     def use_anime(self, provider, payload):
-        """ Setup method to define anime search parameters
-
-        Args:
-            provider (str): Provider ID
-            payload (dict): Elementum search payload
-        """
-        definition = definitions[provider]
-        # Domain name preferred order:
-        # root_url -> base_url (see update_definitions()) -> opennic_dns_alias OR tor_dns_alias -> user defined alias
-        if use_opennic_dns() and "opennic_dns_alias" in definition:
-            definition = get_alias(definition, definition["opennic_dns_alias"])
-        if get_setting("use_tor_dns", bool) and "tor_dns_alias" in definition:
-            definition = get_alias(definition, definition["tor_dns_alias"])
-        definition = get_alias(definition, get_setting("%s_alias" % provider))
-
-        anime_query = definition['anime_query'] if 'anime_query' in definition and definition['anime_query'] else ''
-        log.debug("[%s] Anime URL: %s%s" % (provider, definition['base_url'], anime_query))
-        if get_setting('separate_sizes', bool):
-            self.min_size = get_float(get_setting('min_size_episodes'))
-            self.max_size = get_float(get_setting('max_size_episodes'))
-            self.check_sizes()
-        self.info = payload
+        """ Setup method to define anime search parameters """
+        definition = self._setup(provider, payload, 'anime_query', 'episodes')
         # Overwrite anime's original title if needed
         global overwrite_anime_original_title
         if 'titles' in self.info and self.info['titles']:
@@ -303,7 +219,6 @@ class Filtering:
             if overwrite_anime_original_title == 'en' or overwrite_anime_original_title == '2':
                 if 'en' in self.info['titles'] and self.info['titles']['en']:
                     self.info['titles']['original'] = self.info['titles']['en']
-        self.url = u"%s%s" % (definition['base_url'], anime_query)
 
         self.collect_queries('anime', definition)
 
@@ -653,37 +568,6 @@ class Filtering:
                 res = resolution
         return res, idx
 
-    def included(self, value, keys, strict=False):
-        """ Check if the keys are present in the string
-
-        Args:
-            value   (str): Name of the torrent to check
-            keys   (list): List of strings that must be included in ``value``
-            strict (bool): Boolean flag to accept or not partial results
-
-        Returns:
-            bool: True if any (or all if ``strict``) keys are included, False otherwise.
-        """
-        value = ' ' + value + ' '
-        if '*' in keys:
-            res = True
-        else:
-            value = value.lower()
-            res1 = []
-            for key in keys:
-                res2 = []
-                for item in re.split(r'\s', key):
-                    item = item.replace('_', ' ')  # for keyword like _HEVC_
-                    if strict:
-                        item = ' ' + item + ' '
-                    if item.lower() in value:
-                        res2.append(True)
-                    else:
-                        res2.append(False)
-                res1.append(all(res2))
-            res = any(res1)
-        return res
-
     def included_rx(self, value, keys):
         """ Check if the keys are matched in the string
 
@@ -700,43 +584,6 @@ class Filtering:
             if re.search(rr, value):
                 return True
         return False
-
-    def unescape(self, name):
-        """ Unescapes all HTML entities from a string using
-            HTMLParser().unescape()
-
-        Args:
-            name (str): String to convert
-
-        Returns:
-            str: Converted string
-        """
-        name = name.replace('<![CDATA[', '').replace(']]', '')
-
-        if PY3:
-            name = html.unescape(name.lower())
-        else:
-            name = HTMLParser().unescape(name.lower())
-
-        return name
-
-    def exception(self, title=None):
-        """ Change the title to the standard name in torrent sites
-
-        Args:
-            title (str): Title to check
-
-        Returns:
-            str: Standard title
-        """
-        if title:
-            title = title.lower()
-            title = title.replace('csi crime scene investigation', 'CSI')
-            title = title.replace('law and order special victims unit', 'law and order svu')
-            title = title.replace('law order special victims unit', 'law and order svu')
-            title = title.replace('S H I E L D', 'SHIELD')
-
-        return title
 
     def add_provider_language(self, language):
         if language not in self.provider_languages:

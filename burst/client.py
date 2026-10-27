@@ -20,7 +20,8 @@ except:
 from elementum.provider import log, get_setting
 from time import sleep
 from urllib3.util import connection
-from .utils import encode_dict, translatePath, is_ipv4_address
+from .utils import encode_dict, is_ipv4_address
+from .providers.definitions import translatePath
 if PY3:
     from http.cookiejar import LWPCookieJar
     from urllib.parse import urlparse, urlencode
@@ -260,9 +261,6 @@ class Client:
                 'https': self.proxy_url,
             }
 
-    def _create_cookies(self, payload):
-        return urlencode(payload)
-
     def _locate_cookies(self, url=''):
         cookies_path = os.path.join(PATH_TEMP, 'burst')
         if not os.path.exists(cookies_path):
@@ -303,14 +301,6 @@ class Client:
         self._counter += 1
         if self._counter > 1:
             sleep(0.25)
-
-    def cookies(self):
-        """ Saved client cookies
-
-        Returns:
-            list: A list of saved Cookie objects
-        """
-        return self._cookies
 
     def open(self, url, language='en', post_data=None, get_data=None, headers=None):
         """ Opens a connection to a webpage and saves its HTML content in ``self.content``
