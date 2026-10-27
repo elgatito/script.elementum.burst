@@ -9,14 +9,13 @@ import re
 import json
 import time
 from .client import Client
-from elementum.provider import log, get_setting, set_setting
+from elementum.provider import log, get_setting
 from .filtering import cleanup_results
 from .normalize import normalize_string
 from .providers.definitions import definitions, longest
 from .utils import ADDON_PATH, get_int, clean_size, get_alias, with_defaults, notify, translation, get_icon_path
 from urllib.parse import quote, unquote, urlparse
 import xbmc
-import xbmcaddon
 
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
     """ Payload formatter to format results the way Elementum expects them
@@ -218,19 +217,6 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             username = get_setting('%s_username' % provider, str)
             password = get_setting('%s_password' % provider, str)
             passkey = get_setting('%s_passkey' % provider, str)
-            if not username and not password and not passkey:
-                for addon_name in ('script.magnetic.%s' % provider, 'script.magnetic.%s-mc' % provider):
-                    for setting in ('username', 'password'):
-                        try:
-                            value = xbmcaddon.Addon(addon_name).getSetting(setting)
-                            set_setting('%s_%s' % (provider, setting), value)
-                            if setting == 'username':
-                                username = value
-                            if setting == 'password':
-                                password = value
-                        except:
-                            pass
-
             if username:
                 client.username = username
                 url_search = url_search.replace('USERNAME', username)

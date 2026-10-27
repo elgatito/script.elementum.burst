@@ -18,7 +18,6 @@ from urllib.parse import urlparse, unquote
 from .parser.ehp import Html
 import xbmc
 import xbmcgui
-import xbmcaddon
 
 try:
     from Cryptodome.Cipher import AES
@@ -30,7 +29,7 @@ except:
 from .provider import process
 from .providers.definitions import definitions, longest
 from .filtering import apply_filters, Filtering, cleanup_results
-from .client import Client, change_agent
+from .client import Client, change_agent, elementum_addon
 from .utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias, size_int, domain_matches
 
 provider_names = []
@@ -62,7 +61,6 @@ cookie_sync_content = None
 
 special_chars = "()\"':.[]<>/\\?"
 
-elementum_addon = xbmcaddon.Addon(id='plugin.video.elementum')
 elementum_timeout = 30
 if elementum_addon.getSetting('custom_provider_timeout_enabled') == "true":
     try:
@@ -428,14 +426,14 @@ def extract_torrents(provider, client):
 
                     # Collect cookies used in request
                     if client.request_cookies:
-                        for item in client.request_cookies.split(';'):
-                            item = item.strip()
-                            if not item:
+                        for pair in client.request_cookies.split(';'):
+                            pair = pair.strip()
+                            if not pair:
                                 continue
-                            if '=' not in item:
-                                cookies[item] = None
+                            if '=' not in pair:
+                                cookies[pair] = None
                                 continue
-                            k, v = item.split('=', 1)
+                            k, v = pair.split('=', 1)
                             cookies[k] = v
 
                     # Collect session cookies for current domain
@@ -827,21 +825,24 @@ def cookie_fetch_gist_id():
     try:
         url = "https://api.github.com/gists"
         headers = {'Authorization': 'Bearer %s' % cookie_sync_token}
-        params = {'scope': 'gist'}
-        resp = requests.get(url, headers=headers, params=params, timeout=10)
-        resp_items = json.loads(resp.text)
+        # Gists list is paginated, the first page alone misses the file for users with many gists
+        for page in range(1, 11):
+            resp = requests.get(url, headers=headers, params={'per_page': 100, 'page': page}, timeout=10)
+            resp_items = json.loads(resp.text)
+            if not isinstance(resp_items, list) or not resp_items:
+                break
 
-        for item in resp_items:
-            if "files" not in item or "id" not in item:
-                continue
-            for k, v in item["files"].items():
-                if "filename" not in v or v["filename"] != cookie_sync_filename:
+            for item in resp_items:
+                if "files" not in item or "id" not in item:
                     continue
-                cookie_sync_gist_id = item["id"]
-                cookie_sync_fileurl = v["raw_url"]
-                cookie_sync_content = None  # Gists list does not include files content
+                for k, v in item["files"].items():
+                    if "filename" not in v or v["filename"] != cookie_sync_filename:
+                        continue
+                    cookie_sync_gist_id = item["id"]
+                    cookie_sync_fileurl = v["raw_url"]
+                    cookie_sync_content = None  # Gists list does not include files content
 
-                return True
+                    return True
     except Exception as e:
         log.error("Gist list failed with: %s" % (repr(e)))
 
@@ -886,7 +887,6 @@ def cookie_fetch_file():
 
         expires = int(time.time()) + 1000 * 86400
 
-        # Read persisted user-agent if available
         # Persisted user-agent can be stored as "__userAgent" or "userAgent", it's not a domain with cookies
         userAgent = resp_items.get("__userAgent") or resp_items.get("userAgent")
         if userAgent and cookie_sync_password:

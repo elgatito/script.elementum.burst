@@ -33,7 +33,7 @@ from requests.structures import CaseInsensitiveDict
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
 if os.name == 'nt':
-    USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+    USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
 
 if get_setting("use_custom_user_agent", bool):
     agent = get_setting("custom_user_agent", str)
@@ -82,8 +82,9 @@ public_dns_list = get_setting("public_dns_list", str)
 use_opennic_dns = use_custom_dns and get_setting("use_opennic_dns", bool)
 use_tor_dns = get_setting("use_tor_dns", bool)
 use_elementum_proxy = get_setting("use_elementum_proxy", bool)
-# Read once: each xbmcaddon.Addon() instance makes Kodi load Elementum's settings file again
-use_elementum_internal_proxy = use_elementum_proxy and xbmcaddon.Addon(id='plugin.video.elementum').getSetting('internal_proxy_enabled') == "true"
+# Shared single instance: each xbmcaddon.Addon() makes Kodi load Elementum's settings file again
+elementum_addon = xbmcaddon.Addon(id='plugin.video.elementum')
+use_elementum_internal_proxy = use_elementum_proxy and elementum_addon.getSetting('internal_proxy_enabled') == "true"
 
 def FetchOpenNICDnsServers():
     try:
@@ -438,12 +439,7 @@ class Client:
                     return False
             except Exception as e:
                 log.debug("Login failed with: %s" % e)
-                try:
-                    if re.search(fails_with, self.content.decode('utf-8')):
-                        self.status = 'Wrong username or password'
-                        return False
-                except:
-                    return False
+                return False
 
             return True
 
