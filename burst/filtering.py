@@ -4,9 +4,6 @@
 Burst filtering class and methods
 """
 
-from __future__ import unicode_literals
-from future.utils import PY3
-
 import re
 import hashlib
 import traceback
@@ -15,19 +12,15 @@ from .normalize import normalize_string, remove_accents
 from .providers.definitions import definitions
 from .utils import Magnet, get_int, get_float, clean_number, size_int, get_alias, use_opennic_dns
 from collections import OrderedDict
-if PY3:
-    unicode = str
-
-from kodi_six.utils import py2_encode
 
 use_require_resolution = get_setting('require_resolution', bool)
 use_additional_filters = get_setting('additional_filters', bool)
 use_require_keywords = get_setting('require_keywords', bool)
 use_require_release_type = get_setting('require_release_type', bool)
 use_require_size = get_setting('require_size', bool)
-use_accept = get_setting('accept', unicode).strip().lower()
-use_block = get_setting('block', unicode).strip().lower()
-use_require = get_setting('require', unicode).strip().lower()
+use_accept = get_setting('accept', str).strip().lower()
+use_block = get_setting('block', str).strip().lower()
+use_require = get_setting('require', str).strip().lower()
 use_min_size = get_setting('min_size')
 use_max_size = get_setting('max_size')
 use_filter_quotes = get_setting("filter_quotes", bool)
@@ -648,7 +641,7 @@ def cleanup_results(results_list):
                 if result['uri'] and result['uri'].startswith('magnet'):
                     hash_ = Magnet(result['uri']).info_hash.upper()
                 else:
-                    hash_ = py2_encode(result['uri'].split("|")[0])
+                    hash_ = result['uri'].split("|")[0]
                     try:
                         hash_ = hash_.encode()
                     except:

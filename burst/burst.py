@@ -4,9 +4,6 @@
 Burst processing thread
 """
 
-from __future__ import unicode_literals
-from future.utils import PY3, iteritems
-
 import re
 import json
 import time
@@ -15,22 +12,13 @@ import traceback
 from binascii import unhexlify
 from threading import BoundedSemaphore, Event, Lock, Thread
 from elementum.provider import append_headers, get_setting, set_setting, log
-
-if PY3:
-    from queue import Queue
-    from urllib.parse import urlparse
-    from urllib.parse import unquote
-
-    basestring = str
-    long = int
-    unicode = str
-else:
-    from Queue import Queue
-    from urlparse import urlparse
-    from urllib import unquote
+from queue import Queue
+from urllib.parse import urlparse, unquote
 
 from .parser.ehp import Html
-from kodi_six import xbmc, xbmcgui, xbmcaddon, py2_encode
+import xbmc
+import xbmcgui
+import xbmcaddon
 
 try:
     from Cryptodome.Cipher import AES
@@ -64,11 +52,11 @@ max_results = get_setting('max_results', int)
 sort_by = get_setting('sort_by', int)
 
 cookie_sync_enabled = get_setting("cookie_sync_enabled", bool)
-cookie_sync_token = get_setting("cookie_sync_token", unicode)
-cookie_sync_password = get_setting("cookie_sync_password", unicode)
-cookie_sync_gist_id = get_setting("cookie_sync_gist_id", unicode)
-cookie_sync_filename = get_setting("cookie_sync_filename", unicode)
-cookie_sync_fileurl = get_setting("cookie_sync_fileurl", unicode)
+cookie_sync_token = get_setting("cookie_sync_token", str)
+cookie_sync_password = get_setting("cookie_sync_password", str)
+cookie_sync_gist_id = get_setting("cookie_sync_gist_id", str)
+cookie_sync_filename = get_setting("cookie_sync_filename", str)
+cookie_sync_fileurl = get_setting("cookie_sync_fileurl", str)
 # Gist file content, if it came inline with the gist info, saves a request for the file itself
 cookie_sync_content = None
 
@@ -121,7 +109,7 @@ def search(payload, method="general"):
                 },
             }
 
-    payload['titles'] = dict((k.lower(), v) for k, v in iteritems(payload['titles']))
+    payload['titles'] = dict((k.lower(), v) for k, v in payload['titles'].items())
 
     # If titles[] exists in payload and there are special chars in titles[source]
     #   then we set a flag to possibly modify the search query
@@ -335,7 +323,7 @@ def extract_torrents(provider, client):
 
             uri = torrent.split('|')  # Split cookies for private trackers
             with subpage_slots:
-                subclient.open(py2_encode(uri[0]), headers=headers)
+                subclient.open(uri[0], headers=headers)
 
             if 'bittorrent' in subclient.headers.get('content-type', ''):
                 log.debug('[%s] bittorrent content-type for %s' % (provider, repr(torrent)))
@@ -416,7 +404,7 @@ def extract_torrents(provider, client):
                 user_agent = client.user_agent
 
                 if not torrent.startswith('http'):
-                    torrent = definition['root_url'] + py2_encode(torrent)
+                    torrent = definition['root_url'] + torrent
 
                 if client.passkey:
                     torrent = torrent.replace('PASSKEY', client.passkey)
@@ -457,13 +445,13 @@ def extract_torrents(provider, client):
 
                     if cookies:
                         # Need to set Cookie afterwards to avoid rewriting it with session Cookies
-                        headers['Cookie'] = ";".join(["%s=%s" % (k, v) for (k, v) in iteritems(cookies)])
+                        headers['Cookie'] = ";".join(["%s=%s" % (k, v) for (k, v) in cookies.items()])
 
                     torrent = append_headers(torrent, headers)
 
             if name and torrent and needs_subpage and not torrent.startswith('magnet'):
                 if not torrent.startswith('http'):
-                    torrent = definition['root_url'] + py2_encode(torrent)
+                    torrent = definition['root_url'] + torrent
                 # Check if this url was previously requested, to avoid doing same job again.
                 uri = torrent.split('|')
                 if uri and uri[0] and uri[0] in provider_cache and provider_cache[uri[0]]:
@@ -589,17 +577,17 @@ def extract_from_api(provider, client):
             name = "%s - %s" % (name, get_nested_value(result, api_format['quality'], ""))
         if 'size' in api_format:
             size = result.get(api_format['size'])
-            if isinstance(size, (long, int)):
+            if isinstance(size, int):
                 size = sizeof(size)
-            elif isinstance(size, basestring) and size.isdigit():
+            elif isinstance(size, str) and size.isdigit():
                 size = sizeof(int(size))
         if 'seeds' in api_format:
             seeds = result.get(api_format['seeds'])
-            if isinstance(seeds, basestring) and seeds.isdigit():
+            if isinstance(seeds, str) and seeds.isdigit():
                 seeds = int(seeds)
         if 'peers' in api_format:
             peers = result.get(api_format['peers'])
-            if isinstance(peers, basestring) and peers.isdigit():
+            if isinstance(peers, str) and peers.isdigit():
                 peers = int(peers)
         yield (name, info_hash, torrent, size, seeds, peers)
 
@@ -817,7 +805,7 @@ def cookie_sync(is_silent):
 
 def set_setting_if_changed(key, value):
     # Every set_setting() makes Kodi write the settings file
-    if get_setting(key, unicode) != value:
+    if get_setting(key, str) != value:
         set_setting(key, value)
 
 def cookie_check_defaults():
@@ -838,7 +826,7 @@ def cookie_fetch_gist_id():
         for item in resp_items:
             if "files" not in item or "id" not in item:
                 continue
-            for k, v in iteritems(item["files"]):
+            for k, v in item["files"].items():
                 if "filename" not in v or v["filename"] != cookie_sync_filename:
                     continue
                 cookie_sync_gist_id = item["id"]
@@ -862,7 +850,7 @@ def cookie_fetch_fileurl():
 
         if "files" not in item or "id" not in item:
             return False
-        for k, v in iteritems(item["files"]):
+        for k, v in item["files"].items():
             if "filename" not in v or v["filename"] != cookie_sync_filename:
                 continue
             cookie_sync_gist_id = item["id"]
@@ -896,7 +884,7 @@ def cookie_fetch_file():
         if userAgent and cookie_sync_password:
             userAgent = aes_decode(userAgent).decode('utf-8')
 
-        for k, v in iteritems(resp_items):
+        for k, v in resp_items.items():
             if k.startswith("__") or k == "userAgent":
                 continue
 
@@ -908,7 +896,7 @@ def cookie_fetch_file():
 
             # Loop through and force cookies into cookie jar
             try:
-                for cookie in json.loads(py2_encode(v)):
+                for cookie in json.loads(v):
                     cookie["domain"] = k
 
                     if "expirationDate" not in cookie or not cookie["expirationDate"]:
@@ -943,10 +931,7 @@ def EVP_BytesToKey(password, salt, key_len, iv_len):
     return dtot[:key_len], dtot[key_len:key_len+iv_len]
 
 def aes_decode(data):
-    try:
-        key, iv = EVP_BytesToKey(cookie_sync_password.encode('utf-8'), b'', 16, 16)
-    except:
-        key, iv = EVP_BytesToKey(py2_encode(cookie_sync_password), b'', 16, 16)
+    key, iv = EVP_BytesToKey(cookie_sync_password.encode('utf-8'), b'', 16, 16)
 
     aes = AES.new(key, AES.MODE_CBC, IV=iv)
     raw = aes.decrypt(unhexlify(data))

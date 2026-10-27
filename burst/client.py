@@ -4,8 +4,6 @@
 Burst web client
 """
 
-from future.utils import PY3, iteritems
-
 import re
 import os
 import urllib3
@@ -24,15 +22,9 @@ from time import sleep
 from urllib3.util import connection
 from .utils import encode_dict, is_ipv4_address, domain_matches
 from .providers.definitions import translatePath
-if PY3:
-    from http.cookiejar import LWPCookieJar
-    from urllib.parse import urlparse, urlencode
-    unicode = str
-else:
-    from cookielib import LWPCookieJar
-    from urllib import urlencode
-    from urlparse import urlparse
-from kodi_six import xbmcaddon, py2_encode
+from http.cookiejar import LWPCookieJar
+from urllib.parse import urlparse, urlencode
+import xbmcaddon
 
 from requests.packages.urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
@@ -43,7 +35,7 @@ if os.name == 'nt':
     USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
 
 if get_setting("use_custom_user_agent", bool):
-    agent = get_setting("custom_user_agent", unicode)
+    agent = get_setting("custom_user_agent", str)
     if agent:
         USER_AGENT = agent
         log.debug("Using custom User Agent: %s" % (USER_AGENT))
@@ -79,13 +71,13 @@ urllib3.disable_warnings()
 # Kodi settings
 proxy_enabled = get_setting("proxy_enabled", bool)
 proxy_use_type = get_setting("proxy_use_type", int)
-proxy_host = get_setting("proxy_host", unicode)
+proxy_host = get_setting("proxy_host", str)
 proxy_port = get_setting("proxy_port", int)
-proxy_login = get_setting("proxy_login", unicode)
-proxy_password = get_setting("proxy_password", unicode)
+proxy_login = get_setting("proxy_login", str)
+proxy_password = get_setting("proxy_password", str)
 proxy_type = get_setting("proxy_type", int)
 use_custom_dns = get_setting("use_custom_dns", bool)
-public_dns_list = get_setting("public_dns_list", unicode)
+public_dns_list = get_setting("public_dns_list", str)
 use_opennic_dns = use_custom_dns and get_setting("use_opennic_dns", bool)
 use_tor_dns = get_setting("use_tor_dns", bool)
 use_elementum_proxy = get_setting("use_elementum_proxy", bool)
@@ -361,7 +353,7 @@ class Client:
 
         # If headers passed to open() call - we overwrite headers.
         if headers:
-            for key, value in iteritems(headers):
+            for key, value in headers.items():
                 if key == ':path':
                     u = urlparse(url)
                     value = u.path
@@ -438,9 +430,9 @@ class Client:
             if not prerequest.startswith('http'):
                 prerequest = root_url + prerequest
             log.debug("Running prerequest to %s" % (prerequest))
-            self.open(py2_encode(prerequest), headers=headers)
+            self.open(prerequest, headers=headers)
 
-        if self.open(py2_encode(url), post_data=encode_dict(data, self.request_charset), headers=headers):
+        if self.open(url, post_data=encode_dict(data, self.request_charset), headers=headers):
             try:
                 if fails_with and re.search(fails_with, self.content):
                     self.status = 'Wrong username or password'

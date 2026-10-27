@@ -4,20 +4,14 @@
 Burst utilities
 """
 
-from future.utils import PY3, iteritems
-
 import os
 import re
 import socket
 from elementum.provider import get_setting
 from .providers.definitions import definitions
-if PY3:
-    from urllib.parse import urlparse
-    basestring = str
-    unicode = str
-else:
-    from urlparse import urlparse
-from kodi_six import xbmcgui, xbmcaddon
+from urllib.parse import urlparse
+import xbmcgui
+import xbmcaddon
 
 ADDON = xbmcaddon.Addon()
 ADDON_NAME = ADDON.getAddonInfo("name")
@@ -100,14 +94,14 @@ def get_alias(definition, alias):
 
             # Replace all occurrences of old domain name with new one
             for k in definition:
-                if isinstance(definition[k], basestring):
+                if isinstance(definition[k], str):
                     definition[k] = definition[k].replace(old_domain, new_domain)
                     if protocol:
                         definition[k] = definition[k].replace("http://", protocol + "://")
                         definition[k] = definition[k].replace("https://", protocol + "://")
 
             for k in definition["parser"]:
-                if isinstance(definition["parser"][k], basestring):
+                if isinstance(definition["parser"][k], str):
                     definition["parser"][k] = definition["parser"][k].replace(old_domain, new_domain)
                     if protocol:
                         definition["parser"][k] = definition["parser"][k].replace("http://", protocol + "://")
@@ -206,16 +200,7 @@ def get_float(string):
             floated = re.findall(r'[\d.]+', cleaned)[0]
             return float(floated)
         except:
-            pass
-    try:
-        string = string[:clean_number(string).find('.')]
-        return float(filter(type(string).isdigit, string))
-    except:
-        pass
-    try:
-        return float(filter(type(string).isdigit, string))
-    except:
-        return float(0)
+            return float(0)
 
 
 def size_int(size_txt):
@@ -320,17 +305,17 @@ def encode_dict(dict_in, charset='utf8'):
     """ Encodes dict values to the given charset
 
     Args:
-        dict_in (dict): Input dictionary with unicode values
+        dict_in (dict): Input dictionary with str values
 
     Returns:
         dict: Output dictionary with encoded values
     """
     try:
         dict_out = {}
-        for k, v in iteritems(dict_in):
+        for k, v in dict_in.items():
             if isinstance(v, bytes):
                 v = v.decode('utf8')
-            if isinstance(v, unicode):
+            if isinstance(v, str):
                 v = v.encode(charset)
             dict_out[k] = v
         return dict_out

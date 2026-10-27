@@ -3,24 +3,19 @@
 Definitions and overrides loader
 """
 
-from future.utils import PY3, iteritems
-
 import os
 import sys
 import json
 import time
 import traceback
 from glob import glob
-if PY3:
-    from urllib.parse import urlparse
-    from collections.abc import Mapping
-else:
-    from urlparse import urlparse
-    from io import open
-    from collections import Mapping
+from urllib.parse import urlparse
+from collections.abc import Mapping
 
 from elementum.provider import log, get_setting
-from kodi_six import xbmc, xbmcaddon, xbmcvfs
+import xbmc
+import xbmcaddon
+import xbmcvfs
 
 start_time = time.time()
 ADDON = xbmcaddon.Addon()
@@ -113,7 +108,7 @@ def update(d, u):
         d (dict): Current provider definitions
         u (dict): Dictionary of definitions to be updated
     """
-    for k, v in iteritems(u):
+    for k, v in u.items():
         if isinstance(v, Mapping):
             r = update(d.get(k, {}), v)
             d[k] = r
@@ -157,7 +152,7 @@ load_providers(overrides_path)
 
 # Setting mandatory fields to their default values for each provider.
 for provider in definitions:
-    for k, v in iteritems(mandatory_fields):
+    for k, v in mandatory_fields.items():
         if k not in definitions[provider]:
             definitions[provider][k] = v
 
