@@ -13,7 +13,7 @@ from elementum.provider import log, get_setting
 from .filtering import cleanup_results
 from .normalize import normalize_string
 from .providers.definitions import definitions, longest
-from .utils import ADDON_PATH, get_int, clean_size, get_alias, with_defaults, notify, translation, get_icon_path
+from .utils import ADDON_PATH, get_int, clean_size, get_alias, with_defaults, add_error, translation
 from urllib.parse import quote, unquote, urlparse
 import xbmc
 
@@ -286,7 +286,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 elif not logged_in:
                     log.error("[%s] Login failed: %s", provider, client.status)
                     log.debug("[%s] Failed login content: %s", provider, repr(client.content))
-                    notify(translation(32169).format(provider), image=get_icon_path())
+                    add_error(translation(32169).format(provider))
                     return filtering.results
 
                 if logged_in:
@@ -324,7 +324,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             client.status = 403
             if not is_silent:
                 log.error("[%s] > Could not authorize provider using cookie sync" % (provider))
-                notify(translation(32168) % (definition['name']), image=get_icon_path())
+                add_error(translation(32168) % (definition['name']))
 
         try:
             filtering.results.extend(

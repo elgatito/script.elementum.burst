@@ -7,6 +7,7 @@ Burst utilities
 import os
 import re
 import socket
+from threading import Lock
 from elementum.provider import get_setting
 from .providers.definitions import definitions
 from urllib.parse import urlparse
@@ -289,16 +290,48 @@ def sizeof(num, suffix='B'):
     return "%.1f %s%s" % (num, 'Y', suffix)
 
 
-def notify(message, image=None):
+def notify(message, image=None, time=5000):
     """ Creates a notification dialog
 
     Args:
         message (str): The message to show in the dialog
         image   (str): Path to an icon for this dialog
+        time    (int): How long to show the notification, in milliseconds
     """
     dialog = xbmcgui.Dialog()
-    dialog.notification(ADDON_NAME, message, icon=image, sound=False)
+    dialog.notification(ADDON_NAME, message, icon=image, sound=False, time=time)
     del dialog
+
+
+provider_errors = []
+provider_errors_lock = Lock()
+
+
+def add_error(message):
+    """ Stores a provider error for the current search, avoiding duplicates
+
+    Args:
+        message (str): The error message to store
+    """
+    with provider_errors_lock:
+        if message not in provider_errors:
+            provider_errors.append(message)
+
+
+def get_errors():
+    """ Returns the provider errors collected during the current search
+
+    Returns:
+        list: Stored error messages
+    """
+    with provider_errors_lock:
+        return list(provider_errors)
+
+
+def clear_errors():
+    """ Clears the provider errors collected during the previous search """
+    with provider_errors_lock:
+        provider_errors[:] = []
 
 
 def encode_dict(dict_in, charset='utf8'):

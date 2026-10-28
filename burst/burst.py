@@ -30,7 +30,7 @@ from .provider import process
 from .providers.definitions import definitions, longest
 from .filtering import apply_filters, Filtering, cleanup_results
 from .client import Client, change_agent, elementum_addon
-from .utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias, size_int, domain_matches
+from .utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias, size_int, domain_matches, clear_errors, get_errors
 
 provider_names = []
 provider_results = []
@@ -147,6 +147,7 @@ def search(payload, method="general"):
     available_providers = 0
     request_time = time.time()
     providers_done.clear()
+    clear_errors()
 
     cookie_sync(payload['silent'])
     providers = get_enabled_providers(method)
@@ -169,6 +170,9 @@ def search(payload, method="general"):
             log.info("No '%s' translation available..." % kodi_language)
 
     p_dialog = xbmcgui.DialogProgressBG()
+    # Separate progress handle, Kodi rotates it with the search progress so errors show up while searching
+    error_dialog = None
+    error_message = None
     if not payload['silent']:
         p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', translation(32061))
 
@@ -196,11 +200,28 @@ def search(payload, method="general"):
         message = translation(32062) % available_providers if available_providers > 1 else translation(32063)
         if not payload['silent']:
             p_dialog.update(int((total - available_providers) / total * 100), message=message)
+            errors = get_errors()
+            if errors:
+                message = ' | '.join(errors)
+                if error_dialog is None:
+                    error_dialog = xbmcgui.DialogProgressBG()
+                    error_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR] errors', message)
+                elif message != error_message:
+                    error_dialog.update(-1, message=message)
+                error_message = message
         providers_done.wait(0.25)
 
     if not payload['silent']:
         p_dialog.close()
     del p_dialog
+
+    errors = get_errors()
+    if error_dialog is not None:
+        error_dialog.close()
+    del error_dialog
+
+    if errors and not payload['silent']:
+        notify("\n".join(errors), ADDON_ICON, time=10000)
 
     if available_providers > 0:
         message = ', '.join(provider_names)
