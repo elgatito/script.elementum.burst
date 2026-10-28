@@ -1,6 +1,85 @@
 script.elementum.burst changelog
 ===============
 
+[B]v0.0.100[/B] - 2026-10-28
+ - Version 0.0.100
+ - Show provider login and cookie sync errors during search and in the
+   final notification.
+ - Cookie sync: ignore expired cookies and fall back to login instead
+   of using them.
+ - Cookie sync: find the gist file when the account has many gists, and
+   no longer fail when the file cannot be downloaded.
+ - Cookie sync: match cookies to the correct tracker domains and use the
+   synced user-agent for torrent downloads.
+ - Fixed missing results: torrents without an info hash were merged
+   into a single result.
+ - Fixed searches hanging when a tracker is slow or a provider crashes.
+ - Fixed failed logins being treated as successful.
+ - Fixed login on trackers using Windows-1251 or other non-UTF-8
+   charsets, and with special characters in credentials.
+ - Fixed parsing of seeds and peers with thousand separators.
+ - Fixed proxy handling with Antizapret and Elementum's hosts resolve
+   mode.
+ - Fixed lowercase custom headers not overriding default headers.
+ - Fixed duplicate custom providers and API providers returning no
+   results when a single row is broken.
+ - Improved search speed and reduced rate limiting by making fewer
+   duplicate requests and limiting parallel subpage requests.
+ - OpenNIC DNS servers are now used only when custom DNS is enabled.
+ - Updated French trackers (Cpasbien, Torrent9) as of 18.07.2026
+   (#500). Thanks to @antonsoroko.
+ - Dropped support for Kodi 18, Kodi 19 or newer is required.
+
+[B]v0.0.99[/B] - 2026-07-14
+ - Version 0.0.99
+ - Fixed LostFilm search URL when the tracker returns a relative link
+   (#495). Thanks to @GorianskyE.
+ - Updated French trackers (Cpasbien, Torrent9) as of 24.05.2026
+   (#497). Thanks to @antonsoroko.
+ - ZTracker now uses HTTPS (#499). Thanks to @antonsoroko.
+ - OpenNIC DNS servers are now loaded automatically, with a new
+   "Use OpenNIC DNS servers" setting (#493). Thanks to @antonsoroko.
+
+[B]v0.0.98[/B] - 2026-03-07
+ - Version 0.0.98
+ - Updated YTS API address (#490). Thanks to @antonsoroko.
+
+[B]v0.0.97[/B] - 2025-11-16
+ - Version 0.0.97
+ - Updated YggTorrent URL (#487). Thanks to @antonsoroko.
+ - Fixed torrent names containing line breaks and added the media type
+   to YTS result names (#489). Thanks to @antonsoroko.
+
+[B]v0.0.96[/B] - 2025-10-05
+ - Version 0.0.96
+ - Add Knaben provider (#485). Thanks to @alexwhish23.
+ - Torrentio is now enabled by default and has a proper icon (#486).
+   Thanks to @antonsoroko.
+ - Remember the user-agent received from cookie sync and reuse it.
+
+[B]v0.0.95[/B] - 2025-09-14
+ - Version 0.0.95
+ - Add Torrentio provider (#481). Thanks to @Rodrigo-Barros and
+   @antonsoroko.
+ - Fixed BitSearch parsing and disabled Torrentz, which is a clone of
+   BitSearch (#483). Thanks to @antonsoroko.
+
+[B]v0.0.94[/B] - 2025-07-20
+ - Version 0.0.94
+ - Add Animelayer tracker (#464). Thanks to @antonsoroko.
+ - Add cookie sync support for 0day (#466). Thanks to @antonsoroko.
+ - Disable Torrentz2K and KickAss, fix BlueBird login, and update
+   AniMaunt and LostFilm URLs (#462). Thanks to @antonsoroko.
+ - Fixed nnmclub parsing (#475). Thanks to @antonsoroko.
+ - Fixed Tor and public DNS aliases, including Rutracker and Rustorka
+   (#469). Thanks to @antonsoroko.
+ - Added Antizapret proxy support (#472). Thanks to @antonsoroko.
+ - Fixed crash on Xbox when the custom DNS resolver is unavailable
+   (#473). Thanks to @antonsoroko.
+ - Custom tracker aliases now take precedence over built-in ones (#470).
+   Thanks to @antonsoroko.
+ - Updated Swedish translation (#474). Thanks to @nonew-star.
+
 [B]v0.0.93[/B] - 2025-04-02
  - Version 0.0.93
  - Fixed json
