@@ -283,9 +283,15 @@ class Client:
                     log.debug("Reading cookies error: %s" % repr(e))
 
     def cookie_exists(self, cookie_name, domain):
+        expired = False
         for cookie in self._cookies:
             if cookie.name == cookie_name and domain_matches(domain, cookie.domain):
+                if cookie.is_expired():
+                    expired = True
+                    continue
                 return True
+        if expired:
+            log.warning("Cookie %s for %s is expired, re-sync cookies to use them" % (cookie_name, domain))
         return False
 
     def add_cookie(self, cookie):

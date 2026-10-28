@@ -932,6 +932,9 @@ def cookie_fetch_file():
                         cookie["expirationDate"] = expires
                     else:
                         cookie["expirationDate"] = int(cookie["expirationDate"])
+                        if cookie["expirationDate"] <= time.time():
+                            log.debug("Skipping expired cookie %s for %s" % (cookie.get("name"), k))
+                            continue
                     cookie["rest"] = {'HttpOnly': cookie.get("httpOnly", False)}
 
                     cookies.append(cookie)
