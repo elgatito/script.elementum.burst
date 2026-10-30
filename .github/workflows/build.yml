@@ -25,6 +25,9 @@ jobs:
       - name: Lint
         run: python -m flake8
 
+      - name: Test
+        run: python -m pytest -q tests
+
       - name: Validate translations
         run: ./scripts/xgettext.sh
 

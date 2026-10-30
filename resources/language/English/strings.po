@@ -497,3 +497,7 @@ msgstr ""
 msgctxt "#32171"
 msgid "Use OpenNIC DNS servers"
 msgstr ""
+
+msgctxt "#32172"
+msgid "Season and episode"
+msgstr ""

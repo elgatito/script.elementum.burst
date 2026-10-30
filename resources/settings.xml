@@ -374,6 +374,7 @@
     <setting label="32090" id="require_keywords" type="bool" default="true" />
     <setting label="32091" id="require_release_type" type="bool" default="true" />
     <setting label="32092" id="require_size" type="bool" default="true" />
+    <setting label="32172" id="require_episode" type="bool" default="false" />
     <setting label="32078" id="allow_noseeds" type="bool" default="false" />
   </category>
 
