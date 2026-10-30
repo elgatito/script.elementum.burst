@@ -529,3 +529,7 @@ msgstr "Prioridad de idiomas"
 msgctxt "#32180"
 msgid "Kodi language"
 msgstr "Idioma de Kodi"
+
+msgctxt "#32181"
+msgid "Season and episode"
+msgstr ""
