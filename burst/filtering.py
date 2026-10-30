@@ -9,6 +9,7 @@ import hashlib
 import traceback
 from elementum.provider import log, get_setting
 from .normalize import normalize_string, remove_accents
+from .episodes import name_matches
 from .providers.definitions import definitions
 from .utils import Magnet, get_int, get_float, clean_number, size_int, get_alias, use_opennic_dns
 from collections import OrderedDict
@@ -18,6 +19,7 @@ use_additional_filters = get_setting('additional_filters', bool)
 use_require_keywords = get_setting('require_keywords', bool)
 use_require_release_type = get_setting('require_release_type', bool)
 use_require_size = get_setting('require_size', bool)
+use_require_episode = get_setting('require_episode', bool)
 use_accept = get_setting('accept', str).strip().lower()
 use_block = get_setting('block', str).strip().lower()
 use_require = get_setting('require', str).strip().lower()
@@ -49,6 +51,7 @@ class Filtering:
         extras (list): List of extras to be filtered
         queries_priorities (list): Priorities of the queries
         info (dict): Payload from Elementum
+        search_type (str): ``episode`` or ``season`` when results are checked for the searched season and episode
         kodi_language (str): Language code from Kodi if kodi_language setting is enabled
         language_exceptions (list): List of providers for which not to apply ``kodi_language`` setting
         url (str): URL of this filtering request
@@ -144,6 +147,7 @@ class Filtering:
         self.queries_priorities = []
 
         self.info = dict(title="", proxy_url="", internal_proxy_url="", elementum_url="", titles=[])
+        self.search_type = ''
         self.kodi_language = ''
         self.language_exceptions = []
         self.provider_languages = []
@@ -182,6 +186,7 @@ class Filtering:
             self.max_size = get_float(get_setting('max_size_%s' % sizes))
             self.check_sizes()
         self.info = payload
+        self.search_type = ''
         self.url = u"%s%s" % (definition['base_url'], query)
         return definition
 
@@ -196,10 +201,12 @@ class Filtering:
     def use_episode(self, provider, payload):
         """ Setup method to define episode search parameters """
         self.collect_queries('tv', self._setup(provider, payload, 'show_query', 'episodes'))
+        self.search_type = 'episode'
 
     def use_season(self, provider, payload):
         """ Setup method to define season search parameters """
         self.collect_queries('season', self._setup(provider, payload, 'season_query', 'seasons'))
+        self.search_type = 'season'
 
     def use_anime(self, provider, payload):
         """ Setup method to define anime search parameters """
@@ -523,7 +530,28 @@ class Filtering:
             self.reason += " Size out of range ({0})".format(size)
             return False
 
+        if self.search_type and use_require_episode and not self.season_episode_matches(name):
+            self.reason += " Other season or episode"
+            return False
+
         return True
+
+    def season_episode_matches(self, name):
+        """ Checks that a name is for the searched season, and in an episode search also for the episode (see ``episodes.name_matches``)
+
+        Args:
+            name (str): Torrent name
+
+        Returns:
+            bool: ``False`` if the name is for another season or episode, ``True`` otherwise or without a searched season
+        """
+        season = self.info.get('season')
+        if season is None or season == '':
+            return True
+        episode = self.info.get('episode') if self.search_type == 'episode' else None
+        if episode is None or episode == '':
+            return name_matches(name, get_int(season))
+        return name_matches(name, get_int(season), get_int(episode))
 
     def in_size_range(self, size):
         """ Compares size ranges

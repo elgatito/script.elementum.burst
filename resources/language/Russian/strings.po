@@ -497,3 +497,7 @@ msgstr "URL файла PAC Antizapret"
 msgctxt "#32171"
 msgid "Use OpenNIC DNS servers"
 msgstr "Использовать OpenNIC DNS сервера"
+
+msgctxt "#32172"
+msgid "Season and episode"
+msgstr ""
