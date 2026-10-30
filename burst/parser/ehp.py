@@ -11,13 +11,7 @@ documents as well as look for patterns.
 https://github.com/iogf/ehp
 """
 
-from future.utils import PY3
-
-if PY3:
-    from future.builtins import range as xrange
-    from html.parser import HTMLParser
-else:
-    from .HTMLParser import HTMLParser
+from html.parser import HTMLParser
 from collections import deque
 
 version = '1.3b'
@@ -1107,7 +1101,7 @@ class Tree(object):
             count = 0
 
         # It pops all the items which do not match with the closing tag.
-        for i in xrange(0, count):
+        for i in range(0, count):
             self.stack.pop()
 
 

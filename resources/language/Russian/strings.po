@@ -497,27 +497,3 @@ msgstr "URL файла PAC Antizapret"
 msgctxt "#32171"
 msgid "Use OpenNIC DNS servers"
 msgstr "Использовать OpenNIC DNS сервера"
-
-msgctxt "#32172"
-msgid "FlareSolverr (Cloudflare bypass)"
-msgstr "FlareSolverr (обход Cloudflare)"
-
-msgctxt "#32173"
-msgid "Use FlareSolverr to pass Cloudflare challenges"
-msgstr "Использовать FlareSolverr для обхода проверок Cloudflare"
-
-msgctxt "#32174"
-msgid "FlareSolverr URL"
-msgstr "URL FlareSolverr"
-
-msgctxt "#32175"
-msgid "FlareSolverr timeout (seconds)"
-msgstr "Таймаут FlareSolverr (секунды)"
-
-msgctxt "#32176"
-msgid "FlareSolverr must be reachable from Kodi and use the same public IP address"
-msgstr "FlareSolverr должен быть доступен из Kodi и иметь тот же публичный IP-адрес"
-
-msgctxt "#32177"
-msgid "Timeout for a single tracker request (seconds)"
-msgstr "Таймаут одного запроса к трекеру (секунды)"

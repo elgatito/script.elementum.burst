@@ -1,36 +1,21 @@
-# Kinozal behind Cloudflare: FlareSolverr and Jackett
+# Kinozal behind Cloudflare: Jackett as a custom provider
 
 Since Kinozal put a Cloudflare managed challenge in front of `browse.php` and
 `takelogin.php`, a plain HTTP client cannot log in any more: both paths answer
 `403` with `Cf-Mitigated: challenge` while the site root still answers `200`.
 
-There are two independent ways out, and they can be used together.
+The way out is to let something else deal with Cloudflare and hand Burst a
+plain JSON API.
 
-## 1. Native FlareSolverr support (fixes the built-in Kinozal provider)
+Burst itself deliberately carries no Cloudflare code. A solver only helps when
+it shares its public IP with Kodi, because Cloudflare issues `cf_clearance` for
+the pair (public IP, User-Agent) — a solver on a VPS hands Kodi a cookie that
+Cloudflare rejects at home. Running a browser next to Kodi on a TV box is not
+reasonable either. [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr)
+therefore belongs next to Jackett, wherever that runs, and Jackett is what talks
+to it.
 
-Burst detects the challenge and asks [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr)
-to pass it. FlareSolverr drives a real browser and returns the `cf_clearance`
-cookie plus the User-Agent it was issued for; Burst stores both and retries the
-request once.
-
-Start the solver (see `docker-compose.yml` next to this file), then in
-**Burst → General → FlareSolverr**:
-
-| Setting | Value |
-| --- | --- |
-| Use FlareSolverr to pass Cloudflare challenges | on |
-| FlareSolverr URL | `http://<solver-host>:8191/v1` |
-| FlareSolverr timeout | 60 |
-
-**The solver has to share its public IP with Kodi.** Cloudflare issues
-`cf_clearance` for the pair (public IP, User-Agent), so a solver running on a VPS
-hands Kodi a cookie that Cloudflare will reject at home. Run it on the same LAN,
-or route Burst through a proxy on the same host (Burst → Proxy).
-
-Nothing changes when the setting is off, and a solver that is unreachable or
-fails simply leaves the original response in place.
-
-## 2. Jackett as a custom provider
+## Jackett as a custom provider
 
 Jackett keeps the Cloudflare handling entirely on its own side: it talks to
 FlareSolverr itself, and Burst only sees a local JSON API. This also brings in

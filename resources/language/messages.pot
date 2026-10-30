@@ -498,27 +498,3 @@ msgstr ""
 msgctxt "#32171"
 msgid "Use OpenNIC DNS servers"
 msgstr ""
-
-msgctxt "#32172"
-msgid "FlareSolverr (Cloudflare bypass)"
-msgstr ""
-
-msgctxt "#32173"
-msgid "Use FlareSolverr to pass Cloudflare challenges"
-msgstr ""
-
-msgctxt "#32174"
-msgid "FlareSolverr URL"
-msgstr ""
-
-msgctxt "#32175"
-msgid "FlareSolverr timeout (seconds)"
-msgstr ""
-
-msgctxt "#32176"
-msgid "FlareSolverr must be reachable from Kodi and use the same public IP address"
-msgstr ""
-
-msgctxt "#32177"
-msgid "Timeout for a single tracker request (seconds)"
-msgstr ""

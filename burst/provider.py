@@ -4,24 +4,18 @@
 Provider thread methods
 """
 
-from future.utils import PY3, iteritems
-
 import os
 import re
 import json
 import time
 from .client import Client
-from elementum.provider import log, get_setting, set_setting
+from elementum.provider import log, get_setting
 from .filtering import cleanup_results
+from .normalize import normalize_string
 from .providers.definitions import definitions, longest
-from .utils import ADDON_PATH, get_int, clean_size, get_alias, with_defaults, notify, translation, get_icon_path
-from kodi_six import xbmc, xbmcaddon, py2_encode
-if PY3:
-    from urllib.parse import quote, unquote, urlparse
-    unicode = str
-else:
-    from urllib import quote, unquote
-    from urlparse import urlparse
+from .utils import ADDON_PATH, get_int, clean_size, get_alias, with_defaults, add_error, translation
+from urllib.parse import quote, unquote, urlparse
+import xbmc
 
 def generate_payload(provider, generator, filtering, verify_name=True, verify_size=True):
     """ Payload formatter to format results the way Elementum expects them
@@ -74,6 +68,7 @@ def generate_payload(provider, generator, filtering, verify_name=True, verify_si
             log.debug(filtering.reason)
 
     log.debug('[%s] >>>>>> %s would send %d torrents to Elementum <<<<<<<' % (provider, provider, len(results)))
+    # Also drops results without seeds, so fallback queries still run when there are no usable results
     results = cleanup_results(results)
     log.debug('[%s] >>>>>> %s would send %d torrents to Elementum after cleanup <<<<<<<' % (provider, provider, len(results)))
 
@@ -144,8 +139,8 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 query = quote(query.encode(definition['charset']))
                 extra = quote(extra.encode(definition['charset']))
             else:
-                query = quote(py2_encode(query))
-                extra = quote(py2_encode(extra))
+                query = quote(query)
+                extra = quote(extra)
         except Exception as e:
             log.debug("[%s] Could not quote the query (%s): %s" % (provider, query, e))
             pass
@@ -169,7 +164,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             filtering.post_data = eval(definition['post_data'])
 
         payload = dict()
-        for key, value in iteritems(filtering.post_data):
+        for key, value in filtering.post_data.items():
             payload[key] = filtering.post_data[key].replace('QUERY', query)
             payload[key] = payload[key].replace('EXTRA', extra)
             payload[key] = unquote(payload[key])
@@ -178,7 +173,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         data = None
         if filtering.get_data:
             data = dict()
-            for key, value in iteritems(filtering.get_data):
+            for key, value in filtering.get_data.items():
                 data[key] = filtering.get_data[key].replace('QUERY', query)
                 data[key] = data[key].replace('EXTRA', extra)
                 data[key] = unquote(data[key])
@@ -191,13 +186,13 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         # Set search's "title" in filtering to double-check results' names
         if 'filter_title' in definition and definition['filter_title']:
             filtering.filter_title = True
-            filtering.title = query
+            filtering.title = normalize_string(query)
 
         if 'initial_url' in definition and definition['initial_url']:
             url = definition['initial_url']
             if not url.startswith('http'):
                 url = definition['root_url'] + url
-            client.open(py2_encode(url))
+            client.open(url)
 
         if token:
             log.info('[%s] Reusing existing token' % provider)
@@ -205,7 +200,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         elif 'token' in definition:
             token_url = definition['base_url'] + definition['token']
             log.debug("[%s] Getting token for %s at %s" % (provider, provider, repr(token_url)))
-            client.open(py2_encode(token_url))
+            client.open(token_url)
             try:
                 token_data = json.loads(client.content)
             except:
@@ -224,22 +219,9 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
         elif token_auth:
             log.info("[%s] Reusing previous token authorization" % provider)
         elif 'private' in definition and definition['private']:
-            username = get_setting('%s_username' % provider, unicode)
-            password = get_setting('%s_password' % provider, unicode)
-            passkey = get_setting('%s_passkey' % provider, unicode)
-            if not username and not password and not passkey:
-                for addon_name in ('script.magnetic.%s' % provider, 'script.magnetic.%s-mc' % provider):
-                    for setting in ('username', 'password'):
-                        try:
-                            value = xbmcaddon.Addon(addon_name).getSetting(setting)
-                            set_setting('%s_%s' % (provider, setting), value)
-                            if setting == 'username':
-                                username = value
-                            if setting == 'password':
-                                password = value
-                        except:
-                            pass
-
+            username = get_setting('%s_username' % provider, str)
+            password = get_setting('%s_password' % provider, str)
+            passkey = get_setting('%s_passkey' % provider, str)
             if username:
                 client.username = username
                 url_search = url_search.replace('USERNAME', username)
@@ -254,7 +236,8 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 logged_in = skip_auth
 
                 try:
-                    login_object = definition['login_object'].replace('USERNAME', 'u"%s"' % username).replace('PASSWORD', 'u"%s"' % password)
+                    # repr() gives a valid literal for eval() even with quotes or backslashes in credentials
+                    login_object = definition['login_object'].replace('USERNAME', repr(username)).replace('PASSWORD', repr(password))
                 except Exception as e:
                     log.error("Could not make login object for %s: %s" % (provider, e))
                 try:
@@ -265,7 +248,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
                 # TODO generic flags in definitions for those...
                 if 'csrf_token' in definition and definition['csrf_token']:
-                    client.open(py2_encode(definition['root_url'] + definition['login_path']))
+                    client.open(definition['root_url'] + definition['login_path'])
                     if client.content:
                         csrf_token = re.search(r'name=\"_?csrf_token\" value=\"(.*?)\"', client.content)
                         if csrf_token:
@@ -282,7 +265,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
 
                 if 'token_auth' in definition:  # token_auth login currently unused by any tracker
                     # log.debug("[%s] logging in with: %s" % (provider, login_object))
-                    if client.open(py2_encode(definition['root_url'] + definition['token_auth']), post_data=eval(login_object)):
+                    if client.open(definition['root_url'] + definition['token_auth'], post_data=eval(login_object)):
                         try:
                             token_data = json.loads(client.content)
                         except:
@@ -308,17 +291,17 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                 elif not logged_in:
                     log.error("[%s] Login failed: %s", provider, client.status)
                     log.debug("[%s] Failed login content: %s", provider, repr(client.content))
-                    notify(translation(32169).format(provider), image=get_icon_path())
+                    add_error(translation(32169).format(provider))
                     return filtering.results
 
                 if logged_in:
                     if provider == 'lostfilm':
                         log.info('[%s] Search lostfilm ID...', provider)
-                        client.open(py2_encode(url_search), post_data=payload, get_data=data)
+                        client.open(url_search, post_data=payload, get_data=data)
                         series_details = re.search(r'PlayEpisode\(\'(\d+)\'\)">', client.content)
                         if series_details:
                             url_search = definition['root_url'] + '/v_search.php?a=%s' % series_details.group(1)
-                            client.open(py2_encode(url_search))
+                            client.open(url_search)
                             redirect_url = re.search(r'url=(.*?)">', client.content)
                             if redirect_url is not None:
                                 url_search = redirect_url.group(1)
@@ -328,7 +311,7 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
                             log.info('[%s] Have not found lostfilm ID in %s' % (provider, url_search))
                             return filtering.results
                     if provider == 'hd-torrents':
-                        client.open(py2_encode(definition['root_url'] + '/torrents.php'))
+                        client.open(definition['root_url'] + '/torrents.php')
                         csrf_token = re.search(r'name="csrfToken" value="(.*?)"', client.content)
                         if csrf_token:
                             url_search = url_search.replace("CSRF_TOKEN", csrf_token.group(1))
@@ -341,12 +324,12 @@ def process(provider, generator, filtering, has_special, verify_name=True, verif
             headers = eval(definition['headers'])
             log.info("[%s] >  %s headers: %s" % (provider, definition['name'].rjust(longest), headers))
 
-        client.open(py2_encode(url_search), post_data=payload, get_data=data, headers=headers)
+        client.open(url_search, post_data=payload, get_data=data, headers=headers)
         if client.use_cookie_sync and 'login_failed' in definition and definition['login_failed'] and re.search(definition['login_failed'], client.content):
             client.status = 403
             if not is_silent:
                 log.error("[%s] > Could not authorize provider using cookie sync" % (provider))
-                notify(translation(32168) % (definition['name']), image=get_icon_path())
+                add_error(translation(32168) % (definition['name']))
 
         try:
             filtering.results.extend(

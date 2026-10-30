@@ -6,18 +6,11 @@
     List is checked through providers.json and inserting only providers with enabled:true,
     while default providers should have predefined:true.
 """
-from future.utils import PY3
-
 import os
 import re
 import json
 import traceback
 
-if PY3:
-    from future.builtins import range as xrange
-
-from future.utils import iteritems
-from io import open
 
 mandatory_fields = {'name': '', 'predefined': False, 'enabled': False, 'private': False, 'id': '', 'languages': ''}
 public = []
@@ -42,13 +35,11 @@ languages = {
 
 def char_range(c1, c2):
     """Generates the characters from `c1` to `c2`, inclusive."""
-    for c in xrange(ord(c1), ord(c2)+1):
+    for c in range(ord(c1), ord(c2)+1):
         yield chr(c)
 
 def cleanup_settings(path):
     global settings
-    global public
-    global private
 
     print("Cleaning settings at %s" % (path))
     try:
@@ -63,10 +54,6 @@ def cleanup_settings(path):
 
 
 def load_providers(path):
-    global settings
-    global public
-    global private
-
     print("Loading providers from %s" % (path))
     try:
         with open(path, encoding='utf-8') as file:
@@ -75,7 +62,7 @@ def load_providers(path):
         # Setting default values for each provider
         # to avoid missing dict items
         for provider in providers:
-            for k, v in iteritems(mandatory_fields):
+            for k, v in mandatory_fields.items():
                 if k not in providers[provider]:
                     providers[provider][k] = v
 
@@ -99,8 +86,6 @@ def load_providers(path):
 
 def store_providers(path):
     global settings
-    global public
-    global private
 
     public1_string = ""
     private1_string = ""

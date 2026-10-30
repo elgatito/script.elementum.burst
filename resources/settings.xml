@@ -26,17 +26,10 @@
     <setting label="32124" id="auto_timeout" type="bool" default="true" />
     <setting label="32070" id="timeout" type="slider" default="25" option="int" range="3,1,180" enable="eq(-1,false)" />
     <setting label="32071" id="timeout_help" type="text" enable="false" subsetting="true" />
-      <setting label="32177" id="request_timeout" type="slider" default="15" option="int" range="5,1,120" />
 
     <setting label="32163" type="lsep" />
     <setting label="32164" id="use_custom_user_agent" type="bool" default="false" />
       <setting id="custom_user_agent" label="32165" type="text" default="" enable="eq(-1,true)" />
-
-    <setting label="32172" type="lsep" />
-    <setting label="32173" id="flaresolverr_enabled" type="bool" default="false" />
-      <setting id="flaresolverr_url" label="32174" type="text" default="http://127.0.0.1:8191/v1" enable="eq(-1,true)" />
-      <setting id="flaresolverr_timeout" label="32175" type="slider" option="int" range="15,5,180" default="60" enable="eq(-2,true)" />
-      <setting id="flaresolverr_help" label="32176" type="text" enable="false" subsetting="true" />
   </category>
 
 <!-- Cookie Sync -->

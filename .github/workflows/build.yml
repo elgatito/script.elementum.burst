@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Makefile calls `git describe --tags`
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y gettext
+          pip install -r requirements.txt
+
+      - name: Lint
+        run: python -m flake8
+
+      - name: Validate translations
+        run: ./scripts/xgettext.sh
+
+      - name: Build zip
+        run: |
+          make
+          zip=$(ls script.elementum.burst-*.zip)
+          echo "name=${zip%.zip}" >> "$GITHUB_ENV"
+          # GitHub always zips artifacts, so upload the extracted folder to get a Kodi-installable zip, not a zip in a zip
+          mkdir dist && unzip -q "$zip" -d dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.name }}
+          path: dist/

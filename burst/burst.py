@@ -4,32 +4,20 @@
 Burst processing thread
 """
 
-from __future__ import unicode_literals
-from future.utils import PY3, iteritems
-
 import re
 import json
 import time
 import requests
-import datetime
-from threading import Thread
+import traceback
+from binascii import unhexlify
+from threading import BoundedSemaphore, Event, Lock, Thread
 from elementum.provider import append_headers, get_setting, set_setting, log
-
-if PY3:
-    from queue import Queue
-    from urllib.parse import urlparse
-    from urllib.parse import unquote
-
-    basestring = str
-    long = int
-    unicode = str
-else:
-    from Queue import Queue
-    from urlparse import urlparse
-    from urllib import unquote
+from queue import Queue
+from urllib.parse import urlparse, unquote
 
 from .parser.ehp import Html
-from kodi_six import xbmc, xbmcgui, xbmcaddon, py2_encode
+import xbmc
+import xbmcgui
 
 try:
     from Cryptodome.Cipher import AES
@@ -41,17 +29,19 @@ except:
 from .provider import process
 from .providers.definitions import definitions, longest
 from .filtering import apply_filters, Filtering, cleanup_results
-from .client import USER_AGENT, Client, change_agent
-from .utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias, size_int
-
-# How many sub-pages of one provider are resolved at the same time.
-SUBPAGE_CONCURRENCY = 10
+from .client import Client, change_agent, elementum_addon
+from .utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias, size_int, domain_matches, clear_errors, get_errors
 
 provider_names = []
 provider_results = []
 provider_cache = {}
 available_providers = 0
 request_time = time.time()
+results_lock = Lock()
+providers_done = Event()
+parser_code = {}
+# Concurrent subpage requests per provider, more only gets us rate limited
+SUBPAGE_THREADS = 10
 
 use_kodi_language = get_setting('kodi_language', bool)
 auto_timeout = get_setting("auto_timeout", bool)
@@ -61,22 +51,23 @@ max_results = get_setting('max_results', int)
 sort_by = get_setting('sort_by', int)
 
 cookie_sync_enabled = get_setting("cookie_sync_enabled", bool)
-cookie_sync_token = get_setting("cookie_sync_token", unicode)
-cookie_sync_password = get_setting("cookie_sync_password", unicode)
-cookie_sync_gist_id = get_setting("cookie_sync_gist_id", unicode)
-cookie_sync_filename = get_setting("cookie_sync_filename", unicode)
-cookie_sync_fileurl = get_setting("cookie_sync_fileurl", unicode)
+cookie_sync_token = get_setting("cookie_sync_token", str)
+cookie_sync_password = get_setting("cookie_sync_password", str)
+cookie_sync_gist_id = get_setting("cookie_sync_gist_id", str)
+cookie_sync_filename = get_setting("cookie_sync_filename", str)
+cookie_sync_fileurl = get_setting("cookie_sync_fileurl", str)
+# Gist file content, if it came inline with the gist info, saves a request for the file itself
+cookie_sync_content = None
 
 special_chars = "()\"':.[]<>/\\?"
-elementum_timeout = 0
 
-elementum_addon = xbmcaddon.Addon(id='plugin.video.elementum')
-if elementum_addon:
-    if elementum_addon.getSetting('custom_provider_timeout_enabled') == "true":
+elementum_timeout = 30
+if elementum_addon.getSetting('custom_provider_timeout_enabled') == "true":
+    try:
         elementum_timeout = int(elementum_addon.getSetting('custom_provider_timeout'))
-    else:
-        elementum_timeout = 30
-    log.info("Using timeout from Elementum: %d seconds" % (elementum_timeout))
+    except ValueError:
+        log.warning("Invalid custom provider timeout in Elementum, using %d seconds" % elementum_timeout)
+log.info("Using timeout from Elementum: %d seconds" % (elementum_timeout))
 
 # Elementum starts its clock when it calls the addon, and by the time this module
 # is running, Kodi has already spent seconds starting the interpreter. Leave room
@@ -90,6 +81,9 @@ if auto_timeout:
 elif elementum_timeout > 0 and timeout > elementum_timeout - ELEMENTUM_MARGIN:
     log.info("Redefining timeout to be less than Elementum's: %d to %d seconds" % (timeout, elementum_timeout - ELEMENTUM_MARGIN))
     timeout = elementum_timeout - ELEMENTUM_MARGIN
+
+# Time when results are not needed anymore, set again for each search()
+search_deadline = time.time() + timeout
 
 def search(payload, method="general"):
     """ Main search entrypoint
@@ -107,7 +101,7 @@ def search(payload, method="general"):
         method = 'anime'
 
     if method == 'general':
-        if 'query' in payload:
+        if isinstance(payload, dict) and 'query' in payload:
             payload['title'] = payload['query']
             payload['titles'] = {
                 'source': payload['query'],
@@ -122,7 +116,7 @@ def search(payload, method="general"):
                 },
             }
 
-    payload['titles'] = dict((k.lower(), v) for k, v in iteritems(payload['titles']))
+    payload['titles'] = dict((k.lower(), v) for k, v in payload['titles'].items())
 
     # If titles[] exists in payload and there are special chars in titles[source]
     #   then we set a flag to possibly modify the search query
@@ -147,6 +141,7 @@ def search(payload, method="general"):
         payload['skip_auth'] = False
 
     global request_time
+    global search_deadline
     global provider_cache
     global provider_names
     global provider_results
@@ -157,6 +152,8 @@ def search(payload, method="general"):
     provider_results = []
     available_providers = 0
     request_time = time.time()
+    providers_done.clear()
+    clear_errors()
 
     cookie_sync(payload['silent'])
     providers = get_enabled_providers(method)
@@ -179,34 +176,61 @@ def search(payload, method="general"):
             log.info("No '%s' translation available..." % kodi_language)
 
     p_dialog = xbmcgui.DialogProgressBG()
+    # Separate progress handle, Kodi rotates it with the search progress so errors show up while searching
+    error_dialog = None
+    error_message = None
     if not payload['silent']:
         p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', translation(32061))
 
     if 'titles' in payload:
         log.debug("Translated titles from Elementum: %s" % (repr(payload['titles'])))
 
+    # Counted from the start of the request rather than from this point: whatever
+    # the setup above took is already gone from Elementum's own budget, and it is
+    # Elementum that stops listening.
+    providers_time = request_time
+    search_deadline = providers_time + timeout
+
+    # Count all providers before starting any, so an early finished one can't bring the counter to zero
+    available_providers = len(providers)
+    provider_names = [definitions[provider]['name'] for provider in providers]
     for provider in providers:
-        available_providers += 1
-        provider_names.append(definitions[provider]['name'])
-        task = Thread(target=run_provider, args=(provider, payload, method, request_time, timeout))
+        task = Thread(target=run_provider, args=(provider, payload, method, providers_time, timeout))
         task.start()
 
     total = float(available_providers)
 
     # Exit if all providers have returned results or timeout reached, check every 100ms
-    while time.time() - request_time < timeout and available_providers > 0:
-        timer = time.time() - request_time
+    while time.time() - providers_time < timeout and available_providers > 0:
+        timer = time.time() - providers_time
         log.debug("Timer: %ds / %ds" % (timer, timeout))
         if timer > timeout:
             break
         message = translation(32062) % available_providers if available_providers > 1 else translation(32063)
         if not payload['silent']:
             p_dialog.update(int((total - available_providers) / total * 100), message=message)
-        time.sleep(0.25)
+            errors = get_errors()
+            if errors:
+                message = ' | '.join(errors)
+                if error_dialog is None:
+                    error_dialog = xbmcgui.DialogProgressBG()
+                    error_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR] errors', message)
+                elif message != error_message:
+                    error_dialog.update(-1, message=message)
+                error_message = message
+        providers_done.wait(0.25)
 
     if not payload['silent']:
         p_dialog.close()
     del p_dialog
+
+    errors = get_errors()
+    if error_dialog is not None:
+        error_dialog.close()
+    del error_dialog
+
+    if errors and not payload['silent']:
+        notify("\n".join(errors), ADDON_ICON, time=10000)
 
     if available_providers > 0:
         message = ', '.join(provider_names)
@@ -233,8 +257,6 @@ def got_results(provider, results):
         provider (str): The provider ID
         results (list): The list of results
     """
-    global provider_names
-    global provider_results
     global available_providers
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
@@ -261,10 +283,13 @@ def got_results(provider, results):
         provider, definition['name'].rjust(longest), len(results), round(time.time() - request_time, 2),
         (", sending %d best ones" % max_results) if len(results) > max_results else ""))
 
-    provider_results.extend(sorted_results)
-    available_providers -= 1
-    if definition['name'] in provider_names:
-        provider_names.remove(definition['name'])
+    with results_lock:
+        provider_results.extend(sorted_results)
+        available_providers -= 1
+        if definition['name'] in provider_names:
+            provider_names.remove(definition['name'])
+        if available_providers <= 0:
+            providers_done.set()
 
 
 def extract_torrents(provider, client):
@@ -285,7 +310,7 @@ def extract_torrents(provider, client):
         if debug_parser:
             log.debug("[%s] Parser debug | Page content is empty" % provider)
 
-        raise StopIteration
+        return
 
     dom = Html().feed(client.content)
 
@@ -307,13 +332,14 @@ def extract_torrents(provider, client):
     needs_subpage = 'subpage' in definition and definition['subpage']
 
     if needs_subpage:
+        subpage_slots = BoundedSemaphore(SUBPAGE_THREADS)
+
         def extract_subpage(q, name, torrent, size, seeds, peers, info_hash, referer):
             try:
                 log.debug("[%s] Getting subpage at %s" % (provider, repr(torrent)))
             except Exception as e:
-                import traceback
                 log.error("[%s] Subpage logging failed with: %s" % (provider, repr(e)))
-                map(log.debug, traceback.format_exc().split("\n"))
+                log.debug(traceback.format_exc())
 
             # New client instance, otherwise it's race conditions all over the place
             subclient = Client()
@@ -329,7 +355,11 @@ def extract_torrents(provider, client):
                 headers['Referer'] = referer
 
             uri = torrent.split('|')  # Split cookies for private trackers
-            subclient.open(py2_encode(uri[0]), headers=headers)
+            with subpage_slots:
+                # Subpages still waiting for a slot when search is over would be thrown away anyway
+                if time.time() >= search_deadline:
+                    return
+                subclient.open(uri[0], headers=headers)
 
             if 'bittorrent' in subclient.headers.get('content-type', ''):
                 log.debug('[%s] bittorrent content-type for %s' % (provider, repr(torrent)))
@@ -341,9 +371,8 @@ def extract_torrents(provider, client):
                     if torrent and not torrent.startswith('magnet') and len(uri) > 1:  # Stick back cookies if needed
                         torrent = '%s|%s' % (torrent, uri[1])
                 except Exception as e:
-                    import traceback
                     log.error("[%s] Subpage extraction for %s failed with: %s" % (provider, repr(uri[0]), repr(e)))
-                    map(log.debug, traceback.format_exc().split("\n"))
+                    log.debug(traceback.format_exc())
 
             log.debug("[%s] Subpage torrent for %s: %s" % (provider, repr(uri[0]), torrent))
             ret = (name, info_hash, torrent, size, seeds, peers)
@@ -356,7 +385,7 @@ def extract_torrents(provider, client):
         if debug_parser:
             log.debug("[%s] Parser debug | Could not parse DOM from page content" % provider)
 
-        raise StopIteration
+        return
 
     if debug_parser:
         log.debug("[%s] Parser debug | Page content: %s" % (provider, client.content.replace('\r', '').replace('\n', '')))
@@ -379,14 +408,14 @@ def extract_torrents(provider, client):
             continue
 
         try:
-            name = eval(name_search) if name_search else ""
-            description = eval(description_search) if description_search else ""
-            torrent = eval(torrent_search) if torrent_search else ""
-            size = eval(size_search) if size_search else ""
-            seeds = eval(seeds_search) if seeds_search else ""
-            peers = eval(peers_search) if peers_search else ""
-            info_hash = eval(info_hash_search) if info_hash_search else ""
-            referer = eval(referer_search) if referer_search else ""
+            name = eval(compiled(name_search)) if name_search else ""
+            description = eval(compiled(description_search)) if description_search else ""
+            torrent = eval(compiled(torrent_search)) if torrent_search else ""
+            size = eval(compiled(size_search)) if size_search else ""
+            seeds = eval(compiled(seeds_search)) if seeds_search else ""
+            peers = eval(compiled(peers_search)) if peers_search else ""
+            info_hash = eval(compiled(info_hash_search)) if info_hash_search else ""
+            referer = eval(compiled(referer_search)) if referer_search else ""
 
             if 'magnet:?' in torrent:
                 torrent = torrent[torrent.find('magnet:?'):]
@@ -408,10 +437,10 @@ def extract_torrents(provider, client):
 
             # Pass client cookies with torrent if private
             if not torrent.startswith('magnet'):
-                user_agent = USER_AGENT
+                user_agent = client.user_agent
 
                 if not torrent.startswith('http'):
-                    torrent = definition['root_url'] + py2_encode(torrent)
+                    torrent = definition['root_url'] + torrent
 
                 if client.passkey:
                     torrent = torrent.replace('PASSKEY', client.passkey)
@@ -422,25 +451,24 @@ def extract_torrents(provider, client):
                     log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
                 else:
                     parsed_url = urlparse(torrent.split('|')[0])
-                    cookie_domain = '{uri.netloc}'.format(uri=parsed_url)
-                    cookie_domain = re.sub(r'www\d*\.', '', cookie_domain)
+                    cookie_domain = re.sub(r'^www\d*\.', '', parsed_url.hostname or '')
                     cookies = {}
 
                     # Collect cookies used in request
                     if client.request_cookies:
-                        for item in client.request_cookies.split(';'):
-                            item = item.strip()
-                            if not item:
+                        for pair in client.request_cookies.split(';'):
+                            pair = pair.strip()
+                            if not pair:
                                 continue
-                            if '=' not in item:
-                                cookies[item] = None
+                            if '=' not in pair:
+                                cookies[pair] = None
                                 continue
-                            k, v = item.split('=', 1)
+                            k, v = pair.split('=', 1)
                             cookies[k] = v
 
                     # Collect session cookies for current domain
                     for cookie in client._cookies:
-                        if cookie.domain in cookie_domain:
+                        if domain_matches(cookie_domain, cookie.domain):
                             cookies[cookie.name] = cookie.value
 
                     headers = {'User-Agent': user_agent}
@@ -453,13 +481,13 @@ def extract_torrents(provider, client):
 
                     if cookies:
                         # Need to set Cookie afterwards to avoid rewriting it with session Cookies
-                        headers['Cookie'] = ";".join(["%s=%s" % (k, v) for (k, v) in iteritems(cookies)])
+                        headers['Cookie'] = ";".join(["%s=%s" % (k, v) for (k, v) in cookies.items()])
 
                     torrent = append_headers(torrent, headers)
 
             if name and torrent and needs_subpage and not torrent.startswith('magnet'):
                 if not torrent.startswith('http'):
-                    torrent = definition['root_url'] + py2_encode(torrent)
+                    torrent = definition['root_url'] + torrent
                 # Check if this url was previously requested, to avoid doing same job again.
                 uri = torrent.split('|')
                 if uri and uri[0] and uri[0] in provider_cache and provider_cache[uri[0]]:
@@ -478,7 +506,7 @@ def extract_torrents(provider, client):
         for t in threads:
             t.start()
         for t in threads:
-            t.join()
+            t.join(max(0, search_deadline - time.time()))
 
         for i in range(q.qsize()):
             ret = q.get_nowait()
@@ -509,6 +537,54 @@ def extract_from_api(provider, client):
     definition = definitions[provider]
     definition = get_alias(definition, get_setting("%s_alias" % provider))
     api_format = definition['api_format']
+
+    q = Queue()
+    threads = []
+    # Some APIs only hand out a link to a page carrying the real torrent or magnet,
+    # the way HTML providers do. Jackett is one: its /dl/ link redirects to a magnet.
+    needs_subpage = 'subpage' in definition and definition['subpage']
+
+    if needs_subpage:
+        subpage_slots = BoundedSemaphore(SUBPAGE_THREADS)
+
+        def resolve_subpage(q, name, info_hash, torrent, size, seeds, peers):
+            resolved = torrent
+            try:
+                # New client instance, otherwise it's race conditions all over the place
+                subclient = Client()
+                subclient.passkey = client.passkey
+                headers = {}
+
+                if "subpage_mode" in definition:
+                    if definition["subpage_mode"] == "xhr":
+                        headers['X-Requested-With'] = 'XMLHttpRequest'
+                        headers['Content-Language'] = ''
+
+                with subpage_slots:
+                    # Subpages still waiting for a slot when search is over would be thrown away anyway
+                    if time.time() >= search_deadline:
+                        return
+                    # Redirects are followed by hand: the target is often a magnet:
+                    # link, and no HTTP adapter can fetch one of those.
+                    subclient.open(torrent, headers=headers, allow_redirects=False)
+
+                location = subclient.headers.get('location', '')
+                if location.startswith('magnet:'):
+                    resolved = location
+                elif location.startswith('http'):
+                    subclient.open(location, headers=headers)
+                    resolved = location
+
+                if resolved == torrent and 'bittorrent' not in subclient.headers.get('content-type', ''):
+                    found = extract_from_page(provider, subclient.content)
+                    if found:
+                        resolved = found
+            except Exception as e:
+                log.error("[%s] Subpage resolve for %s failed with: %s" % (provider, repr(torrent), repr(e)))
+                log.debug(traceback.format_exc())
+
+            provider_cache[torrent] = resolved
+            q.put_nowait((name, info_hash, resolved, size, seeds, peers))
 
     def get_nested_value(result, key, default):
         keys = key.split('.')
@@ -547,47 +623,6 @@ def extract_from_api(provider, client):
         results = subresults
         log.debug("[%s] with subresults: %s" % (provider, repr(results)))
 
-    # Some APIs only hand out a link to a page that carries the real torrent or
-    # magnet, the way HTML providers do. Resolving those is what keeps a tracker
-    # with a daily .torrent quota from spending it on every single result.
-    needs_subpage = 'subpage' in definition and definition['subpage']
-    threads = []
-    q = Queue()
-
-    def resolve_subpage(name, info_hash, torrent, size, seeds, peers):
-        resolved = torrent
-        try:
-            # A separate client, otherwise it is race conditions all over the place.
-            subclient = Client()
-            subclient.passkey = client.passkey
-
-            headers = {}
-            if 'subpage_mode' in definition and definition['subpage_mode'] == 'xhr':
-                headers['X-Requested-With'] = 'XMLHttpRequest'
-                headers['Content-Language'] = ''
-
-            # Redirects are followed by hand: the target is often a magnet: link,
-            # and letting requests prepare a redirect to it blows up while it
-            # rebuilds proxies, because such a URL has no hostname.
-            subclient.open(py2_encode(torrent), headers=headers, allow_redirects=False)
-
-            location = subclient.headers.get('location', '')
-            if location.startswith('magnet:'):
-                resolved = location
-            elif location.startswith('http'):
-                subclient.open(py2_encode(location), headers=headers)
-                resolved = location
-
-            if resolved == torrent and 'bittorrent' not in subclient.headers.get('content-type', ''):
-                found = extract_from_page(provider, subclient.content)
-                if found:
-                    resolved = found
-        except Exception as e:
-            log.error("[%s] Subpage resolve for %s failed with: %s" % (provider, repr(torrent), repr(e)))
-
-        provider_cache[torrent] = resolved
-        q.put_nowait((name, info_hash, resolved, size, seeds, peers))
-
     for result in results:
         if not result or not isinstance(result, dict):
             continue
@@ -599,9 +634,11 @@ def extract_from_api(provider, client):
         peers = ''
 
         if provider == 'torrentio':
-            title = result['title'].encode('unicode-escape').decode('utf-8')
-            seeds = re.findall(r"\\U0001f464\s\d+", title)[0].split(' ')[1]
-            size = re.findall("\\b(\\d+(?:\\.\\d+)? [MG]B)\\b", title)[0]
+            title = result.get('title', '').encode('unicode-escape').decode('utf-8')
+            match = re.search(r"\\U0001f464\s(\d+)", title)
+            seeds = match.group(1) if match else ''
+            match = re.search("\\b(\\d+(?:\\.\\d+)? [MG]B)\\b", title)
+            size = match.group(1) if match else ''
 
         if 'name' in api_format:
             name = get_nested_value(result, api_format['name'], "").replace('\n', ' ').replace('\r', '')
@@ -610,55 +647,51 @@ def extract_from_api(provider, client):
                 name += ' '
             name += get_nested_value(result, api_format['description'], "")
         if 'torrent' in api_format:
-            torrent = result[api_format['torrent']] or ''
-            if 'download_path' in definition:
+            torrent = result.get(api_format['torrent']) or ''
+            if 'download_path' in definition and torrent:
                 torrent = definition['download_path'] + torrent
             if client.token:
-                user_agent = USER_AGENT
-                headers = {'Authorization': client.token, 'User-Agent': user_agent}
+                headers = {'Authorization': client.token, 'User-Agent': client.user_agent}
                 log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
                 torrent = append_headers(torrent, headers)
                 log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
         if 'info_hash' in api_format:
-            # APIs report a missing hash as null, keep the empty-string contract.
-            info_hash = result[api_format['info_hash']] or ''
+            info_hash = result.get(api_format['info_hash']) or ''
         if 'quality' in api_format:  # Again quite specific to YTS and AniLibria
             name = "%s - %s" % (name, get_nested_value(result, api_format['quality'], ""))
         if 'size' in api_format:
-            size = result[api_format['size']]
-            if isinstance(size, (long, int)):
+            size = result.get(api_format['size'])
+            if isinstance(size, int):
                 size = sizeof(size)
-            elif isinstance(size, basestring) and size.isdigit():
+            elif isinstance(size, str) and size.isdigit():
                 size = sizeof(int(size))
         if 'seeds' in api_format:
-            seeds = result[api_format['seeds']]
-            if isinstance(seeds, basestring) and seeds.isdigit():
+            seeds = result.get(api_format['seeds'])
+            if isinstance(seeds, str) and seeds.isdigit():
                 seeds = int(seeds)
         if 'peers' in api_format:
-            peers = result[api_format['peers']]
-            if isinstance(peers, basestring) and peers.isdigit():
+            peers = result.get(api_format['peers'])
+            if isinstance(peers, str) and peers.isdigit():
                 peers = int(peers)
 
         if needs_subpage and torrent and not torrent.startswith('magnet'):
-            # Already resolved during an earlier query of this search?
+            # Check if this url was previously requested, to avoid doing same job again.
             if torrent in provider_cache and provider_cache[torrent]:
                 yield (name, info_hash, provider_cache[torrent], size, seeds, peers)
                 continue
 
             threads.append(Thread(target=resolve_subpage,
-                                  args=(name, info_hash, torrent, size, seeds, peers)))
+                                  args=(q, name, info_hash, torrent, size, seeds, peers)))
             continue
 
         yield (name, info_hash, torrent, size, seeds, peers)
 
     if needs_subpage:
-        log.debug("[%s] Resolving %d subpages, %d at a time..." % (provider, len(threads), SUBPAGE_CONCURRENCY))
-        for batch in range(0, len(threads), SUBPAGE_CONCURRENCY):
-            chunk = threads[batch:batch + SUBPAGE_CONCURRENCY]
-            for t in chunk:
-                t.start()
-            for t in chunk:
-                t.join()
+        log.debug("[%s] Starting %d subpage threads..." % (provider, len(threads)))
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join(max(0, search_deadline - time.time()))
 
         for i in range(q.qsize()):
             yield q.get_nowait()
@@ -762,32 +795,46 @@ def run_provider(provider, payload, method, start_time, timeout):
         start_time (int): Time when search has been started
         timeout    (int): Time limit for searching
     """
-    log.debug("[%s] Processing %s with %s method" % (provider, provider, method))
+    results = []
+    try:
+        log.debug("[%s] Processing %s with %s method" % (provider, provider, method))
 
-    filterInstance = Filtering()
+        filterInstance = Filtering()
 
-    # collect languages, defined for this provider
-    filterInstance.define_languages(provider)
+        # collect languages, defined for this provider
+        filterInstance.define_languages(provider)
 
-    if method == 'movie':
-        filterInstance.use_movie(provider, payload)
-    elif method == 'season':
-        filterInstance.use_season(provider, payload)
-    elif method == 'episode':
-        filterInstance.use_episode(provider, payload)
-    elif method == 'anime':
-        filterInstance.use_anime(provider, payload)
-    else:
-        filterInstance.use_general(provider, payload)
+        if method == 'movie':
+            filterInstance.use_movie(provider, payload)
+        elif method == 'season':
+            filterInstance.use_season(provider, payload)
+        elif method == 'episode':
+            filterInstance.use_episode(provider, payload)
+        elif method == 'anime':
+            filterInstance.use_anime(provider, payload)
+        else:
+            filterInstance.use_general(provider, payload)
 
-    if 'is_api' in definitions[provider]:
-        results = process(provider=provider, generator=extract_from_api, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'], start_time=start_time, timeout=timeout, is_silent=payload['silent'])
-    else:
-        results = process(provider=provider, generator=extract_torrents, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'], start_time=start_time, timeout=timeout, is_silent=payload['silent'])
+        if 'is_api' in definitions[provider]:
+            results = process(provider=provider, generator=extract_from_api, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'], start_time=start_time, timeout=timeout, is_silent=payload['silent'])
+        else:
+            results = process(provider=provider, generator=extract_torrents, filtering=filterInstance, has_special=payload['has_special'], skip_auth=payload['skip_auth'], start_time=start_time, timeout=timeout, is_silent=payload['silent'])
 
-    # Cleanup results from duplcates before limiting each provider's results.
-    results = cleanup_results(results)
-    got_results(provider, results)
+        # Cleanup results from duplcates before limiting each provider's results.
+        results = cleanup_results(results)
+    except Exception as e:
+        log.error("[%s] Provider failed with: %s" % (provider, repr(e)))
+        log.debug(traceback.format_exc())
+    finally:
+        # Always report back, otherwise search() waits for the full timeout
+        got_results(provider, results)
+
+def compiled(expression):
+    """ Compiles parser expression once, eval() of a string compiles it again on every call """
+    code = parser_code.get(expression)
+    if code is None:
+        code = parser_code[expression] = compile(expression, '<parser>', 'eval')
+    return code
 
 def get_search_query(definition, key):
     if 'parser' not in definition or key not in definition['parser']:
@@ -813,7 +860,6 @@ def cookie_sync(is_silent):
     if not is_silent:
         p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', translation(32166))
 
-    global cookie_sync_gist_id
     # Try to get url to a Gist's file first, if we have Gist ID
     if not cookie_sync_gist_id or not cookie_fetch_fileurl():
         # Try to get both Gist ID and Gist's file url
@@ -828,12 +874,12 @@ def cookie_sync(is_silent):
 
             return
 
-    set_setting('cookie_sync_gist_id', cookie_sync_gist_id)
-    set_setting('cookie_sync_fileurl', cookie_sync_fileurl)
+    set_setting_if_changed('cookie_sync_gist_id', cookie_sync_gist_id)
+    set_setting_if_changed('cookie_sync_fileurl', cookie_sync_fileurl)
 
     userAgent, cookies = cookie_fetch_file()
     if userAgent:
-        set_setting('cookie_sync_useragent', userAgent)
+        set_setting_if_changed('cookie_sync_useragent', userAgent)
         log.debug("Persisted user-agent for cookie-sync: %s" % (repr(userAgent)))
         change_agent(userAgent)
     if not cookies:
@@ -862,52 +908,62 @@ def cookie_sync(is_silent):
             notify(translation(32167) % (err), image=get_icon_path())
     del p_dialog
 
+def set_setting_if_changed(key, value):
+    # Every set_setting() makes Kodi write the settings file
+    if get_setting(key, str) != value:
+        set_setting(key, value)
+
 def cookie_check_defaults():
     global cookie_sync_filename
     if not cookie_sync_filename:
         cookie_sync_filename = "kevast-gist-default.json"
 
 def cookie_fetch_gist_id():
-    global cookie_sync_gist_id, cookie_sync_token, cookie_sync_filename, cookie_sync_fileurl
+    global cookie_sync_gist_id, cookie_sync_fileurl, cookie_sync_content
 
     try:
         url = "https://api.github.com/gists"
         headers = {'Authorization': 'Bearer %s' % cookie_sync_token}
-        params = {'scope': 'gist'}
-        resp = requests.get(url, headers=headers, params=params)
-        resp_items = json.loads(resp.text)
+        # Gists list is paginated, the first page alone misses the file for users with many gists
+        for page in range(1, 11):
+            resp = requests.get(url, headers=headers, params={'per_page': 100, 'page': page}, timeout=10)
+            resp_items = json.loads(resp.text)
+            if not isinstance(resp_items, list) or not resp_items:
+                break
 
-        for item in resp_items:
-            if "files" not in item or "id" not in item:
-                continue
-            for k, v in iteritems(item["files"]):
-                if "filename" not in v or v["filename"] != cookie_sync_filename:
+            for item in resp_items:
+                if "files" not in item or "id" not in item:
                     continue
-                cookie_sync_gist_id = item["id"]
-                cookie_sync_fileurl = v["raw_url"]
+                for k, v in item["files"].items():
+                    if "filename" not in v or v["filename"] != cookie_sync_filename:
+                        continue
+                    cookie_sync_gist_id = item["id"]
+                    cookie_sync_fileurl = v["raw_url"]
+                    cookie_sync_content = None  # Gists list does not include files content
 
-                return True
+                    return True
     except Exception as e:
         log.error("Gist list failed with: %s" % (repr(e)))
 
     return False
 
 def cookie_fetch_fileurl():
-    global cookie_sync_gist_id, cookie_sync_token, cookie_sync_filename, cookie_sync_fileurl
+    global cookie_sync_gist_id, cookie_sync_fileurl, cookie_sync_content
 
     try:
         url = "https://api.github.com/gists/%s" % (cookie_sync_gist_id)
         headers = {'Authorization': 'Bearer %s' % cookie_sync_token}
-        resp = requests.get(url, headers=headers)
+        resp = requests.get(url, headers=headers, timeout=10)
         item = json.loads(resp.text)
 
         if "files" not in item or "id" not in item:
             return False
-        for k, v in iteritems(item["files"]):
+        for k, v in item["files"].items():
             if "filename" not in v or v["filename"] != cookie_sync_filename:
                 continue
             cookie_sync_gist_id = item["id"]
             cookie_sync_fileurl = v["raw_url"]
+            cookie_sync_content = v["content"] if v.get("content") and not v.get("truncated") else None
 
             return True
     except Exception as e:
@@ -922,18 +978,21 @@ def cookie_fetch_file():
 
         cookies = []
 
-        resp = requests.get(cookie_sync_fileurl)
-        resp_items = json.loads(resp.text)
+        if cookie_sync_content:
+            resp_items = json.loads(cookie_sync_content)
+        else:
+            resp = requests.get(cookie_sync_fileurl, timeout=10)
+            resp_items = json.loads(resp.text)
 
-        expires = datetime.datetime.utcnow() + datetime.timedelta(days=1000)
+        expires = int(time.time()) + 1000 * 86400
 
-        # Read persisted user-agent if available
-        userAgent = resp_items["__userAgent"] if "__userAgent" in resp_items else None
+        # Persisted user-agent can be stored as "__userAgent" or "userAgent", it's not a domain with cookies
+        userAgent = resp_items.get("__userAgent") or resp_items.get("userAgent")
         if userAgent and cookie_sync_password:
-            userAgent = aes_decode(userAgent)
+            userAgent = aes_decode(userAgent).decode('utf-8')
 
-        for k, v in iteritems(resp_items):
-            if k.startswith("__"):
+        for k, v in resp_items.items():
+            if k.startswith("__") or k == "userAgent":
                 continue
 
             domains_count = domains_count + 1
@@ -944,30 +1003,30 @@ def cookie_fetch_file():
 
             # Loop through and force cookies into cookie jar
             try:
-                for cookie in json.loads(py2_encode(v)):
+                for cookie in json.loads(v):
                     cookie["domain"] = k
 
                     if "expirationDate" not in cookie or not cookie["expirationDate"]:
-                        datetime.datetime.utcnow() + datetime.timedelta(days=30)
-                        cookie["expirationDate"] = int(expires.timestamp())
+                        cookie["expirationDate"] = expires
                     else:
                         cookie["expirationDate"] = int(cookie["expirationDate"])
-                    cookie["rest"] = {'HttpOnly': cookie["httpOnly"]}
+                        if cookie["expirationDate"] <= time.time():
+                            log.debug("Skipping expired cookie %s for %s" % (cookie.get("name"), k))
+                            continue
+                    cookie["rest"] = {'HttpOnly': cookie.get("httpOnly", False)}
 
                     cookies.append(cookie)
                     cookies_count = cookies_count + 1
             except Exception as e:
                 log.error("Failed parsing cookies for %s with: %s" % (k, repr(e)))
-                import traceback
-                map(log.error, traceback.format_exc().split("\n"))
+                log.error(traceback.format_exc())
         log.debug("Cookie sync fetched for %d domains, %d cookies" % (domains_count, cookies_count))
         return userAgent, cookies
     except Exception as e:
         log.error("Gist file download failed with: %s" % (repr(e)))
-        import traceback
-        map(log.error, traceback.format_exc().split("\n"))
+        log.error(traceback.format_exc())
 
-    return None
+    return None, None
 
 def EVP_BytesToKey(password, salt, key_len, iv_len):
     """
@@ -982,11 +1041,8 @@ def EVP_BytesToKey(password, salt, key_len, iv_len):
     return dtot[:key_len], dtot[key_len:key_len+iv_len]
 
 def aes_decode(data):
-    try:
-        key, iv = EVP_BytesToKey(cookie_sync_password.encode('utf-8'), b'', 16, 16)
-    except:
-        key, iv = EVP_BytesToKey(py2_encode(cookie_sync_password), b'', 16, 16)
+    key, iv = EVP_BytesToKey(cookie_sync_password.encode('utf-8'), b'', 16, 16)
 
     aes = AES.new(key, AES.MODE_CBC, IV=iv)
-    raw = aes.decrypt(bytes.fromhex(data))
+    raw = aes.decrypt(unhexlify(data))
     return unpad(raw, block_size=AES.block_size)

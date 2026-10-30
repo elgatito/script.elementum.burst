@@ -4,30 +4,26 @@
 Burst utilities
 """
 
-from future.utils import PY2, PY3, iteritems
-
 import os
 import re
 import socket
+from threading import Lock
+
+try:
+    import dns.resolver  # noqa: F401
+    platform_can_resolve = True
+except Exception:
+    platform_can_resolve = False
 from elementum.provider import get_setting
-from .providers.definitions import definitions, translatePath
-if PY3:
-    from urllib.parse import urlparse
-    basestring = str
-    unicode = str
-else:
-    from urlparse import urlparse
-from kodi_six import xbmcgui, xbmcaddon
+from .providers.definitions import definitions
+from urllib.parse import urlparse
+import xbmcgui
+import xbmcaddon
 
 ADDON = xbmcaddon.Addon()
-ADDON_ID = ADDON.getAddonInfo("id")
 ADDON_NAME = ADDON.getAddonInfo("name")
 ADDON_PATH = ADDON.getAddonInfo("path")
 ADDON_ICON = ADDON.getAddonInfo("icon")
-ADDON_PROFILE = ADDON.getAddonInfo("profile")
-ADDON_VERSION = ADDON.getAddonInfo("version")
-PATH_ADDONS = translatePath("special://home/addons/")
-PATH_TEMP = translatePath("special://temp")
 if not ADDON_PATH:
     ADDON_PATH = '..'
 
@@ -81,6 +77,16 @@ def with_defaults(definition):
         definition['login_prerequest'] = ''
     return definition
 
+def use_opennic_dns():
+    # use_opennic_dns is a sub-setting of use_custom_dns and defaults to true.
+    # The OpenNIC mirrors live under alternative TLDs such as .lib, which resolve
+    # only through OpenNIC's own name servers. Those are installed by client.py
+    # just when a resolver exists on this platform, so rewriting a provider to its
+    # mirror without one only replaces a reachable domain with an unreachable one.
+    return (platform_can_resolve and get_setting("use_custom_dns", bool) and
+            get_setting("use_opennic_dns", bool))
+
+
 def get_alias(definition, alias):
     definition["alias"] = ""
 
@@ -100,32 +106,20 @@ def get_alias(definition, alias):
 
             # Replace all occurrences of old domain name with new one
             for k in definition:
-                if isinstance(definition[k], basestring):
+                if isinstance(definition[k], str):
                     definition[k] = definition[k].replace(old_domain, new_domain)
                     if protocol:
                         definition[k] = definition[k].replace("http://", protocol + "://")
                         definition[k] = definition[k].replace("https://", protocol + "://")
 
             for k in definition["parser"]:
-                if isinstance(definition["parser"][k], basestring):
+                if isinstance(definition["parser"][k], str):
                     definition["parser"][k] = definition["parser"][k].replace(old_domain, new_domain)
                     if protocol:
                         definition["parser"][k] = definition["parser"][k].replace("http://", protocol + "://")
                         definition["parser"][k] = definition["parser"][k].replace("https://", protocol + "://")
 
     return definition
-
-
-def get_providers():
-    """ Utility method to get all provider IDs available in the definitions
-
-    Returns:
-        list: All available provider IDs
-    """
-    results = []
-    for provider in definitions:
-        results.append(provider)
-    return results
 
 
 def get_enabled_providers(method):
@@ -147,14 +141,14 @@ def get_enabled_providers(method):
         if 'enabled' in definitions[provider] and not definitions[provider]['enabled']:
             continue
 
-        if get_setting('use_%s' % provider, bool):
+        if 'custom' in definitions[provider] and definitions[provider]['custom']:
+            results.append(provider)
+        elif get_setting('use_%s' % provider, bool):
             contains = get_setting('%s_contains' % provider, choices=('All', 'Movies', 'Shows'))
             if not contains or contains == 'All' or contains == '0':  # treat absence of setting as All
                 results.append(provider)
             elif contains == content_type_string or contains == content_type_int:
                 results.append(provider)
-        if 'custom' in definitions[provider] and definitions[provider]['custom']:
-            results.append(provider)
     return results
 
 
@@ -193,14 +187,10 @@ def get_int(string):
     try:
         return int(string)
     except:
-        try:
-            return int(get_float(string))
-        except:
-            pass
-    try:
-        return int(filter(type(string).isdigit, string))
-    except:
-        return 0
+        pass
+    # Counters on sites come with thousand separators, ie. "1,234", "1.234" or "1 234"
+    match = re.search(r'\d[\d,. ]*', '%s' % string)
+    return int(re.sub(r'\D', '', match.group(0))) if match else 0
 
 
 def get_float(string):
@@ -222,16 +212,7 @@ def get_float(string):
             floated = re.findall(r'[\d.]+', cleaned)[0]
             return float(floated)
         except:
-            pass
-    try:
-        string = string[:clean_number(string).find('.')]
-        return float(filter(type(string).isdigit, string))
-    except:
-        pass
-    try:
-        return float(filter(type(string).isdigit, string))
-    except:
-        return float(0)
+            return float(0)
 
 
 def size_int(size_txt):
@@ -320,56 +301,85 @@ def sizeof(num, suffix='B'):
     return "%.1f %s%s" % (num, 'Y', suffix)
 
 
-def notify(message, image=None):
+def notify(message, image=None, time=5000):
     """ Creates a notification dialog
 
     Args:
         message (str): The message to show in the dialog
         image   (str): Path to an icon for this dialog
+        time    (int): How long to show the notification, in milliseconds
     """
     dialog = xbmcgui.Dialog()
-    dialog.notification(ADDON_NAME, message, icon=image, sound=False)
+    dialog.notification(ADDON_NAME, message, icon=image, sound=False, time=time)
     del dialog
 
 
-def clear_cache():
-    """ Clears cookies from Burst's cache
+provider_errors = []
+provider_errors_lock = Lock()
+
+
+def add_error(message):
+    """ Stores a provider error for the current search, avoiding duplicates
+
+    Args:
+        message (str): The error message to store
     """
-    cookies_path = os.path.join(translatePath("special://temp"), "burst")
-    if os.path.isdir(cookies_path):
-        for f in os.listdir(cookies_path):
-            if re.search('.jar', f):
-                os.remove(os.path.join(cookies_path, f))
+    with provider_errors_lock:
+        if message not in provider_errors:
+            provider_errors.append(message)
+
+
+def get_errors():
+    """ Returns the provider errors collected during the current search
+
+    Returns:
+        list: Stored error messages
+    """
+    with provider_errors_lock:
+        return list(provider_errors)
+
+
+def clear_errors():
+    """ Clears the provider errors collected during the previous search """
+    with provider_errors_lock:
+        provider_errors[:] = []
 
 
 def encode_dict(dict_in, charset='utf8'):
-    """ Encodes dict values to UTF-8
+    """ Encodes dict values to the given charset
 
     Args:
-        dict_in (dict): Input dictionary with unicode values
+        dict_in (dict): Input dictionary with str values
 
     Returns:
-        dict: Output dictionary with UTF-8 encoded values
+        dict: Output dictionary with encoded values
     """
     try:
         dict_out = {}
-        for k, v in iteritems(dict_in):
-            if PY2 and isinstance(v, unicode):
-                v = v.encode('utf8')
-            elif PY2 and isinstance(v, str):
+        for k, v in dict_in.items():
+            if isinstance(v, bytes):
                 v = v.decode('utf8')
-            elif PY3 and isinstance(v, str):
-                v = v
-            elif PY3 and isinstance(v, bytes):
-                v = v.decode()
-
-            if charset != 'utf8':
-                v = v.decode('utf8').encode(charset)
-
+            if isinstance(v, str):
+                v = v.encode(charset)
             dict_out[k] = v
         return dict_out
     except:
         return dict_in
+
+def domain_matches(host, cookie_domain):
+    """ Checks if cookie domain applies to the host, ie. '.example.com' applies to 'www.example.com'
+
+    Args:
+        host          (str): Host name, port is ignored
+        cookie_domain (str): Domain of the cookie
+
+    Returns:
+        bool: True if cookie can be sent to the host, False otherwise
+    """
+    host = host.split(':')[0].lower()
+    cookie_domain = cookie_domain.lstrip('.').lower()
+    return bool(cookie_domain) and (host == cookie_domain or host.endswith('.' + cookie_domain))
+
 
 def is_ipv4_address(string_ip):
     """ Checks if a string is a valid IPv4 address
