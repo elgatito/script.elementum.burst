@@ -76,8 +76,10 @@ elif elementum_timeout > 0 and timeout > elementum_timeout - 3:
     log.info("Redefining timeout to be less than Elementum's: %d to %d seconds" % (timeout, elementum_timeout - 3))
     timeout = elementum_timeout - 3
 
-# Time when results are not needed anymore, set again for each search()
-search_deadline = time.time() + timeout
+# Seconds before the search timeout when subpage requests stop
+SUBPAGE_MARGIN = 2
+# Time when subpage results are not needed anymore, set again for each search()
+search_deadline = time.time() + timeout - SUBPAGE_MARGIN
 
 def search(payload, method="general"):
     """ Main search entrypoint
@@ -180,7 +182,8 @@ def search(payload, method="general"):
         log.debug("Translated titles from Elementum: %s" % (repr(payload['titles'])))
 
     providers_time = time.time()
-    search_deadline = providers_time + timeout
+    # Stop subpages early, providers still need time to parse and report results before search() gives up on them
+    search_deadline = providers_time + timeout - SUBPAGE_MARGIN
 
     # Count all providers before starting any, so an early finished one can't bring the counter to zero
     available_providers = len(providers)
@@ -459,7 +462,7 @@ def extract_torrents(provider, client):
 
                     # Collect session cookies for current domain
                     for cookie in client._cookies:
-                        if domain_matches(cookie_domain, cookie.domain):
+                        if domain_matches(cookie_domain, cookie.domain) and not cookie.is_expired():
                             cookies[cookie.name] = cookie.value
 
                     headers = {'User-Agent': user_agent}
@@ -933,7 +936,7 @@ def cookie_fetch_file():
                     else:
                         cookie["expirationDate"] = int(cookie["expirationDate"])
                         if cookie["expirationDate"] <= time.time():
-                            log.debug("Skipping expired cookie %s for %s" % (cookie.get("name"), k))
+                            log.warning("Skipping expired cookie %s for %s, re-sync cookies in the browser to use it" % (cookie.get("name"), k))
                             continue
                     cookie["rest"] = {'HttpOnly': cookie.get("httpOnly", False)}
 

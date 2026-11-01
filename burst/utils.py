@@ -178,7 +178,8 @@ def get_int(string):
     except:
         pass
     # Counters on sites come with thousand separators, ie. "1,234", "1.234" or "1 234"
-    match = re.search(r'\d[\d,. ]*', '%s' % string)
+    # Only groups of exactly 3 digits count, so "5.0", "1.2K" or "10 20" are not glued into one number
+    match = re.search(r'\d{1,3}(?:[,. ]\d{3})+(?!\d)|\d+', '%s' % string)
     return int(re.sub(r'\D', '', match.group(0))) if match else 0
 
 

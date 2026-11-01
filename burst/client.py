@@ -278,20 +278,15 @@ class Client:
         with cookies_lock:
             if os.path.exists(self._cookies_filename):
                 try:
+                    # Drops expired cookies, cookie_sync() warns about expired ones it skips
                     self._cookies.load(self._cookies_filename)
                 except Exception as e:
                     log.debug("Reading cookies error: %s" % repr(e))
 
     def cookie_exists(self, cookie_name, domain):
-        expired = False
         for cookie in self._cookies:
-            if cookie.name == cookie_name and domain_matches(domain, cookie.domain):
-                if cookie.is_expired():
-                    expired = True
-                    continue
+            if cookie.name == cookie_name and domain_matches(domain, cookie.domain) and not cookie.is_expired():
                 return True
-        if expired:
-            log.warning("Cookie %s for %s is expired, re-sync cookies to use them" % (cookie_name, domain))
         return False
 
     def add_cookie(self, cookie):
