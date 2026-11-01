@@ -2409,7 +2409,7 @@
         "parser": {
             "infohash": "",
             "name": "item('a', order=2)",
-            "peers": "item(tag='b', order=2)",
+            "peers": "item(tag='td', order=1, select=('class', 'leechmed'))",
             "row": "find_once('table', ('class', 'forumline'), order=1).find_all('tr', start=2)",
             "seeds": "item(tag='b', order=1, select=('class', 'seedmed'))",
             "size": "item('a', order=4)",
