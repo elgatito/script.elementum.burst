@@ -1,6 +1,17 @@
 script.elementum.burst changelog
 ===============
 
+[B]v0.0.101[/B] - 2026-11-01
+ - Version 0.0.101
+ - Expired cookies are no longer used for searches and torrent
+   downloads, a warning asks to re-sync cookies in the browser.
+ - Subpage requests stop shortly before the search timeout, so
+   providers still report their results in time.
+ - Fixed parsing of numbers like "5.0" or "1.2K", that were glued into
+   one number.
+ - Fixed peers count for RuTracker.
+ - Translations moved to standard Kodi language folders.
+
 [B]v0.0.100[/B] - 2026-10-28
  - Version 0.0.100
  - Show provider login and cookie sync errors during search and in the
