@@ -7,10 +7,11 @@ Burst filtering class and methods
 import re
 import hashlib
 import traceback
+import xbmc
 from elementum.provider import log, get_setting
 from .normalize import normalize_string, remove_accents
 from .providers.definitions import definitions
-from .utils import Magnet, get_int, get_float, clean_number, size_int, get_alias, use_opennic_dns
+from .utils import LANGUAGES, Magnet, get_int, get_float, clean_number, size_int, get_alias, use_opennic_dns
 from collections import OrderedDict
 
 use_require_resolution = get_setting('require_resolution', bool)
@@ -21,6 +22,8 @@ use_require_size = get_setting('require_size', bool)
 use_accept = get_setting('accept', str).strip().lower()
 use_block = get_setting('block', str).strip().lower()
 use_require = get_setting('require', str).strip().lower()
+# 'kodi' stands for the current Kodi language
+language_priority = [xbmc.getLanguage(xbmc.ISO_639_1) if lang == 'kodi' else lang for lang in get_setting('language_priority', str).split(',') if lang and lang != 'all']
 use_min_size = get_setting('min_size')
 use_max_size = get_setting('max_size')
 use_filter_quotes = get_setting("filter_quotes", bool)
@@ -357,6 +360,12 @@ class Filtering:
 
         for keyword in keywords:
             keyword = keyword.lower()
+            if keyword.startswith('languages'):
+                languages = self.priority_languages()
+                if keyword == 'languages:long':
+                    languages = [LANGUAGES.get(lang, lang) for lang in languages]
+                text = text.replace('{%s}' % keyword, ','.join(languages))
+
             if 'title' in keyword:
                 title = self.info['title']
                 provider_language = definitions[provider]['language']
@@ -583,6 +592,21 @@ class Filtering:
     def add_provider_language(self, language):
         if language not in self.provider_languages:
             self.provider_languages.append(language)
+
+    def priority_languages(self):
+        """ Languages for {languages} keywords: Burst language priority first, then the ones from Elementum
+
+        Returns:
+            list: ISO 639-1 codes, empty for no language priority
+        """
+        incoming = self.info.get('languages') or []
+        if isinstance(incoming, str):
+            incoming = incoming.split(',')
+        languages = []
+        for lang in language_priority + [lang.strip().lower() for lang in incoming if lang]:
+            if lang and lang not in languages:
+                languages.append(lang)
+        return languages
 
     def convert_language(self, language):
         if language == 'ru' or language == 'ua' or language == 'by':

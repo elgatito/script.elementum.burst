@@ -517,3 +517,15 @@ msgstr "GitHub naudotojas"
 msgctxt "#32177"
 msgid "Select another Gist"
 msgstr "Pasirinkti kitą Gist"
+
+msgctxt "#32178"
+msgid "Select language priority"
+msgstr "Pasirinkti kalbų prioritetą"
+
+msgctxt "#32179"
+msgid "Language priority"
+msgstr "Kalbų prioritetas"
+
+msgctxt "#32180"
+msgid "Kodi language"
+msgstr "Kodi kalba"

@@ -21,6 +21,8 @@
     <setting label="32034" id="max_size" type="slider" option="float" range="1,0.25,500" default="100" />
     <setting label="32040" id="max_results" type="slider" default="10" option="int" range="1,1,25" />
     <setting label="32119" id="sort_by" type="enum" lvalues="32120|32121|32122|32123" default="3" />
+    <setting label="32178" type="action" option="close" action="RunScript(script.elementum.burst, select_languages)" />
+    <setting label="32179" id="language_priority" type="text" enable="false" default="kodi" />
 
     <setting label="32162" type="lsep" />
     <setting label="32124" id="auto_timeout" type="bool" default="true" />

@@ -3153,7 +3153,7 @@
         "anime_keywords_fallback2": "",
         "anime_keywords_fallback3": "",
         "anime_query": "",
-        "base_url": "https://torrentio.strem.fun/providers=yts,eztv,rarbg,1337x,thepiratebay,kickasstorrents,torrentgalaxy,magnetdl,horriblesubs,nyaasi,comando,bludv|sort=qualitysize|qualityfilter=scr,cam/QUERY",
+        "base_url": "https://torrentio.strem.fun/language={languages:long}|sort=qualitysize|qualityfilter=scr,cam/QUERY",
         "general_extra": "",
         "general_keywords": "",
         "general_query": "",
@@ -3162,7 +3162,7 @@
         "login_object": "",
         "login_path": null,
         "movie_extra": "",
-        "movie_keywords": "stream/movies/{imdb_id}.json",
+        "movie_keywords": "stream/movie/{imdb_id}.json",
         "movie_query": "",
         "download_path": "magnet:?xt=urn:btih:",
         "api_format": {

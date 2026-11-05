@@ -516,3 +516,15 @@ msgstr "GitHub-felhasználó"
 msgctxt "#32177"
 msgid "Select another Gist"
 msgstr "Másik Gist kiválasztása"
+
+msgctxt "#32178"
+msgid "Select language priority"
+msgstr "Nyelvi prioritás kiválasztása"
+
+msgctxt "#32179"
+msgid "Language priority"
+msgstr "Nyelvi prioritás"
+
+msgctxt "#32180"
+msgid "Kodi language"
+msgstr "Kodi nyelve"

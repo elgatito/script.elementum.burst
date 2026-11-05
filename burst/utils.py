@@ -21,6 +21,31 @@ ADDON_ICON = ADDON.getAddonInfo("icon")
 if not ADDON_PATH:
     ADDON_PATH = '..'
 
+# ISO 639-1 codes and English names for {languages:short} and {languages:long} keywords
+LANGUAGES = {
+    "en": "english", "ru": "russian", "uk": "ukrainian", "be": "belarusian", "de": "german", "fr": "french",
+    "es": "spanish", "it": "italian", "pt": "portuguese", "pl": "polish", "nl": "dutch", "sv": "swedish",
+    "no": "norwegian", "da": "danish", "fi": "finnish", "cs": "czech", "sk": "slovak", "hu": "hungarian",
+    "ro": "romanian", "bg": "bulgarian", "hr": "croatian", "sr": "serbian", "sl": "slovenian", "el": "greek",
+    "tr": "turkish", "he": "hebrew", "ar": "arabic", "fa": "persian", "hi": "hindi", "ja": "japanese",
+    "ko": "korean", "zh": "chinese", "th": "thai", "vi": "vietnamese", "id": "indonesian", "lt": "lithuanian",
+    "lv": "latvian", "et": "estonian", "ka": "georgian", "kk": "kazakh",
+}
+
+# Countries whose flags stand for the language in results, ie. Torrentio shows 🇬🇧 for English
+LANGUAGE_COUNTRIES = {
+    "en": "GB,US", "ru": "RU", "uk": "UA", "be": "BY", "de": "DE", "fr": "FR", "es": "ES,MX", "it": "IT", "pt": "PT,BR",
+    "pl": "PL", "nl": "NL", "sv": "SE", "no": "NO", "da": "DK", "fi": "FI", "cs": "CZ", "sk": "SK", "hu": "HU",
+    "ro": "RO", "bg": "BG", "hr": "HR", "sr": "RS", "sl": "SI", "el": "GR", "tr": "TR", "he": "IL", "ar": "SA",
+    "fa": "IR", "hi": "IN", "ja": "JP", "ko": "KR", "zh": "CN,TW", "th": "TH", "vi": "VN", "id": "ID", "lt": "LT",
+    "lv": "LV", "et": "EE", "ka": "GE", "kk": "KZ",
+}
+
+
+def language_flags(language):
+    """ Flag emojis for a language code, ie. ['🇬🇧'] for 'en' """
+    return [''.join(chr(0x1F1E6 + ord(c) - ord('A')) for c in country) for country in LANGUAGE_COUNTRIES.get(language, '').split(',') if country]
+
 
 class Magnet:
     """ Magnet link parsing class

@@ -13,7 +13,7 @@ from binascii import hexlify, unhexlify
 from threading import BoundedSemaphore, Event, Lock, Thread
 from elementum.provider import append_headers, get_setting, set_setting, log
 from queue import Queue
-from urllib.parse import urlparse, unquote
+from urllib.parse import urlparse, unquote, quote
 
 from .parser.ehp import Html
 import xbmc
@@ -29,9 +29,9 @@ except:
 
 from .provider import process
 from .providers.definitions import definitions, longest
-from .filtering import apply_filters, Filtering, cleanup_results
+from .filtering import apply_filters, Filtering, cleanup_results, language_priority
 from .client import Client, change_agent, elementum_addon
-from .utils import ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias, size_int, domain_matches, clear_errors, get_errors
+from .utils import LANGUAGES, language_flags, ADDON_ICON, notify, translation, sizeof, get_icon_path, get_enabled_providers, get_alias, size_int, domain_matches, clear_errors, get_errors
 
 provider_names = []
 provider_results = []
@@ -573,6 +573,9 @@ def extract_from_api(provider, client):
         results = subresults
         log.debug("[%s] with subresults: %s" % (provider, repr(results)))
 
+    # Torrentio orders results by language priority but does not filter them
+    priority_flags = set(flag for lang in language_priority for flag in language_flags(lang)) if provider == 'torrentio' else set()
+
     for result in results:
         if not result or not isinstance(result, dict):
             continue
@@ -582,16 +585,33 @@ def extract_from_api(provider, client):
         size = ''
         seeds = ''
         peers = ''
+        source = ''
+        trackers = ''
 
         if provider == 'torrentio':
+            if priority_flags:
+                # Languages are flags in the last line of the title, Torrentio shows none for English-only releases
+                flags = set(re.findall('[\U0001F1E6-\U0001F1FF]{2}', result.get('title', '').split('\n')[-1])) or set(language_flags('en'))
+                if not flags & priority_flags:
+                    log.debug("[%s] Skipping result without priority languages: %s" % (provider, repr(result.get('title'))))
+                    continue
             title = result.get('title', '').encode('unicode-escape').decode('utf-8')
             match = re.search(r"\\U0001f464\s(\d+)", title)
             seeds = match.group(1) if match else ''
             match = re.search("\\b(\\d+(?:\\.\\d+)? [MG]B)\\b", title)
             size = match.group(1) if match else ''
+            # Tracker the torrent comes from, ie. '⚙️ RARBG'
+            match = re.search('\u2699\ufe0f?[ \t]*([^\n]+)', result.get('title', ''))
+            source = match.group(1).strip() if match else ''
+            # Magnet trackers come as 'tracker:<url>' in sources
+            trackers = ''.join('&tr=' + quote(s[8:], safe='') for s in result.get('sources') or [] if isinstance(s, str) and s.startswith('tracker:'))
 
         if 'name' in api_format:
-            name = get_nested_value(result, api_format['name'], "").replace('\n', ' ').replace('\r', '')
+            name = get_nested_value(result, api_format['name'], "")
+            if provider == 'torrentio':
+                # Lines after the torrent name are seeds, size, source and languages
+                name = name.split('\n')[0].strip()
+            name = name.replace('\n', ' ').replace('\r', '')
         if 'description' in api_format:
             if name:
                 name += ' '
@@ -599,7 +619,7 @@ def extract_from_api(provider, client):
         if 'torrent' in api_format:
             torrent = result.get(api_format['torrent']) or ''
             if 'download_path' in definition and torrent:
-                torrent = definition['download_path'] + torrent
+                torrent = definition['download_path'] + torrent + trackers
             if client.token:
                 headers = {'Authorization': client.token, 'User-Agent': client.user_agent}
                 log.debug("[%s] Appending headers: %s" % (provider, repr(headers)))
@@ -623,7 +643,7 @@ def extract_from_api(provider, client):
             peers = result.get(api_format['peers'])
             if isinstance(peers, str) and peers.isdigit():
                 peers = int(peers)
-        yield (name, info_hash, torrent, size, seeds, peers)
+        yield (name, info_hash, torrent, size, seeds, peers, source)
 
 
 def extract_from_page(provider, content):
@@ -1029,13 +1049,14 @@ def gist_info(gist, count=None):
 
 def cookie_sync_setup():
     """ Settings wizard: authorizes in GitHub and selects the Gist to sync cookies with """
-    cookie_sync_wizard(cookie_sync_setup_steps)
+    run_settings_action(cookie_sync_setup_steps)
 
 def cookie_sync_select():
     """ Settings action: selects another Gist, authorizes first if there is no token yet """
-    cookie_sync_wizard(cookie_select_gist if cookie_sync_token else cookie_sync_setup_steps)
+    run_settings_action(cookie_select_gist if cookie_sync_token else cookie_sync_setup_steps)
 
-def cookie_sync_wizard(steps):
+def run_settings_action(steps):
+    """ Runs a Settings action, the dialog is closed while it runs and opened again after """
     try:
         steps()
     except Exception as e:
@@ -1045,6 +1066,21 @@ def cookie_sync_wizard(steps):
     finally:
         # Settings dialog was closed to run the wizard, otherwise it overwrites settings we have set
         xbmcaddon.Addon().openSettings()
+
+def select_languages():
+    """ Settings action: selects languages to prioritize in {languages} keywords, all or none checked means no priority """
+    run_settings_action(select_languages_steps)
+
+def select_languages_steps():
+    # 'kodi' stands for the current Kodi language, resolved at search time
+    codes = ['kodi'] + list(LANGUAGES)
+    labels = ["%s (%s)" % (translation(32180), xbmc.getLanguage(xbmc.ISO_639_1))] + ["%s (%s)" % (LANGUAGES[code].capitalize(), code) for code in LANGUAGES]
+    current = get_setting('language_priority', str).split(',')
+    preselect = [i for i, code in enumerate(codes) if 'all' in current or code in current]
+    index = xbmcgui.Dialog().multiselect(translation(32178), labels, preselect=preselect)
+    if index is None:
+        return
+    set_setting('language_priority', ','.join(codes[i] for i in index) if 0 < len(index) < len(codes) else 'all')
 
 def cookie_sync_setup_steps():
     global cookie_sync_token

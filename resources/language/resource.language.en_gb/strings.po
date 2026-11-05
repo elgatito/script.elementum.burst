@@ -517,3 +517,15 @@ msgstr ""
 msgctxt "#32177"
 msgid "Select another Gist"
 msgstr ""
+
+msgctxt "#32178"
+msgid "Select language priority"
+msgstr ""
+
+msgctxt "#32179"
+msgid "Language priority"
+msgstr ""
+
+msgctxt "#32180"
+msgid "Kodi language"
+msgstr ""

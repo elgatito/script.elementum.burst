@@ -517,3 +517,15 @@ msgstr "Utilisateur GitHub"
 msgctxt "#32177"
 msgid "Select another Gist"
 msgstr "Choisir un autre Gist"
+
+msgctxt "#32178"
+msgid "Select language priority"
+msgstr "Choisir la priorité des langues"
+
+msgctxt "#32179"
+msgid "Language priority"
+msgstr "Priorité des langues"
+
+msgctxt "#32180"
+msgid "Kodi language"
+msgstr "Langue de Kodi"
