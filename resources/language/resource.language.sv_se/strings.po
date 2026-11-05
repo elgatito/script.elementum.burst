@@ -423,24 +423,20 @@ msgid "Enable Cookie sync"
 msgstr "Aktivera kaksynkronisering"
 
 msgctxt "#32153"
-msgid "Github Token"
-msgstr "Github-token"
+msgid "Connect GitHub and select Gist"
+msgstr "Anslut GitHub och välj Gist"
 
 msgctxt "#32154"
 msgid "Encryption password (optional)"
 msgstr "Krypteringslösenord (valfritt)"
 
 msgctxt "#32155"
-msgid "Gist ID (optional)"
-msgstr "Gist-ID (valfritt)"
+msgid "Active Gist"
+msgstr "Aktiv Gist"
 
 msgctxt "#32156"
 msgid "File name (optional)"
 msgstr "Filnamn (valfritt)"
-
-msgctxt "#32157"
-msgid "File url (optional)"
-msgstr "Fil-URL (valfritt)"
 
 msgctxt "#32158"
 msgid "Configure proxy in Elementum in the same way as here[CR]to avoid issues with downloading torrent files."
@@ -497,3 +493,27 @@ msgstr ""
 msgctxt "#32171"
 msgid "Use OpenNIC DNS servers"
 msgstr ""
+
+msgctxt "#32172"
+msgid "Open [B]%s[/B] on any device and enter the code:[CR][B]%s[/B]"
+msgstr "Öppna [B]%s[/B] på valfri enhet och ange koden:[CR][B]%s[/B]"
+
+msgctxt "#32173"
+msgid "Select Gist with cookies"
+msgstr "Välj Gist med cookies"
+
+msgctxt "#32174"
+msgid "No Gists with %s file found"
+msgstr "Inga Gists med filen %s hittades"
+
+msgctxt "#32175"
+msgid "%d cookies for %d sites"
+msgstr "%d cookies för %d webbplatser"
+
+msgctxt "#32176"
+msgid "GitHub user"
+msgstr "GitHub-användare"
+
+msgctxt "#32177"
+msgid "Select another Gist"
+msgstr "Välj en annan Gist"

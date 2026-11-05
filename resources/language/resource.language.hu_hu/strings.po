@@ -422,23 +422,19 @@ msgid "Enable Cookie sync"
 msgstr ""
 
 msgctxt "#32153"
-msgid "Github Token"
-msgstr ""
+msgid "Connect GitHub and select Gist"
+msgstr "GitHub csatlakoztatása és Gist kiválasztása"
 
 msgctxt "#32154"
 msgid "Encryption password (optional)"
 msgstr ""
 
 msgctxt "#32155"
-msgid "Gist ID (optional)"
-msgstr ""
+msgid "Active Gist"
+msgstr "Aktív Gist"
 
 msgctxt "#32156"
 msgid "File name (optional)"
-msgstr ""
-
-msgctxt "#32157"
-msgid "File url (optional)"
 msgstr ""
 
 msgctxt "#32158"
@@ -496,3 +492,27 @@ msgstr ""
 msgctxt "#32171"
 msgid "Use OpenNIC DNS servers"
 msgstr ""
+
+msgctxt "#32172"
+msgid "Open [B]%s[/B] on any device and enter the code:[CR][B]%s[/B]"
+msgstr "Nyisd meg a(z) [B]%s[/B] címet bármely eszközön, és add meg a kódot:[CR][B]%s[/B]"
+
+msgctxt "#32173"
+msgid "Select Gist with cookies"
+msgstr "Sütiket tartalmazó Gist kiválasztása"
+
+msgctxt "#32174"
+msgid "No Gists with %s file found"
+msgstr "Nem található Gist a(z) %s fájllal"
+
+msgctxt "#32175"
+msgid "%d cookies for %d sites"
+msgstr "%d süti %d oldalhoz"
+
+msgctxt "#32176"
+msgid "GitHub user"
+msgstr "GitHub-felhasználó"
+
+msgctxt "#32177"
+msgid "Select another Gist"
+msgstr "Másik Gist kiválasztása"

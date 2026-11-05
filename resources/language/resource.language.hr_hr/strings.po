@@ -423,23 +423,19 @@ msgid "Enable Cookie sync"
 msgstr ""
 
 msgctxt "#32153"
-msgid "Github Token"
-msgstr ""
+msgid "Connect GitHub and select Gist"
+msgstr "Poveži GitHub i odaberi Gist"
 
 msgctxt "#32154"
 msgid "Encryption password (optional)"
 msgstr ""
 
 msgctxt "#32155"
-msgid "Gist ID (optional)"
-msgstr ""
+msgid "Active Gist"
+msgstr "Aktivni Gist"
 
 msgctxt "#32156"
 msgid "File name (optional)"
-msgstr ""
-
-msgctxt "#32157"
-msgid "File url (optional)"
 msgstr ""
 
 msgctxt "#32158"
@@ -497,3 +493,27 @@ msgstr ""
 msgctxt "#32171"
 msgid "Use OpenNIC DNS servers"
 msgstr ""
+
+msgctxt "#32172"
+msgid "Open [B]%s[/B] on any device and enter the code:[CR][B]%s[/B]"
+msgstr "Otvorite [B]%s[/B] na bilo kojem uređaju i unesite kôd:[CR][B]%s[/B]"
+
+msgctxt "#32173"
+msgid "Select Gist with cookies"
+msgstr "Odaberi Gist s kolačićima"
+
+msgctxt "#32174"
+msgid "No Gists with %s file found"
+msgstr "Nije pronađen nijedan Gist s datotekom %s"
+
+msgctxt "#32175"
+msgid "%d cookies for %d sites"
+msgstr "Kolačića: %d, stranica: %d"
+
+msgctxt "#32176"
+msgid "GitHub user"
+msgstr "GitHub korisnik"
+
+msgctxt "#32177"
+msgid "Select another Gist"
+msgstr "Odaberi drugi Gist"

@@ -9,7 +9,7 @@ import json
 import time
 import requests
 import traceback
-from binascii import unhexlify
+from binascii import hexlify, unhexlify
 from threading import BoundedSemaphore, Event, Lock, Thread
 from elementum.provider import append_headers, get_setting, set_setting, log
 from queue import Queue
@@ -17,11 +17,12 @@ from urllib.parse import urlparse, unquote
 
 from .parser.ehp import Html
 import xbmc
+import xbmcaddon
 import xbmcgui
 
 try:
     from Cryptodome.Cipher import AES
-    from Cryptodome.Util.Padding import unpad
+    from Cryptodome.Util.Padding import pad, unpad
     hasCrypto = True
 except:
     hasCrypto = False
@@ -54,10 +55,11 @@ cookie_sync_enabled = get_setting("cookie_sync_enabled", bool)
 cookie_sync_token = get_setting("cookie_sync_token", str)
 cookie_sync_password = get_setting("cookie_sync_password", str)
 cookie_sync_gist_id = get_setting("cookie_sync_gist_id", str)
-cookie_sync_filename = get_setting("cookie_sync_filename", str)
-cookie_sync_fileurl = get_setting("cookie_sync_fileurl", str)
-# Gist file content, if it came inline with the gist info, saves a request for the file itself
-cookie_sync_content = None
+cookie_sync_filename = get_setting("cookie_sync_filename", str) or "kevast-gist-default.json"
+# Parsed Gist file and its original cookies per domain, to push cookies changed by sites back
+cookie_sync_data = None
+cookie_sync_raw = {}
+GITHUB_CLIENT_ID = "Ov23liyj1e79CVhOqohm"
 
 special_chars = "()\"':.[]<>/\\?"
 
@@ -241,6 +243,7 @@ def search(payload, method="general"):
 
     log.info("Providers returned %d results in %s seconds" % (len(filtered_results), round(time.time() - request_time, 2)))
 
+    cookie_push()
     return filtered_results
 
 
@@ -771,6 +774,10 @@ def get_search_query(definition, key):
     return definition['parser'][key]
 
 def cookie_sync(is_silent):
+    global cookie_sync_data, cookie_sync_raw
+    cookie_sync_data = None
+    cookie_sync_raw = {}
+
     if not cookie_sync_enabled or not cookie_sync_token:
         return
 
@@ -778,47 +785,55 @@ def cookie_sync(is_silent):
         log.error("Cryptodome Python module is not available for current Kodi version")
         return
 
-    cookie_check_defaults()
-
     log.debug("Fetching cookies from Github")
 
     p_dialog = xbmcgui.DialogProgressBG()
     if not is_silent:
         p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', translation(32166))
 
-    # Try to get url to a Gist's file first, if we have Gist ID
-    if not cookie_sync_gist_id or not cookie_fetch_fileurl():
-        # Try to get both Gist ID and Gist's file url
-        if not cookie_fetch_gist_id():
-            err = "Could not fetch gist id for cookie-sync"
-            log.error(err)
+    content = None
+    try:
+        if cookie_sync_gist_id:
+            content = cookie_gist_content(cookie_sync_gist_id)
+        if content is None:
+            # Gist ID is not set or the Gist is gone, use the most recently updated Gist with the cookies file
+            gists = cookie_list_gists()
+            if gists:
+                set_setting_if_changed('cookie_sync_gist_id', gists[0]["id"])
+                set_setting_if_changed('cookie_sync_info', gist_info(gists[0]))
+                content = cookie_gist_content(gists[0]["id"])
+    except Exception as e:
+        log.error("Gist fetch failed with: %s" % (repr(e)))
 
-            if not is_silent:
-                p_dialog.close()
-                notify(translation(32167) % (err), image=get_icon_path())
-            del p_dialog
+    if content is None:
+        err = "Could not fetch gist for cookie-sync"
+        log.error(err)
 
-            return
-
-    set_setting_if_changed('cookie_sync_gist_id', cookie_sync_gist_id)
-    set_setting_if_changed('cookie_sync_fileurl', cookie_sync_fileurl)
-
-    userAgent, cookies = cookie_fetch_file()
-    if userAgent:
-        set_setting_if_changed('cookie_sync_useragent', userAgent)
-        log.debug("Persisted user-agent for cookie-sync: %s" % (repr(userAgent)))
-        change_agent(userAgent)
-    if not cookies:
         if not is_silent:
             p_dialog.close()
+            notify(translation(32167) % (err), image=get_icon_path())
         del p_dialog
+
         return
 
     err = None
     try:
+        cookie_sync_data = json.loads(content)
+        userAgent, cookies, cookie_sync_raw = cookie_parse(cookie_sync_data)
+        if userAgent:
+            set_setting_if_changed('cookie_sync_useragent', userAgent)
+            log.debug("Persisted user-agent for cookie-sync: %s" % (repr(userAgent)))
+            change_agent(userAgent)
+
         log.debug("Adding %d cookies to http client" % (len(cookies)))
         client = Client()
         client._read_cookies()
+
+        # Drop local copies of synced cookies, whatever differs from the Gist after search was changed by sites
+        synced = set((cookie["domain"], cookie["name"], cookie["path"]) for cookie in cookies)
+        for c in list(client._cookies):
+            if any((k, c.name, c.path) in synced and domain_matches(c.domain.lstrip('.'), k) for k in cookie_sync_raw):
+                client._cookies.clear(c.domain, c.path, c.name)
 
         for cookie in cookies:
             client.add_cookie(cookie)
@@ -826,6 +841,8 @@ def cookie_sync(is_silent):
         client.save_cookies()
     except Exception as e:
         log.error("Failed adding cookies with: %s" % (repr(e)))
+        log.error(traceback.format_exc())
+        cookie_sync_raw = {}
         err = e
 
     if not is_silent:
@@ -834,125 +851,248 @@ def cookie_sync(is_silent):
             notify(translation(32167) % (err), image=get_icon_path())
     del p_dialog
 
+def cookie_push():
+    """ Puts cookies changed by sites back to the Gist, only for domains that came from the Gist """
+    if not cookie_sync_raw:
+        return
+
+    try:
+        client = Client()
+        client._read_cookies()
+
+        changed = []
+        for domain, raw in cookie_sync_raw.items():
+            fetched = dict(((c.get("name"), c.get("path")), c.get("value")) for c in raw)
+            known = dict(((c.get("name"), c.get("path")), c) for c in raw)
+            dirty = False
+            for c in client._cookies:
+                if not domain_matches(c.domain.lstrip('.'), domain) or c.value == fetched.get((c.name, c.path)):
+                    continue
+                cookie = known.get((c.name, c.path))
+                if cookie is None:
+                    cookie = known[(c.name, c.path)] = {"domain": c.domain, "name": c.name, "path": c.path, "secure": c.secure, "httpOnly": c.has_nonstandard_attr('HttpOnly'), "hostOnly": not c.domain.startswith('.'), "session": False}
+                    raw.append(cookie)
+                cookie["value"] = c.value
+                if c.expires:
+                    cookie["expirationDate"] = c.expires
+                dirty = True
+
+            if dirty:
+                data = json.dumps(raw)
+                cookie_sync_data[domain] = aes_encode(data) if cookie_sync_password else data
+                changed.append(domain)
+
+        if not changed:
+            return
+
+        log.info("Pushing changed cookies to Gist for: %s" % (", ".join(changed)))
+        gist_id = get_setting("cookie_sync_gist_id", str)
+        resp = requests.patch("https://api.github.com/gists/%s" % (gist_id), headers=github_headers(), json={"files": {cookie_sync_filename: {"content": json.dumps(cookie_sync_data)}}}, timeout=10)
+        if resp.status_code != 200:
+            log.error("Gist update failed with status %d: %s" % (resp.status_code, resp.text))
+    except Exception as e:
+        log.error("Cookie push failed with: %s" % (repr(e)))
+        log.debug(traceback.format_exc())
+
 def set_setting_if_changed(key, value):
     # Every set_setting() makes Kodi write the settings file
     if get_setting(key, str) != value:
         set_setting(key, value)
 
-def cookie_check_defaults():
-    global cookie_sync_filename
-    if not cookie_sync_filename:
-        cookie_sync_filename = "kevast-gist-default.json"
+def github_headers(token=None):
+    return {'Authorization': 'Bearer %s' % (token or cookie_sync_token), 'Accept': 'application/vnd.github+json'}
 
-def cookie_fetch_gist_id():
-    global cookie_sync_gist_id, cookie_sync_fileurl, cookie_sync_content
+def cookie_list_gists(token=None):
+    """ Returns Gists having the cookies file, most recently updated first """
+    gists = []
+    # Gists list is paginated, the first page alone misses the file for users with many gists
+    for page in range(1, 11):
+        resp = requests.get("https://api.github.com/gists", headers=github_headers(token), params={'per_page': 100, 'page': page}, timeout=10)
+        items = resp.json()
+        if not isinstance(items, list) or not items:
+            if resp.status_code != 200:
+                log.error("Gist list failed with status %d: %s" % (resp.status_code, resp.text))
+            break
+        gists.extend(item for item in items if any(v.get("filename") == cookie_sync_filename for v in item.get("files", {}).values()))
+    return sorted(gists, key=lambda g: g.get("updated_at", ""), reverse=True)
 
-    try:
-        url = "https://api.github.com/gists"
-        headers = {'Authorization': 'Bearer %s' % cookie_sync_token}
-        # Gists list is paginated, the first page alone misses the file for users with many gists
-        for page in range(1, 11):
-            resp = requests.get(url, headers=headers, params={'per_page': 100, 'page': page}, timeout=10)
-            resp_items = json.loads(resp.text)
-            if not isinstance(resp_items, list) or not resp_items:
-                break
+def cookie_gist_content(gist_id, token=None):
+    """ Returns content of the cookies file in the Gist, None if there is no such Gist or file """
+    resp = requests.get("https://api.github.com/gists/%s" % (gist_id), headers=github_headers(token), timeout=10)
+    if resp.status_code != 200:
+        log.error("Gist get failed with status %d: %s" % (resp.status_code, resp.text))
+        return None
+    for v in resp.json().get("files", {}).values():
+        if v.get("filename") != cookie_sync_filename:
+            continue
+        if v.get("content") and not v.get("truncated"):
+            return v["content"]
+        return requests.get(v["raw_url"], timeout=10).text
+    return None
 
-            for item in resp_items:
-                if "files" not in item or "id" not in item:
-                    continue
-                for k, v in item["files"].items():
-                    if "filename" not in v or v["filename"] != cookie_sync_filename:
-                        continue
-                    cookie_sync_gist_id = item["id"]
-                    cookie_sync_fileurl = v["raw_url"]
-                    cookie_sync_content = None  # Gists list does not include files content
+def cookie_parse(items):
+    """ Parses the cookies file
 
-                    return True
-    except Exception as e:
-        log.error("Gist list failed with: %s" % (repr(e)))
+    Returns:
+        tuple: User-agent, cookies for the cookie jar, original cookies per domain
+    """
+    domains_count = 0
+    cookies = []
+    raw = {}
+    expires = int(time.time()) + 1000 * 86400
 
-    return False
+    # Persisted user-agent can be stored as "__userAgent" or "userAgent", it's not a domain with cookies
+    userAgent = items.get("__userAgent") or items.get("userAgent")
+    if userAgent and cookie_sync_password:
+        userAgent = aes_decode(userAgent).decode('utf-8')
 
-def cookie_fetch_fileurl():
-    global cookie_sync_gist_id, cookie_sync_fileurl, cookie_sync_content
+    for k, v in items.items():
+        if k.startswith("__") or k == "userAgent":
+            continue
 
-    try:
-        url = "https://api.github.com/gists/%s" % (cookie_sync_gist_id)
-        headers = {'Authorization': 'Bearer %s' % cookie_sync_token}
-        resp = requests.get(url, headers=headers, timeout=10)
-        item = json.loads(resp.text)
+        domains_count = domains_count + 1
 
-        if "files" not in item or "id" not in item:
-            return False
-        for k, v in item["files"].items():
-            if "filename" not in v or v["filename"] != cookie_sync_filename:
-                continue
-            cookie_sync_gist_id = item["id"]
-            cookie_sync_fileurl = v["raw_url"]
-            cookie_sync_content = v["content"] if v.get("content") and not v.get("truncated") else None
-
-            return True
-    except Exception as e:
-        log.error("Gist get failed with: %s" % (repr(e)))
-
-    return False
-
-def cookie_fetch_file():
-    try:
-        domains_count = 0
-        cookies_count = 0
-
-        cookies = []
-
-        if cookie_sync_content:
-            resp_items = json.loads(cookie_sync_content)
-        else:
-            resp = requests.get(cookie_sync_fileurl, timeout=10)
-            resp_items = json.loads(resp.text)
-
-        expires = int(time.time()) + 1000 * 86400
-
-        # Persisted user-agent can be stored as "__userAgent" or "userAgent", it's not a domain with cookies
-        userAgent = resp_items.get("__userAgent") or resp_items.get("userAgent")
-        if userAgent and cookie_sync_password:
-            userAgent = aes_decode(userAgent).decode('utf-8')
-
-        for k, v in resp_items.items():
-            if k.startswith("__") or k == "userAgent":
-                continue
-
-            domains_count = domains_count + 1
-
+        # Loop through and force cookies into cookie jar
+        try:
             # Decode data if encrypted
             if cookie_sync_password:
                 v = aes_decode(v)
+            raw[k] = json.loads(v)
 
-            # Loop through and force cookies into cookie jar
-            try:
-                for cookie in json.loads(v):
-                    cookie["domain"] = k
+            for cookie in raw[k]:
+                # Copy, originals are pushed back to the Gist with their own fields
+                cookie = dict(cookie, domain=k)
 
-                    if "expirationDate" not in cookie or not cookie["expirationDate"]:
-                        cookie["expirationDate"] = expires
-                    else:
-                        cookie["expirationDate"] = int(cookie["expirationDate"])
-                        if cookie["expirationDate"] <= time.time():
-                            log.warning("Skipping expired cookie %s for %s, re-sync cookies in the browser to use it" % (cookie.get("name"), k))
-                            continue
-                    cookie["rest"] = {'HttpOnly': cookie.get("httpOnly", False)}
+                if "expirationDate" not in cookie or not cookie["expirationDate"]:
+                    cookie["expirationDate"] = expires
+                else:
+                    cookie["expirationDate"] = int(cookie["expirationDate"])
+                    if cookie["expirationDate"] <= time.time():
+                        log.warning("Skipping expired cookie %s for %s, re-sync cookies in the browser to use it" % (cookie.get("name"), k))
+                        continue
+                cookie["rest"] = {'HttpOnly': cookie.get("httpOnly", False)}
 
-                    cookies.append(cookie)
-                    cookies_count = cookies_count + 1
-            except Exception as e:
-                log.error("Failed parsing cookies for %s with: %s" % (k, repr(e)))
-                log.error(traceback.format_exc())
-        log.debug("Cookie sync fetched for %d domains, %d cookies" % (domains_count, cookies_count))
-        return userAgent, cookies
+                cookies.append(cookie)
+        except Exception as e:
+            log.error("Failed parsing cookies for %s with: %s" % (k, repr(e)))
+            log.error(traceback.format_exc())
+    log.debug("Cookie sync fetched for %d domains, %d cookies" % (domains_count, len(cookies)))
+    return userAgent, cookies, raw
+
+def github_device_auth():
+    """ Authorizes in GitHub with OAuth device flow, user enters the code on any other device
+
+    Returns:
+        str: Access token, None if cancelled
+    """
+    if not GITHUB_CLIENT_ID:
+        raise Exception("GitHub Client ID is not configured")
+
+    accept = {'Accept': 'application/json'}
+    code = requests.post("https://github.com/login/device/code", data={'client_id': GITHUB_CLIENT_ID, 'scope': 'gist'}, headers=accept, timeout=10).json()
+    if 'device_code' not in code:
+        raise Exception(code.get('error_description') or code.get('error') or repr(code))
+
+    interval = int(code.get('interval', 5))
+    lifetime = int(code.get('expires_in', 900))
+    expires_at = time.time() + lifetime
+    message = translation(32172) % (code['verification_uri'], code['user_code'])
+
+    p_dialog = xbmcgui.DialogProgress()
+    p_dialog.create('Elementum [COLOR FFFF6B00]Burst[/COLOR]', message)
+    monitor = xbmc.Monitor()
+    try:
+        while time.time() < expires_at:
+            # Wait in short steps, so Cancel reacts at once
+            for _ in range(interval * 4):
+                if p_dialog.iscanceled() or monitor.waitForAbort(0.25):
+                    return None
+            p_dialog.update(int((expires_at - time.time()) * 100 / lifetime), message)
+
+            token = requests.post("https://github.com/login/oauth/access_token", data={'client_id': GITHUB_CLIENT_ID, 'device_code': code['device_code'], 'grant_type': 'urn:ietf:params:oauth:grant-type:device_code'}, headers=accept, timeout=10).json()
+            if token.get('access_token'):
+                return token['access_token']
+            error = token.get('error')
+            if error == 'slow_down':
+                interval = int(token.get('interval', interval + 5))
+            elif error != 'authorization_pending':
+                raise Exception(token.get('error_description') or error)
+    finally:
+        p_dialog.close()
+
+    raise Exception("Device code expired")
+
+def gist_info(gist, count=None):
+    """ Gist description for the read-only Settings field """
+    info = "%s (%s)" % (gist.get("description") or gist["id"], gist["id"])
+    return "%s, %s" % (info, count) if count else info
+
+def cookie_sync_setup():
+    """ Settings wizard: authorizes in GitHub and selects the Gist to sync cookies with """
+    cookie_sync_wizard(cookie_sync_setup_steps)
+
+def cookie_sync_select():
+    """ Settings action: selects another Gist, authorizes first if there is no token yet """
+    cookie_sync_wizard(cookie_select_gist if cookie_sync_token else cookie_sync_setup_steps)
+
+def cookie_sync_wizard(steps):
+    try:
+        steps()
     except Exception as e:
-        log.error("Gist file download failed with: %s" % (repr(e)))
-        log.error(traceback.format_exc())
+        log.error("Cookie sync setup failed with: %s" % (repr(e)))
+        log.debug(traceback.format_exc())
+        notify(translation(32167) % (e), image=get_icon_path())
+    finally:
+        # Settings dialog was closed to run the wizard, otherwise it overwrites settings we have set
+        xbmcaddon.Addon().openSettings()
 
-    return None, None
+def cookie_sync_setup_steps():
+    global cookie_sync_token
+    token = github_device_auth()
+    if not token:
+        return
+
+    resp = requests.get("https://api.github.com/user", headers=github_headers(token), timeout=10)
+    if resp.status_code != 200:
+        raise Exception("GitHub user request failed with status %d" % (resp.status_code))
+    login = resp.json().get("login", "")
+
+    # Gist of another account is not reachable with the new token
+    if login != get_setting("cookie_sync_user", str):
+        set_setting('cookie_sync_gist_id', '')
+        set_setting('cookie_sync_info', '')
+    set_setting('cookie_sync_token', token)
+    set_setting('cookie_sync_user', login)
+    cookie_sync_token = token
+
+    cookie_select_gist()
+
+def cookie_select_gist():
+    gists = cookie_list_gists()
+    if not gists:
+        # The Gist is picked up automatically once the browser extension creates it
+        notify(translation(32174) % (cookie_sync_filename), image=get_icon_path())
+        return
+
+    items = []
+    counts = []
+    for gist in gists:
+        try:
+            _, cookies, raw = cookie_parse(json.loads(cookie_gist_content(gist["id"])))
+            count = translation(32175) % (len(cookies), len(raw))
+        except Exception as e:
+            log.error("Failed reading gist %s with: %s" % (gist["id"], repr(e)))
+            count = "?"
+        updated = gist.get("updated_at", "").replace("T", " ")[:16]
+        items.append(xbmcgui.ListItem(label=gist.get("description") or gist["id"], label2="ID: %s | %s | %s" % (gist["id"], count, updated)))
+        counts.append(count)
+
+    index = xbmcgui.Dialog().select(translation(32173), items, preselect=0, useDetails=True)
+    if index < 0:
+        return
+
+    set_setting('cookie_sync_gist_id', gists[index]["id"])
+    set_setting('cookie_sync_info', gist_info(gists[index], counts[index]))
 
 def EVP_BytesToKey(password, salt, key_len, iv_len):
     """
@@ -965,6 +1105,12 @@ def EVP_BytesToKey(password, salt, key_len, iv_len):
         d.append(md5(d[-1] + password + salt).digest())
         dtot += d[-1]
     return dtot[:key_len], dtot[key_len:key_len+iv_len]
+
+def aes_encode(data):
+    key, iv = EVP_BytesToKey(cookie_sync_password.encode('utf-8'), b'', 16, 16)
+
+    aes = AES.new(key, AES.MODE_CBC, IV=iv)
+    return hexlify(aes.encrypt(pad(data.encode('utf-8'), AES.block_size))).decode('ascii')
 
 def aes_decode(data):
     key, iv = EVP_BytesToKey(cookie_sync_password.encode('utf-8'), b'', 16, 16)

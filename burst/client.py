@@ -293,12 +293,21 @@ class Client:
         cookie_obj = create_cookie(domain=cookie["domain"], name=cookie["name"], value=cookie["value"], path=cookie["path"], secure=cookie["secure"], expires=cookie["expirationDate"], discard=False, rest=cookie["rest"])
         self._cookies.set_cookie(cookie_obj)
 
-    def save_cookies(self):
+    def save_cookies(self, cookies=None):
+        """ Saves the whole jar, or only given cookies merged into the saved jar """
         self._cookies_filename = self._locate_cookies(self.url)
 
         with cookies_lock:
             try:
-                self._cookies.save(self._cookies_filename)
+                jar = self._cookies
+                if cookies is not None:
+                    # Jar loaded before the request would overwrite cookies saved by other threads since
+                    jar = LWPCookieJar()
+                    if os.path.exists(self._cookies_filename):
+                        jar.load(self._cookies_filename)
+                    for cookie in cookies:
+                        jar.set_cookie(cookie)
+                jar.save(self._cookies_filename)
             except Exception as e:
                 log.debug("Saving cookies error: %s" % repr(e))
 
@@ -393,6 +402,11 @@ class Client:
                     self.content = response.text
                 self.request_cookies = response.request.headers.get('Cookie')
                 self.response_cookies = response.cookies.get_dict()
+
+                # Keep cookies set by sites, cookie sync pushes changed ones back to the Gist
+                set_cookies = [cookie for r in response.history + [response] for cookie in r.cookies]
+                if set_cookies:
+                    self.save_cookies(set_cookies)
 
         except requests.exceptions.InvalidSchema as e:
             # If link points to a magnet: then it can be used as a content

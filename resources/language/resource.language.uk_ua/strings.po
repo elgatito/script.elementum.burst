@@ -423,23 +423,19 @@ msgid "Enable Cookie sync"
 msgstr ""
 
 msgctxt "#32153"
-msgid "Github Token"
-msgstr ""
+msgid "Connect GitHub and select Gist"
+msgstr "Підключити GitHub і вибрати Gist"
 
 msgctxt "#32154"
 msgid "Encryption password (optional)"
 msgstr ""
 
 msgctxt "#32155"
-msgid "Gist ID (optional)"
-msgstr ""
+msgid "Active Gist"
+msgstr "Активний Gist"
 
 msgctxt "#32156"
 msgid "File name (optional)"
-msgstr ""
-
-msgctxt "#32157"
-msgid "File url (optional)"
 msgstr ""
 
 msgctxt "#32158"
@@ -497,3 +493,27 @@ msgstr ""
 msgctxt "#32171"
 msgid "Use OpenNIC DNS servers"
 msgstr ""
+
+msgctxt "#32172"
+msgid "Open [B]%s[/B] on any device and enter the code:[CR][B]%s[/B]"
+msgstr "Відкрийте [B]%s[/B] на будь-якому пристрої та введіть код:[CR][B]%s[/B]"
+
+msgctxt "#32173"
+msgid "Select Gist with cookies"
+msgstr "Виберіть Gist з cookie"
+
+msgctxt "#32174"
+msgid "No Gists with %s file found"
+msgstr "Не знайдено Gist з файлом %s"
+
+msgctxt "#32175"
+msgid "%d cookies for %d sites"
+msgstr "Cookie: %d, сайтів: %d"
+
+msgctxt "#32176"
+msgid "GitHub user"
+msgstr "Користувач GitHub"
+
+msgctxt "#32177"
+msgid "Select another Gist"
+msgstr "Вибрати інший Gist"

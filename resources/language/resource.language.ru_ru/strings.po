@@ -423,24 +423,20 @@ msgid "Enable Cookie sync"
 msgstr "Включить синхронизацию cookie"
 
 msgctxt "#32153"
-msgid "Github Token"
-msgstr "Токен Github"
+msgid "Connect GitHub and select Gist"
+msgstr "Подключить GitHub и выбрать Gist"
 
 msgctxt "#32154"
 msgid "Encryption password (optional)"
 msgstr "Пароль шифрования (опционально)"
 
 msgctxt "#32155"
-msgid "Gist ID (optional)"
-msgstr "Gist ID (опционально)"
+msgid "Active Gist"
+msgstr "Активный Gist"
 
 msgctxt "#32156"
 msgid "File name (optional)"
 msgstr "Название файла (опционально)"
-
-msgctxt "#32157"
-msgid "File url (optional)"
-msgstr "Ссылка на файл (опционально)"
 
 msgctxt "#32158"
 msgid "Configure proxy in Elementum in the same way as here[CR]to avoid issues with downloading torrent files."
@@ -497,3 +493,27 @@ msgstr "URL файла PAC Antizapret"
 msgctxt "#32171"
 msgid "Use OpenNIC DNS servers"
 msgstr "Использовать OpenNIC DNS сервера"
+
+msgctxt "#32172"
+msgid "Open [B]%s[/B] on any device and enter the code:[CR][B]%s[/B]"
+msgstr "Откройте [B]%s[/B] на любом устройстве и введите код:[CR][B]%s[/B]"
+
+msgctxt "#32173"
+msgid "Select Gist with cookies"
+msgstr "Выберите Gist с cookie"
+
+msgctxt "#32174"
+msgid "No Gists with %s file found"
+msgstr "Не найдено Gist с файлом %s"
+
+msgctxt "#32175"
+msgid "%d cookies for %d sites"
+msgstr "Cookie: %d, сайтов: %d"
+
+msgctxt "#32176"
+msgid "GitHub user"
+msgstr "Пользователь GitHub"
+
+msgctxt "#32177"
+msgid "Select another Gist"
+msgstr "Выбрать другой Gist"
