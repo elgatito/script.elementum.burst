@@ -336,7 +336,8 @@ def extract_torrents(provider, client):
                 log.debug(traceback.format_exc())
 
             # New client instance, otherwise it's race conditions all over the place
-            subclient = Client()
+            # Same info as the main client, so subpages use the same proxy from Elementum payload
+            subclient = Client(info=client.info)
             subclient.passkey = client.passkey
             headers = {}
 
