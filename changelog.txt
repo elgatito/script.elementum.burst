@@ -12,6 +12,16 @@ script.elementum.burst changelog
    back to the Gist, so other devices always get the latest cookies.
  - Cookies set by trackers during search are kept for next searches.
  - Subpage requests use the same proxy as the search.
+ - New Language priority setting, Kodi language by default, to get
+   results in preferred languages first.
+ - New {languages:short} and {languages:long} keywords for provider
+   queries and URLs, ie. "en,ru" or "english,russian".
+ - Torrentio: results come by language priority, and results without
+   any of the preferred languages are skipped.
+ - Torrentio: provider name shows where the torrent comes from, ie.
+   "Torrentio (RARBG)", and magnet links include its trackers.
+ - Torrentio: torrent names no longer include seeds, size and
+   languages, and movie search is fixed.
 
 [B]v0.0.101[/B] - 2026-11-01
  - Version 0.0.101
