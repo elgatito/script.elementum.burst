@@ -1,6 +1,18 @@
 script.elementum.burst changelog
 ===============
 
+[B]v0.0.102[/B] - 2026-11-05
+ - Cookie sync: log in to GitHub with a code entered on any device,
+   instead of creating a token by hand. Only access to Gists is asked.
+ - Cookie sync: select the Gist to use, with its ID, number of cookies
+   and update time. The most recently updated Gist is preselected.
+ - Cookie sync: Settings show the GitHub user and the active Gist, and
+   another Gist can be selected at any time.
+ - Cookie sync: cookies changed by trackers during search are saved
+   back to the Gist, so other devices always get the latest cookies.
+ - Cookies set by trackers during search are kept for next searches.
+ - Subpage requests use the same proxy as the search.
+
 [B]v0.0.101[/B] - 2026-11-01
  - Version 0.0.101
  - Expired cookies are no longer used for searches and torrent
