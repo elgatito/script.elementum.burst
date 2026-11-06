@@ -2437,6 +2437,7 @@
     },
     "seedpool": {
         "api_format": {
+            "info_hash": "attributes.info_hash",
             "name": "attributes.name",
             "peers": "attributes.leechers",
             "results": "data",
