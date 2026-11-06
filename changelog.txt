@@ -1,7 +1,17 @@
 script.elementum.burst changelog
 ===============
 
-[B]v0.0.102[/B] - 2026-11-05
+[B]v0.0.102[/B] - 2026-11-06
+ - New "Season and episode" filtering setting, off by default: episode
+   and season searches skip results for other seasons or episodes, ie.
+   S02E05 or S04 when searching for S02E09. Season packs and ranges
+   that include the episode are kept (#503). Thanks to @sjq42.
+ - Add Seedpool private provider, searched with the account passkey
+   (#502). Thanks to @mozibwxhkabgpb.
+ - API providers can read torrent, info hash, size, seeds and peers
+   from nested fields, and a result without such a field no longer
+   drops all results of the search (#502). Thanks to @mozibwxhkabgpb.
+ - RuTracker: fixed peers count.
  - Cookie sync: log in to GitHub with a code entered on any device,
    instead of creating a token by hand. Only access to Gists is asked.
  - Cookie sync: select the Gist to use, with its ID, number of cookies
