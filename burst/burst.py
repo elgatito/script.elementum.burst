@@ -41,8 +41,8 @@ request_time = time.time()
 results_lock = Lock()
 providers_done = Event()
 parser_code = {}
-# Concurrent subpage requests per provider, more only gets us rate limited
-SUBPAGE_THREADS = 10
+# Concurrent subpage requests per provider, browsers do not open more pages of one site at once and Cloudflare rate limits that
+SUBPAGE_THREADS = 4
 
 use_kodi_language = get_setting('kodi_language', bool)
 auto_timeout = get_setting("auto_timeout", bool)
@@ -347,7 +347,6 @@ def extract_torrents(provider, client):
             if "subpage_mode" in definition:
                 if definition["subpage_mode"] == "xhr":
                     headers['X-Requested-With'] = 'XMLHttpRequest'
-                    headers['Content-Language'] = ''
 
             if referer:
                 headers['Referer'] = referer

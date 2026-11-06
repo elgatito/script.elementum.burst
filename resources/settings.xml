@@ -46,6 +46,7 @@
     <setting label="32155" id="cookie_sync_info" type="text" enable="false" default="" />
     <setting id="cookie_sync_token" type="text" visible="false" default="" />
     <setting id="cookie_sync_gist_id" type="text" visible="false" default="" />
+    <setting id="cookie_sync_useragent" type="text" visible="false" default="" />
   </category>
 
   <!-- Providers -->

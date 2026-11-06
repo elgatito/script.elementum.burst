@@ -12,6 +12,17 @@ script.elementum.burst changelog
    back to the Gist, so other devices always get the latest cookies.
  - Cookies set by trackers during search are kept for next searches.
  - Subpage requests use the same proxy as the search.
+ - With Elementum internal proxy enabled, all requests go through it,
+   also when Burst proxy settings are enabled, so Cloudflare cookies
+   from cookie sync keep working.
+ - Cookie sync: the browser User-Agent is kept between runs, so synced
+   cookies work even when the Gist could not be fetched.
+ - Requests send the same headers as a browser opening a page.
+ - Rate limited (429) and Cloudflare challenged (503) requests are not
+   retried right away, and at most 4 pages of one tracker are opened at
+   once, so Cloudflare does not block searches for too many requests.
+ - Log says when a tracker answers with a Cloudflare challenge, so
+   cookies can be refreshed in the browser.
  - New Language priority setting, Kodi language by default, to get
    results in preferred languages first.
  - New {languages:short} and {languages:long} keywords for provider

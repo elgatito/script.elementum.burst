@@ -41,6 +41,16 @@ if get_setting("use_custom_user_agent", bool):
         USER_AGENT = agent
         log.debug("Using custom User Agent: %s" % (USER_AGENT))
 
+# Synced cookies are bound to the browser User-Agent, so use it even when this run cannot fetch the Gist
+if get_setting("cookie_sync_enabled", bool):
+    agent = get_setting("cookie_sync_useragent", str)
+    if agent:
+        USER_AGENT = agent
+
+# Navigation Accept headers of the browsers
+CHROME_ACCEPT = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+FIREFOX_ACCEPT = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+
 PATH_TEMP = translatePath("special://temp")
 # (connect, read) seconds, so a stalled tracker can't hold a provider thread forever
 REQUEST_TIMEOUT = (5, 20)
@@ -193,7 +203,8 @@ class Client:
             connect=2,
             redirect=3,
             backoff_factor=0.2,
-            status_forcelist=[429, 500, 502, 503, 504],
+            # Not 429 and 503: retrying rate limits and Cloudflare challenges right away looks like a bot
+            status_forcelist=[500, 502, 504],
             respect_retry_after_header=False
         )
 
@@ -228,9 +239,12 @@ class Client:
 
         if use_elementum_internal_proxy:
             self.proxy_url = "{0}://{1}:{2}".format("http", "127.0.0.1", "65222")
-            if info and "internal_proxy_url" in info:
+            if info and info.get("internal_proxy_url"):
                 self.proxy_url = info["internal_proxy_url"]
-        if proxy['enabled']:
+        if proxy['enabled'] and use_elementum_internal_proxy:
+            # Any other proxy would skip browser impersonation, Elementum's internal proxy uses Elementum's proxy settings
+            log.debug("Ignoring Burst proxy settings, requests go through Elementum's internal proxy")
+        elif proxy['enabled']:
             if proxy['use_type'] == 0 and info and "proxy_url" in info:
                 log.debug("Setting proxy from Elementum: %s" % (info["proxy_url"]))
 
@@ -316,12 +330,11 @@ class Client:
         if self._counter > 1:
             sleep(0.25)
 
-    def open(self, url, language='en', post_data=None, get_data=None, headers=None):
+    def open(self, url, post_data=None, get_data=None, headers=None):
         """ Opens a connection to a webpage and saves its HTML content in ``self.content``
 
         Args:
             url        (str): The URL to open
-            language   (str): The language code for the ``Content-Language`` header
             post_data (dict): POST data for the request
             get_data  (dict): GET data for the request
         """
@@ -348,18 +361,27 @@ class Client:
 
         # Default headers for any request. Pretend like we are the usual browser.
         req_headers = CaseInsensitiveDict({
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'Accept': FIREFOX_ACCEPT if 'Firefox/' in self.user_agent else CHROME_ACCEPT,
             'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7,uk;q=0.6,pl;q=0.5',
-            'Cache-Control': 'max-age=0',
-            'Content-Language': language,
-            'Origin': url,
+            'Priority': 'u=0, i',
             'Referer': url,
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'same-origin',
+            'Sec-Fetch-User': '?1',
+            'Upgrade-Insecure-Requests': '1',
             'User-Agent': self.user_agent
         })
 
-        # Remove referer for API providers
+        # Browsers send Origin, without path, only with POST for page navigation
+        if post_data:
+            parsed = urlparse(url)
+            req_headers['Origin'] = "%s://%s" % (parsed.scheme, parsed.netloc)
+
+        # API providers are not browser pages
         if self.is_api:
-            del req_headers['Referer']
+            for key in ('Priority', 'Referer', 'Sec-Fetch-Dest', 'Sec-Fetch-Mode', 'Sec-Fetch-Site', 'Sec-Fetch-User', 'Upgrade-Insecure-Requests'):
+                del req_headers[key]
 
         # If headers passed to open() call - we overwrite headers.
         if headers:
@@ -371,6 +393,14 @@ class Client:
                     req_headers[key] = value
                 elif key in req_headers:
                     del req_headers[key]
+
+        # XHR requests are not navigation, keep fetch metadata consistent with that
+        if 'X-Requested-With' in req_headers and 'Sec-Fetch-Mode' in req_headers:
+            req_headers['Sec-Fetch-Dest'] = 'empty'
+            req_headers['Sec-Fetch-Mode'] = 'cors'
+            req_headers.pop('Sec-Fetch-User', None)
+            req_headers.pop('Upgrade-Insecure-Requests', None)
+            req_headers['Priority'] = 'u=1, i'
 
         if self.token:
             req_headers["Authorization"] = self.token
@@ -395,6 +425,9 @@ class Client:
                 self.headers = response.headers
                 self.status = response.status_code
                 self.url = response.url
+
+                if response.headers.get('cf-mitigated') == 'challenge':
+                    log.warning("Cloudflare challenge for %s: open the site in the browser with cookie sync, from the same IP, to refresh its cookies" % (urlparse(url).netloc))
 
                 if self.response_charset:
                     self.content = response.content.decode(self.response_charset, 'ignore')
