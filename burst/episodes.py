@@ -118,9 +118,10 @@ def name_matches(name, season, episode=None):
     episodes it has (``Season 2 Episode 5``, ``S02 1080p E05``, ``Сезон 2 / Серии 1-10``). ``S02-09`` is seasons 2 to 9,
     the usual name of a multi-season pack. Season and episode 0 (specials) are checked like the others.
 
-    A name without season or episode numbers (``Complete Series``) is kept, and so is a notation this does not know,
-    such as absolute episode numbers or season words in languages other than English, French, Spanish, Portuguese,
-    German, Italian, Polish, Croatian/Serbian, Russian and Ukrainian.
+    A name without season or episode numbers (``Complete Series``) is kept, and so is an episode named without a season
+    (``E125``, ``Episode 125``), which may be an absolute number, and a notation this does not know, such as season
+    words in languages other than English, French, Spanish, Portuguese, German, Italian, Polish, Croatian/Serbian,
+    Russian and Ukrainian.
 
     Args:
         name    (str): Torrent name
@@ -140,6 +141,5 @@ def name_matches(name, season, episode=None):
         return True
     if any(first <= season <= last for first, last in seasons):
         return not bare or any(first <= episode <= last for first, last in bare)
-    if episodes or seasons:
-        return False
-    return not bare or any(first <= episode <= last for first, last in bare)
+    # An episode without a season (E125, Episode 125) may be an absolute number, as in Nyaa's {absolute_episode} queries
+    return not (episodes or seasons)

@@ -58,6 +58,9 @@ KEEP_S02E09 = [
     'Show Staffel 2',
     'Show 2\u044509 HDTV',
     'Show E09 720p',
+    'Show E05 720p',
+    'Show Ep 125 1080p',
+    'Show Episode 125',
 ]
 
 DROP_S02E09 = [
@@ -85,7 +88,6 @@ DROP_S02E09 = [
     'Show Saison 1',
     'Show Temporada 1',
     'Show Staffel 1',
-    'Show E05 720p',
 ]
 
 
