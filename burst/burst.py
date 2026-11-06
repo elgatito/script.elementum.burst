@@ -537,12 +537,12 @@ def extract_from_api(provider, client):
     api_format = definition['api_format']
 
     def get_nested_value(result, key, default):
-        keys = key.split('.')
-        for key in keys:
-            if key in result:
+        # Dotted keys reach into nested objects, ie. 'attributes.name' in UNIT3D APIs
+        for key in key.split('.'):
+            if isinstance(result, dict) and key in result:
                 result = result[key]
             else:
-                result = default
+                return default
         return result
 
     results = []
@@ -617,7 +617,7 @@ def extract_from_api(provider, client):
                 name += ' '
             name += get_nested_value(result, api_format['description'], "")
         if 'torrent' in api_format:
-            torrent = result.get(api_format['torrent']) or ''
+            torrent = get_nested_value(result, api_format['torrent'], '') or ''
             if 'download_path' in definition and torrent:
                 torrent = definition['download_path'] + torrent + trackers
             if client.token:
@@ -626,21 +626,21 @@ def extract_from_api(provider, client):
                 torrent = append_headers(torrent, headers)
                 log.debug("[%s] Torrent with headers: %s" % (provider, repr(torrent)))
         if 'info_hash' in api_format:
-            info_hash = result.get(api_format['info_hash']) or ''
+            info_hash = get_nested_value(result, api_format['info_hash'], '') or ''
         if 'quality' in api_format:  # Again quite specific to YTS and AniLibria
             name = "%s - %s" % (name, get_nested_value(result, api_format['quality'], ""))
         if 'size' in api_format:
-            size = result.get(api_format['size'])
+            size = get_nested_value(result, api_format['size'], None)
             if isinstance(size, int):
                 size = sizeof(size)
             elif isinstance(size, str) and size.isdigit():
                 size = sizeof(int(size))
         if 'seeds' in api_format:
-            seeds = result.get(api_format['seeds'])
+            seeds = get_nested_value(result, api_format['seeds'], None)
             if isinstance(seeds, str) and seeds.isdigit():
                 seeds = int(seeds)
         if 'peers' in api_format:
-            peers = result.get(api_format['peers'])
+            peers = get_nested_value(result, api_format['peers'], None)
             if isinstance(peers, str) and peers.isdigit():
                 peers = int(peers)
         yield (name, info_hash, torrent, size, seeds, peers, source)
