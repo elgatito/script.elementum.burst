@@ -528,3 +528,7 @@ msgstr "Nyelvi prioritás"
 msgctxt "#32180"
 msgid "Kodi language"
 msgstr "Kodi nyelve"
+
+msgctxt "#32181"
+msgid "Season and episode"
+msgstr ""
