@@ -47,6 +47,20 @@ def language_flags(language):
     return [''.join(chr(0x1F1E6 + ord(c) - ord('A')) for c in country) for country in LANGUAGE_COUNTRIES.get(language, '').split(',') if country]
 
 
+def priority_languages(setting, kodi_language):
+    """ Language codes of the language_priority setting, in order: 'kodi' is the current Kodi language and English,
+    'all' or nothing means no priority, ie. ['sr', 'en'] for 'kodi' in a Serbian Kodi, ['en'] in an English one """
+    languages = []
+    for lang in setting.split(','):
+        lang = lang.strip()
+        if not lang or lang == 'all':
+            continue
+        for code in [kodi_language, 'en'] if lang == 'kodi' else [lang]:
+            if code and code not in languages:
+                languages.append(code)
+    return languages
+
+
 class Magnet:
     """ Magnet link parsing class
 

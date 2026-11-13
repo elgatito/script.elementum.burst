@@ -12,7 +12,7 @@ from elementum.provider import log, get_setting
 from .normalize import normalize_string, remove_accents
 from .episodes import name_matches
 from .providers.definitions import definitions
-from .utils import LANGUAGES, Magnet, get_int, get_float, clean_number, size_int, get_alias, use_opennic_dns
+from .utils import LANGUAGES, Magnet, get_int, get_float, clean_number, size_int, get_alias, use_opennic_dns, priority_languages
 from collections import OrderedDict
 
 use_require_resolution = get_setting('require_resolution', bool)
@@ -24,8 +24,8 @@ use_require_episode = get_setting('require_episode', bool)
 use_accept = get_setting('accept', str).strip().lower()
 use_block = get_setting('block', str).strip().lower()
 use_require = get_setting('require', str).strip().lower()
-# 'kodi' stands for the current Kodi language
-language_priority = [xbmc.getLanguage(xbmc.ISO_639_1) if lang == 'kodi' else lang for lang in get_setting('language_priority', str).split(',') if lang and lang != 'all']
+# 'kodi' stands for the current Kodi language and English
+language_priority = priority_languages(get_setting('language_priority', str), xbmc.getLanguage(xbmc.ISO_639_1))
 use_min_size = get_setting('min_size')
 use_max_size = get_setting('max_size')
 use_filter_quotes = get_setting("filter_quotes", bool)
