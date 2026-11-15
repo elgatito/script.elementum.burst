@@ -4233,11 +4233,11 @@
         "parser": {
             "infohash": "",
             "name": "item(tag='a', order=2)",
-            "peers": "item(tag='div', ('class', ['col-sm-6']), order=2)",
+            "peers": "item(tag='div', select=('class', ['col-sm-6']), order=2)",
             "row": "find_all('div', ('class', ['row', 'mr-0', 'ml-0', 'pt-2', 'pb-2']))",
-            "seeds": "item(tag='div', ('class', ['col-sm-6']), order=1)",
-            "size": "item(tag='div', ('class', ['col-6', 'col-sm-4', 'col-md-1', 'text-center', 'text-muted']))",
-            "torrent": "'https://www.myxz.ey/%s' % item(tag='a', ('class', ['btn', 'btn-success']))"
+            "seeds": "item(tag='div', select=('class', ['col-sm-6']), order=1)",
+            "size": "item(tag='div', select=('class', ['col-6', 'col-sm-4', 'col-md-1', 'text-center', 'text-muted']))",
+            "torrent": "'https://www.myxz.ey/%s' % item(tag='a', select=('class', ['btn', 'btn-success']))"
         },
         "predefined": false,
         "private": true,
@@ -4266,6 +4266,18 @@
                     "nth": 2,
                     "tag": "a"
                 },
+                "peers": {
+                    "nth": 2,
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "col-sm-6"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
                 "row": [
                     {
                         "all": true,
@@ -4283,9 +4295,50 @@
                         ],
                         "tag": "div"
                     }
-                ]
-            },
-            "unsupported": "parser.torrent: not valid Python"
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "col-sm-6"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "size": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "col-6",
+                                "col-sm-4",
+                                "col-md-1",
+                                "text-center",
+                                "text-muted"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "torrent": {
+                    "arg": {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "btn",
+                                    "btn-success"
+                                ]
+                            ]
+                        ],
+                        "tag": "a"
+                    },
+                    "format": "https://www.myxz.ey/%s",
+                    "op": "format"
+                }
+            }
         }
     },
     "ncore": {
@@ -6569,10 +6622,10 @@
         "parser": {
             "infohash": "",
             "name": "item(tag='a', attribute='href', order=1)",
-            "peers": "item(tag='td', class='leechersInfo')",
+            "peers": "item(tag='td', select=('class', 'leechersInfo'))",
             "row": "find_once('table', ('id', 'torrentTable')).find_all('tr', start=2)",
-            "seeds": "item(tag='td', class='seedersInfo')",
-            "size": "item(tag='td', style='white-space: nowrap')",
+            "seeds": "item(tag='td', select=('class', 'seedersInfo'))",
+            "size": "item(tag='td', select=('style', 'nowrap'))",
             "torrent": "item(tag='a', attribute='href', order=2)"
         },
         "predefined": false,
@@ -6599,6 +6652,17 @@
                     "attr": "href",
                     "tag": "a"
                 },
+                "peers": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "leechersInfo"
+                            ]
+                        ]
+                    ],
+                    "tag": "td"
+                },
                 "row": [
                     {
                         "select": [
@@ -6617,13 +6681,34 @@
                         "tag": "tr"
                     }
                 ],
+                "seeds": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "seedersInfo"
+                            ]
+                        ]
+                    ],
+                    "tag": "td"
+                },
+                "size": {
+                    "select": [
+                        [
+                            "style",
+                            [
+                                "nowrap"
+                            ]
+                        ]
+                    ],
+                    "tag": "td"
+                },
                 "torrent": {
                     "attr": "href",
                     "nth": 2,
                     "tag": "a"
                 }
-            },
-            "unsupported": "parser.size: unknown argument style"
+            }
         }
     },
     "torrentdownloads": {
@@ -7394,6 +7479,27 @@
                 "username": "USERNAME"
             },
             "parser": {
+                "name": {
+                    "args": [
+                        {
+                            "nth": 4,
+                            "tag": "a"
+                        },
+                        " ",
+                        {
+                            "select": [
+                                [
+                                    "class",
+                                    [
+                                        "torrent_info"
+                                    ]
+                                ]
+                            ],
+                            "tag": "div"
+                        }
+                    ],
+                    "op": "concat"
+                },
                 "peers": {
                     "nth": 7,
                     "tag": "td"
@@ -7429,8 +7535,7 @@
                     "format": "https://uhdbits.org/%s",
                     "op": "format"
                 }
-            },
-            "unsupported": "parser.name: Tuple"
+            }
         }
     },
     "uindex": {
@@ -8043,6 +8148,46 @@
                 "username": "USERNAME"
             },
             "parser": {
+                "infohash": {
+                    "else": "",
+                    "op": "if",
+                    "test": {
+                        "in": [
+                            {
+                                "parent_of": [
+                                    [
+                                        "src",
+                                        [
+                                            "//img.zamunda.se/pic/magnet-icon-12w-12h.gif"
+                                        ]
+                                    ]
+                                ]
+                            }
+                        ],
+                        "op": "exists"
+                    },
+                    "then": {
+                        "arg": {
+                            "attr": "href",
+                            "in": [
+                                {
+                                    "parent_of": [
+                                        [
+                                            "src",
+                                            [
+                                                "//img.zamunda.se/pic/magnet-icon-12w-12h.gif"
+                                            ]
+                                        ]
+                                    ]
+                                }
+                            ],
+                            "raw": true
+                        },
+                        "new": "",
+                        "old": "magnet:?xt=urn:btih:",
+                        "op": "replace"
+                    }
+                },
                 "name": {
                     "args": [
                         {
@@ -8134,8 +8279,7 @@
                     ],
                     "op": "concat"
                 }
-            },
-            "unsupported": "parser.infohash: Call"
+            }
         }
     },
     "zooqle": {

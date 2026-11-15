@@ -93,6 +93,15 @@ def text(node):
     if isinstance(node, ast.Name) and node.id == "key":
         return {"op": "key"}
     if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Mod) and isinstance(node.left, ast.Constant):
+        if isinstance(node.right, ast.Tuple):
+            # '%s %s' % (a, b): the pieces of the format with the values between them
+            pieces = node.left.value.split("%s")
+            if len(pieces) != len(node.right.elts) + 1:
+                raise Unsupported("format with other placeholders than %s")
+            parts = [pieces[0]]
+            for value, piece in zip(node.right.elts, pieces[1:]):
+                parts.extend([text(value), piece])
+            return {"op": "concat", "args": [p for p in parts if p != ""]}
         return {"op": "format", "format": node.left.value, "arg": text(node.right)}
     if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add):
         parts = []
@@ -101,7 +110,11 @@ def text(node):
             parts.extend(t["args"] if isinstance(t, dict) and t.get("op") == "concat" else [t])
         return {"op": "concat", "args": parts}
     if isinstance(node, ast.IfExp):
-        return {"op": "if", "test": text(node.test), "then": text(node.body), "else": text(node.orelse)}
+        try:
+            test = text(node.test)
+        except Unsupported:
+            test = {"op": "exists", "in": nodes(node.test)}  # "x if <element> else y": is the element there
+        return {"op": "if", "test": test, "then": text(node.body), "else": text(node.orelse)}
     if isinstance(node, ast.Subscript):
         # .attr['href'] on elements
         if isinstance(node.value, ast.Attribute) and node.value.attr == "attr":
