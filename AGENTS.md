@@ -12,6 +12,7 @@ Use `scripts/` for maintenance tasks such as settings generation, localization c
 - `./scripts/xgettext.sh`: validate translation `.po` files.
 - `make`: build `script.elementum.burst-<version>.zip` from current `HEAD`.
 - `make settings`: regenerate provider blocks in `resources/settings.xml` after editing `burst/providers/providers.json`.
+- `make builtin`: rewrite the `builtin` part of every provider in `burst/providers/providers.json` after editing a provider. Elementum's built-in search reads it in place of the Python expressions; CI fails when it is out of date.
 - `make locales`: merge `resources/language/messages.pot` into each locale file.
 
 ## Coding Style & Naming Conventions

@@ -28,6 +28,12 @@ jobs:
       - name: Test
         run: python -m pytest -q tests
 
+      - name: Check the builtin part of providers.json
+        run: |
+          # Elementum's built-in search reads "builtin", written from the Python expressions by this script
+          python scripts/builtin.py
+          git diff --exit-code -- burst/providers/providers.json || { echo "::error::providers.json is out of date, run: make builtin"; exit 1; }
+
       - name: Validate translations
         run: ./scripts/xgettext.sh
 

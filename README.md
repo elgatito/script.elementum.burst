@@ -98,6 +98,16 @@ and make sure it follows the format below (hopefully with `"subpage": false`):
 }
 ```
 
+### The `builtin` part of a provider
+
+Elementum has its own torrent search that reads `burst/providers/providers.json` too. It cannot run
+the Python expressions of `parser`, `login_object`, `login_headers`, `post_data` and `headers`, so
+each provider carries them a second time under `builtin`, as plain JSON. Burst ignores that key.
+
+Do not edit `builtin` by hand: change the provider as usual and run `make builtin`, which rewrites it
+from the Python expressions. CI fails when the two do not match. A provider with an expression the
+script does not understand gets `"builtin": {"unsupported": "..."}` and is searched by Burst only.
+
 ### Release
 
 Release is done by running `release.sh` script, that collects zip artifacts and push it as a release (if we are on the tag).
