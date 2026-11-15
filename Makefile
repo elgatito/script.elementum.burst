@@ -56,6 +56,9 @@ endif
 settings:
 	scripts/generate_settings.py
 
+builtin:
+	scripts/builtin.py
+
 locales:
 	scripts/xgettext_merge.sh
 	scripts/xgettext.sh

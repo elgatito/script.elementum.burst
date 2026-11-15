@@ -44,7 +44,63 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:original} Сезон {season}"
+        "tv_keywords_fallback": "{title:original} Сезон {season}",
+        "builtin": {
+            "login_object": {
+                "password": "PASSWORD",
+                "returnto": "/browse.php",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "divider": [
+                        "|",
+                        1
+                    ],
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "rowtorrentinfo"
+                                ]
+                            ]
+                        ],
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "divider": [
+                        "|",
+                        0
+                    ],
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 3,
+                        "tag": "a"
+                    },
+                    "format": "https://tracker.0day.community/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "1337x": {
         "anime_extra": "",
@@ -94,7 +150,45 @@
         "tv_keywords2": null,
         "tv_keywords_fallback": "{title:original:en} s{season:2}",
         "tv_keywords_fallback2": "{title:original:en} season {season}",
-        "tv_keywords_fallback3": "{title:original:en} {season:2}x01"
+        "tv_keywords_fallback3": "{title:original:en} {season:2}x01",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "tag": "tbody"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 2,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 2,
+                        "tag": "a"
+                    },
+                    "format": "https://www.1337x.to%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "3dtrackerru": {
         "anime_extra": "",
@@ -138,7 +232,90 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "",
-        "tv_keywords2": ""
+        "tv_keywords2": "",
+        "builtin": {
+            "login_object": {
+                "login": "Вход",
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "nav"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "leech"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "tablebg"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "valign",
+                                [
+                                    "middle"
+                                ]
+                            ]
+                        ],
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "seed"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                },
+                "size": {
+                    "nth": 5,
+                    "tag": "b"
+                },
+                "torrent": {
+                    "arg": {
+                        "arg": {
+                            "attr": "href",
+                            "tag": "a"
+                        },
+                        "from": 1,
+                        "op": "slice"
+                    },
+                    "format": "http://3d-tracker.ru%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "anilibria": {
         "anime_keywords": "{title:ru:jp}",
@@ -196,7 +373,39 @@
         "season_keywords": "{title:ru:jp}",
         "separator": "+",
         "subpage": true,
-        "tv_keywords": "{title:ru:jp}"
+        "tv_keywords": "{title:ru:jp}",
+        "builtin": {
+            "parser": {
+                "description": "WebDL 1080p",
+                "name": {
+                    "tag": "h2"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "search_post"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    }
+                ],
+                "seeds": "1",
+                "torrent": {
+                    "attr": "href",
+                    "tag": "a"
+                }
+            },
+            "post_data": {
+                "do": "search",
+                "story": "QUERY",
+                "subaction": "search"
+            }
+        }
     },
     "animaunt": {
         "anime_keywords": "{title:ru:jp}",
@@ -224,7 +433,55 @@
         "season_keywords": "{title:ru:jp}",
         "separator": "+",
         "subpage": true,
-        "tv_keywords": "{title:ru:jp}"
+        "tv_keywords": "{title:ru:jp}",
+        "builtin": {
+            "parser": {
+                "description": "WebDL 1080p",
+                "name": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "th-title"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "thumb"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    }
+                ],
+                "seeds": "1",
+                "torrent": {
+                    "attr": "href",
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "th-title"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                }
+            },
+            "post_data": {
+                "do": "search",
+                "story": "QUERY",
+                "subaction": "search"
+            }
+        }
     },
     "animelayer": {
         "anime_keywords": "{title:ru:jp}",
@@ -254,7 +511,60 @@
         "season_keywords": "{title:ru:jp}",
         "separator": "+",
         "subpage": false,
-        "tv_keywords": "{title:ru:jp}"
+        "tv_keywords": "{title:ru:jp}",
+        "builtin": {
+            "login_object": {
+                "login": "USERNAME",
+                "password": "PASSWORD"
+            },
+            "parser": {
+                "description": "WebDL 1080p",
+                "name": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "title"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "torrent-item"
+                                ]
+                            ]
+                        ],
+                        "tag": "li"
+                    }
+                ],
+                "seeds": "1",
+                "torrent": {
+                    "args": [
+                        {
+                            "attr": "href",
+                            "select": [
+                                [
+                                    "class",
+                                    [
+                                        "cover"
+                                    ]
+                                ]
+                            ],
+                            "tag": "a"
+                        },
+                        "download"
+                    ],
+                    "op": "concat"
+                }
+            }
+        }
     },
     "arabp2p": {
         "anime_extra": "",
@@ -303,7 +613,65 @@
         "tv_keywords2": null,
         "tv_keywords_fallback": "{title} s{season:2}",
         "tv_keywords_fallback2": "{title} season {season}",
-        "tv_keywords_fallback3": "{title} {season:2}x01"
+        "tv_keywords_fallback3": "{title} {season:2}x01",
+        "builtin": {
+            "login_object": {
+                "pwd": "PASSWORD",
+                "uid": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "td"
+                },
+                "peers": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "torrents_list_p"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "torrent"
+                                ]
+                            ]
+                        ],
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 3,
+                        "tag": "a"
+                    },
+                    "format": "https://www.arabp2p.net/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "baibako": {
         "anime_extra": "",
@@ -345,7 +713,66 @@
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:original:en} /s{season:2}"
+        "tv_keywords": "{title:original:en} /s{season:2}",
+        "builtin": {
+            "login_object": {
+                "commit": "Пустите меня",
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "divider": [
+                        "|",
+                        1
+                    ],
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "highlighted"
+                                ]
+                            ]
+                        ],
+                        "tag": "tbody"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "divider": [
+                        "|",
+                        0
+                    ],
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 3,
+                        "tag": "a"
+                    },
+                    "format": "http://baibako.tv/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "bithumen": {
         "anime_extra": "",
@@ -386,7 +813,62 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:original:en:hu} s{season:2}"
+        "tv_keywords_fallback": "{title:original:en:hu} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "divider": [
+                        "/",
+                        1
+                    ],
+                    "nth": 9,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "torrenttable"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 8,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 3,
+                        "tag": "a"
+                    },
+                    "format": "https://bithumen.be/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "bitnova": {
         "anime_extra": null,
@@ -431,7 +913,64 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "login": "USERNAME",
+                "pass": "PASSWORD",
+                "remember": "1"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "searchRes"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "arg": {
+                            "attr": "id",
+                            "nth": 4,
+                            "tag": "a"
+                        },
+                        "new": "/",
+                        "old": "_",
+                        "op": "replace"
+                    },
+                    "format": "https://bitnova.info/%s/",
+                    "op": "format"
+                }
+            }
+        }
     },
     "bitsearch": {
         "anime_extra": "",
@@ -481,7 +1020,132 @@
         "tv_keywords2": null,
         "tv_keywords_fallback": "{title:original:en} s{season:2}",
         "tv_keywords_fallback2": "{title:original:en} season {season}",
-        "tv_keywords_fallback3": "{title:original:en} {season:2}x01"
+        "tv_keywords_fallback3": "{title:original:en} {season:2}x01",
+        "builtin": {
+            "parser": {
+                "infohash": {
+                    "arg": {
+                        "attr": "href",
+                        "divider": [
+                            "&",
+                            0
+                        ],
+                        "nth": 3,
+                        "tag": "a"
+                    },
+                    "new": "",
+                    "old": "magnet:?xt=urn:btih:",
+                    "op": "replace"
+                },
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "in": [
+                        {
+                            "nth": 3,
+                            "select": [
+                                [
+                                    "class",
+                                    [
+                                        "items-center"
+                                    ]
+                                ]
+                            ],
+                            "tag": "div"
+                        },
+                        {
+                            "nth": 2,
+                            "select": [
+                                [
+                                    "class",
+                                    [
+                                        "font-medium"
+                                    ]
+                                ]
+                            ],
+                            "tag": "span"
+                        }
+                    ],
+                    "raw": true
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "items-start"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    }
+                ],
+                "seeds": {
+                    "in": [
+                        {
+                            "nth": 3,
+                            "select": [
+                                [
+                                    "class",
+                                    [
+                                        "items-center"
+                                    ]
+                                ]
+                            ],
+                            "tag": "div"
+                        },
+                        {
+                            "select": [
+                                [
+                                    "class",
+                                    [
+                                        "font-medium"
+                                    ]
+                                ]
+                            ],
+                            "tag": "span"
+                        }
+                    ],
+                    "raw": true
+                },
+                "size": {
+                    "in": [
+                        {
+                            "select": [
+                                [
+                                    "class",
+                                    [
+                                        "mb-3"
+                                    ]
+                                ]
+                            ],
+                            "tag": "div"
+                        },
+                        {
+                            "nth": 2,
+                            "select": [
+                                [
+                                    "class",
+                                    [
+                                        "items-center"
+                                    ]
+                                ]
+                            ],
+                            "tag": "span"
+                        }
+                    ],
+                    "raw": true
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 3,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "bt4g": {
         "anime_extra": "",
@@ -526,7 +1190,69 @@
         "tv_keywords_fallback": "{title:original:en} s{season:2}",
         "tv_keywords_fallback2": "{title:original:en} season {season}",
         "tv_keywords_fallback3": "{title:original:en} {season:2}x01",
-        "show_query": ""
+        "show_query": "",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "id",
+                            [
+                                "leechers"
+                            ]
+                        ]
+                    ],
+                    "tag": "b"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "result-item"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    }
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "id",
+                            [
+                                "seeders"
+                            ]
+                        ]
+                    ],
+                    "tag": "b"
+                },
+                "size": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "red-pill"
+                            ]
+                        ]
+                    ],
+                    "tag": "b"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "tag": "a"
+                    },
+                    "format": "https://bt4gprx.com%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "helltorrents": {
         "anime_extra": null,
@@ -571,7 +1297,63 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "pwd": "PASSWORD",
+                "uid": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "searchRes"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "arg": {
+                            "attr": "id",
+                            "nth": 4,
+                            "tag": "a"
+                        },
+                        "new": "/",
+                        "old": "_",
+                        "op": "replace"
+                    },
+                    "format": "https://helltorrents.com/%s/",
+                    "op": "format"
+                }
+            }
+        }
     },
     "electrotorrent": {
         "anime_extra": null,
@@ -616,7 +1398,89 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "nazwa-torrenta"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 3,
+                    "tag": "font"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "test5"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "tag": "div"
+                    }
+                ],
+                "seeds": {
+                    "nth": 2,
+                    "tag": "font"
+                },
+                "size": {
+                    "arg": {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "descr3"
+                                ]
+                            ]
+                        ],
+                        "tag": "td"
+                    },
+                    "group": 1,
+                    "op": "regex",
+                    "pattern": "Rozmiar: (.*?)\\n"
+                },
+                "torrent": {
+                    "arg": {
+                        "arg": {
+                            "attr": "href",
+                            "select": [
+                                [
+                                    "class",
+                                    [
+                                        "nazwa-torrenta"
+                                    ]
+                                ]
+                            ],
+                            "tag": "a"
+                        },
+                        "index": -1,
+                        "max": -1,
+                        "op": "split",
+                        "sep": "/"
+                    },
+                    "format": "https://electro-torrent.pl/download/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "bluebird": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -660,7 +1524,63 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:original} Сезон {season}"
+        "tv_keywords_fallback": "{title:original} Сезон {season}",
+        "builtin": {
+            "login_object": {
+                "password": "PASSWORD",
+                "returnto": "/browse.php",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 3,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 8,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "highlighted"
+                                ]
+                            ]
+                        ],
+                        "tag": "tbody"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 9,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "arg": {
+                            "attr": "href",
+                            "nth": 3,
+                            "tag": "a"
+                        },
+                        "new": "download.php",
+                        "old": "details.php",
+                        "op": "replace"
+                    },
+                    "format": "https://bluebird-hd.org/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "cpasbien": {
         "anime_extra": "",
@@ -706,7 +1626,68 @@
         "tv_extra2": "",
         "tv_keywords": "{title:fr} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:fr} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:fr} s{season:2}"
+        "tv_keywords_fallback": "{title:fr} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "down"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "table-corps"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "up"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "size": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "poid"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "tag": "a"
+                }
+            }
+        }
     },
     "ettv": {
         "anime_extra": "",
@@ -752,7 +1733,50 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": -1,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "table-bordered"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": -2,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": -4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 2,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "extranet": {
         "anime_extra": "",
@@ -800,7 +1824,81 @@
         "tv_keywords_fallback": "{title:original:en} s{season:2}",
         "tv_keywords_fallback2": "{title:original:en} season {season}",
         "tv_keywords_fallback3": "{title:original:en} {season:2}x01",
-        "show_query": "&cat=2"
+        "show_query": "&cat=2",
+        "builtin": {
+            "parser": {
+                "infohash": {
+                    "attr": "href",
+                    "divider": [
+                        ":",
+                        3
+                    ],
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "torrent-dwn"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                },
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "search-table"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "in": [
+                        {
+                            "nth": 2,
+                            "tag": "td"
+                        },
+                        {
+                            "nth": 2,
+                            "tag": "span"
+                        }
+                    ],
+                    "raw": true
+                },
+                "torrent": {
+                    "attr": "href",
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "torrent-dwn"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                }
+            }
+        }
     },
     "extratorrent": {
         "anime_extra": "",
@@ -845,7 +1943,79 @@
         "tv_keywords_fallback": "{title:original:en} s{season:2}",
         "tv_keywords_fallback2": "{title:original:en} season {season}",
         "tv_keywords_fallback3": "{title:original:en} {season:2}x01",
-        "show_query": "&s_cat=2"
+        "show_query": "&s_cat=2",
+        "builtin": {
+            "parser": {
+                "infohash": {
+                    "arg": {
+                        "attr": "href",
+                        "divider": [
+                            "&",
+                            0
+                        ],
+                        "in": [
+                            {
+                                "tag": "td"
+                            }
+                        ],
+                        "nth": 0,
+                        "tag": "a"
+                    },
+                    "new": "",
+                    "old": "magnet:?xt=urn:btih:",
+                    "op": "replace"
+                },
+                "name": {
+                    "in": [
+                        {
+                            "nth": 2,
+                            "tag": "td"
+                        }
+                    ],
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "tl"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "in": [
+                        {
+                            "tag": "td"
+                        }
+                    ],
+                    "nth": 0,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "eztv": {
         "anime_extra": null,
@@ -888,7 +2058,45 @@
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "'{title:original}' s{season:2}e{episode:2}"
+        "tv_keywords": "'{title:original}' s{season:2}e{episode:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "forum_header_border"
+                                ]
+                            ]
+                        ],
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 3,
+                    "tag": "a"
+                }
+            },
+            "post_data": {
+                "layout": "def_wlinks"
+            }
+        }
     },
     "filebase": {
         "anime_keywords": "{title:en:ru}",
@@ -936,7 +2144,62 @@
         "tv_keywords": "{title:en:ru} {season} сезон {episode} сери",
         "tv_keywords2": "{title:en:ru} {season} сезон {episode} сери",
         "tv_keywords_fallback": "{title:en:ru} {season} сезон",
-        "tv_keywords_fallback2": "{title:en:ru} {season} сезон"
+        "tv_keywords_fallback2": "{title:en:ru} {season} сезон",
+        "builtin": {
+            "login_object": {
+                "pwd": "PASSWORD",
+                "uid": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 8,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "torrents_list"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "divider": [
+                            "/",
+                            3
+                        ],
+                        "nth": 2,
+                        "tag": "a"
+                    },
+                    "format": "http://www.filebase.ws/download.php?id=%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "filelist": {
         "anime_extra": "",
@@ -1024,7 +2287,57 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "pwd": "PASSWORD",
+                "uid": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "cellpadding",
+                                [
+                                    "3px"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 3,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "tag": "a"
+                    },
+                    "format": "https://filetracker.pl/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "gimmepeers": {
         "anime_keywords": "{title} s{season:2}e{episode:2}",
@@ -1068,7 +2381,61 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season:2}"
+        "tv_keywords_fallback": "{title} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 12,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "browsetable"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 11,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "select": [
+                        [
+                            "title",
+                            [
+                                "Download"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                }
+            }
+        }
     },
     "glotorrents": {
         "anime_extra": "",
@@ -1118,7 +2485,47 @@
         "tv_keywords2": null,
         "tv_keywords_fallback": "{title:en} s{season:2}",
         "tv_keywords_fallback2": "{title:en} season {season}",
-        "tv_keywords_fallback3": "{title:en} {season:2}x01"
+        "tv_keywords_fallback3": "{title:en} {season:2}x01",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 3,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "every": 2,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "t-row"
+                                ]
+                            ]
+                        ],
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 5,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "hd-torrents": {
         "anime_keywords": "{title} s{season:2}e{episode:2}",
@@ -1165,7 +2572,69 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season:2}"
+        "tv_keywords_fallback": "{title} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "csrfToken": "CSRF_TOKEN",
+                "pwd": "PASSWORD",
+                "uid": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 11,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "mainblockcontenttt"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 3,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 10,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 8,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "arg": {
+                            "arg": {
+                                "attr": "href",
+                                "nth": 5,
+                                "tag": "a"
+                            },
+                            "new": "download.php",
+                            "old": "wishlist.php",
+                            "op": "replace"
+                        },
+                        "new": "id=",
+                        "old": "torrent_id=",
+                        "op": "replace"
+                    },
+                    "format": "https://hd-torrents.org/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "idope": {
         "anime_extra": "",
@@ -1215,7 +2684,84 @@
         "tv_keywords2": null,
         "tv_keywords_fallback": "{title:original:en} s{season:2}",
         "tv_keywords_fallback2": "{title:original:en} season {season}",
-        "tv_keywords_fallback3": "{title:original:en} {season:2}x01"
+        "tv_keywords_fallback3": "{title:original:en} {season:2}x01",
+        "builtin": {
+            "parser": {
+                "infohash": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "hideinfohash"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "name": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "resultdivtopname"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "resultdiv"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    }
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "resultdivbottonseed"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "size": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "resultdivbottonlength"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "torrent": {
+                    "arg": {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "hideinfohash"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    },
+                    "format": "magnet:?xt=urn:btih:%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "ilcorsaroblu": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -1257,7 +2803,66 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "pwd": "PASSWORD",
+                "uid": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "td"
+                },
+                "peers": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "nth": 6,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "lista"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 10,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "arg": {
+                            "arg": {
+                                "attr": "href",
+                                "nth": 3,
+                                "tag": "a"
+                            },
+                            "group": 1,
+                            "op": "regex",
+                            "pattern": "id=(.*?)&"
+                        },
+                        "op": "upper"
+                    },
+                    "format": "https://itorrents.org/torrent/%s.torrent",
+                    "op": "format"
+                }
+            }
+        }
     },
     "ilcorsaronero": {
         "anime_keywords": "{title:original:it} s{season:2}e{episode:2}",
@@ -1301,7 +2906,44 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original:it} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:original:it} s{season:2}"
+        "tv_keywords_fallback": "{title:original:it} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 2,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "tag": "a"
+                    },
+                    "format": "https://ilcorsaronero.link%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "ilcorsarored": {
         "anime_keywords": "{title:it} s{season:2}e{episode:2}",
@@ -1357,7 +2999,13 @@
         "tv_extra2": "",
         "tv_keywords": "{title:it} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:it} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:it} s{season:2}"
+        "tv_keywords_fallback": "{title:it} s{season:2}",
+        "builtin": {
+            "post_data": {
+                "category": "0",
+                "term": "QUERY"
+            }
+        }
     },
     "iptorrents": {
         "anime_extra": "",
@@ -1401,7 +3049,72 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "t_leechers"
+                            ]
+                        ]
+                    ],
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "torrents"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "t_seeders"
+                            ]
+                        ]
+                    ],
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 4,
+                        "tag": "a"
+                    },
+                    "format": "https://www.iptorrents.com%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "itorrent": {
         "anime_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
@@ -1444,7 +3157,56 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:original:en:hu} s{season:2}"
+        "tv_keywords_fallback": "{title:original:en:hu} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 8,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "table",
+                                    "main-table",
+                                    "table-striped"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 2,
+                        "tag": "a"
+                    },
+                    "format": "https://itorrent.ws/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "kickass": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -1489,7 +3251,54 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 4,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "frontPageWidget"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 2,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 2,
+                        "tag": "a"
+                    },
+                    "format": "https://kickasstorrents.to%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "kinozal": {
         "anime_keywords": "{title:ru:en} s{season:2}e{episode:2}",
@@ -1539,7 +3348,94 @@
         "tv_extra": "",
         "tv_keywords": "{title:ru:en} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:ru:en} {season}+Сезон",
-        "tv_keywords_fallback": "{title:original} {season}+Сезон"
+        "tv_keywords_fallback": "{title:original} {season}+Сезон",
+        "builtin": {
+            "login_object": {
+                "login": "Вход",
+                "password": "PASSWORD",
+                "referer": "https://kinozal.guru/login.php?m=5",
+                "to": "",
+                "touser": "1",
+                "username": "USERNAME",
+                "wact": "takerecover"
+            },
+            "parser": {
+                "description": {
+                    "arg": {
+                        "arg": {
+                            "arg": {
+                                "attr": "class",
+                                "tag": "a"
+                            },
+                            "new": "Обычная раздача",
+                            "old": "r0",
+                            "op": "replace"
+                        },
+                        "new": "Золотая раздача",
+                        "old": "r1",
+                        "op": "replace"
+                    },
+                    "new": "Серебрянная раздача",
+                    "old": "r2",
+                    "op": "replace"
+                },
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "referer": {
+                    "arg": {
+                        "attr": "href",
+                        "tag": "a"
+                    },
+                    "format": "https://s-kinozal-tv.appspot.com%s",
+                    "op": "format"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "t_peer"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "arg": {
+                            "attr": "href",
+                            "tag": "a"
+                        },
+                        "index": 1,
+                        "max": 1,
+                        "op": "split",
+                        "sep": "?"
+                    },
+                    "format": "https://kinozal.guru/get_srv_details.php?action=2&%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "knaben": {
         "anime_extra": "",
@@ -1589,7 +3485,45 @@
         "tv_keywords2": null,
         "tv_keywords_fallback": "{title:original:en} s{season:2}",
         "tv_keywords_fallback2": "{title:original:en} season {season}",
-        "tv_keywords_fallback3": "{title:original:en} {season:2}x01"
+        "tv_keywords_fallback3": "{title:original:en} {season:2}x01",
+        "builtin": {
+            "parser": {
+                "infohash": {
+                    "attr": "data-copy-to-clipboard-content",
+                    "tag": "span"
+                },
+                "name": {
+                    "nth": 3,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "tag": "tbody"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 3,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "leproduction": {
         "anime_keywords": "{title:ru:en}",
@@ -1617,7 +3551,60 @@
         "season_keywords": "{title:ru:en}",
         "separator": "+",
         "subpage": true,
-        "tv_keywords": "{title:ru:en}"
+        "tv_keywords": "{title:ru:en}",
+        "builtin": {
+            "parser": {
+                "description": "WebDL 1080p",
+                "name": {
+                    "in": [
+                        {
+                            "select": [
+                                [
+                                    "class",
+                                    [
+                                        "short-info"
+                                    ]
+                                ]
+                            ],
+                            "tag": "div"
+                        }
+                    ],
+                    "tag": "a"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "short-item"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    }
+                ],
+                "seeds": "1",
+                "torrent": {
+                    "attr": "href",
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "short-img"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                }
+            },
+            "post_data": {
+                "do": "search",
+                "story": "QUERY",
+                "subaction": "search"
+            }
+        }
     },
     "limetorrents": {
         "anime_extra": "",
@@ -1666,7 +3653,47 @@
         "tv_keywords2": null,
         "tv_keywords_fallback": "{title:en} s{season:2}",
         "tv_keywords_fallback2": "{title:en} season {season}",
-        "tv_keywords_fallback3": "{title:en} {season:2}x01"
+        "tv_keywords_fallback3": "{title:en} {season:2}x01",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "tag": "td"
+                },
+                "peers": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "table2"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "tag": "a"
+                }
+            }
+        }
     },
     "linkomanija": {
         "anime_keywords": "+{title:original} s{season:2}e{episode:2}",
@@ -1710,7 +3737,78 @@
         "tv_extra2": "",
         "tv_keywords": "+{title:original:en} s{season:2}e{episode:2}",
         "tv_keywords2": "+{title:original:en} s{season:2}",
-        "tv_keywords_fallback": "+{title:original:en}"
+        "tv_keywords_fallback": "+{title:original:en}",
+        "builtin": {
+            "login_object": {
+                "commit": "Prisijungti",
+                "login_cookie": "1",
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "args": [
+                        {
+                            "nth": 2,
+                            "tag": "a"
+                        },
+                        " [",
+                        {
+                            "attr": "title",
+                            "tag": "img"
+                        },
+                        "]"
+                    ],
+                    "op": "concat"
+                },
+                "peers": {
+                    "nth": 9,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "cellpadding",
+                                [
+                                    "5"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 8,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "index"
+                                ]
+                            ]
+                        ],
+                        "tag": "a"
+                    },
+                    "format": "https://www.linkomanija.net/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "lostfilm": {
         "anime_extra": "",
@@ -1754,7 +3852,87 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:en}/season_{season}/episode_{episode}",
-        "tv_keywords2": ""
+        "tv_keywords2": "",
+        "builtin": {
+            "login_object": {
+                "act": "users",
+                "mail": "USERNAME",
+                "need_captcha": "1",
+                "pass": "PASSWORD",
+                "rem": "1",
+                "type": "login"
+            },
+            "parser": {
+                "name": {
+                    "arg": {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "main"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    },
+                    "new": " ",
+                    "old": "\n",
+                    "op": "replace"
+                },
+                "peers": "0",
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "inner-box--list"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    },
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "inner-box--item"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    }
+                ],
+                "seeds": "1",
+                "size": {
+                    "arg": {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "inner-box--desc"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    },
+                    "group": 1,
+                    "op": "regex",
+                    "pattern": "(\\d+\\.\\d+ ..)"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 2,
+                        "tag": "a"
+                    },
+                    "format": "%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "magnetdl": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -1800,7 +3978,49 @@
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": null,
         "tv_keywords_fallback": "{title:original} s{season:2}",
-        "tv_keywords_fallback2": "{title:original} season {season}"
+        "tv_keywords_fallback2": "{title:original} season {season}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 8,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "download"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "tag": "a"
+                }
+            }
+        }
     },
     "megapeer": {
         "anime_keywords": "",
@@ -1845,7 +4065,48 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} {season} Сезон",
-        "tv_keywords_fallback": "{title:original}"
+        "tv_keywords_fallback": "{title:original}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 2,
+                    "tag": "font"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "table_fon"
+                                ]
+                            ]
+                        ],
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "tag": "font"
+                },
+                "size": {
+                    "nth": -1,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "tag": "a"
+                    },
+                    "format": "https://megapeer.vip%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "mvgroup": {
         "anime_keywords": "{title} s{season:2}e{episode:2}",
@@ -1891,7 +4152,62 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season:2}"
+        "tv_keywords_fallback": "{title} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "CODE": "01",
+                "CookieDate": "1",
+                "PassWord": "PASSWORD",
+                "UserName": "USERNAME",
+                "act": "Login",
+                "referer": "http://forums.mvgroup.org/index.php?act=Login&CODE=00",
+                "submit": "Log In"
+            },
+            "parser": {
+                "name": {
+                    "tag": "td"
+                },
+                "peers": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "torrentlist"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "size": "1",
+                "torrent": {
+                    "attr": "href",
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "magnetlink"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                }
+            }
+        }
     },
     "myxzorg": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -1937,7 +4253,40 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "_csrf_token": "CSRF_TOKEN",
+                "_remember_me": "on",
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "row",
+                                    "mr-0",
+                                    "ml-0",
+                                    "pt-2",
+                                    "pb-2"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    }
+                ]
+            },
+            "unsupported": "parser.torrent: not valid Python"
+        }
     },
     "ncore": {
         "anime_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
@@ -1983,7 +4332,108 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:original:en:hu} s{season:2}"
+        "tv_keywords_fallback": "{title:original:en:hu} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "ne_leptessen_ki": "1",
+                "nev": "USERNAME",
+                "pass": "PASSWORD"
+            },
+            "parser": {
+                "key": {
+                    "arg": {
+                        "attr": "href",
+                        "in": [
+                            {
+                                "select": [
+                                    [
+                                        "rel",
+                                        [
+                                            "alternate"
+                                        ]
+                                    ]
+                                ],
+                                "tag": "link"
+                            }
+                        ],
+                        "raw": true
+                    },
+                    "index": -1,
+                    "max": 1,
+                    "op": "split",
+                    "sep": "="
+                },
+                "name": {
+                    "attr": "title",
+                    "tag": "a"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "box_l2"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "box_nagy",
+                                    "box_nagy2"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    }
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "box_s2"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "size": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "box_meret2"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "tag": "a"
+                    },
+                    "new": {
+                        "args": [
+                            "https://ncore.pro/torrents.php?action=download&key=",
+                            {
+                                "op": "key"
+                            }
+                        ],
+                        "op": "concat"
+                    },
+                    "old": "torrents.php?action=details",
+                    "op": "replace"
+                }
+            }
+        }
     },
     "newstudio": {
         "anime_keywords": "\"{title:ru} Сезон {season}, Серия {episode}\"",
@@ -2025,7 +4475,53 @@
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "\"{title:ru} Сезон {season}, Серия {episode}\""
+        "tv_keywords": "\"{title:ru} Сезон {season}, Серия {episode}\"",
+        "builtin": {
+            "login_object": {
+                "autologin": "1",
+                "login": "1",
+                "login_password": "PASSWORD",
+                "login_username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "well-small"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": "1",
+                "size": {
+                    "nth": 3,
+                    "tag": "a"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 4,
+                        "tag": "a"
+                    },
+                    "format": "https://newstudio.tv%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "nitro": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -2070,7 +4566,64 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "pwd": "PASSWORD",
+                "uid": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "nth": 4,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "styled-block",
+                                    "concise-block"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "arg": {
+                            "attr": "title",
+                            "nth": 0,
+                            "tag": "a"
+                        },
+                        "new": "download_magnet.php",
+                        "old": "__DWNMAGNET__",
+                        "op": "replace"
+                    },
+                    "format": "http://nitro.to/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "nnmclub": {
         "anime_keywords": "{title:ru:en} s{season:2}e{episode:2}",
@@ -2126,7 +4679,91 @@
         "tv_keywords": "{title:ru:en} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:ru:en} \"Сезон {season}\"",
         "tv_keywords_fallback": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords_fallback2": "{title:original} \"Сезон {season}\""
+        "tv_keywords_fallback2": "{title:original} \"Сезон {season}\"",
+        "builtin": {
+            "login_object": {
+                "autologin": "on",
+                "login": "1",
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "description": {
+                    "attr": "title",
+                    "tag": "span"
+                },
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "leechmed"
+                            ]
+                        ]
+                    ],
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "tablesorter"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "prow1",
+                                    "prow2"
+                                ]
+                            ]
+                        ],
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "seedmed"
+                            ]
+                        ]
+                    ],
+                    "tag": "td"
+                },
+                "size": {
+                    "arg": {
+                        "nth": 4,
+                        "tag": "td"
+                    },
+                    "index": 1,
+                    "max": 1,
+                    "op": "split",
+                    "sep": " "
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 2,
+                        "tag": "a"
+                    },
+                    "format": "https://nnmclub.to/forum/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "nyaa": {
         "anime_keywords": "{title:original:en:jp} s{season:2}e{episode:2}",
@@ -2172,7 +4809,38 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original:en:jp} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original:en:jp} {absolute_episode:2}",
-        "tv_keywords_fallback": "{title:original:en:jp} s{season:2}"
+        "tv_keywords_fallback": "{title:original:en:jp} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": -2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": -1,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": -2,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 0,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "piratbit": {
         "anime_keywords": "{title:original} Сезон {season}",
@@ -2213,7 +4881,73 @@
         "subpage": true,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:original} Сезон {season}"
+        "tv_keywords": "{title:original} Сезон {season}",
+        "builtin": {
+            "login_object": {
+                "login": "Bxoд",
+                "login_password": "PASSWORD",
+                "login_site_username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "title"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "tor-tbl"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "title"
+                                ]
+                            ]
+                        ],
+                        "tag": "a"
+                    },
+                    "format": "https://pirat.one%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "rarbg": {
         "anime_keywords": "{title:en:original} s{season:2}e{episode:2}",
@@ -2322,7 +5056,103 @@
         "tv_keywords": "\"{title:en:ru}\" \"Сезон {season}\"",
         "tv_keywords2": "\"{title:en:ru}\" -Сезон Серии",
         "tv_keywords_fallback": "\"{title:original}\" \"Сезон {season}\"",
-        "tv_keywords_fallback2": "\"{title:en:ru:original}\" {season}"
+        "tv_keywords_fallback2": "\"{title:en:ru:original}\" {season}",
+        "builtin": {
+            "login_object": {
+                "login": "Логин",
+                "login_password": "PASSWORD",
+                "login_username": "USERNAME"
+            },
+            "parser": {
+                "description": {
+                    "attr": "title",
+                    "nth": 2,
+                    "tag": "img"
+                },
+                "name": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "genmed"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "leechmed"
+                            ]
+                        ]
+                    ],
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "forumline"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "seedmed"
+                            ]
+                        ]
+                    ],
+                    "tag": "td"
+                },
+                "size": {
+                    "divider": [
+                        " ",
+                        2
+                    ],
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "small"
+                            ]
+                        ]
+                    ],
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "dLink"
+                                ]
+                            ]
+                        ],
+                        "tag": "a"
+                    },
+                    "format": "https://rustorka.com/forum/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "rutor": {
         "anime_keywords": "{title:ru:original} {season:2}x01|{season:2}х01|(01-{season:2}x01)|(01-{season:2}х01)|S{season:2}|(S01-{season:2})|(TV-{season})|(ТВ-{season})",
@@ -2382,7 +5212,84 @@
         "tv_keywords_fallback": "{title:original} {season:2}x01|{season:2}х01|(01-{season:2}x01)|(01-{season:2}х01)|S{season:2}|(S01-{season:2})|(01-)",
         "tv_extra_fallback": "0",
         "tv_keywords_fallback2": "{title:en:ru:original}",
-        "tv_extra_fallback2": "0"
+        "tv_extra_fallback2": "0",
+        "builtin": {
+            "parser": {
+                "infohash": {
+                    "arg": {
+                        "attr": "href",
+                        "divider": [
+                            "&",
+                            0
+                        ],
+                        "nth": 2,
+                        "tag": "a"
+                    },
+                    "new": "",
+                    "old": "magnet:?xt=urn:btih:",
+                    "op": "replace"
+                },
+                "name": {
+                    "nth": 2,
+                    "tag": "td"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "red"
+                            ]
+                        ]
+                    ],
+                    "tag": "span"
+                },
+                "row": [
+                    {
+                        "nth": 3,
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "green"
+                            ]
+                        ]
+                    ],
+                    "tag": "span"
+                },
+                "size": {
+                    "in": [
+                        {
+                            "nth": 0,
+                            "select": [
+                                [
+                                    "align",
+                                    [
+                                        "right"
+                                    ]
+                                ]
+                            ],
+                            "tag": "td"
+                        }
+                    ],
+                    "raw": true
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 2,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "rutracker": {
         "anime_keywords": "\"{title:en:ru:original}\" \"TV-{season}\"",
@@ -2433,7 +5340,73 @@
         "tv_keywords": "\"{title:en:ru}\" \"Сезон {season}\"",
         "tv_keywords2": "\"{title:en:ru}\" -Сезон Серии",
         "tv_keywords_fallback": "\"{title:original}\" \"Сезон {season}\"",
-        "tv_keywords_fallback2": "\"{title:en:ru:original}\" {season}"
+        "tv_keywords_fallback2": "\"{title:en:ru:original}\" {season}",
+        "builtin": {
+            "login_object": {
+                "login": "Login",
+                "login_password": "PASSWORD",
+                "login_username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "leechmed"
+                            ]
+                        ]
+                    ],
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "forumline"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "seedmed"
+                            ]
+                        ]
+                    ],
+                    "tag": "b"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "a"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 4,
+                        "tag": "a"
+                    },
+                    "format": "https://rutracker.org/forum/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "seedpool": {
         "api_format": {
@@ -2509,7 +5482,61 @@
         "subpage": true,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:original} Сезон {season} Серия {episode}"
+        "tv_keywords": "{title:original} Сезон {season} Серия {episode}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "tLink"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 5,
+                    "tag": "span"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "tor-tbl"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 4,
+                    "tag": "span"
+                },
+                "size": {
+                    "nth": 3,
+                    "tag": "a"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 5,
+                        "tag": "a"
+                    },
+                    "format": "http://serialz.tv%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "skytorrents": {
         "anime_extra": "",
@@ -2550,7 +5577,51 @@
         "subpage": false,
         "tv_extra": "",
         "tv_extra2": "",
-        "tv_keywords": "{title:original} s{season:2}e{episode:2}"
+        "tv_keywords": "{title:original} s{season:2}e{episode:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "table",
+                                    "is-striped",
+                                    "is-narrow"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 2,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 3,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "sumotorrent": {
         "anime_extra": "",
@@ -2596,7 +5667,59 @@
         "tv_extra2": "",
         "tv_keywords": "{title:en} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:en} {season:2}x{episode:2}",
-        "tv_keywords_fallback": "{title:en} s{season:2}"
+        "tv_keywords_fallback": "{title:en} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 8,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "fd_row_list",
+                                    "color_fd"
+                                ]
+                            ]
+                        ],
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "select": [
+                            [
+                                "title",
+                                [
+                                    "Download"
+                                ]
+                            ]
+                        ],
+                        "tag": "a"
+                    },
+                    "new": "/torrent_download/",
+                    "old": "/download/",
+                    "op": "replace"
+                }
+            }
+        }
     },
     "tfile": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -2641,7 +5764,56 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:original} Сезон {season}"
+        "tv_keywords_fallback": "{title:original} Сезон {season}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "peers": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "topics"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "arg": {
+                            "attr": "id"
+                        },
+                        "from": 1,
+                        "op": "slice"
+                    },
+                    "format": "http://tfile-home.org/forum/viewtopic.php?t=%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "thepiratebay": {
         "anime_extra": "",
@@ -2693,7 +5865,63 @@
         "tv_keywords2": null,
         "tv_keywords_fallback": "{title:original:en} s{season:2}",
         "tv_keywords_fallback2": "{title:original:en} season {season}",
-        "tv_keywords_fallback3": "{title:original:en} {season:2}x01"
+        "tv_keywords_fallback3": "{title:original:en} {season:2}x01",
+        "builtin": {
+            "parser": {
+                "infohash": {
+                    "arg": {
+                        "attr": "href",
+                        "divider": [
+                            "&",
+                            0
+                        ],
+                        "in": [
+                            {
+                                "nth": 4,
+                                "tag": "td"
+                            }
+                        ],
+                        "tag": "a"
+                    },
+                    "new": "",
+                    "old": "magnet:?xt=urn:btih:",
+                    "op": "replace"
+                },
+                "name": {
+                    "nth": 2,
+                    "tag": "td"
+                },
+                "peers": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "in": [
+                        {
+                            "nth": 4,
+                            "tag": "td"
+                        }
+                    ],
+                    "tag": "a"
+                }
+            }
+        }
     },
     "tntvillage": {
         "anime_keywords": "{title} s{season:2}e{episode:2}",
@@ -2739,7 +5967,55 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season:2}"
+        "tv_keywords_fallback": "{title} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "peers": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "showrelease_tb"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 2,
+                    "tag": "a"
+                }
+            },
+            "post_data": {
+                "cat": "0",
+                "page": "1",
+                "srcrel": "QUERY"
+            }
+        }
     },
     "toloka": {
         "anime_keywords": "{title:ua:en} s{season:2}e{episode:2}",
@@ -2790,7 +6066,61 @@
         "tv_keywords": "{title:ua:en} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:ua:en} Сезон_{season}",
         "tv_keywords_fallback": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords_fallback2": "{title:original} Сезон_{season}"
+        "tv_keywords_fallback2": "{title:original} Сезон_{season}",
+        "builtin": {
+            "login_object": {
+                "autologin": "1",
+                "login": "Enter",
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 11,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "nth": 2,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "forumline"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 10,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 4,
+                        "tag": "a"
+                    },
+                    "format": "https://toloka.to/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "torlock": {
         "anime_extra": "",
@@ -2840,7 +6170,56 @@
         "tv_keywords": "{title:original:en} s{season:2}e{episode:2}",
         "tv_keywords_fallback": "{title:original:en} s{season:2}",
         "tv_keywords_fallback2": "{title:original:en} season {season}",
-        "tv_keywords_fallback3": "{title:original:en} {season:2}x01"
+        "tv_keywords_fallback3": "{title:original:en} {season:2}x01",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "nth": 2,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "table-responsive"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "divider": [
+                            "/",
+                            2
+                        ],
+                        "tag": "a"
+                    },
+                    "format": "https://www.torlock.com/tor/%s.torrent",
+                    "op": "format"
+                }
+            }
+        }
     },
     "torrent3dru": {
         "anime_extra": "",
@@ -2885,7 +6264,71 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "",
-        "tv_keywords2": ""
+        "tv_keywords2": "",
+        "builtin": {
+            "login_object": {
+                "email": "USERNAME",
+                "password": "PASSWORD"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "divider": [
+                        "|",
+                        1
+                    ],
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "releases-table"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    },
+                    {
+                        "all": true,
+                        "start": 3,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "divider": [
+                        "|",
+                        0
+                    ],
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "arg": {
+                            "attr": "href",
+                            "tag": "a"
+                        },
+                        "index": 0,
+                        "max": 1,
+                        "op": "split",
+                        "sep": "&"
+                    },
+                    "format": "%s&ok",
+                    "op": "format"
+                }
+            }
+        }
     },
     "torrent9": {
         "anime_keywords": "{title} s{season:2}e{episode:2}",
@@ -2930,7 +6373,39 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season:2}"
+        "tv_keywords_fallback": "{title} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 2,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "torrentby": {
         "anime_keywords": "{title:en:ru} S{season:2}",
@@ -2990,7 +6465,86 @@
         "tv_keywords_fallback3": "{title:en:ru} S{season:2}",
         "tv_extra_fallback3": "14",
         "tv_keywords_fallback4": "{title:en:ru} {season:2}x01",
-        "tv_extra_fallback4": "14"
+        "tv_extra_fallback4": "14",
+        "builtin": {
+            "login_object": {
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "select": [
+                        [
+                            "name",
+                            [
+                                "search_select"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "color",
+                            [
+                                "red"
+                            ]
+                        ]
+                    ],
+                    "tag": "font"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "torrents_table"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "color",
+                            [
+                                "green"
+                            ]
+                        ]
+                    ],
+                    "tag": "font"
+                },
+                "size": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "dwnld"
+                                ]
+                            ]
+                        ],
+                        "tag": "a"
+                    },
+                    "format": "https://torrent.by%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "torrentday": {
         "anime_keywords": "{title:en} s{season:2}e{episode:2}",
@@ -3034,7 +6588,43 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:en} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:en} s{season:2}"
+        "tv_keywords_fallback": "{title:en} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "attr": "href",
+                    "tag": "a"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "torrentTable"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "torrent": {
+                    "attr": "href",
+                    "nth": 2,
+                    "tag": "a"
+                }
+            },
+            "unsupported": "parser.size: unknown argument style"
+        }
     },
     "torrentdownloads": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -3079,7 +6669,44 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season:2}"
+        "tv_keywords_fallback": "{title} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 2,
+                    "tag": "span"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "grey_bar3"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    }
+                ],
+                "seeds": {
+                    "nth": 3,
+                    "tag": "span"
+                },
+                "size": {
+                    "nth": 4,
+                    "tag": "span"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "tag": "a"
+                }
+            }
+        }
     },
     "torrentfunk": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -3124,7 +6751,56 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "nth": 2,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "tmain"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "divider": [
+                            "/",
+                            2
+                        ],
+                        "tag": "a"
+                    },
+                    "format": "https://www.torrentfunk.com/tor/%s.torrent",
+                    "op": "format"
+                }
+            }
+        }
     },
     "torrentgalaxy": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -3170,11 +6846,103 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{imdb_id} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "parser": {
+                "infohash": {
+                    "arg": {
+                        "attr": "href",
+                        "divider": [
+                            "&",
+                            0
+                        ],
+                        "select": [
+                            [
+                                "role",
+                                [
+                                    "button"
+                                ]
+                            ]
+                        ],
+                        "tag": "a"
+                    },
+                    "new": "",
+                    "old": "magnet:?xt=urn:btih:",
+                    "op": "replace"
+                },
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "color",
+                            [
+                                "#ff0000"
+                            ]
+                        ]
+                    ],
+                    "tag": "font"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "tgxtable"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    },
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "tgxtablerow"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    }
+                ],
+                "seeds": {
+                    "select": [
+                        [
+                            "color",
+                            [
+                                "green"
+                            ]
+                        ]
+                    ],
+                    "tag": "font"
+                },
+                "size": {
+                    "nth": 9,
+                    "tag": "div"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "select": [
+                        [
+                            "role",
+                            [
+                                "button"
+                            ]
+                        ]
+                    ],
+                    "tag": "a"
+                }
+            }
+        }
     },
     "torrentio": {
         "enabled": true,
-        "is_api":true,
+        "is_api": true,
         "predefined": true,
         "color": "FFFFFFFF",
         "name": "Torrentio",
@@ -3257,7 +7025,53 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:en} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:en} s{season:2}"
+        "tv_keywords_fallback": "{title:en} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 8,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "torrenttable"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 3,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "torrentlt": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -3303,7 +7117,89 @@
         "tv_keywords": "{title:original:en} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original:en} s{season:2}",
         "tv_keywords3": "{title:original:en}",
-        "tv_keywords_fallback": "{title}"
+        "tv_keywords_fallback": "{title}",
+        "builtin": {
+            "login_object": {
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "args": [
+                        {
+                            "nth": 2,
+                            "tag": "a"
+                        },
+                        " [",
+                        {
+                            "attr": "title",
+                            "tag": "a"
+                        },
+                        "]"
+                    ],
+                    "op": "concat"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "leechers"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "torrents-table"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tbody"
+                    }
+                ],
+                "seeds": {
+                    "nth": -4,
+                    "tag": "div"
+                },
+                "size": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "size_cell"
+                            ]
+                        ]
+                    ],
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "download-button"
+                                ]
+                            ]
+                        ],
+                        "tag": "a"
+                    },
+                    "format": "https://torrent.ai/lt/%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "torrentz": {
         "anime_keywords": "{title:original:en} s{season:2}e{episode:2}",
@@ -3353,7 +7249,62 @@
         "tv_keywords2": null,
         "tv_keywords_fallback": "{title:original:en} s{season:2}",
         "tv_keywords_fallback2": "{title:original:en} season {season}",
-        "tv_keywords_fallback3": "{title:original:en} {season:2}x01"
+        "tv_keywords_fallback3": "{title:original:en} {season:2}x01",
+        "builtin": {
+            "parser": {
+                "infohash": {
+                    "arg": {
+                        "attr": "href",
+                        "divider": [
+                            "&",
+                            0
+                        ],
+                        "nth": 2,
+                        "tag": "a"
+                    },
+                    "new": "",
+                    "old": "magnet:?xt=urn:btih:",
+                    "op": "replace"
+                },
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 5,
+                    "tag": "span"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "results"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    },
+                    {
+                        "all": true,
+                        "tag": "dl"
+                    }
+                ],
+                "seeds": {
+                    "nth": 4,
+                    "tag": "span"
+                },
+                "size": {
+                    "nth": 3,
+                    "tag": "span"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 2,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "torrentz2k": {
         "anime_keywords": "{title:en} s{season:2}e{episode:2}",
@@ -3434,7 +7385,53 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season:2}"
+        "tv_keywords_fallback": "{title} s{season:2}",
+        "builtin": {
+            "login_object": {
+                "keeplogged": "1",
+                "login": "Log in",
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "peers": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "torrent"
+                                ]
+                            ]
+                        ],
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "nth": 2,
+                        "tag": "a"
+                    },
+                    "format": "https://uhdbits.org/%s",
+                    "op": "format"
+                }
+            },
+            "unsupported": "parser.name: Tuple"
+        }
     },
     "uindex": {
         "anime_extra": "",
@@ -3479,7 +7476,38 @@
         "tv_keywords_fallback": "{title:original:en} s{season:2}",
         "tv_keywords_fallback2": "{title:original:en} season {season}",
         "tv_keywords_fallback3": "{title:original:en} {season:2}x01",
-        "show_query": ""
+        "show_query": "",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "nth": 3,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 2,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "worldwidetorrents": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -3521,7 +7549,48 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title:original} s{season:2}"
+        "tv_keywords2": "{title:original} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 4,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "w3-table"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 2,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 2,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "yggtorrent": {
         "anime_keywords": "{title:fr} s{season:2}e{episode:2}",
@@ -3572,7 +7641,67 @@
         "tv_extra2": "",
         "tv_keywords": "{title:fr} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:fr} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:fr} s{season:2}"
+        "tv_keywords_fallback": "{title:fr} s{season:2}",
+        "builtin": {
+            "headers": {
+                "upgrade-insecure-requests": "1"
+            },
+            "login_headers": {
+                "Origin": "{root_url}",
+                "Referer": "{root_url}",
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            "login_object": {
+                "ci_csrf_token": "",
+                "id": "USERNAME",
+                "pass": "PASSWORD"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 9,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "table"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 8,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "target",
+                        "nth": 3,
+                        "tag": "a"
+                    },
+                    "format": "/engine/download_torrent?id=%s",
+                    "op": "format"
+                }
+            }
+        }
     },
     "yourbittorrent": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -3617,7 +7746,56 @@
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
         "tv_keywords2": "{title:original} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title:original} s{season:2}"
+        "tv_keywords_fallback": "{title:original} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 6,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "nth": 2,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "table-responsive"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    },
+                    {
+                        "all": true,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 5,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 3,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "divider": [
+                            "/",
+                            2
+                        ],
+                        "tag": "a"
+                    },
+                    "format": "https://yourbittorrent.com/down/%s.torrent",
+                    "op": "format"
+                }
+            }
+        }
     },
     "yts": {
         "anime_extra": null,
@@ -3714,7 +7892,106 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original}+s{season:2}e{episode:2}",
-        "tv_keywords2": "{title}+еп.{episode}"
+        "tv_keywords2": "{title}+еп.{episode}",
+        "builtin": {
+            "login_object": {
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "args": [
+                        {
+                            "nth": 2,
+                            "tag": "a"
+                        },
+                        " | ",
+                        {
+                            "arg": {
+                                "arg": {
+                                    "arg": {
+                                        "attr": "href",
+                                        "in": [
+                                            {
+                                                "parent_of": [
+                                                    [
+                                                        "class",
+                                                        [
+                                                            "fa fa-download"
+                                                        ]
+                                                    ]
+                                                ]
+                                            }
+                                        ],
+                                        "raw": true
+                                    },
+                                    "new": "",
+                                    "old": ".torrent",
+                                    "op": "replace"
+                                },
+                                "op": "resub",
+                                "pattern": "/download\\.php/\\d+/",
+                                "repl": ""
+                            },
+                            "op": "unquote"
+                        }
+                    ],
+                    "op": "concat"
+                },
+                "peers": {
+                    "nth": -1,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "id",
+                                [
+                                    "zbtable"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": -2,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": -4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "args": [
+                        "https://zamunda.net",
+                        {
+                            "attr": "href",
+                            "in": [
+                                {
+                                    "parent_of": [
+                                        [
+                                            "class",
+                                            [
+                                                "fa fa-download"
+                                            ]
+                                        ]
+                                    ]
+                                }
+                            ],
+                            "raw": true
+                        }
+                    ],
+                    "op": "concat"
+                }
+            }
+        }
     },
     "zelka": {
         "anime_keywords": "{title:original} s{season:2}e{episode:2}",
@@ -3759,7 +8036,107 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original} s{season:2}e{episode:2}",
-        "tv_keywords2": "{title} еп.{episode}"
+        "tv_keywords2": "{title} еп.{episode}",
+        "builtin": {
+            "login_object": {
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "args": [
+                        {
+                            "nth": 2,
+                            "tag": "a"
+                        },
+                        " | ",
+                        {
+                            "arg": {
+                                "arg": {
+                                    "arg": {
+                                        "attr": "href",
+                                        "in": [
+                                            {
+                                                "parent_of": [
+                                                    [
+                                                        "src",
+                                                        [
+                                                            "//img.zamunda.se/pic/download.gif"
+                                                        ]
+                                                    ]
+                                                ]
+                                            }
+                                        ],
+                                        "raw": true
+                                    },
+                                    "new": "",
+                                    "old": ".torrent",
+                                    "op": "replace"
+                                },
+                                "op": "resub",
+                                "pattern": "download\\.php/\\d+/",
+                                "repl": ""
+                            },
+                            "op": "unquote"
+                        }
+                    ],
+                    "op": "concat"
+                },
+                "peers": {
+                    "nth": -1,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "width",
+                                [
+                                    "900"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": -2,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": -4,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "args": [
+                        "https://zelka.org/",
+                        {
+                            "attr": "href",
+                            "in": [
+                                {
+                                    "parent_of": [
+                                        [
+                                            "src",
+                                            [
+                                                "//img.zamunda.se/pic/download.gif"
+                                            ]
+                                        ]
+                                    ]
+                                }
+                            ],
+                            "raw": true
+                        }
+                    ],
+                    "op": "concat"
+                }
+            },
+            "unsupported": "parser.infohash: Call"
+        }
     },
     "zooqle": {
         "anime_keywords": "{title} s{season:2}e{episode:2}",
@@ -3804,7 +8181,79 @@
         "tv_extra2": "",
         "tv_keywords": "{title} s{season:2}e{episode:2}",
         "tv_keywords2": "{title} {season:2}x01|S{season:2}",
-        "tv_keywords_fallback": "{title} s{season:2}"
+        "tv_keywords_fallback": "{title} s{season:2}",
+        "builtin": {
+            "parser": {
+                "name": {
+                    "tag": "a"
+                },
+                "peers": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "prog-r"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "table",
+                                    "table-condensed",
+                                    "table-torrents",
+                                    "vmiddle"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "arg": {
+                        "nth": 2,
+                        "select": [
+                            [
+                                "class",
+                                [
+                                    "prog-l"
+                                ]
+                            ]
+                        ],
+                        "tag": "div"
+                    },
+                    "new": "000",
+                    "old": " K",
+                    "op": "replace"
+                },
+                "size": {
+                    "select": [
+                        [
+                            "class",
+                            [
+                                "progress-bar"
+                            ]
+                        ]
+                    ],
+                    "tag": "div"
+                },
+                "torrent": {
+                    "attr": "href",
+                    "nth": 3,
+                    "tag": "a"
+                }
+            }
+        }
     },
     "ztracker": {
         "anime_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
@@ -3849,6 +8298,65 @@
         "tv_extra": "",
         "tv_extra2": "",
         "tv_keywords": "{title:original:en:hu} s{season:2}e{episode:2}",
-        "tv_keywords_fallback": "{title:original:en:hu} s{season:2}"
+        "tv_keywords_fallback": "{title:original:en:hu} s{season:2}",
+        "builtin": {
+            "login_headers": {
+                "Origin": "{login_prerequest}",
+                "Referer": "{login_prerequest}"
+            },
+            "login_object": {
+                "password": "PASSWORD",
+                "username": "USERNAME"
+            },
+            "parser": {
+                "name": {
+                    "nth": 2,
+                    "tag": "a"
+                },
+                "peers": {
+                    "nth": 8,
+                    "tag": "td"
+                },
+                "row": [
+                    {
+                        "select": [
+                            [
+                                "border",
+                                [
+                                    "1"
+                                ]
+                            ]
+                        ],
+                        "tag": "table"
+                    },
+                    {
+                        "all": true,
+                        "start": 2,
+                        "tag": "tr"
+                    }
+                ],
+                "seeds": {
+                    "nth": 7,
+                    "tag": "td"
+                },
+                "size": {
+                    "nth": 11,
+                    "tag": "td"
+                },
+                "torrent": {
+                    "arg": {
+                        "attr": "href",
+                        "divider": [
+                            "=",
+                            1
+                        ],
+                        "nth": 2,
+                        "tag": "a"
+                    },
+                    "format": "https://ztracker.cc/download.php?id=%s",
+                    "op": "format"
+                }
+            }
+        }
     }
 }
