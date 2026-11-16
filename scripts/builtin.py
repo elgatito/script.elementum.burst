@@ -7,6 +7,8 @@ as plain JSON that Elementum evaluates (see providers/burst/selector.go in Eleme
 ignores "builtin".
 
 Run it after editing a provider: make builtin
+Or on a file of your own providers (Burst's custom providers), to use them with Elementum's built-in search:
+    python3 scripts/builtin.py ~/.kodi/userdata/addon_data/script.elementum.burst/providers/mine.json
 A provider with an expression this script does not understand gets "builtin": {"unsupported": "..."}
 and is not searched by Elementum.
 """
@@ -14,6 +16,7 @@ import ast
 import collections
 import json
 import os
+import sys
 
 class Unsupported(Exception):
     pass
@@ -198,7 +201,7 @@ def form(expression):
     return result
 
 def main():
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "burst", "providers", "providers.json")
+    path = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "burst", "providers", "providers.json")
     with open(path, encoding="utf-8") as f:
         providers = json.load(f, object_pairs_hook=collections.OrderedDict)
     bad = {}

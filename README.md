@@ -108,6 +108,10 @@ Do not edit `builtin` by hand: change the provider as usual and run `make builti
 from the Python expressions. CI fails when the two do not match. A provider with an expression the
 script does not understand gets `"builtin": {"unsupported": "..."}` and is searched by Burst only.
 
+The script also converts a file of your own providers, so Elementum can search them too:
+`python3 scripts/builtin.py path/to/my-providers.json`, then put the file in
+`<Elementum profile>/providers/` (see the Elementum documentation).
+
 ### Release
 
 Release is done by running `release.sh` script, that collects zip artifacts and push it as a release (if we are on the tag).
