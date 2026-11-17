@@ -1,6 +1,12 @@
 script.elementum.burst changelog
 ===============
 
+[B]v0.0.103[/B] - 2026-11-17
+ - Fix MyXZ seeds, peers and size, and TorrentDay seeds, peers and size:
+   their parser expressions had a syntax error.
+ - Every provider in providers.json also has a "builtin" part, which
+   Elementum's own built-in search reads. Burst ignores it.
+
 [B]v0.0.102[/B] - 2026-11-06
  - New "Season and episode" filtering setting, off by default: episode
    and season searches skip results for other seasons or episodes, ie.
